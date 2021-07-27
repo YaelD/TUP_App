@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MainScreenActivity extends AppCompatActivity{
 
+    //Matan is the most handsome man i Know
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private MaterialToolbar toolbar;
