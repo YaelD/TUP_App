@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">TUP</string>
+    <string name="login_activity">Login</string>
+    <string name="acivity_register">Register</string>
+    <string name="acivity_main_screen">TUP</string>
+    <string name="acivity_create_new_trip">Create new trip</string>
+    <string name="acivity_favorite_attractions">Favorite attractions</string>
+    <string name="acivity_my_trips">My trips</string>
+    <string name="acivity_search_attractions">Search attractions</string>
+    <string name="drawer_open">drawer_open</string>
+    <string name="drawer_close">drawer_close</string>
+    <string-array name="destinations">
+        <item>select</item>
+        <item>London, UK</item>
+    </string-array>
+</resources>
