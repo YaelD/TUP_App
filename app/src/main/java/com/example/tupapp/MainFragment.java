@@ -22,6 +22,9 @@ public class MainFragment extends Fragment {
     private TextView txtHelloUser;
     private Button btnCreateTrip, btnSearchAtt, btnFavoriteAtt, btnMyTrips, btnAttraction;
 
+
+
+
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override

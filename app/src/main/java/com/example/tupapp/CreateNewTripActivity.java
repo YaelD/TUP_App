@@ -38,14 +38,9 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-public class CreateNewTripActivity extends AppCompatActivity /*implements View.OnClickListener*/{
+public class CreateNewTripActivity extends AppCompatActivity{
 
     private static final String TAG= "CreateNewTripActivity";
-/*    private TextView txtTripDetails;
-    private Button btnDestination, btnNumOfDays, btnDesiredHoursInDay, btnMustVisitAtt, btnTest;
-    private Spinner destinationSpinner;
-    private boolean isbtnDestinationClicked = false, isbtnNumOfDaysClicked = false, isbtnDesiredHoursInDay = false, isbtnMustVisitAtt = false; */
-
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private MaterialToolbar toolbar;
@@ -53,7 +48,6 @@ public class CreateNewTripActivity extends AppCompatActivity /*implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_create_new_trip);
         setContentView(R.layout.activity_main_screen);
 
         initViewsCreateNewTripActivity();
@@ -71,6 +65,9 @@ public class CreateNewTripActivity extends AppCompatActivity /*implements View.O
                     case R.id.userDetails:
                         Toast.makeText(CreateNewTripActivity.this, "userDetails selected", Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.home:
+                        Intent intent= new Intent(CreateNewTripActivity.this, MainScreenActivity.class);
+                        startActivity(intent);
                     default:
                         break;
                 }
@@ -82,107 +79,16 @@ public class CreateNewTripActivity extends AppCompatActivity /*implements View.O
         transaction.replace(R.id.container, new CreateNewTripFragment());
         transaction.commit();
 
-       /* MaterialDatePicker.Builder dateRangePickerBuilder = MaterialDatePicker.Builder.dateRangePicker();
-        CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
-
-        RangeDateValidator dateValidator = new RangeDateValidator(7);
-        constraintBuilder.setValidator(dateValidator);
-        dateRangePickerBuilder.setCalendarConstraints(constraintBuilder.build());
-
-
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        calendar.clear();
-        calendar.setTimeInMillis(MaterialDatePicker.todayInUtcMilliseconds());
-
-        //calendarConstraints
-        CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
-        constraintBuilder.setValidator(DateValidatorPointForward.now());
-
-        //MaterialDateRangePicker
-        MaterialDatePicker.Builder<Pair<Long,Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
-        builder.setTitleText("Select Dates");
-        builder.setCalendarConstraints(constraintBuilder.build());
-        final MaterialDatePicker materialDatePicker = builder.build();
-
-
-
-
-        btnNumOfDays.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                materialDatePicker.show(getSupportFragmentManager(),"DATES_PICKER");
-            }
-        });
-
-
-
-       /* ArrayList<String> destinations = new ArrayList<>();
-        destinations.add("select");
-        destinations.add("London, UK");
-
-        ArrayAdapter<String> destinationsAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_dropdown_item,destinations
-        );
-        destinationSpinner.setAdapter(destinationsAdapter);
-        destinationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        btnDestination.setOnClickListener(this);
-        btnMustVisitAtt.setOnClickListener(this);*/
-
     }
 
     private void initViewsCreateNewTripActivity() {
         Log.d(TAG, "initViewsCreateNewTripActivity: started");
-
-    /*    txtTripDetails = findViewById(R.id.txtTripDetails);
-        btnDestination = findViewById(R.id.btnDestination);
-        btnNumOfDays = findViewById(R.id.btnNumOfDays);
-        btnDesiredHoursInDay = findViewById(R.id.btnDesiredHoursInDay);
-        btnMustVisitAtt = findViewById(R.id.btnMustVisitAtt);
-        destinationSpinner = findViewById(R.id.destinationSpinner);
-
-        btnTest = findViewById(R.id.btnTest);*/
 
         drawer = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
     }
 
- /*   @Override
-    public void onClick(View v) {
-        Log.d(TAG, "onClick: started");
-        switch(v.getId()) {
-            case R.id.btnDestination:
-                if(!isbtnDestinationClicked){
-                    destinationSpinner.setVisibility(View.VISIBLE);
-                    isbtnDestinationClicked= true;
-                }
-                else {
-                    destinationSpinner.setVisibility(View.GONE);
-                    isbtnDestinationClicked= false;
-                }
-                break;
-            case R.id.btnDesiredHoursInDay:
-
-                break;
-            case R.id.btnMustVisitAtt:
-                btnTest.setVisibility(View.VISIBLE);
-
-                break;
-            default:
-                break;
-        }
-
-    }*/
 
     //pressLint("ParcelCreator")
     //public class RangeDateValidator implements CalendarConstraints.DateValidator{

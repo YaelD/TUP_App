@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TUPApp">
-        <activity android:name=".AttractionDetailsActivity"></activity>
+        <activity
+            android:name=".AttractionDetailsActivity"
+            android:label="@string/acivity_attraction_details"
+            android:theme="@style/Theme.TUPApp.NoActionBar"/>
         <activity
             android:name=".MyTripsActivity"
             android:label="@string/acivity_my_trips" />
@@ -20,7 +23,8 @@
             android:label="@string/acivity_favorite_attractions" />
         <activity
             android:name=".SearchAttractionsActivity"
-            android:label="@string/acivity_search_attractions" />
+            android:label="@string/acivity_search_attractions"
+            android:theme="@style/Theme.TUPApp.NoActionBar"/>
         <activity
             android:name=".CreateNewTripActivity"
             android:label="@string/acivity_create_new_trip"

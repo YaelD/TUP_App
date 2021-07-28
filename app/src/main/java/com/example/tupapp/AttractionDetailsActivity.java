@@ -1,61 +1,76 @@
 package com.example.tupapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
+
+import org.jetbrains.annotations.NotNull;
 
 public class AttractionDetailsActivity extends AppCompatActivity {
 
-    private TextView txtAttrName, txtAddress, txtOpeningHours, txtPhone, txtWebsite, txtDescription,txtRestaurants, txtMap;
-    private TextView txtAttrAddress, txtAttrOpeningHours, txtAttrPhone, txtAttrWebsite, txtAttrDescription, txtAddToFavorites;
-    private ImageView imgFavorite, imgMap;
-    private boolean isImgFavoriteClicked = false;
+    private static final String TAG = "AttractionDetailsActivity";
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private MaterialToolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attraction_details);
+        setContentView(R.layout.activity_main_screen);
 
         initViews();
 
-        imgFavorite.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                if (!isImgFavoriteClicked) {
-                    imgFavorite.setColorFilter(getColor(R.color.red));
-                    isImgFavoriteClicked = true;
-                } else {
-                    imgFavorite.setColorFilter(getColor(R.color.black));
-                    isImgFavoriteClicked = false;
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.userDetails:
+                        Toast.makeText(AttractionDetailsActivity.this, "userDetails selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.home:
+                        Intent intent= new Intent(AttractionDetailsActivity.this, MainScreenActivity.class);
+                        startActivity(intent);
+                    default:
+                        break;
                 }
+                return false;
             }
         });
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, new AttractionDetailsFragment());
+        transaction.commit();
+
     }
 
     private void initViews() {
-        txtAddress = findViewById(R.id.AddressText);
-        txtOpeningHours = findViewById(R.id.OpeningHoursText);
-        txtPhone = findViewById(R.id.PhoneText);
-        txtWebsite = findViewById(R.id.WebsiteText);
-        txtDescription = findViewById(R.id.DescriptionText);
-        txtRestaurants = findViewById(R.id.RestaurantsText);
-        txtAttrAddress = findViewById(R.id.txtAttrAddress);
-        txtAttrOpeningHours = findViewById(R.id.txtAttrOpeningHours);
-        txtAttrPhone = findViewById(R.id.txtAttrPhone);
-        txtAttrWebsite = findViewById(R.id.txtAttrWebsite);
-        txtAttrDescription = findViewById(R.id.txtAttrDescription);
-        txtAttrName = findViewById(R.id.txtAttrName);
-        imgFavorite = findViewById(R.id.imgFavorite);
-        imgMap = findViewById(R.id.imgMap);
-        txtAddToFavorites = findViewById(R.id.txtAddToFavorite);
-        txtMap = findViewById(R.id.txtMap);
+        drawer = findViewById(R.id.drawer);
+        navigationView = findViewById(R.id.navigationView);
+        toolbar = findViewById(R.id.toolbar);
     }
 }
