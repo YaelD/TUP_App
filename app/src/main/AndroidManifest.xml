@@ -17,10 +17,12 @@
             android:theme="@style/Theme.TUPApp.NoActionBar"/>
         <activity
             android:name=".MyTripsActivity"
-            android:label="@string/acivity_my_trips" />
+            android:label="@string/acivity_my_trips"
+            android:theme="@style/Theme.TUPApp.NoActionBar"/>
         <activity
             android:name=".FavoriteAttractionsActivity"
-            android:label="@string/acivity_favorite_attractions" />
+            android:label="@string/acivity_favorite_attractions"
+            android:theme="@style/Theme.TUPApp.NoActionBar"/>
         <activity
             android:name=".SearchAttractionsActivity"
             android:label="@string/acivity_search_attractions"

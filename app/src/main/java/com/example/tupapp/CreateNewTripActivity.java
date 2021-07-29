@@ -38,9 +38,9 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-public class CreateNewTripActivity extends AppCompatActivity{
+public class CreateNewTripActivity extends AppCompatActivity {
 
-    private static final String TAG= "CreateNewTripActivity";
+    private static final String TAG = "CreateNewTripActivity";
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private MaterialToolbar toolbar;
@@ -61,12 +61,12 @@ public class CreateNewTripActivity extends AppCompatActivity{
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.userDetails:
                         Toast.makeText(CreateNewTripActivity.this, "userDetails selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.home:
-                        Intent intent= new Intent(CreateNewTripActivity.this, MainScreenActivity.class);
+                        Intent intent = new Intent(CreateNewTripActivity.this, MainScreenActivity.class);
                         startActivity(intent);
                     default:
                         break;
@@ -90,43 +90,5 @@ public class CreateNewTripActivity extends AppCompatActivity{
     }
 
 
-    //pressLint("ParcelCreator")
-    //public class RangeDateValidator implements CalendarConstraints.DateValidator{
-    //
-    // private MaterialDatePicker rangePicker;
-    // final int numberOfDays;
-    //
-    // public RangeDateValidator(int numberOfDays){
-    //     this.numberOfDays = numberOfDays;
-    // }
-    //
-    // public void setDatePicker(MaterialDatePicker rangePicker){
-    //     this.rangePicker = rangePicker;
-    // }
-    // @Override
-    // public boolean isValid(long date) {
-    //     Pair<Long, Long> selection = (Pair<Long, Long>) rangePicker.getSelection();
-    //     if(selection != null){
-    //         Long startDate = selection.first;
-    //         if(startDate != null){
-    //             long days = (numberOfDays - 1) * TimeUnit.DAYS.toMillis(1);
-    //             if(date > startDate + days)
-    //                 return false;
-    //             if(date < startDate)
-    //                 return false;
-    //         }
-    //     }
-    //     return true;
-    // }
-    //
-    // @Override
-    // public int describeContents() {
-    //     return 0;
-    // }
-    //
-    // @Override
-    // public void writeToParcel(Parcel dest, int flags) {
-    //
-    // }
-    //
+
 }

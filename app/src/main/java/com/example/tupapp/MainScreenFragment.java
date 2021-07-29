@@ -16,13 +16,11 @@ import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
 
-public class MainFragment extends Fragment {
+public class MainScreenFragment extends Fragment {
 
     private ImageView btnLogoImage;
     private TextView txtHelloUser;
     private Button btnCreateTrip, btnSearchAtt, btnFavoriteAtt, btnMyTrips, btnAttraction;
-
-
 
 
     @Nullable

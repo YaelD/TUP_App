@@ -1,7 +1,9 @@
 package com.example.tupapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class CreateNewTripFragment extends Fragment implements View.OnClickListener{
 
@@ -47,18 +50,25 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         //calendarConstraints
         CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
         constraintBuilder.setValidator(DateValidatorPointForward.now());
-
         //MaterialDateRangePicker
-        MaterialDatePicker.Builder<Pair<Long,Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
-        builder.setTitleText("Select Dates");
-        builder.setCalendarConstraints(constraintBuilder.build());
-        final MaterialDatePicker materialDatePicker = builder.build();
+        MaterialDatePicker.Builder<Pair<Long,Long>> picker = MaterialDatePicker.Builder.dateRangePicker();
+        picker.setTitleText("Select Dates");
+        picker.setCalendarConstraints(constraintBuilder.build());
 
+        //RangeDateValidator rangeDateValidator = new RangeDateValidator(7);
+        final MaterialDatePicker materialDatePicker = picker.build();
+
+        //rangeDateValidator.setDatePicker(materialDatePicker);
+        //constraintBuilder.setValidator(rangeDateValidator);
+        picker.setCalendarConstraints(constraintBuilder.build());
 
         btnNumOfDays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                materialDatePicker.show(getActivity().getSupportFragmentManager(),"DATES_PICKER");
+
+                materialDatePicker.show(getActivity().getSupportFragmentManager(),materialDatePicker.getTag());
+
+
             }
         });
 
@@ -106,6 +116,48 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @SuppressLint("ParcelCreator")
+    public class RangeDateValidator implements CalendarConstraints.DateValidator {
+
+        private MaterialDatePicker rangePicker;
+        final int numberOfDays;
+
+        public RangeDateValidator(int numberOfDays) {
+            this.numberOfDays = numberOfDays;
+        }
+
+        public void setDatePicker(MaterialDatePicker rangePicker) {
+            this.rangePicker = rangePicker;
+        }
+
+        @Override
+        public boolean isValid(long date) {
+            Pair<Long, Long> selection = (Pair<Long, Long>) rangePicker.getSelection();
+            if (selection != null) {
+                Long startDate = selection.first;
+                if (startDate != null) {
+                    long days = (numberOfDays - 1) * TimeUnit.DAYS.toMillis(1);
+                    if (date > startDate + days)
+                        return false;
+                    if (date < startDate)
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+
+        }
+
     }
 }
 

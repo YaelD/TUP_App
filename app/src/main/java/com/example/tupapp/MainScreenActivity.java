@@ -11,10 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -66,9 +62,9 @@ public class MainScreenActivity extends AppCompatActivity{
         });*/
 
         //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        //transaction.replace(R.id.container, new MainFragment());
+        //transaction.replace(R.id.container, new MainScreenFragment());
         //transaction.commit();
-        this.setContainer(new MainFragment());
+        this.setContainer(new MainScreenFragment());
 
     }
 
