@@ -13,40 +13,45 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.appbar.MaterialToolbar;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private final String URL = "http://10.0.0.5/LoginRegister/login.php";
     private static final String TAG = "LoginActivity";
     private EditText txtEmail, txtPassword;
     private TextView txtWarnEmail, txtWarnPassword;
     private Button btnLoginActivity;
+    private String email, password;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         initViews();
 
-        btnLoginActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txtWarnEmail.setVisibility(View.GONE);
-                txtWarnPassword.setVisibility(View.GONE);
-                initLogin();
-            }
-        });
     }
 
     private void initLogin(){
         Log.d(TAG, "initLogin: started");
 
         if(validateData()){
-            Intent intent= new Intent(LoginActivity.this, MainScreenActivity.class);
-            startActivity(intent);
+            getLogInInfoFromDB();
+            //Intent intent= new Intent(LoginActivity.this, MainScreenActivity.class);
+            //startActivity(intent);
         }
     }
 
@@ -73,5 +78,48 @@ public class LoginActivity extends AppCompatActivity {
         txtWarnEmail= findViewById(R.id.txtWarnEmail);
         txtWarnPassword = findViewById(R.id.txtWarnPassword);
         btnLoginActivity = findViewById(R.id.btnLoginActivity);
+    }
+
+    public void login(View view) {
+        txtWarnEmail.setVisibility(View.GONE);
+        txtWarnPassword.setVisibility(View.GONE);
+        initLogin();
+
+    }
+
+    public void getLogInInfoFromDB()
+    {
+        email = txtEmail.getText().toString().trim();
+        password = txtPassword.getText().toString().trim();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equals("Login Success")) {
+
+                    Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(LoginActivity.this, error.toString().trim(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("email", email);
+                data.put("password", password);
+                return data;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
     }
 }
