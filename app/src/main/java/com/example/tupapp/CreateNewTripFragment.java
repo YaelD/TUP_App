@@ -18,8 +18,10 @@ import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,6 +52,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         //calendarConstraints
         CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
         constraintBuilder.setValidator(DateValidatorPointForward.now());
+
         //MaterialDateRangePicker
         MaterialDatePicker.Builder<Pair<Long,Long>> picker = MaterialDatePicker.Builder.dateRangePicker();
         picker.setTitleText("Select Dates");
@@ -67,10 +70,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             public void onClick(View v) {
 
                 materialDatePicker.show(getActivity().getSupportFragmentManager(),materialDatePicker.getTag());
-
-
             }
         });
+
 
         btnDestination.setOnClickListener(this);
         btnMustVisitAtt.setOnClickListener(this);

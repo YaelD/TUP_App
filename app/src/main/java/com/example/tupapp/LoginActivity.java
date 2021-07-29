@@ -91,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
     {
         email = txtEmail.getText().toString().trim();
         password = txtPassword.getText().toString().trim();
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
