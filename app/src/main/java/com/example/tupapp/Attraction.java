@@ -20,7 +20,7 @@ public class Attraction {
     private String phoneNumber;
     private String website;
     private Geometry geometry;
-//    private String placeID;
+    private String placeID;
     private String imageUrl;
 //    private ArrayList<AttractionType> types = new ArrayList<>();
     private ArrayList<DayOpeningHours> OpeningHoursArr = new ArrayList<>();//
@@ -96,11 +96,7 @@ public class Attraction {
         return placeID;
     }*/
     public String getWebsite() {return website;}
-//    public int getDuration() {return duration;}
 
-/*    public void setDuration(int duration) {
-        this.duration = duration;
-    }*/
 
     public String getImageUrl(){
         return imageUrl;
@@ -119,36 +115,6 @@ public class Attraction {
 //    public void setTypes(ArrayList<AttractionType> types) {this.types = types;}
     public void setOpeningHoursArr(ArrayList<DayOpeningHours> openingHoursArr) {OpeningHoursArr = openingHoursArr;}
 
-/*    public void setDuration(ArrayList<AttractionType> types)
-    {
-        if (types.contains(AttractionType.amusement_park) || types.contains(AttractionType.aquarium)
-                || types.contains(AttractionType.bowling_alley) || types.contains(AttractionType.casino)
-                || types.contains(AttractionType.point_of_interest) || types.contains(AttractionType.park)
-                || types.contains(AttractionType.shopping_mall) || types.contains(AttractionType.spa)
-                || types.contains(AttractionType.tourist_attraction) || types.contains(AttractionType.zoo)) {
-            duration = 6;
-        }else if (types.contains(AttractionType.airport) || types.contains(AttractionType.embassy)
-                || types.contains(AttractionType.establishment) || types.contains(AttractionType.cemetery)
-                || types.contains(AttractionType.church) || types.contains(AttractionType.hindu_temple)
-                || types.contains(AttractionType.mosque) || types.contains(AttractionType.synagogue)) {
-            duration = 4;
-        } else if (types.contains(AttractionType.art_gallery) || types.contains(AttractionType.museum)
-                || types.contains(AttractionType.movie_theater) || types.contains(AttractionType.stadium)) {
-            duration = 3;
-        } else if (types.contains(AttractionType.bakery)) {
-            duration = 1;
-        } else if (types.contains(AttractionType.bar) || types.contains(AttractionType.cafe)
-                || types.contains(AttractionType.night_club) || types.contains(AttractionType.restaurant)) {
-            duration = 2;
-        } else if (types.contains(AttractionType.lodging)) {
-            duration = 2;
-        }else
-            duration = 3;
-    }*/
-
- /*   public ArrayList<AttractionType> getTypes() {
-        return types;
-    }*/
 
     public ArrayList<DayOpeningHours> getOpeningHoursArr() {
         return OpeningHoursArr;
