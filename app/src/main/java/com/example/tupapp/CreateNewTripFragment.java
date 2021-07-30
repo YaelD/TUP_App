@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.util.Util;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
@@ -28,7 +30,10 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +44,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private Button btnDestination, btnNumOfDays, btnDesiredHoursInDay, btnMustVisitAtt, btnTest;
     private Spinner destinationSpinner;
     private boolean isbtnDestinationClicked = false, isbtnNumOfDaysClicked = false, isbtnDesiredHoursInDay = false, isbtnMustVisitAtt = false;
+    private EditText txtSelectDateFrom, txtSelectDateTo;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -48,7 +54,58 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
         initView(view);
 
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        CalendarConstraints.Builder constraintBuilder1 = new CalendarConstraints.Builder();
+        constraintBuilder1.setValidator(DateValidatorPointForward.now());
+        CalendarConstraints.Builder constraintBuilder2 = new CalendarConstraints.Builder();
+
+
+        MaterialDatePicker.Builder builder1 = MaterialDatePicker.Builder.datePicker();
+        builder1.setTitleText("Select a date");
+        builder1.setCalendarConstraints(constraintBuilder1.build());
+        final MaterialDatePicker materialDatePicker1 = builder1.build();
+
+
+        txtSelectDateFrom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDatePicker1.show(getActivity().getSupportFragmentManager(), "DATE_PICKER");
+            }
+        });
+
+        materialDatePicker1.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                txtSelectDateFrom.setText(materialDatePicker1.getHeaderText());
+            }
+        });
+
+        Long selectedDate = (Long) materialDatePicker1.getSelection();
+        constraintBuilder2.setValidator(DateValidatorPointBackward.before(selectedDate + TimeUnit.DAYS.toMillis(7)));
+        MaterialDatePicker.Builder builder2 = MaterialDatePicker.Builder.datePicker();
+        builder1.setTitleText("Select a date");
+        builder1.setCalendarConstraints(constraintBuilder1.build());
+        builder1.setCalendarConstraints(constraintBuilder2.build());
+        final MaterialDatePicker materialDatePicker2 = builder2.build();
+
+
+        txtSelectDateTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDatePicker2.show(getActivity().getSupportFragmentManager(), "DATE_PICKER2");
+            }
+        });
+
+        materialDatePicker2.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                txtSelectDateTo.setText(materialDatePicker2.getHeaderText());
+            }
+        });
+
+
+
+
+       /* Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.clear();
         calendar.setTimeInMillis(MaterialDatePicker.todayInUtcMilliseconds());
 
@@ -66,14 +123,14 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
         //rangeDateValidator.setDatePicker(materialDatePicker);
         //constraintBuilder.setValidator(rangeDateValidator);
-        picker.setCalendarConstraints(constraintBuilder.build());
+        picker.setCalendarConstraints(constraintBuilder.build());*/
 
-        btnNumOfDays.setOnClickListener(new View.OnClickListener() {
+      /*  btnNumOfDays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 materialDatePicker.show(getActivity().getSupportFragmentManager(), materialDatePicker.getTag());
             }
-        });
+        });*/
 
 
         /*
@@ -117,6 +174,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         btnDesiredHoursInDay = view.findViewById(R.id.btnDesiredHoursInDay);
         btnMustVisitAtt = view.findViewById(R.id.btnMustVisitAtt);
         destinationSpinner = view.findViewById(R.id.destinationSpinner);
+        txtSelectDateFrom = view.findViewById(R.id.txtSelectDateFrom);
+        txtSelectDateTo = view.findViewById(R.id.txtSelectDateTo);
 
         btnTest = view.findViewById(R.id.btnTest);
     }
