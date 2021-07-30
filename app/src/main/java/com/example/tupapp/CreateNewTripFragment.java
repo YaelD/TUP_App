@@ -1,6 +1,7 @@
 package com.example.tupapp;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -11,12 +12,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.DateValidatorPointForward;
@@ -68,10 +71,34 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         btnNumOfDays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                materialDatePicker.show(getActivity().getSupportFragmentManager(),materialDatePicker.getTag());
+                materialDatePicker.show(getActivity().getSupportFragmentManager(), materialDatePicker.getTag());
             }
         });
+
+
+        /*
+            materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
+                @Override
+                public void onPositiveButtonClick(Pair<Long, Long> selection) {
+                    Toast.makeText(getActivity(), "POSITIVEButtonClick!!!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        materialDatePicker.addOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(getActivity(), "CANCEL LISTENER!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        materialDatePicker.addOnNegativeButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "NAVIGATION LISTENER!!!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+         */
 
 
         btnDestination.setOnClickListener(this);
@@ -137,6 +164,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         @Override
         public boolean isValid(long date) {
             Pair<Long, Long> selection = (Pair<Long, Long>) rangePicker.getSelection();
+
             if (selection != null) {
                 Long startDate = selection.first;
                 if (startDate != null) {
