@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -132,8 +133,12 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
                         endDate = Instant.ofEpochMilli(selection).atZone(ZoneId.systemDefault()).toLocalDate();
                         long numOfDays = ChronoUnit.DAYS.between(startDate,endDate);
-                        rangeDates = Stream.iterate(startDate, date -> date.plusDays(1))
+                        /*rangeDates = Stream.iterate(startDate, date -> date.plusDays(1))
                                 .limit(numOfDays)
+                                .collect(Collectors.toList());*/
+                        rangeDates = IntStream.iterate(0, i -> i+1)
+                                .limit(numOfDays)
+                                .mapToObj(i -> startDate.plusDays(i))
                                 .collect(Collectors.toList());
 
                         System.out.println(rangeDates.size());
