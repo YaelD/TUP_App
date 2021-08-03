@@ -23,6 +23,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,14 +99,23 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equals("Login Success")) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    if (json.getString("status").equals("ok")) {
+                        String jsonUserString = json.getString("message");
+                        Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
 
-                    Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                else {
-                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
+                        intent.putExtra("User", traveler);
+
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {

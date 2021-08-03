@@ -21,6 +21,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -155,17 +160,25 @@ public class RegisterActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equals("Sign Up Success")) {
-                    btnRegisterSystem.setClickable(false);
-                    Intent intent= new Intent(RegisterActivity.this, MainScreenActivity.class);
-                    finish();
-                    startActivity(intent);
+                try {
+                    JSONObject json = new JSONObject(response);
+                    if (json.getString("message").equals("ok")) {
+                        btnRegisterSystem.setClickable(false);
+                        Intent intent= new Intent(RegisterActivity.this, MainScreenActivity.class);
+                        Traveler traveler = new Gson().fromJson(json.getString("message"), Traveler.class);
+                        intent.putExtra("Traveler", traveler);
+                        finish();
+                        startActivity(intent);
 
-                }
-                else
-                {
-                    Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
 
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
