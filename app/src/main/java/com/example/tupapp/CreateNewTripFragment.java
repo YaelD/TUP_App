@@ -97,11 +97,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 txtSelectDateFrom.setText(materialDatePicker1.getHeaderText());
 
                 rangeDates = new ArrayList<LocalDate>();
-                //startDate = LocalDate.parse(selection.toString());
-
-                //startDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(selection), ZoneId.systemDefault());
-                //rangeDates.add(startDate.toLocalDate());
-                startDate = Instant.ofEpochSecond(selection).atZone(ZoneId.systemDefault()).toLocalDate();
+                startDate = Instant.ofEpochMilli(selection).atZone(ZoneId.systemDefault()).toLocalDate();
 
 
                 //Calendar Constraints
@@ -109,7 +105,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 ArrayList<CalendarConstraints.DateValidator> validators = new ArrayList<CalendarConstraints.DateValidator>();
                 validators.add(DateValidatorPointBackward.before(selection+ TimeUnit.DAYS.toMillis(6)));
                 validators.add(DateValidatorPointForward.from(selection));
-                //constraintBuilder2.setValidator(DateValidatorPointBackward.before(selection+ TimeUnit.DAYS.toMillis(7)));
 
                 //Material datePicker
                 MaterialDatePicker.Builder<Long> builder2 = MaterialDatePicker.Builder.datePicker();
@@ -128,28 +123,21 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                     @Override
                     public void onPositiveButtonClick(Long selection) {
                         txtSelectDateTo.setText(materialDatePicker2.getHeaderText());
-                        //endDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(selection), ZoneId.systemDefault());
-                        //int numOfDays = Period.between(startDate.toLocalDate(),endDate.toLocalDate()).getDays();
 
                         endDate = Instant.ofEpochMilli(selection).atZone(ZoneId.systemDefault()).toLocalDate();
-                        long numOfDays = ChronoUnit.DAYS.between(startDate,endDate);
-                        /*rangeDates = Stream.iterate(startDate, date -> date.plusDays(1))
-                                .limit(numOfDays)
-                                .collect(Collectors.toList());*/
+                        long numOfDays = ChronoUnit.DAYS.between(startDate,endDate) + 1;
                         rangeDates = IntStream.iterate(0, i -> i+1)
                                 .limit(numOfDays)
                                 .mapToObj(i -> startDate.plusDays(i))
                                 .collect(Collectors.toList());
 
-                        System.out.println(rangeDates.size());
+                        for(LocalDate date:rangeDates){
+                            System.out.println(date);
+                        }
                     }
                 });
-
-
             }
         });
-
-
 
         btnDestination.setOnClickListener(this);
         btnMustVisitAtt.setOnClickListener(this);
