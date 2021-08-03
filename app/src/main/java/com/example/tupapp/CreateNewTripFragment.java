@@ -60,8 +60,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private boolean isbtnDestinationClicked = false, isbtnNumOfDaysClicked = false, isbtnDesiredHoursInDay = false, isbtnMustVisitAtt = false;
     private EditText txtSelectDateFrom, txtSelectDateTo;
     private List<LocalDate> rangeDates;
-    //private LocalDateTime startDate, endDate;
-    //private List<LocalDate> listOfDates;
     private LocalDate startDate, endDate;
 
 
