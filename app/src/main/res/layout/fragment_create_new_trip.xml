@@ -127,21 +127,19 @@
                 android:id="@+id/recViewDesiredHours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/btnMustVisitAtt"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/btnDesiredHoursInDay" />
 
             <Button
                 android:id="@+id/btnMustVisitAtt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="108dp"
                 android:text="Must Visit Attractions"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnDesiredHoursInDay" />
+                app:layout_constraintTop_toBottomOf="@+id/recViewDesiredHours" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline5"
