@@ -21,6 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.util.Util;
 import com.google.android.material.button.MaterialButton;
@@ -59,6 +61,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private Spinner destinationSpinner;
     private boolean isbtnDestinationClicked = false, isbtnNumOfDaysClicked = false, isbtnDesiredHoursInDay = false, isbtnMustVisitAtt = false;
     private EditText txtSelectDateFrom, txtSelectDateTo;
+    private RecyclerView recViewDesiredHours;
     private List<LocalDate> rangeDates;
     private LocalDate startDate, endDate;
 
@@ -129,6 +132,12 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                                 .mapToObj(i -> startDate.plusDays(i))
                                 .collect(Collectors.toList());
 
+                        DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter();
+                        adapter.setDesiredHours(rangeDates);
+
+                        recViewDesiredHours.setAdapter(adapter);
+                        recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
+
                         for(LocalDate date:rangeDates){
                             System.out.println(date);
                         }
@@ -136,6 +145,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 });
             }
         });
+
+
 
         btnDestination.setOnClickListener(this);
         btnMustVisitAtt.setOnClickListener(this);
@@ -155,6 +166,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         destinationSpinner = view.findViewById(R.id.destinationSpinner);
         txtSelectDateFrom = view.findViewById(R.id.txtSelectDateFrom);
         txtSelectDateTo = view.findViewById(R.id.txtSelectDateTo);
+        recViewDesiredHours = view.findViewById(R.id.recViewDesiredHours);
 
         btnTest = view.findViewById(R.id.btnTest);
     }
