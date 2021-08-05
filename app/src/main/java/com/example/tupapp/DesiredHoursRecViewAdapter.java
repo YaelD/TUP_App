@@ -54,13 +54,13 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
 
                 materialTimePicker.show(materialTimePicker.getActivity().getSupportFragmentManager(), "fragment_tag");
 
-                materialTimePicker.addOnPositiveButtonClickListener(dialog -> {
+               /* materialTimePicker.addOnPositiveButtonClickListener(dialog -> {
                     int newHour = materialTimePicker.getHour();
                     int newMinute = materialTimePicker.getMinute();
                     String time = String.format(Locale.getDefault(), "%02d:%02d", newHour, newMinute);
                     holder.txtTimeFrom.setText(time);
 
-                });
+                });*/
             }
         });
 
@@ -105,7 +105,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
     //מקשר בין קובץ הXML של רשימת השעות (כאן ניתן לקשר את האובייקטים שנמצאים בקובץ למחלקה)
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView txtDate, txtTimeFrom, txtHyphen, txtTimeTo, txtEror;
+        private TextView txtDate, txtTimeFrom, txtHyphen, txtTimeTo; //txtEror;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -113,7 +113,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
             txtHyphen = itemView.findViewById(R.id.txtHyphen);
             txtTimeFrom = itemView.findViewById(R.id.txtTimeFrom);
             txtTimeTo = itemView.findViewById(R.id.txtTimeTo);
-            txtEror = itemView.findViewById(R.id.textView6);
+            //txtEror = itemView.findViewById(R.id.textView6);
 
 
         }
