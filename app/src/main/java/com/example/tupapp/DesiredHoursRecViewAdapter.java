@@ -52,7 +52,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                         .setMinute(minute)
                         .build();
 
-                materialTimePicker.show(materialTimePicker.getParentFragmentManager(), "fragment_tag");
+                materialTimePicker.show(materialTimePicker.getActivity().getSupportFragmentManager(), "fragment_tag");
 
                 materialTimePicker.addOnPositiveButtonClickListener(dialog -> {
                     int newHour = materialTimePicker.getHour();
@@ -64,7 +64,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
             }
         });
 
-        holder.txtTimeTo.setOnClickListener(new View.OnClickListener() {
+        /*holder.txtTimeTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -86,7 +86,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                     holder.txtTimeTo.setText(time);
                 });
             }
-        });
+        });*/
 
 
     }
