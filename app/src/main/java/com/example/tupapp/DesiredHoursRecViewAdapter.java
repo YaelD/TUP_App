@@ -1,10 +1,15 @@
 package com.example.tupapp;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -26,7 +31,9 @@ import java.util.Locale;
 public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHoursRecViewAdapter.ViewHolder> {
 
     private List<LocalDate> desiredHours = new ArrayList<>();
-    private FragmentActivity context;
+    //private int currentHour, currentMinutes;
+    //private FragmentActivity context;
+    private Context context;
 
     public DesiredHoursRecViewAdapter(FragmentActivity context) {
         this.context = context;
@@ -45,12 +52,27 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
     public void onBindViewHolder(@NonNull @NotNull DesiredHoursRecViewAdapter.ViewHolder holder, int position) {
         holder.txtDate.setText(desiredHours.get(position).toString() + ":");
 
-        holder.txtTimeFrom.setOnClickListener(new View.OnClickListener() {
+        //holder.txtTimeFrom.setInputType(InputType.TYPE_NULL);
+        holder.btnTimeFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final Calendar calendar = Calendar.getInstance();
+                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                int currentMinutes = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        holder.btnTimeFrom.setText(hourOfDay + ":" + minute);
+                    }
+                }, currentHour, currentMinutes, true);
+
+                timePicker.show();
+
                 /*Calendar calendar = Calendar.getInstance();
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minute = calendar.get(Calendar.MINUTE);*/
+                int minute = calendar.get(Calendar.MINUTE);
 
                 MaterialTimePicker materialTimePicker = new MaterialTimePicker.Builder()
                         .setHour(10)
@@ -70,6 +92,25 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                     holder.txtTimeFrom.setText(time);
 
                 });*/
+            }
+        });
+
+        //holder.txtTimeTo.setInputType(InputType.TYPE_NULL);
+        holder.btnTimeTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                int currentMinutes = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        holder.btnTimeTo.setText(hourOfDay + ":" + minute);
+                    }
+                }, currentHour, currentMinutes, true);
+
+                timePicker.show();
             }
         });
 
@@ -114,14 +155,15 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
     //מקשר בין קובץ הXML של רשימת השעות (כאן ניתן לקשר את האובייקטים שנמצאים בקובץ למחלקה)
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView txtDate, txtTimeFrom, txtHyphen, txtTimeTo; //txtEror;
+        private TextView txtDate, txtHyphen;
+        private Button btnTimeTo, btnTimeFrom;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             txtDate = itemView.findViewById(R.id.txtDate);
             txtHyphen = itemView.findViewById(R.id.txtHyphen);
-            txtTimeFrom = itemView.findViewById(R.id.txtTimeFrom);
-            txtTimeTo = itemView.findViewById(R.id.txtTimeTo);
+            btnTimeFrom = itemView.findViewById(R.id.btnTimeFrom);
+            btnTimeTo = itemView.findViewById(R.id.btnTimeTo);
             //txtEror = itemView.findViewById(R.id.textView6);
 
 
