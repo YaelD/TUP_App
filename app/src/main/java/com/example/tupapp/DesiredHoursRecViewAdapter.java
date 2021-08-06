@@ -1,13 +1,17 @@
 package com.example.tupapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.datepicker.CompositeDateValidator;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
@@ -22,8 +26,10 @@ import java.util.Locale;
 public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHoursRecViewAdapter.ViewHolder> {
 
     private List<LocalDate> desiredHours = new ArrayList<>();
+    private FragmentActivity context;
 
-    public DesiredHoursRecViewAdapter() {
+    public DesiredHoursRecViewAdapter(FragmentActivity context) {
+        this.context = context;
     }
 
     @NonNull
@@ -42,17 +48,20 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
         holder.txtTimeFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
+                /*Calendar calendar = Calendar.getInstance();
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minute = calendar.get(Calendar.MINUTE);
+                int minute = calendar.get(Calendar.MINUTE);*/
 
                 MaterialTimePicker materialTimePicker = new MaterialTimePicker.Builder()
+                        .setHour(10)
+                        .setMinute(0)
                         .setTimeFormat(TimeFormat.CLOCK_24H)
-                        .setHour(hour)
-                        .setMinute(minute)
                         .build();
 
-                materialTimePicker.show(materialTimePicker.getActivity().getSupportFragmentManager(), "fragment_tag");
+
+                materialTimePicker.show(context.getSupportFragmentManager(), "TAG");
+                //materialTimePicker.show(materialTimePicker.getParentFragmentManager(), "fragment_tag");
+                //materialTimePicker.show(materialTimePicker.getActivity().getSupportFragmentManager(), "fragment_tag");
 
                /* materialTimePicker.addOnPositiveButtonClickListener(dialog -> {
                     int newHour = materialTimePicker.getHour();

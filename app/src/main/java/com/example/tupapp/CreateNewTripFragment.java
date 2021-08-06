@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +75,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
         initView(view);
 
+        txtSelectDateFrom.setInputType(InputType.TYPE_NULL);
+        txtSelectDateTo.setInputType(InputType.TYPE_NULL);
+
         CalendarConstraints.Builder constraintBuilder1 = new CalendarConstraints.Builder();
         constraintBuilder1.setValidator(DateValidatorPointForward.now());
 
@@ -132,7 +136,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                                 .mapToObj(i -> startDate.plusDays(i))
                                 .collect(Collectors.toList());
 
-                        DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter();
+                        DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter(getActivity());
                         adapter.setDesiredHours(rangeDates);
 
                         recViewDesiredHours.setAdapter(adapter);
