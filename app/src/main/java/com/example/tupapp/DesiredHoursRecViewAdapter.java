@@ -1,5 +1,6 @@
 package com.example.tupapp;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.text.InputType;
@@ -31,7 +32,7 @@ import java.util.Locale;
 public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHoursRecViewAdapter.ViewHolder> {
 
     private List<LocalDate> desiredHours = new ArrayList<>();
-    //private int currentHour, currentMinutes;
+    private ArrayList<String> selectedHours = new ArrayList<>();
     //private FragmentActivity context;
     private Context context;
 
@@ -58,15 +59,17 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
             public void onClick(View v) {
 
                 final Calendar calendar = Calendar.getInstance();
-                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                int currentMinutes = calendar.get(Calendar.MINUTE);
+                //int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                //int currentMinutes = calendar.get(Calendar.MINUTE);
 
                 TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @SuppressLint("DefaultLocale")
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        holder.btnTimeFrom.setText(hourOfDay + ":" + minute);
+                        holder.btnTimeFrom.setText(String.format("%02d:%02d", hourOfDay, minute));
+                        selectedHours.add(String.format("%02d:%02d", hourOfDay, minute));
                     }
-                }, currentHour, currentMinutes, true);
+                }, 10, 0, true);
 
                 timePicker.show();
 
@@ -100,19 +103,22 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
             @Override
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
-                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                int currentMinutes = calendar.get(Calendar.MINUTE);
+                //int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                //int currentMinutes = calendar.get(Calendar.MINUTE);
 
                 TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @SuppressLint("DefaultLocale")
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        holder.btnTimeTo.setText(hourOfDay + ":" + minute);
+                        holder.btnTimeTo.setText(String.format("%02d:%02d", hourOfDay, minute));
+                        selectedHours.add(String.format("%02d:%02d", hourOfDay, minute));
                     }
-                }, currentHour, currentMinutes, true);
+                }, 20, 0, true);
 
                 timePicker.show();
             }
         });
+
 
         /*holder.txtTimeTo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +156,9 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
         this.desiredHours = desiredHours;
         notifyDataSetChanged();
     }
+    public ArrayList<String> getSelectedHours(){
+        return selectedHours;
+    }
 
 
     //מקשר בין קובץ הXML של רשימת השעות (כאן ניתן לקשר את האובייקטים שנמצאים בקובץ למחלקה)
@@ -164,7 +173,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
             txtHyphen = itemView.findViewById(R.id.txtHyphen);
             btnTimeFrom = itemView.findViewById(R.id.btnTimeFrom);
             btnTimeTo = itemView.findViewById(R.id.btnTimeTo);
-            //txtEror = itemView.findViewById(R.id.textView6);
+            //txtError = itemView.findViewById(R.id.textView6);
 
 
         }
