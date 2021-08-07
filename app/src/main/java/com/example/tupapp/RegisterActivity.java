@@ -27,13 +27,14 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
 
-    private final String URL = "http://10.0.0.5/LoginRegister/signup.php";
+    private final String URL = "http://10.0.0.5:8080/web_war_exploded/register";
     private static final String TAG = "RegisterActivity";
     private EditText txtFirstName, txtLastName, txtEmailAddr, txtPasswordRegister, txtRePassword;
     private TextView txtWarnFirstName, txtWarnLastName, txtWarningEmail, txtWarningPassword, txtWarningComfirmPass;
@@ -55,8 +56,8 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "initRegister: started");
 
         if(validateData()){
-            showSnackBar();
-            sendRegisterInfoToDB();
+            sendRegisterInfoToServer();
+            //showSnackBar();
         }
 
     }
@@ -150,31 +151,32 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void sendRegisterInfoToDB()
+    private void sendRegisterInfoToServer()
     {
         firstName = txtFirstName.getText().toString().trim();
         lastName = txtLastName.getText().toString().trim();
         email = txtEmailAddr.getText().toString().trim();
         password = txtPasswordRegister.getText().toString().trim();
+        Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
+        Gson gson = new Gson();
         //make a new request
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject json = new JSONObject(response);
-                    if (json.getString("message").equals("ok")) {
+                    if (json.getString("status").equals("error")) {
+                        Toast.makeText(RegisterActivity.this, json.getString("message").trim(), Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
                         btnRegisterSystem.setClickable(false);
                         Intent intent= new Intent(RegisterActivity.this, MainScreenActivity.class);
                         Traveler traveler = new Gson().fromJson(json.getString("message"), Traveler.class);
                         intent.putExtra("Traveler", traveler);
+                        showSnackBar();
                         finish();
                         startActivity(intent);
-
-                    }
-                    else
-                    {
-                        Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
-
                     }
 
                 } catch (JSONException e) {
@@ -188,13 +190,15 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> data = new HashMap<>();
-                data.put("firstname", firstName);
-                data.put("lastname", lastName);
-                data.put("email", email);
-                data.put("password", password);
-                return data;
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type","json");
+                return params;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return gson.toJson(registerTraveler).getBytes(StandardCharsets.UTF_8);
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());

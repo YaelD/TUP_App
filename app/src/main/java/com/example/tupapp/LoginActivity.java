@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final String URL = "http://10.0.0.5/LoginRegister/login.php";
+    private final String URL = "http://10.0.0.5/login.php";
     private static final String TAG = "LoginActivity";
     private EditText txtEmail, txtPassword;
     private TextView txtWarnEmail, txtWarnPassword;

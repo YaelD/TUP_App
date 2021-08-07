@@ -66,4 +66,11 @@ public class AttractionDetailsFragment extends Fragment {
         txtAddToFavorites = view.findViewById(R.id.txtAddToFavorite);
         txtMap = view.findViewById(R.id.txtMap);
     }
+
+
+
 }
+
+
+
+
