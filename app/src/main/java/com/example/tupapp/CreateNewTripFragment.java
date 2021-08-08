@@ -45,8 +45,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     private static final String TAG = "CreateNewTripFragment";
     private TextView txtTripDetails, txtEndDatePickError, txtFrom, txtTo;
-    private Button btnDestination, btnTripDates, btnDesiredHoursInDay, btnMustVisitAtt, btnTest;
-    private Spinner destinationSpinner;
+    private Button btnDestination, btnTripDates, btnDesiredHoursInDay, btnMustVisitAtt, btnHotel, btnTest;
+    private Spinner destinationSpinner, spinnerHotels;
     private boolean isBtnDestinationClicked = false, isBtnTripDatesClicked = false, isBtnDesiredHoursInDayClicked = false, isBtnMustVisitAtt = false;
     private boolean isDateToSelected = false;
     private EditText txtSelectDateFrom, txtSelectDateTo;
@@ -120,11 +120,11 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 builder2.setTitleText("Select end date");
                 builder2.setCalendarConstraints(constraintBuilder2.setValidator(CompositeDateValidator.allOf(validators)).build());
 
-
                 if (isDateToSelected && (endDate.isBefore(startDate) || ((startDate.plusDays(6)).isBefore(endDate)))) {
                     materialDatePicker2 = builder2.build();
                     materialDatePicker2.show(getActivity().getSupportFragmentManager(), "DATE_PICKER2");
                     isDateToSelected = false;
+
                     endDate = positiveButtonClick(materialDatePicker2, startDate);
                 } else {
                     txtSelectDateTo.setOnClickListener(new View.OnClickListener() {
@@ -144,14 +144,18 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         });
 
 
+
         btnDestination.setOnClickListener(this);
         btnTripDates.setOnClickListener(this);
         btnDesiredHoursInDay.setOnClickListener(this);
         btnMustVisitAtt.setOnClickListener(this);
+        btnHotel.setOnClickListener(this);
 
 
         return view;
     }
+
+
 
 
 //   @RequiresApi(api = Build.VERSION_CODES.O)
@@ -236,6 +240,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         txtEndDatePickError = view.findViewById(R.id.txtEndDatePickError);
         txtFrom = view.findViewById(R.id.txtFrom);
         txtTo = view.findViewById(R.id.txtTo);
+        spinnerHotels = view.findViewById(R.id.spinnerHotels);
+        btnHotel = view.findViewById(R.id.btnHotel);
 
         btnTest = view.findViewById(R.id.btnTest);
     }
@@ -282,6 +288,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.btnMustVisitAtt:
                 btnTest.setVisibility(View.VISIBLE);
+                break;
+            case R.id.btnHotel:
+                spinnerHotels.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
