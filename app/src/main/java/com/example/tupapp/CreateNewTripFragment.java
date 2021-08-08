@@ -41,9 +41,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
-public class CreateNewTripFragment extends Fragment implements View.OnClickListener{
+public class CreateNewTripFragment extends Fragment implements View.OnClickListener {
 
-    private static final String TAG= "CreateNewTripFragment";
+    private static final String TAG = "CreateNewTripFragment";
     private TextView txtTripDetails, txtEndDatePickError, txtFrom, txtTo;
     private Button btnDestination, btnTripDates, btnDesiredHoursInDay, btnMustVisitAtt, btnTest;
     private Spinner destinationSpinner;
@@ -52,6 +52,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private EditText txtSelectDateFrom, txtSelectDateTo;
     private RecyclerView recViewDesiredHours;
     private List<LocalDate> rangeDates;
+    private ArrayList<DesiredHoursInDay> desiredHours;
     private LocalDate startDate, endDate;
     private MaterialDatePicker<Long> materialDatePicker2;
     private ArrayList<String> selectedHours;
@@ -120,13 +121,12 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 builder2.setCalendarConstraints(constraintBuilder2.setValidator(CompositeDateValidator.allOf(validators)).build());
 
 
-                if(isDateToSelected && (endDate.isBefore(startDate) || ((startDate.plusDays(6)).isBefore(endDate)))){
+                if (isDateToSelected && (endDate.isBefore(startDate) || ((startDate.plusDays(6)).isBefore(endDate)))) {
                     materialDatePicker2 = builder2.build();
                     materialDatePicker2.show(getActivity().getSupportFragmentManager(), "DATE_PICKER2");
                     isDateToSelected = false;
                     endDate = positiveButtonClick(materialDatePicker2, startDate);
-                }
-                else{
+                } else {
                     txtSelectDateTo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -138,11 +138,10 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 }
                 //dismissButtonclick(materialDatePicker2, startDate, endDate);
                 //cancelButtonClick(materialDatePicker2, startDate, endDate);
-                if(isDateToSelected)
+                if (isDateToSelected)
                     saveRangeOfDates(startDate, endDate);
             }
         });
-
 
 
         btnDestination.setOnClickListener(this);
@@ -153,7 +152,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
         return view;
     }
-
 
 
 //   @RequiresApi(api = Build.VERSION_CODES.O)
@@ -197,22 +195,30 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void saveRangeOfDates(LocalDate startDate, LocalDate endDate) {
-        long numOfDays = ChronoUnit.DAYS.between(startDate,endDate) + 1;
-        rangeDates = IntStream.iterate(0, i -> i+1)
+        long numOfDays = ChronoUnit.DAYS.between(startDate, endDate) + 1;
+        rangeDates = IntStream.iterate(0, i -> i + 1)
                 .limit(numOfDays)
                 .mapToObj(i -> CreateNewTripFragment.this.startDate.plusDays(i))
                 .collect(Collectors.toList());
 
+        desiredHours = new ArrayList<>();
+        for (LocalDate date : rangeDates) {
+            desiredHours.add(new DesiredHoursInDay(date.toString()));
+        }
+
         DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter(getActivity());
-        adapter.setDesiredHours(rangeDates);
+        adapter.setDesiredHours(desiredHours);
 
         recViewDesiredHours.setAdapter(adapter);
         recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        selectedHours = adapter.getSelectedHours();
-        for(String hour: selectedHours){
-            System.out.println(hour);
-        }
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                desiredHours = adapter.getDesiredHours();
+                System.out.println(desiredHours.toString());
+            }
+        });
     }
 
     private void initView(View view) {
@@ -276,7 +282,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.btnMustVisitAtt:
                 btnTest.setVisibility(View.VISIBLE);
-
                 break;
             default:
                 break;

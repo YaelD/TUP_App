@@ -1,5 +1,6 @@
 package com.example.tupapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull AttractionsSearchRecAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull AttractionsSearchRecAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Log.d(TAG, "onBindViewHolder: called");
         holder.txtNameAttr.setText(attractions.get(position).getName());
         Glide.with(mContext)
