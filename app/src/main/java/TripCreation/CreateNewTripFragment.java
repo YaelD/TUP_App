@@ -28,6 +28,7 @@ import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,6 +51,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private TextView txtTripDetails, txtEndDatePickError, txtFrom, txtTo;
     private Button btnDestination, btnTripDates, btnDesiredHoursInDay, btnMustVisitAtt, btnHotel, btnTest;
     private Spinner destinationSpinner, spinnerHotels;
+    private FloatingActionButton fltBtnAddAttr, fltBtnSearchAttr;
     private boolean isBtnDestinationClicked = false, isBtnTripDatesClicked = false, isBtnDesiredHoursInDayClicked = false, isBtnMustVisitAtt = false;
     private boolean isDateToSelected = false;
     private EditText txtSelectDateFrom, txtSelectDateTo;
@@ -245,6 +247,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         txtTo = view.findViewById(R.id.txtTo);
         spinnerHotels = view.findViewById(R.id.spinnerHotels);
         btnHotel = view.findViewById(R.id.btnHotel);
+        fltBtnAddAttr = view.findViewById(R.id.fltBtnAddAttr);
+        fltBtnSearchAttr = view.findViewById(R.id.fltBtnSearchAttr);
 
         btnTest = view.findViewById(R.id.btnTest);
     }
@@ -290,7 +294,16 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 }
                 break;
             case R.id.btnMustVisitAtt:
-                btnTest.setVisibility(View.VISIBLE);
+                if(!isBtnMustVisitAtt) {
+                    fltBtnSearchAttr.setVisibility(View.VISIBLE);
+                    fltBtnAddAttr.setVisibility(View.VISIBLE);
+                    isBtnMustVisitAtt = true;
+                }
+                else {
+                    fltBtnSearchAttr.setVisibility(View.GONE);
+                    fltBtnAddAttr.setVisibility(View.GONE);
+                    isBtnMustVisitAtt = false;
+                }
                 break;
             case R.id.btnHotel:
                 spinnerHotels.setVisibility(View.VISIBLE);

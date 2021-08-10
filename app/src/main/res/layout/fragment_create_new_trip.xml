@@ -168,15 +168,12 @@
                 android:id="@+id/btnTest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="35dp"
                 android:text="Button"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnMustVisitAtt"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@+id/fltBtnSearchAttr" />
 
             <TextView
                 android:id="@+id/txtEndDatePickError"
@@ -214,6 +211,34 @@
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnHotel" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fltBtnAddAttr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/fltBtnSearchAttr"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fltBtnSearchAttr"
+                app:layout_constraintTop_toTopOf="@+id/fltBtnSearchAttr"
+                app:rippleColor="@color/white"
+                app:srcCompat="@android:drawable/ic_input_add" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fltBtnSearchAttr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:clickable="true"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.287"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnMustVisitAtt"
+                app:rippleColor="@color/white"
+                app:srcCompat="@drawable/ic_search"
+                tools:ignore="VectorDrawableCompat" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

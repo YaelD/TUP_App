@@ -28,7 +28,7 @@ public class MainScreenFragment extends Fragment {
 
     private ImageView btnLogoImage;
     private TextView txtHelloUser;
-    private Button btnCreateTrip, btnSearchAtt, btnFavoriteAtt, btnMyTrips, btnAttraction;
+    private Button btnCreateTrip, btnSearchAtt, btnFavoriteAtt, btnMyTrips, btnTestAttractionDetails;
 
 
     @Nullable
@@ -67,7 +67,7 @@ public class MainScreenFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        btnAttraction.setOnClickListener(new View.OnClickListener() {
+        btnTestAttractionDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AttractionDetailsActivity.class);
@@ -85,7 +85,7 @@ public class MainScreenFragment extends Fragment {
         btnSearchAtt = view.findViewById(R.id.btnSearchAtt);
         btnFavoriteAtt = view.findViewById(R.id.btnFavoriteAtt);
         btnMyTrips = view.findViewById(R.id.btnMyTrips);
-        btnAttraction = view.findViewById(R.id.btnAttractions);
+        btnTestAttractionDetails = view.findViewById(R.id.btnTestAttractionDetails);
     }
 
 }

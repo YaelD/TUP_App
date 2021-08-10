@@ -69,7 +69,7 @@ public class MainScreenActivity extends AppCompatActivity{
 
     }
 
-    final protected void setContainer(Fragment fragmet)
+    public void setContainer(Fragment fragmet)
     {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -77,7 +77,7 @@ public class MainScreenActivity extends AppCompatActivity{
         transaction.commit();
     }
 
-    final protected void func()
+    public void func()
     {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -98,7 +98,7 @@ public class MainScreenActivity extends AppCompatActivity{
 
     }
 
-    protected void setToolBarAndDrawer(){
+    public void setToolBarAndDrawer(){
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.drawer_open, R.string.drawer_close);
@@ -106,7 +106,7 @@ public class MainScreenActivity extends AppCompatActivity{
         toggle.syncState();
     }
 
-    private void initViews() {
+    public void initViews() {
         Log.d(TAG, "initViews: started");
         drawer = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigationView);
