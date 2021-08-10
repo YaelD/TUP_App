@@ -1,5 +1,6 @@
 package TripCreation;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -150,6 +151,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
 
 
+
         btnDestination.setOnClickListener(this);
         btnTripDates.setOnClickListener(this);
         btnDesiredHoursInDay.setOnClickListener(this);
@@ -215,19 +217,36 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             desiredHours.add(new DesiredHoursInDay(date.toString()));
         }
 
+        callAdapter(desiredHours);
+
+//        DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter(getActivity());
+//        adapter.setDesiredHours(desiredHours);
+//
+//        recViewDesiredHours.setAdapter(adapter);
+//        recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
+//
+//        btnTest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                desiredHours = adapter.getDesiredHours();
+//                System.out.println(desiredHours.toString());
+//            }
+//        });
+    }
+
+    private void callAdapter(ArrayList<DesiredHoursInDay> desiredHours) {
+
         DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter(getActivity());
         adapter.setDesiredHours(desiredHours);
 
         recViewDesiredHours.setAdapter(adapter);
         recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                desiredHours = adapter.getDesiredHours();
-                System.out.println(desiredHours.toString());
-            }
-        });
+        Intent intent = getActivity().getIntent();
+        if (intent != null){
+
+        }
+
     }
 
     private void initView(View view) {
