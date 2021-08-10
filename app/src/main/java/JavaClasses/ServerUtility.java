@@ -21,19 +21,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServerUtility {
-    private final String baseURL = "http://localhost:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private static ServerUtility instance;
     private RequestQueue queue;
     private Context context;
 
-    private ArrayList<Attraction> attractions = new ArrayList<>();
-    private ArrayList<Attraction> hotels = new ArrayList<>();
-
+    private ArrayList<Attraction> attractions = null;
+    private ArrayList<Attraction> hotels = null;
     private Traveler travelerDetails;
 
     private String cookie;
 
+
+
+    public ArrayList<Attraction> getAttractionsByDestination(String destination) {
+        getAllAttractions(destination.toLowerCase().trim());
+        return attractions;
+    }
+
+    public ArrayList<Attraction> getHotelsByDestination(String destination) {
+        getAllHotels(destination.toLowerCase().trim()+"_hotels");
+        return hotels;
+    }
+
+    public ArrayList<Attraction> getAttractions() {
+        if(attractions == null)
+        {
+            getAllAttractions("london");
+        }
+        return attractions;
+    }
+
+    public ArrayList<Attraction> getHotels() {
+        if(hotels == null)
+        {
+            getAllHotels("london_hotels");
+        }
+        return hotels;
+    }
 
     public static synchronized ServerUtility getInstance(Context context)
     {
@@ -47,36 +73,33 @@ public class ServerUtility {
         queue = Volley.newRequestQueue(context);
     }
 
-    public void getAllAttractions()
+
+
+    private void getAllHotels(String destination)
     {
         StringRequest request = new StringRequest(Request.Method.POST,baseURL+allAttractionsURL ,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject json = new JSONObject(response);
-                    if(json.getString("status").equals("error"))
+                    JSONObject jsonResponse = new JSONObject(response);
+                    if(jsonResponse.getString("status").equals("error"))
                     {
-                        Toast toast = Toast.makeText(this, "Server Connection Error", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(context,"Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
                         toast.show();
                     }
                     else
                     {
-                        String attractionsStr = json.getString("message");
-                        attractions = new Gson().fromJson(attractionsStr, ArrayList.class);
-
+                        attractions = new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class);
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast toast = Toast.makeText(this, "Server Connection Error", Toast.LENGTH_SHORT);
-                    toast.show();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast toast = Toast.makeText(context,"Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                toast.show();
             }
         })
         {
@@ -89,10 +112,55 @@ public class ServerUtility {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                return "london".getBytes();
+                return destination.getBytes();
             }
         };
+        queue.add(request);
+    }
 
+
+
+    private void getAllAttractions(String destination)
+    {
+        StringRequest request = new StringRequest(Request.Method.POST,baseURL+allAttractionsURL ,new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    if(jsonResponse.getString("status").equals("error"))
+                    {
+                        Toast toast = Toast.makeText(context,"Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                    else
+                    {
+                        attractions = new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast toast = Toast.makeText(context,"Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "text/html");
+                return headers;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return destination.getBytes();
+            }
+        };
+        queue.add(request);
     }
 
 
