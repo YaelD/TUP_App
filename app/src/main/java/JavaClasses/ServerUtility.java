@@ -26,11 +26,13 @@ public class ServerUtility {
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
 
+
     private static ServerUtility instance;
     private RequestQueue queue;
     private Context context;
 
     private ArrayList<Attraction> tripSelectedAttrations = new ArrayList<>();
+
 
     private ArrayList<Attraction> attractions = new ArrayList<>();
     private ArrayList<Attraction> hotels = new ArrayList<>();
@@ -60,16 +62,13 @@ public class ServerUtility {
         return hotels;
     }
 
-    public ArrayList<Attraction> getMustVisitAttractions()
-    {
-        if(instance.tripSelectedAttrations == null)
-        {
-            instance.tripSelectedAttrations = new ArrayList<>();
-        }
-        return instance.tripSelectedAttrations;
+    public ArrayList<Attraction> getTripSelectedAttrations() {
+        return tripSelectedAttrations;
     }
 
-
+    public void setTripSelectedAttrations(ArrayList<Attraction> tripSelectedAttrations) {
+        this.tripSelectedAttrations = tripSelectedAttrations;
+    }
 
     public static synchronized ServerUtility getInstance(Context context)
     {
@@ -109,7 +108,6 @@ public class ServerUtility {
                     else
                     {
                         attractions = new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class);
-                        Log.e("HERE==>", attractions.get(0).toString());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -201,7 +199,6 @@ public class ServerUtility {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,baseURL+tripURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("HERE RESPONSE==>", response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     if(jsonResponse.getString("status").equals("ok"))
@@ -231,7 +228,6 @@ public class ServerUtility {
             public void onErrorResponse(VolleyError error) {
                 //Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
                 //toast.show();
-                Log.e("HERE ERROR==>", error.toString());
 
 
             }
@@ -251,7 +247,6 @@ public class ServerUtility {
             }
         };
         instance.queue.add(stringRequest);
-        Log.e("HERE", arr.toString());
         return arr;
     }
 

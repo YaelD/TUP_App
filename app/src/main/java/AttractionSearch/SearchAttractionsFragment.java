@@ -1,10 +1,12 @@
 package AttractionSearch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import JavaClasses.Attraction;
+import JavaClasses.ServerUtility;
 import MainScreen.MainScreenActivity;
 import MainScreen.MainScreenFragment;
 import TripCreation.CreateNewTripActivity;
@@ -31,6 +34,7 @@ public class SearchAttractionsFragment extends Fragment {
 
     private SearchView searchViewAttractions;
     private RecyclerView attractionsRecView;
+    private Button btnFinish;
     private AttractionsSearchRecAdapter adapterToDetailesAttr;
     private AddingAttrToMustVisitAttrAdapter adapterToMustVisitAttr;
 
@@ -41,14 +45,13 @@ public class SearchAttractionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_attractions, container, false);
 
         String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
-        Log.e("HERE==>", callingActivity);
-        Log.e("MainScreen", MainScreenActivity.class.getName());
-        Log.e("TripCreating", CreateNewTripActivity.class.getName());
 
         initView(view);
         //String name = getActivity().getCallingActivity().getClassName();
 
         if(callingActivity.equals(MainScreenActivity.class.getName())){
+
+            btnFinish.setVisibility(View.GONE);
             adapterToDetailesAttr = new AttractionsSearchRecAdapter(getActivity());
 
             attractionsRecView.setAdapter(adapterToDetailesAttr);
@@ -66,6 +69,8 @@ public class SearchAttractionsFragment extends Fragment {
         }
         else{
 
+            btnFinish.setVisibility(View.VISIBLE);
+
             adapterToMustVisitAttr = new AddingAttrToMustVisitAttrAdapter(getActivity());
             attractionsRecView.setAdapter(adapterToMustVisitAttr);
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -77,6 +82,15 @@ public class SearchAttractionsFragment extends Fragment {
                     "+44 303 123 7300", "https://www.royal.uk/royal-residences-buckingham-palace", "2",
                     "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
             adapterToMustVisitAttr.setMustVisitAttractions(attractions);
+
+            btnFinish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ServerUtility.getInstance(getContext()).setTripSelectedAttrations(adapterToMustVisitAttr.getSelectedAttractions());
+                    Intent intent = new Intent(getActivity(), CreateNewTripActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
 
@@ -87,5 +101,6 @@ public class SearchAttractionsFragment extends Fragment {
     private void initView(View view) {
         searchViewAttractions = view.findViewById(R.id.searchViewAttr);
         attractionsRecView = view.findViewById(R.id.searchAttrRecView);
+        btnFinish = view.findViewById(R.id.btnFinish);
     }
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,13 +22,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import JavaClasses.Attraction;
+import JavaClasses.ServerUtility;
 
 public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<AddingAttrToMustVisitAttrAdapter.ViewHolder>{
 
     private static final String TAG = "AddingAttrToMustVisitAttrAdapter";
 
     private ArrayList<Attraction> attractions = new ArrayList<>();
+    private ArrayList<Attraction> selectedAttractions = new ArrayList<>();
     private Context mContext;
+
 
     public AddingAttrToMustVisitAttrAdapter(Context mContext) {
         this.mContext = mContext;
@@ -50,6 +54,23 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
                 .asBitmap()
                 .load(attractions.get(position).getImageUrl())
                 .into(holder.imgAttraction);
+
+        if(holder.checkBox.isChecked())
+        {
+            if(!selectedAttractions.contains(attractions.get(position)))
+            {
+                selectedAttractions.add(attractions.get(position));
+            }
+        }
+        else
+        {
+            if(selectedAttractions.contains(attractions.get(position)))
+            {
+                selectedAttractions.remove(attractions.get(position));
+            }
+        }
+
+
     }
 
     @Override
@@ -62,16 +83,22 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
         notifyDataSetChanged();
     }
 
+    public ArrayList<Attraction> getSelectedAttractions() {
+        return selectedAttractions;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private CardView parent;
         private ImageView imgAttraction;
         private TextView txtNameAttr;
+        private CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
             imgAttraction = itemView.findViewById(R.id.imgAttraction);
             txtNameAttr = itemView.findViewById(R.id.txtAttractionName);
+            checkBox = itemView.findViewById(R.id.checkBoxPickAttr);
         }
     }
 }

@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import AttractionSearch.SearchAttractionsActivity;
 import JavaClasses.DesiredHoursInDay;
+import JavaClasses.ServerUtility;
 
 import com.example.TupApp.R;
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -59,7 +60,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private boolean isBtnDestinationClicked = false, isBtnTripDatesClicked = false, isBtnDesiredHoursInDayClicked = false, isBtnMustVisitAtt = false;
     private boolean isDateToSelected = false;
     private EditText txtSelectDateFrom, txtSelectDateTo;
-    private RecyclerView recViewDesiredHours;
+    private RecyclerView recViewDesiredHours, recViewMustVisitAttr;
     private List<LocalDate> rangeDates;
     private ArrayList<DesiredHoursInDay> desiredHours;
     private LocalDate startDate, endDate;
@@ -168,8 +169,15 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 Intent intent = new Intent(getActivity(), SearchAttractionsActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
                 startActivity(intent);
+
             }
         });
+
+        MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
+        adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
+
+        recViewMustVisitAttr.setAdapter(adapter);
+        recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
         return view;
@@ -255,10 +263,10 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         recViewDesiredHours.setAdapter(adapter);
         recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Intent intent = getActivity().getIntent();
+       /* Intent intent = getActivity().getIntent();
         if (intent != null){
 
-        }
+        }*/
 
     }
 
@@ -281,6 +289,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         btnHotel = view.findViewById(R.id.btnHotel);
         fltBtnAddAttr = view.findViewById(R.id.fltBtnAddAttr);
         fltBtnSearchAttr = view.findViewById(R.id.fltBtnSearchAttr);
+        recViewMustVisitAttr = view.findViewById(R.id.recViewMustVisitAttr);
 
         btnTest = view.findViewById(R.id.btnTest);
     }

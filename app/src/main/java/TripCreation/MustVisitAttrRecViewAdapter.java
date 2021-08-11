@@ -31,6 +31,10 @@ public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitA
     private ArrayList<Attraction> mustVisitAttractions = new ArrayList<>();
     private Context mContext;
 
+    public MustVisitAttrRecViewAdapter(Context mContext) {
+        this.mContext = mContext;
+    }
+
 
     @NonNull
     @NotNull
@@ -51,9 +55,6 @@ public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitA
                 .load(mustVisitAttractions.get(position).getImageUrl())
                 .into(holder.imgAttraction);
 
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("attraction", mustVisitAttractions.get(position));
 
     }
 

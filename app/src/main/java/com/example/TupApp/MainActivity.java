@@ -21,7 +21,7 @@ import MainScreen.MainScreenActivity;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private Button btnLogin, btnRegister,btnGeust, button1;
+    private Button btnLogin, btnRegister, btnGeust, button1;
     private ImageView backgroundImage, logoImage;
 
     @Override
@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initViews();
-        testTrip();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,21 +56,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initViews(){
+    private void initViews() {
         Log.d(TAG, "initViews: started");
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
         btnGeust = findViewById(R.id.btnGuset);
 
         backgroundImage = findViewById(R.id.backgroundImage);
-        logoImage= findViewById(R.id.logoImage);
+        logoImage = findViewById(R.id.logoImage);
 
 
-    }
-
-    private void testTrip()
-    {
-        ArrayList<DayPlan> arr =  ServerUtility.getInstance(this).getTrip(TripDetails.staticTrip());
-        Log.e("HERE==>", arr.toString());
     }
 }
