@@ -2,6 +2,8 @@ package TripCreation;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +22,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-import AttractionSearch.AttractionsSearchRecAdapter;
+import AttractionDetails.AttractionDetailsFragment;
 import JavaClasses.Attraction;
 
 public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitAttrRecViewAdapter.ViewHolder>{
     private static final String TAG = "MustVisitAttrRecViewAdapter";
 
-    private ArrayList<Attraction> MustVisitAttractions = new ArrayList<>();
+    private ArrayList<Attraction> mustVisitAttractions = new ArrayList<>();
     private Context mContext;
 
 
@@ -43,21 +45,25 @@ public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitA
     public void onBindViewHolder(@NonNull @NotNull MustVisitAttrRecViewAdapter.ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
 
-        holder.txtNameAttr.setText(MustVisitAttractions.get(position).getName());
+        holder.txtNameAttr.setText(mustVisitAttractions.get(position).getName());
         Glide.with(mContext)
                 .asBitmap()
-                .load(MustVisitAttractions.get(position).getImageUrl())
+                .load(mustVisitAttractions.get(position).getImageUrl())
                 .into(holder.imgAttraction);
+
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("attraction", mustVisitAttractions.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return MustVisitAttractions.size();
+        return mustVisitAttractions.size();
     }
 
     public void setMustVisitAttractions(ArrayList<Attraction> attractions) {
-        this.MustVisitAttractions = attractions;
+        this.mustVisitAttractions = attractions;
         notifyDataSetChanged();
     }
 

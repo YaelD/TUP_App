@@ -2,6 +2,7 @@ package AttractionSearch;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import AttractionDetails.AttractionDetailsActivity;
+import AttractionDetails.AttractionDetailsFragment;
 import JavaClasses.Attraction;
+
+import static AttractionDetails.AttractionDetailsFragment.ATTRACTION_KEY;
 
 public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<AttractionsSearchRecAdapter.ViewHolder> {
     private static final String TAG = "AttrSearchRecAdapter";
@@ -53,7 +58,9 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, attractions.get(position).getName() + "selected", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, AttractionDetailsFragment.class);
+                intent.putExtra(ATTRACTION_KEY, attractions.get(position));
+                mContext.startActivity(intent);
             }
         });
     }

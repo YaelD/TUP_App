@@ -2,6 +2,8 @@ package JavaClasses;
 
 
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
 
@@ -9,7 +11,7 @@ import java.time.DayOfWeek;
 
 import java.util.ArrayList;
 
-public class Attraction {
+public class Attraction implements Parcelable {
 
     private String name;
     private String address;
@@ -18,16 +20,17 @@ public class Attraction {
     private Geometry geometry;
     private String placeID;
     private String imageUrl;
+    private String description;
     private ArrayList<DayOpeningHours> OpeningHoursArr = new ArrayList<>();//
 
     public Attraction(String name, String address, String phoneNumber, String website, /*Geometry geometry,*/ String placeID,
-                      String imageUrl/*, ArrayList<AttractionType> types, ArrayList<DayOpeningHours> openingHoursArr*/) {
+                      String imageUrl/*, ArrayList<AttractionType> types, ArrayList<DayOpeningHours> openingHoursArr*//*, String description*/) {
         this.setName(name);
         this.setAddress(address);
         this.setPhoneNumber(phoneNumber);
         this.setWebsite(website);
         this.setPlaceID(placeID);
-
+        //this.setDescription(description);
         //this.setGeometry(geometry);
         //this.setOpeningHoursArr(openingHoursArr);
         this.setImageUrl(imageUrl);
@@ -43,8 +46,30 @@ public class Attraction {
         this.setGeometry(other.geometry);
         this.setOpeningHoursArr(other.OpeningHoursArr);
         this.setImageUrl(other.imageUrl);
+        this.setDescription(other.description);
     }
 
+
+    protected Attraction(Parcel in) {
+        name = in.readString();
+        address = in.readString();
+        phoneNumber = in.readString();
+        website = in.readString();
+        placeID = in.readString();
+        imageUrl = in.readString();
+    }
+
+    public static final Creator<Attraction> CREATOR = new Creator<Attraction>() {
+        @Override
+        public Attraction createFromParcel(Parcel in) {
+            return new Attraction(in);
+        }
+
+        @Override
+        public Attraction[] newArray(int size) {
+            return new Attraction[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -90,6 +115,14 @@ public class Attraction {
         return OpeningHoursArr.get(day.getValue());
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return "Attraction{" +
@@ -98,8 +131,25 @@ public class Attraction {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", website='" + website + '\'' +
                 ", geometry=" + geometry +
+                ", placeID='" + placeID + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", description='" + description + '\'' +
                 ", OpeningHoursArr=" + OpeningHoursArr +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(phoneNumber);
+        dest.writeString(website);
+        dest.writeString(placeID);
+        dest.writeString(imageUrl);
     }
 }

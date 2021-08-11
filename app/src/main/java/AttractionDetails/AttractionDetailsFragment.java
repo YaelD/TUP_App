@@ -1,5 +1,6 @@
 package AttractionDetails;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,15 +14,20 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import JavaClasses.Attraction;
+
 public class AttractionDetailsFragment extends Fragment {
+
+    public static final String ATTRACTION_KEY = "attraction";
 
     private TextView txtAttrName, txtAddress, txtOpeningHours, txtPhone, txtWebsite, txtDescription,txtRestaurants, txtMap;
     private TextView txtAttrAddress, txtAttrOpeningHours, txtAttrPhone, txtAttrWebsite, txtAttrDescription, txtAddToFavorites;
-    private ImageView imgFavorite, imgMap;
+    private ImageView imgFavorite, imgMap, imgAttr;
     private boolean isImgFavoriteClicked = false;
 
     @Nullable
@@ -46,6 +52,21 @@ public class AttractionDetailsFragment extends Fragment {
             }
         });
 
+        Intent intent = getActivity().getIntent();
+        if(null != intent){
+            Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
+            if(attraction != null){
+                txtAttrName.setText(attraction.getName());
+                txtAttrPhone.setText(attraction.getPhoneNumber());
+                txtAttrAddress.setText(attraction.getAddress());
+                txtAttrWebsite.setText(attraction.getWebsite());
+                Glide.with(getActivity())
+                        .asBitmap()
+                        .load(attraction.getImageUrl())
+                        .into(imgAttr);
+            }
+        }
+
         return view;
     }
 
@@ -66,6 +87,7 @@ public class AttractionDetailsFragment extends Fragment {
         imgMap = view.findViewById(R.id.imgMap);
         txtAddToFavorites = view.findViewById(R.id.txtAddToFavorite);
         txtMap = view.findViewById(R.id.txtMap);
+        imgAttr = view.findViewById(R.id.imgAttr);
     }
 
 
