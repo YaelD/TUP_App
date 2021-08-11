@@ -16,7 +16,7 @@ import MainScreen.MainScreenActivity;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private Button btnLogin, btnRegister,btnGeust;
+    private Button btnLogin, btnRegister,btnGeust, button1;
     private ImageView backgroundImage, logoImage;
 
     @Override

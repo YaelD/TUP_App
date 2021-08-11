@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class ServerUtility {
     private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
+    private final String tripURL = "/trip";
+
     private static ServerUtility instance;
     private RequestQueue queue;
     private Context context;
@@ -30,6 +33,9 @@ public class ServerUtility {
     private ArrayList<Attraction> attractions = null;
     private ArrayList<Attraction> hotels = null;
     private Traveler travelerDetails;
+    //private
+
+
 
     private String cookie;
 
@@ -162,6 +168,47 @@ public class ServerUtility {
         };
         queue.add(request);
     }
+
+
+
+    private void sendTripDetails(TripDetails tripDetails)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,baseURL+tripURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String body = new Gson().toJson(tripDetails);
+                return body.getBytes();
+            }
+        };
+    }
+
+
+
 
 
 }
