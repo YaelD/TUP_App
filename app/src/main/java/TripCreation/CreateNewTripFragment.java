@@ -21,9 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import AttractionSearch.SearchAttractionsActivity;
+import JavaClasses.Attraction;
 import JavaClasses.DesiredHoursInDay;
 import JavaClasses.ServerUtility;
 
+import com.bumptech.glide.Glide;
 import com.example.TupApp.R;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.CompositeDateValidator;
@@ -172,6 +174,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
             }
         });
+
 
         MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
         adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());

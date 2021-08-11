@@ -32,6 +32,8 @@ import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
 public class SearchAttractionsFragment extends Fragment {
 
+    public static final String SELECTED_ATTRACTIONS = "selected attractions";
+
     private SearchView searchViewAttractions;
     private RecyclerView attractionsRecView;
     private Button btnFinish;

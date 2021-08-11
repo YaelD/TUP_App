@@ -32,10 +32,18 @@ public class ServerUtility {
     private Context context;
 
     private ArrayList<Attraction> tripSelectedAttrations = new ArrayList<>();
-
-
+    private ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private ArrayList<Attraction> attractions = new ArrayList<>();
     private ArrayList<Attraction> hotels = new ArrayList<>();
+
+    public ArrayList<Attraction> getFavoriteAttractions() {
+        return favoriteAttractions;
+    }
+
+    public void setFavoriteAttractions(ArrayList<Attraction> favoriteAttractions) {
+        this.favoriteAttractions = favoriteAttractions;
+    }
+
     private Traveler travelerDetails;
     //private
 
