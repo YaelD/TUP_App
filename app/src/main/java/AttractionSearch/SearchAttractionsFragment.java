@@ -46,7 +46,7 @@ public class SearchAttractionsFragment extends Fragment {
         attractions.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
                 "+44 303 123 7300", "https://www.royal.uk/royal-residences-buckingham-palace", "2",
                 "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
-        adapter.setAttractions(ServerUtility.getInstance(getContext()).getAttractions());
+        //adapter.setAttractions(ServerUtility.getInstance(getContext()).getAttractions());
         adapter.setAttractions(attractions);
 
 

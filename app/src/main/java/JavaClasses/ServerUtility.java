@@ -1,6 +1,7 @@
 package JavaClasses;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -12,17 +13,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ServerUtility {
-    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
 
@@ -30,8 +34,8 @@ public class ServerUtility {
     private RequestQueue queue;
     private Context context;
 
-    private ArrayList<Attraction> attractions = null;
-    private ArrayList<Attraction> hotels = null;
+    private ArrayList<Attraction> attractions = new ArrayList<>();
+    private ArrayList<Attraction> hotels = new ArrayList<>();
     private Traveler travelerDetails;
     //private
 
@@ -40,11 +44,13 @@ public class ServerUtility {
     private String cookie;
 
 
-
+/*
     public ArrayList<Attraction> getAttractionsByDestination(String destination) {
         getAllAttractions(destination.toLowerCase().trim());
         return attractions;
     }
+
+ */
 
     public ArrayList<Attraction> getHotelsByDestination(String destination) {
         getAllHotels(destination.toLowerCase().trim()+"_hotels");
@@ -52,11 +58,11 @@ public class ServerUtility {
     }
 
     public ArrayList<Attraction> getAttractions() {
-        if(attractions == null)
+        if(instance.attractions.size() == 0)
         {
             getAllAttractions("london");
         }
-        return attractions;
+        return instance.attractions;
     }
 
     public ArrayList<Attraction> getHotels() {
@@ -77,15 +83,20 @@ public class ServerUtility {
     }
     private ServerUtility(Context context) {
         queue = Volley.newRequestQueue(context);
+        this.context = context;
     }
 
-
+    private void setAttractions(ArrayList<Attraction> attractions) {
+        instance.attractions = attractions;
+        Log.e("InSET====>", instance.attractions.toString());
+    }
 
     private void getAllHotels(String destination)
     {
         StringRequest request = new StringRequest(Request.Method.POST,baseURL+allAttractionsURL ,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.e("HERE==>", response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     if(jsonResponse.getString("status").equals("error"))
@@ -96,6 +107,7 @@ public class ServerUtility {
                     else
                     {
                         attractions = new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class);
+                        Log.e("HERE==>", attractions.get(0).toString());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -126,21 +138,34 @@ public class ServerUtility {
 
 
 
-    private void getAllAttractions(String destination)
+    private static void getAllAttractions(String destination)
     {
-        StringRequest request = new StringRequest(Request.Method.POST,baseURL+allAttractionsURL ,new Response.Listener<String>() {
+        ArrayList<Attraction> arr = new ArrayList<>();
+        String url =ServerUtility.instance.baseURL + ServerUtility.instance.allAttractionsURL;
+        StringRequest request = new StringRequest(Request.Method.POST,"http://10.0.2.2:8080/web_war_exploded/attractions/all" ,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     if(jsonResponse.getString("status").equals("error"))
                     {
-                        Toast toast = Toast.makeText(context,"Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
                         toast.show();
                     }
                     else
                     {
-                        attractions = new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class);
+                        Log.e("HERE==>>", "Got good response");
+                        Log.e("Here==>", jsonResponse.getString("message"));
+                        JSONArray jsonArray = jsonResponse.getJSONArray("message");
+                        Gson gson = new Gson();
+                        for(int i =0; i < jsonArray.length(); ++i)
+                        {
+                            String attractionJsonString = jsonArray.getString(i);
+
+                            arr.add(gson.fromJson(attractionJsonString, Attraction.class));
+                        }
+                        Log.e("Here==>", arr.toString());
+                        instance.attractions = arr;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -149,7 +174,7 @@ public class ServerUtility {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast toast = Toast.makeText(context,"Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(instance.context,"Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
                 toast.show();
             }
         })
@@ -166,7 +191,7 @@ public class ServerUtility {
                 return destination.getBytes();
             }
         };
-        queue.add(request);
+        instance.queue.add(request);
     }
 
 
