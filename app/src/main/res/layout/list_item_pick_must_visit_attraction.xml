@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    app:cardCornerRadius="7dp"
+    app:cardElevation="7dp"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBoxPickAttr"/>
+
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/imgAttraction"
+            android:src="@mipmap/ic_launcher"
+            android:layout_below="@+id/checkBoxPickAttr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtAttractionName"
+            android:text="Attraction Name"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_below="@+id/imgAttraction"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"/>
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

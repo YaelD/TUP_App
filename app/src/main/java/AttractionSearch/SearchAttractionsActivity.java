@@ -1,5 +1,6 @@
 package AttractionSearch;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,6 +61,8 @@ public class SearchAttractionsActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, new SearchAttractionsFragment());
         transaction.commit();
+
+
 
     }
 

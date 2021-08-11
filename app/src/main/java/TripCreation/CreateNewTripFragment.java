@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import AttractionSearch.SearchAttractionsActivity;
 import JavaClasses.DesiredHoursInDay;
 
 import com.example.TupApp.R;
@@ -44,6 +45,8 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
 
 public class CreateNewTripFragment extends Fragment implements View.OnClickListener {
@@ -157,6 +160,16 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         btnDesiredHoursInDay.setOnClickListener(this);
         btnMustVisitAtt.setOnClickListener(this);
         btnHotel.setOnClickListener(this);
+
+
+        fltBtnSearchAttr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchAttractionsActivity.class);
+                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
+                startActivity(intent);
+            }
+        });
 
 
         return view;

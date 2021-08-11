@@ -2,6 +2,7 @@ package MainScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,12 @@ import TripCreation.CreateNewTripActivity;
 
 public class MainScreenFragment extends Fragment {
 
+    public static final String CALLING_ACTIVITY = "calling activity";
+
     private ImageView btnLogoImage;
     private TextView txtHelloUser;
     private Button btnCreateTrip, btnSearchAtt, btnFavoriteAtt, btnMyTrips, btnTestAttractionDetails;
+
 
 
     @Nullable
@@ -50,6 +54,8 @@ public class MainScreenFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SearchAttractionsActivity.class);
+                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
+                Log.e("MAIN Screen===>", getActivity().getClass().getName());
                 startActivity(intent);
             }
         });

@@ -2,14 +2,12 @@ package AttractionSearch;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,19 +20,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-import AttractionDetails.AttractionDetailsActivity;
-import AttractionDetails.AttractionDetailsFragment;
 import JavaClasses.Attraction;
 
-import static AttractionDetails.AttractionDetailsFragment.ATTRACTION_KEY;
+public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<AddingAttrToMustVisitAttrAdapter.ViewHolder>{
 
-public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<AttractionsSearchRecAdapter.ViewHolder> {
-    private static final String TAG = "AttrSearchRecAdapter";
+    private static final String TAG = "AddingAttrToMustVisitAttrAdapter";
 
     private ArrayList<Attraction> attractions = new ArrayList<>();
     private Context mContext;
 
-    public AttractionsSearchRecAdapter(Context mContext) {
+    public AddingAttrToMustVisitAttrAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -42,27 +37,19 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attractions, parent, false);
-        return new ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_pick_must_visit_attraction, parent, false);
+        return new AddingAttrToMustVisitAttrAdapter.ViewHolder(view);
     }
 
+    @SuppressLint("LongLogTag")
     @Override
-    public void onBindViewHolder(@NonNull @NotNull AttractionsSearchRecAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull @NotNull AddingAttrToMustVisitAttrAdapter.ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
         holder.txtNameAttr.setText(attractions.get(position).getName());
         Glide.with(mContext)
                 .asBitmap()
                 .load(attractions.get(position).getImageUrl())
                 .into(holder.imgAttraction);
-
-        holder.parent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, AttractionDetailsActivity.class);
-                intent.putExtra(ATTRACTION_KEY, attractions.get(position));
-                mContext.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -70,12 +57,12 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
         return attractions.size();
     }
 
-    public void setAttractions(ArrayList<Attraction> attractions) {
+    public void setMustVisitAttractions(ArrayList<Attraction> attractions) {
         this.attractions = attractions;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private CardView parent;
         private ImageView imgAttraction;
         private TextView txtNameAttr;
