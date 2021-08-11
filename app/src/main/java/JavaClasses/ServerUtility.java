@@ -30,6 +30,8 @@ public class ServerUtility {
     private RequestQueue queue;
     private Context context;
 
+    private ArrayList<Attraction> tripSelectedAttrations = new ArrayList<>();
+
     private ArrayList<Attraction> attractions = new ArrayList<>();
     private ArrayList<Attraction> hotels = new ArrayList<>();
     private Traveler travelerDetails;
@@ -57,6 +59,17 @@ public class ServerUtility {
         }
         return hotels;
     }
+
+    public ArrayList<Attraction> getMustVisitAttractions()
+    {
+        if(instance.tripSelectedAttrations == null)
+        {
+            instance.tripSelectedAttrations = new ArrayList<>();
+        }
+        return instance.tripSelectedAttrations;
+    }
+
+
 
     public static synchronized ServerUtility getInstance(Context context)
     {
