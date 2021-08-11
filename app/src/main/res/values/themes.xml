@@ -14,5 +14,9 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.TUPApp.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar"/>
+    <style name="Theme.TUPApp.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar" />
+
+    <style name="Theme.TUPApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.TUPApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
+import JavaClasses.DayPlan;
+import JavaClasses.ServerUtility;
+import JavaClasses.TripDetails;
 import LoginAndRegister.LoginActivity;
 import LoginAndRegister.RegisterActivity;
 import MainScreen.MainScreenActivity;
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initViews();
+        testTrip();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,5 +67,11 @@ public class MainActivity extends AppCompatActivity {
         logoImage= findViewById(R.id.logoImage);
 
 
+    }
+
+    private void testTrip()
+    {
+        ArrayList<DayPlan> arr =  ServerUtility.getInstance(this).getTrip(TripDetails.staticTrip());
+        Log.e("HERE==>", arr.toString());
     }
 }

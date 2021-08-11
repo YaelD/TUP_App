@@ -19,6 +19,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
+import JavaClasses.ServerUtility;
+
 public class MainScreenActivity extends AppCompatActivity{
 
     private static final String TAG = "MainScreenActivity";
@@ -34,6 +36,7 @@ public class MainScreenActivity extends AppCompatActivity{
 
         initViews();
         setToolBarAndDrawer();
+        ServerUtility.getInstance(this).getAttractions();
 
         /*setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
