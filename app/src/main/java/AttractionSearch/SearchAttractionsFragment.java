@@ -165,8 +165,9 @@ public class SearchAttractionsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     ServerUtility.getInstance(getContext()).setTripSelectedAttrations(adapterToMustVisitAttr.getSelectedAttractions());
-                    Intent intent = new Intent(getActivity(), CreateNewTripActivity.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(getActivity(), CreateNewTripActivity.class);
+                    //startActivity(intent);
+                    getActivity().finish();
                 }
             });
         }

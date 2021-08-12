@@ -31,7 +31,6 @@ public class FavoriteAttractionsFragment extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite_attractions, container, false);
         initViews(view);
-
         return view;
     }
 
