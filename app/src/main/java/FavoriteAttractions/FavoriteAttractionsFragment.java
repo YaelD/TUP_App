@@ -32,13 +32,22 @@ public class FavoriteAttractionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite_attractions, container, false);
         initViews(view);
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setAdapters();
+    }
+
+    private void setAdapters()
+    {
         FavoriteAttractionsRecAdapter adapter = new FavoriteAttractionsRecAdapter(getActivity());
         adapter.setFavoriteAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
 
         recViewFavoriteAttractions.setAdapter(adapter);
         recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
-        return view;
     }
 
     private void initViews(View view) {

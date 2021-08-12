@@ -56,7 +56,7 @@ public class FavoriteAttractionsRecAdapter extends RecyclerView.Adapter<Favorite
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AttractionDetailsActivity.class);
-                intent.putExtra(ATTRACTION_KEY, attractionsArr.get(position));
+                intent.putExtra(ATTRACTION_KEY, attractionsArr.get(position).getPlaceID());
                 intent.putExtra(CALLING_ACTIVITY, mContext.getClass().getName());
                 mContext.startActivity(intent);
             }

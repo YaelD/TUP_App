@@ -43,7 +43,7 @@ public class ServerUtility {
 
 
 
-    public static Attraction getAttractionByID(String ID)
+    public Attraction getAttractionByID(String ID)
     {
         for(Attraction currentAttracion: attractionsTest)
         {

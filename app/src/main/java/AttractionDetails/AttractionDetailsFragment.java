@@ -3,6 +3,7 @@ package AttractionDetails;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,12 +139,12 @@ public class AttractionDetailsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
+        //String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
 
         Intent intent = getActivity().getIntent();
         if(null != intent){
-            Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
-
+            String attractionID = getActivity().getIntent().getStringExtra(ATTRACTION_KEY);
+            Attraction attraction = ServerUtility.getInstance(getContext()).getAttractionByID(attractionID);
             if(attraction != null){
                 txtAttrName.setText(attraction.getName());
                 txtAttrPhone.setText(attraction.getPhoneNumber());
@@ -153,8 +154,6 @@ public class AttractionDetailsFragment extends Fragment {
                         .asBitmap()
                         .load(attraction.getImageUrl())
                         .into(imgAttr);
-
-                if(callingActivity.equals(SearchAttractionsActivity.class.getName())){
                     if(ServerUtility.getInstance(getContext()).getFavoriteAttractions().contains(attraction))
                     {
                         imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
@@ -166,7 +165,7 @@ public class AttractionDetailsFragment extends Fragment {
                         isImgFavoriteClicked = false;
                     }
 
-                    imgFavorite.setVisibility(View.VISIBLE);
+                    //imgFavorite.setVisibility(View.VISIBLE);
                     imgFavorite.setOnClickListener(new View.OnClickListener() {
                         @RequiresApi(api = Build.VERSION_CODES.M)
                         @Override
@@ -186,10 +185,6 @@ public class AttractionDetailsFragment extends Fragment {
                             }
                         }
                     });
-                }
-                else{
-                    imgFavorite.setVisibility(View.GONE);
-                }
 
             }
         }
