@@ -36,7 +36,7 @@ public class MainScreenActivity extends AppCompatActivity{
 
         initViews();
         setToolBarAndDrawer();
-        ServerUtility.getInstance(this).getAttractions();
+        //ServerUtility.getInstance(this).getAttractions();
 
         /*setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,

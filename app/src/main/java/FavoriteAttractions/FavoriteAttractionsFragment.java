@@ -9,11 +9,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
+
+import JavaClasses.ServerUtility;
+import TripCreation.MustVisitAttrRecViewAdapter;
 
 public class FavoriteAttractionsFragment extends Fragment {
     private static final String TAG = "FavoriteAttractionsFrag";
@@ -27,7 +32,11 @@ public class FavoriteAttractionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite_attractions, container, false);
         initViews(view);
 
+        FavoriteAttractionsRecAdapter adapter = new FavoriteAttractionsRecAdapter(getActivity());
+        adapter.setFavoriteAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
 
+        recViewFavoriteAttractions.setAdapter(adapter);
+        recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         return view;
     }

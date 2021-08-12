@@ -31,10 +31,45 @@ public class ServerUtility {
     private RequestQueue queue;
     private Context context;
 
-    private ArrayList<Attraction> tripSelectedAttrations = new ArrayList<>();
-    private ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
-    private ArrayList<Attraction> attractions = new ArrayList<>();
-    private ArrayList<Attraction> hotels = new ArrayList<>();
+    private static ArrayList<Attraction> tripSelectedAttrations = new ArrayList<>();
+    private static ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
+    private static ArrayList<Attraction> attractions = new ArrayList<>();
+    private static ArrayList<Attraction> hotels = new ArrayList<>();
+    private static ArrayList<Attraction> attractionsTest = new ArrayList<>();
+
+
+
+
+
+
+
+    public static Attraction getAttractionByID(String ID)
+    {
+        for(Attraction currentAttracion: attractionsTest)
+        {
+            if(currentAttracion.getPlaceID().equals(ID))
+            {
+                return currentAttracion;
+            }
+        }
+        return null;
+    }
+
+    public static void attTestFiiler()
+    {
+
+        attractionsTest.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
+                "+44 20 7967 8021", "https://www.londoneye.com/", "1",
+                "https://media.cntraveler.com/photos/55c8be0bd36458796e4ca38a/master/pass/london-eye-2-cr-getty.jpg"));
+        attractionsTest.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
+                "+44 303 123 7300", "https://www.royal.uk/royal-residences-buckingham-palace", "2",
+                "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
+
+    }
+
+
+
+
 
     public ArrayList<Attraction> getFavoriteAttractions() {
         return favoriteAttractions;
@@ -42,6 +77,22 @@ public class ServerUtility {
 
     public void setFavoriteAttractions(ArrayList<Attraction> favoriteAttractions) {
         this.favoriteAttractions = favoriteAttractions;
+    }
+
+    public boolean addAttractionToFavoriteList(Attraction attraction){
+        if(favoriteAttractions.contains(attraction))
+            return false;
+        else
+            favoriteAttractions.add(attraction);
+        return true;
+    }
+
+    public boolean removeAttractionFromFavoriteList(Attraction attraction){
+        if(favoriteAttractions.contains(attraction))
+            favoriteAttractions.remove(attraction);
+        else
+            return false;
+        return true;
     }
 
     private Traveler travelerDetails;
@@ -88,9 +139,19 @@ public class ServerUtility {
     }
 
 
+    public ArrayList<Attraction> getAttractionsTest() {
+        return attractionsTest;
+    }
+
+    public void setAttractionsTest(ArrayList<Attraction> attractionsTest) {
+        ServerUtility.attractionsTest = attractionsTest;
+    }
+
     private ServerUtility(Context context) {
         queue = Volley.newRequestQueue(context);
         this.context = context;
+        attTestFiiler();
+
     }
 
     public ArrayList<DayPlan> getTrip(TripDetails tripDetails)

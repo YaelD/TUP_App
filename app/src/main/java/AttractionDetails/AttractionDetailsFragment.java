@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +20,11 @@ import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import AttractionSearch.SearchAttractionsActivity;
 import JavaClasses.Attraction;
+import JavaClasses.ServerUtility;
+
+import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
 public class AttractionDetailsFragment extends Fragment {
 
@@ -36,36 +41,74 @@ public class AttractionDetailsFragment extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_attraction_details, container, false);
 
+
+
+
         initViews(view);
 
-        imgFavorite.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                if (!isImgFavoriteClicked) {
-                    imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
-                    isImgFavoriteClicked = true;
-                } else {
-                    imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
-                    isImgFavoriteClicked = false;
-                }
-            }
-        });
 
-        Intent intent = getActivity().getIntent();
-        if(null != intent){
-            Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
-            if(attraction != null){
-                txtAttrName.setText(attraction.getName());
-                txtAttrPhone.setText(attraction.getPhoneNumber());
-                txtAttrAddress.setText(attraction.getAddress());
-                txtAttrWebsite.setText(attraction.getWebsite());
-                Glide.with(getActivity())
-                        .asBitmap()
-                        .load(attraction.getImageUrl())
-                        .into(imgAttr);
-            }
-        }
+
+        /*
+
+
+//        imgFavorite.setOnClickListener(new View.OnClickListener() {
+//            @RequiresApi(api = Build.VERSION_CODES.M)
+//            @Override
+//            public void onClick(View v) {
+//                if (!isImgFavoriteClicked) {
+//                    imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
+//                    isImgFavoriteClicked = true;
+//                } else {
+//                    imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
+//                    isImgFavoriteClicked = false;
+//                }
+//            }
+//        });
+
+//        String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
+//
+//        Intent intent = getActivity().getIntent();
+//        if(null != intent){
+//            Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
+//            if(attraction != null){
+//                txtAttrName.setText(attraction.getName());
+//                txtAttrPhone.setText(attraction.getPhoneNumber());
+//                txtAttrAddress.setText(attraction.getAddress());
+//                txtAttrWebsite.setText(attraction.getWebsite());
+//                Glide.with(getActivity())
+//                        .asBitmap()
+//                        .load(attraction.getImageUrl())
+//                        .into(imgAttr);
+//
+//                if(callingActivity.equals(SearchAttractionsActivity.class.getName())){
+//                    imgFavorite.setVisibility(View.VISIBLE);
+//                    imgFavorite.setOnClickListener(new View.OnClickListener() {
+//                        @RequiresApi(api = Build.VERSION_CODES.M)
+//                        @Override
+//                        public void onClick(View v) {
+//                            if (!isImgFavoriteClicked) {
+//                                imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
+//                                isImgFavoriteClicked = true;
+//                                boolean isAdded = ServerUtility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
+//                                if(isAdded)
+//                                    Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
+//                                isImgFavoriteClicked = false;
+//                                boolean isRemoved = ServerUtility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
+//                                if(isRemoved)
+//                                    Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();;
+//                            }
+//                        }
+//                    });
+//                }
+//                else{
+//                    imgFavorite.setVisibility(View.GONE);
+//                }
+//
+//            }
+//        }
+         */
 
         return view;
     }
@@ -90,8 +133,67 @@ public class AttractionDetailsFragment extends Fragment {
         imgAttr = view.findViewById(R.id.imgAttr);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
 
+        Intent intent = getActivity().getIntent();
+        if(null != intent){
+            Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
+
+            if(attraction != null){
+                txtAttrName.setText(attraction.getName());
+                txtAttrPhone.setText(attraction.getPhoneNumber());
+                txtAttrAddress.setText(attraction.getAddress());
+                txtAttrWebsite.setText(attraction.getWebsite());
+                Glide.with(getActivity())
+                        .asBitmap()
+                        .load(attraction.getImageUrl())
+                        .into(imgAttr);
+
+                if(callingActivity.equals(SearchAttractionsActivity.class.getName())){
+                    if(ServerUtility.getInstance(getContext()).getFavoriteAttractions().contains(attraction))
+                    {
+                        imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
+                        isImgFavoriteClicked = true;
+                    }
+                    else
+                    {
+                        imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
+                        isImgFavoriteClicked = false;
+                    }
+
+                    imgFavorite.setVisibility(View.VISIBLE);
+                    imgFavorite.setOnClickListener(new View.OnClickListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.M)
+                        @Override
+                        public void onClick(View v) {
+                            if (!isImgFavoriteClicked) {
+                                imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
+                                isImgFavoriteClicked = true;
+                                boolean isAdded = ServerUtility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
+                                if(isAdded)
+                                    Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
+                                isImgFavoriteClicked = false;
+                                boolean isRemoved = ServerUtility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
+                                if(isRemoved)
+                                    Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();;
+                            }
+                        }
+                    });
+                }
+                else{
+                    imgFavorite.setVisibility(View.GONE);
+                }
+
+            }
+        }
+    }
 }
 
 

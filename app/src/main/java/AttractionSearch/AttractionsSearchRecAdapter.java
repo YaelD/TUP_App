@@ -27,6 +27,7 @@ import AttractionDetails.AttractionDetailsFragment;
 import JavaClasses.Attraction;
 
 import static AttractionDetails.AttractionDetailsFragment.ATTRACTION_KEY;
+import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
 public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<AttractionsSearchRecAdapter.ViewHolder> {
     private static final String TAG = "AttrSearchRecAdapter";
@@ -34,14 +35,14 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
     private ArrayList<Attraction> attractions = new ArrayList<>();
     private Context mContext;
 
+
     public AttractionsSearchRecAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    @NonNull
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attractions, parent, false);
         return new ViewHolder(view);
     }
@@ -59,7 +60,9 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AttractionDetailsActivity.class);
-                intent.putExtra(ATTRACTION_KEY, attractions.get(position));
+                //intent.putExtra(ATTRACTION_KEY, attractions.get(position));
+                intent.putExtra(ATTRACTION_KEY, attractions.get(position).getPlaceID());
+                intent.putExtra(CALLING_ACTIVITY, mContext.getClass().getName());
                 mContext.startActivity(intent);
             }
         });

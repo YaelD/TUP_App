@@ -1,6 +1,7 @@
 package FavoriteAttractions;
 
 import static AttractionDetails.AttractionDetailsFragment.ATTRACTION_KEY;
+import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -56,6 +57,7 @@ public class FavoriteAttractionsRecAdapter extends RecyclerView.Adapter<Favorite
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AttractionDetailsActivity.class);
                 intent.putExtra(ATTRACTION_KEY, attractionsArr.get(position));
+                intent.putExtra(CALLING_ACTIVITY, mContext.getClass().getName());
                 mContext.startActivity(intent);
             }
         });
