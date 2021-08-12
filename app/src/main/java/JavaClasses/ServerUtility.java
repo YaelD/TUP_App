@@ -31,6 +31,9 @@ public class ServerUtility {
     private RequestQueue queue;
     private Context context;
 
+
+    private static ArrayList<Attraction> tempAttractions = new ArrayList<>();
+
     private static ArrayList<Attraction> tripSelectedAttrations = new ArrayList<>();
     private static ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private static ArrayList<Attraction> attractions = new ArrayList<>();
@@ -38,10 +41,13 @@ public class ServerUtility {
     private static ArrayList<Attraction> attractionsTest = new ArrayList<>();
 
 
+    public static ArrayList<Attraction> getTempAttractions() {
+        return tempAttractions;
+    }
 
-
-
-
+    public static void setTempAttractions(ArrayList<Attraction> tempAttractions) {
+        ServerUtility.tempAttractions = tempAttractions;
+    }
 
     public Attraction getAttractionByID(String ID)
     {
@@ -122,7 +128,7 @@ public class ServerUtility {
     }
 
     public ArrayList<Attraction> getTripSelectedAttrations() {
-        return tripSelectedAttrations;
+        return this.tripSelectedAttrations;
     }
 
     public void setTripSelectedAttrations(ArrayList<Attraction> tripSelectedAttrations) {

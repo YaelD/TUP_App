@@ -176,20 +176,23 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         });
 
 
-        MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
-        adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
-
-        recViewMustVisitAttr.setAdapter(adapter);
-        recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
+        adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
+
+        recViewMustVisitAttr.setAdapter(adapter);
+        recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
 
 
-
-//   @RequiresApi(api = Build.VERSION_CODES.O)
+    //   @RequiresApi(api = Build.VERSION_CODES.O)
 //    private void cancelButtonClick(MaterialDatePicker<Long> materialDatePicker2, LocalDate startDate, LocalDate endDate) {
 //        materialDatePicker2.addOnCancelListener(new DialogInterface.OnCancelListener() {
 //            @Override
