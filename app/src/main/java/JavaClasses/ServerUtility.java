@@ -58,7 +58,6 @@ public class ServerUtility {
         Attraction selectedAttraction = null;
         for(Attraction currentAttraction: attractionsTest)
         {
-            Log.e("HERE==>", "selected: " + currentAttraction.getName());
             if(currentAttraction.getPlaceID().equals(id))
             {
                 selectedAttraction = currentAttraction;

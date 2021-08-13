@@ -17,8 +17,13 @@ import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import AttractionSearch.AddingAttrToMustVisitAttrAdapter;
+import AttractionSearch.AttractionsSearchRecAdapter;
 import JavaClasses.ServerUtility;
+import MainScreen.MainScreenActivity;
 import TripCreation.MustVisitAttrRecViewAdapter;
+
+import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
 public class FavoriteAttractionsFragment extends Fragment {
     private static final String TAG = "FavoriteAttractionsFrag";
@@ -42,11 +47,28 @@ public class FavoriteAttractionsFragment extends Fragment {
 
     private void setAdapters()
     {
-        FavoriteAttractionsRecAdapter adapter = new FavoriteAttractionsRecAdapter(getActivity());
-        adapter.setFavoriteAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
+        String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
+        if(callingActivity.equals(MainScreenActivity.class.getName()))
+        {
+            AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
+            adapter.setAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
+            recViewFavoriteAttractions.setAdapter(adapter);
+            recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        }
+        else
+        {
+            AddingAttrToMustVisitAttrAdapter adapter = new AddingAttrToMustVisitAttrAdapter(getActivity());
+            adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
+            adapter.setSelectedAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
+            recViewFavoriteAttractions.setAdapter(adapter);
+            recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        }
 
-        recViewFavoriteAttractions.setAdapter(adapter);
-        recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+
+
+
+
     }
 
     private void initViews(View view) {

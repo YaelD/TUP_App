@@ -145,10 +145,7 @@ public class AttractionDetailsFragment extends Fragment {
         if(null != intent){
             String attractionID = getActivity().getIntent().getStringExtra(ATTRACTION_KEY);
             //Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
-            Log.e("HERE==>", "THE id is" + attractionID);
             Attraction attraction = ServerUtility.getInstance(getContext()).getAttractionByID(attractionID);
-            Toast.makeText(getContext(),"THE attraction is: " +attraction.getName(), Toast.LENGTH_SHORT ).show();
-
             if(attraction != null){
                 txtAttrName.setText(attraction.getName());
                 txtAttrPhone.setText(attraction.getPhoneNumber());

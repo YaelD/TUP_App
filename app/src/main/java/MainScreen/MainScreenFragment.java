@@ -63,6 +63,7 @@ public class MainScreenFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FavoriteAttractionsActivity.class);
+                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
                 startActivity(intent);
             }
         });

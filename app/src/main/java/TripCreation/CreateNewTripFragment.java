@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import AttractionSearch.SearchAttractionsActivity;
+import FavoriteAttractions.FavoriteAttractionsActivity;
 import JavaClasses.Attraction;
 import JavaClasses.DesiredHoursInDay;
 import JavaClasses.ServerUtility;
@@ -170,6 +171,15 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SearchAttractionsActivity.class);
+                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
+                startActivity(intent);
+            }
+        });
+
+        fltBtnAddAttr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FavoriteAttractionsActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
                 startActivity(intent);
             }
