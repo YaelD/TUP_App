@@ -139,10 +139,13 @@ public class SearchAttractionsFragment extends Fragment {
             ArrayList<Attraction> array = ServerUtility.getInstance(getContext()).getAttractionsTest();
 
             adapterToDetailesAttr.setAttractions(array);
+            /*
 
             //adapter.setAttractions(ServerUtility.getInstance(getContext()).getAttractions());
             //adapterToDetailesAttr.setAttractions(attractions);
             //adapterToDetailesAttr.setAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
+
+             */
         }
         else{
 
@@ -151,6 +154,7 @@ public class SearchAttractionsFragment extends Fragment {
             adapterToMustVisitAttr = new AddingAttrToMustVisitAttrAdapter(getActivity());
             attractionsRecView.setAdapter(adapterToMustVisitAttr);
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            /*
 //            ArrayList<Attraction> attractions = new ArrayList<>();
 //            attractions.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
 //                    "+44 20 7967 8021", "https://www.londoneye.com/", "1",
@@ -159,15 +163,23 @@ public class SearchAttractionsFragment extends Fragment {
 //                    "+44 303 123 7300", "https://www.royal.uk/royal-residences-buckingham-palace", "2",
 //                    "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
             //adapterToMustVisitAttr.setMustVisitAttractions(attractions);
-            adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
 
+             */
+            adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
+            adapterToMustVisitAttr.setSelectedAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
             btnFinish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ServerUtility.getInstance(getContext()).setTripSelectedAttrations(adapterToMustVisitAttr.getSelectedAttractions());
-                    //Intent intent = new Intent(getActivity(), CreateNewTripActivity.class);
-                    //startActivity(intent);
+                    /*
+                    ArrayList<Attraction> selectedAttractions = adapterToMustVisitAttr.getSelectedAttractions();
+                    for(Attraction currentSelectedAttraction: selectedAttractions)
+                    {
+                        ServerUtility.insertAttractionToArrayList(ServerUtility.getInstance(getContext()).getTripSelectedAttrations(), currentSelectedAttraction);
+                    }
+
+                     */
                     getActivity().finish();
+
                 }
             });
         }

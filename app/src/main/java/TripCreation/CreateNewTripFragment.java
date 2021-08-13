@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -171,25 +172,34 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 Intent intent = new Intent(getActivity(), SearchAttractionsActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
                 startActivity(intent);
-
             }
         });
 
 
-        MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
-        adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
+        /*
+            MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
+            adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
 
-        recViewMustVisitAttr.setAdapter(adapter);
-        recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recViewMustVisitAttr.setAdapter(adapter);
+            recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
+         */
 
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
+        adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
+
+        recViewMustVisitAttr.setAdapter(adapter);
+        recViewMustVisitAttr.setLayoutManager(new GridLayoutManager(getActivity(),2));
+    }
 
 
-
-//   @RequiresApi(api = Build.VERSION_CODES.O)
+    //   @RequiresApi(api = Build.VERSION_CODES.O)
 //    private void cancelButtonClick(MaterialDatePicker<Long> materialDatePicker2, LocalDate startDate, LocalDate endDate) {
 //        materialDatePicker2.addOnCancelListener(new DialogInterface.OnCancelListener() {
 //            @Override

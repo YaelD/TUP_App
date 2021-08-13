@@ -31,44 +31,41 @@ public class ServerUtility {
     private RequestQueue queue;
     private Context context;
 
-    private static ArrayList<Attraction> tripSelectedAttrations = new ArrayList<>();
+    private static ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
     private static ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private static ArrayList<Attraction> attractions = new ArrayList<>();
     private static ArrayList<Attraction> hotels = new ArrayList<>();
     private static ArrayList<Attraction> attractionsTest = new ArrayList<>();
 
+    private Traveler travelerDetails;
 
+    private String cookie;
 
-
-
-
-
-    public Attraction getAttractionByID(String ID)
+    public static void attTestFiller()
     {
-        for(Attraction currentAttracion: attractionsTest)
-        {
-            if(currentAttracion.getPlaceID().equals(ID))
-            {
-                return currentAttracion;
-            }
-        }
-        return null;
-    }
-
-    public static void attTestFiiler()
-    {
-
         attractionsTest.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
                 "+44 20 7967 8021", "https://www.londoneye.com/", "1",
                 "https://media.cntraveler.com/photos/55c8be0bd36458796e4ca38a/master/pass/london-eye-2-cr-getty.jpg"));
         attractionsTest.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
                 "+44 303 123 7300", "https://www.royal.uk/royal-residences-buckingham-palace", "2",
                 "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
-
     }
 
 
-
+    //REMEMBER TO CHANGE TO attractions ArrayList;
+    public Attraction getAttractionByID(String id)
+    {
+        Attraction selectedAttraction = null;
+        for(Attraction currentAttraction: attractionsTest)
+        {
+            Log.e("HERE==>", "selected: " + currentAttraction.getName());
+            if(currentAttraction.getPlaceID().equals(id))
+            {
+                selectedAttraction = currentAttraction;
+            }
+        }
+        return selectedAttraction;
+    }
 
 
     public ArrayList<Attraction> getFavoriteAttractions() {
@@ -95,10 +92,6 @@ public class ServerUtility {
         return true;
     }
 
-    private Traveler travelerDetails;
-    //private
-
-    private String cookie;
 
     public ArrayList<Attraction> getHotelsByDestination(String destination) {
         getHotelsFromServer(destination.toLowerCase().trim()+"_hotels");
@@ -122,12 +115,18 @@ public class ServerUtility {
     }
 
     public ArrayList<Attraction> getTripSelectedAttrations() {
-        return tripSelectedAttrations;
+        return tripSelectedAttractions;
     }
 
-    public void setTripSelectedAttrations(ArrayList<Attraction> tripSelectedAttrations) {
-        this.tripSelectedAttrations = tripSelectedAttrations;
-    }
+     /*
+
+        public void setTripSelectedAttrations(ArrayList<Attraction> tripSelectedAttrations) {
+            this.tripSelectedAttractions = tripSelectedAttrations;
+        }
+      */
+
+
+
 
     public static synchronized ServerUtility getInstance(Context context)
     {
@@ -150,7 +149,7 @@ public class ServerUtility {
     private ServerUtility(Context context) {
         queue = Volley.newRequestQueue(context);
         this.context = context;
-        attTestFiiler();
+        attTestFiller();
 
     }
 

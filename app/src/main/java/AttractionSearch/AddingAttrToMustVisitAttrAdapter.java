@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -55,21 +57,38 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
                 .load(attractions.get(position).getImageUrl())
                 .into(holder.imgAttraction);
 
-        if(holder.checkBox.isChecked())
+        if(selectedAttractions.contains(attractions.get(position)))
         {
-            if(!selectedAttractions.contains(attractions.get(position)))
-            {
-                selectedAttractions.add(attractions.get(position));
-            }
+            holder.checkBox.setChecked(true);
         }
         else
         {
-            if(selectedAttractions.contains(attractions.get(position)))
-            {
-                selectedAttractions.remove(attractions.get(position));
-            }
+            holder.checkBox.setChecked(false);
         }
 
+
+
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    if(!selectedAttractions.contains(attractions.get(position)))
+                    {
+                        selectedAttractions.add(attractions.get(position));
+                    }
+                }
+                else
+                {
+                    if(selectedAttractions.contains(attractions.get(position)))
+                    {
+                        selectedAttractions.remove(attractions.get(position));
+                    }
+                }
+
+            }
+        });
 
     }
 
@@ -83,8 +102,8 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
         notifyDataSetChanged();
     }
 
-    public ArrayList<Attraction> getSelectedAttractions() {
-        return selectedAttractions;
+    public void setSelectedAttractions(ArrayList<Attraction> selectedAttractions) {
+        this.selectedAttractions = selectedAttractions;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

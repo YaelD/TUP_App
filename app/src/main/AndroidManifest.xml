@@ -14,11 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TUPApp">
         <activity
-            android:name="MatanTests.MatanTest"
-            android:exported="true"
-            android:label="@string/title_activity_matan_test"
-            android:theme="@style/Theme.TUPApp.NoActionBar" />
-        <activity
             android:name="AttractionDetails.AttractionDetailsActivity"
             android:label="@string/acivity_attraction_details"
             android:theme="@style/Theme.TUPApp.NoActionBar" />
