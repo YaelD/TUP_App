@@ -36,8 +36,8 @@ public class ServerUtility {
     private static ArrayList<Attraction> attractions = new ArrayList<>();
     private static ArrayList<Attraction> hotels = new ArrayList<>();
     private static ArrayList<Attraction> attractionsTest = new ArrayList<>();
+    private static ArrayList<DayPlan> lastCreatedTrip = new ArrayList<>();
 
-    private Traveler travelerDetails;
 
     private String cookie;
 
@@ -152,9 +152,9 @@ public class ServerUtility {
 
     }
 
-    public ArrayList<DayPlan> getTrip(TripDetails tripDetails)
+    public void getTrip(TripDetails tripDetails)
     {
-        return instance.sendTripDetailsToServer(tripDetails);
+        lastCreatedTrip = instance.sendTripDetailsToServer(tripDetails);
     }
 
 

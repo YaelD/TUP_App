@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -26,6 +27,7 @@ import FavoriteAttractions.FavoriteAttractionsActivity;
 import JavaClasses.Attraction;
 import JavaClasses.DesiredHoursInDay;
 import JavaClasses.ServerUtility;
+import JavaClasses.TripDetails;
 
 import com.bumptech.glide.Glide;
 import com.example.TupApp.R;
@@ -159,14 +161,12 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
 
 
-
         btnDestination.setOnClickListener(this);
         btnTripDates.setOnClickListener(this);
         btnDesiredHoursInDay.setOnClickListener(this);
         btnMustVisitAtt.setOnClickListener(this);
         btnHotel.setOnClickListener(this);
         btnFinishCreation.setOnClickListener(this);
-
 
         fltBtnSearchAttr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,6 +187,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         });
 
 
+
         /*
             MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
             adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
@@ -195,9 +196,40 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
          */
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finish();
+            }
+        };
+
+
+
 
         return view;
     }
+
+
+    private void initFinButton()
+    {
+        btnFinishCreation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TripDetails tripDetails = new TripDetails();
+                tripDetails.setHotelID(spinnerHotels.getSelectedItem().toString());
+                tripDetails.setDestination(destinationSpinner.getSelectedItem().toString());
+                for(Attraction attraction: ServerUtility.getInstance(getContext()).getTripSelectedAttrations())
+                {
+                    tripDetails.getMustSeenAttractionsID().add(attraction.getPlaceID());
+                }
+                ServerUtility.getInstance(getContext()).getTripSelectedAttrations().clear();
+                tripDetails.setHoursEveryDay(desiredHours);
+                ServerUtility.getInstance(getContext()).getTrip(tripDetails);
+
+            }
+        });
+    }
+
 
     @Override
     public void onResume() {
@@ -208,6 +240,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         recViewMustVisitAttr.setAdapter(adapter);
         recViewMustVisitAttr.setLayoutManager(new GridLayoutManager(getActivity(),2));
     }
+
+/*
 
 
     //   @RequiresApi(api = Build.VERSION_CODES.O)
@@ -233,6 +267,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 //            }
 //        });
 //    }
+ */
 
     private LocalDate positiveButtonClick(MaterialDatePicker<Long> materialDatePicker2, LocalDate startDate) {
         materialDatePicker2.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
@@ -263,6 +298,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         }
 
         callAdapter(desiredHours);
+/*
 
 //        DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter(getActivity());
 //        adapter.setDesiredHours(desiredHours);
@@ -277,6 +313,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 //                System.out.println(desiredHours.toString());
 //            }
 //        });
+ */
     }
 
     private void callAdapter(ArrayList<DesiredHoursInDay> desiredHours) {
@@ -286,11 +323,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
         recViewDesiredHours.setAdapter(adapter);
         recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-       /* Intent intent = getActivity().getIntent();
-        if (intent != null){
-
-        }*/
 
     }
 

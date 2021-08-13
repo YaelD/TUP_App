@@ -8,6 +8,40 @@ public class TripDetails {
     ArrayList<String> mustSeenAttractionsID = new ArrayList<>();
     ArrayList<DesiredHoursInDay> hoursEveryDay = new ArrayList<>();
 
+    public TripDetails() {
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getHotelID() {
+        return hotelID;
+    }
+
+    public void setHotelID(String hotelID) {
+        this.hotelID = hotelID;
+    }
+
+    public ArrayList<String> getMustSeenAttractionsID() {
+        return mustSeenAttractionsID;
+    }
+
+    public void setMustSeenAttractionsID(ArrayList<String> mustSeenAttractionsID) {
+        this.mustSeenAttractionsID = mustSeenAttractionsID;
+    }
+
+    public ArrayList<DesiredHoursInDay> getHoursEveryDay() {
+        return hoursEveryDay;
+    }
+
+    public void setHoursEveryDay(ArrayList<DesiredHoursInDay> hoursEveryDay) {
+        this.hoursEveryDay = hoursEveryDay;
+    }
 
     public static TripDetails staticTrip()
     {

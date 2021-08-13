@@ -40,6 +40,13 @@ public class FavoriteAttractionsFragment extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite_attractions, container, false);
         initViews(view);
+        btnFinishSelectFavAttr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
         return view;
     }
 
@@ -53,10 +60,13 @@ public class FavoriteAttractionsFragment extends Fragment {
     {
         String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
         if(ServerUtility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
+        {
             txtEmptyFavoriteList.setVisibility(View.GONE);
+        }
         else
+        {
             txtEmptyFavoriteList.setVisibility(View.VISIBLE);
-
+        }
         if(callingActivity.equals(MainScreenActivity.class.getName()))
         {
             btnFinishSelectFavAttr.setVisibility(View.GONE);
@@ -68,21 +78,19 @@ public class FavoriteAttractionsFragment extends Fragment {
         else
         {
             if(ServerUtility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
+            {
                 btnFinishSelectFavAttr.setVisibility(View.VISIBLE);
+            }
             else
+            {
                 btnFinishSelectFavAttr.setVisibility(View.GONE);
+            }
             AddingAttrToMustVisitAttrAdapter adapter = new AddingAttrToMustVisitAttrAdapter(getActivity());
             adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
             adapter.setSelectedAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
             recViewFavoriteAttractions.setAdapter(adapter);
             recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
-
-
-
-
-
-
     }
 
     private void initViews(View view) {
