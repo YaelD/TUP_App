@@ -2,11 +2,13 @@ package MainScreen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -92,6 +94,19 @@ public class MainScreenActivity extends AppCompatActivity{
                     case R.id.home:
                         Intent intent= new Intent(MainScreenActivity.this, MainScreenActivity.class);
                         startActivity(intent);
+                        break;
+                    case R.id.about:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainScreenActivity.this);
+                        builder.setTitle(getString(R.string.app_name));
+                        builder.setMessage("Matan is a genius");
+                        builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        builder.create().show();
+                        break;
                     default:
                         break;
                 }

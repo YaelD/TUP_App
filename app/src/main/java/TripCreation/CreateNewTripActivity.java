@@ -2,10 +2,12 @@ package TripCreation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +52,18 @@ public class CreateNewTripActivity extends AppCompatActivity {
                     case R.id.home:
                         Intent intent = new Intent(CreateNewTripActivity.this, MainScreenActivity.class);
                         startActivity(intent);
+                        break;
+                    case R.id.about:
+                        new AlertDialog.Builder(CreateNewTripActivity.this)
+                                .setTitle(getString(R.string.app_name))
+                                .setMessage("Matan is a genius")
+                                .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        }).create().show();
+                        break;
                     default:
                         break;
                 }
