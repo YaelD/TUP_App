@@ -58,7 +58,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     private static final String TAG = "CreateNewTripFragment";
     private TextView txtTripDetails, txtEndDatePickError, txtFrom, txtTo;
-    private Button btnDestination, btnTripDates, btnDesiredHoursInDay, btnMustVisitAtt, btnHotel, btnTest;
+    private Button btnDestination, btnTripDates, btnDesiredHoursInDay, btnMustVisitAtt, btnHotel, btnFinishCreation;
     private Spinner destinationSpinner, spinnerHotels;
     private FloatingActionButton fltBtnAddAttr, fltBtnSearchAttr;
     private boolean isBtnDestinationClicked = false, isBtnTripDatesClicked = false, isBtnDesiredHoursInDayClicked = false, isBtnMustVisitAtt = false;
@@ -165,6 +165,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         btnDesiredHoursInDay.setOnClickListener(this);
         btnMustVisitAtt.setOnClickListener(this);
         btnHotel.setOnClickListener(this);
+        btnFinishCreation.setOnClickListener(this);
 
 
         fltBtnSearchAttr.setOnClickListener(new View.OnClickListener() {
@@ -313,8 +314,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         fltBtnAddAttr = view.findViewById(R.id.fltBtnAddAttr);
         fltBtnSearchAttr = view.findViewById(R.id.fltBtnSearchAttr);
         recViewMustVisitAttr = view.findViewById(R.id.recViewMustVisitAttr);
-
-        btnTest = view.findViewById(R.id.btnTest);
+        btnFinishCreation = view.findViewById(R.id.btnFinishCreation);
     }
 
     @Override
@@ -361,16 +361,20 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 if(!isBtnMustVisitAtt) {
                     fltBtnSearchAttr.setVisibility(View.VISIBLE);
                     fltBtnAddAttr.setVisibility(View.VISIBLE);
+                    recViewMustVisitAttr.setVisibility(View.VISIBLE);
                     isBtnMustVisitAtt = true;
                 }
                 else {
                     fltBtnSearchAttr.setVisibility(View.GONE);
                     fltBtnAddAttr.setVisibility(View.GONE);
+                    recViewMustVisitAttr.setVisibility(View.GONE);
                     isBtnMustVisitAtt = false;
                 }
                 break;
             case R.id.btnHotel:
                 spinnerHotels.setVisibility(View.VISIBLE);
+                break;
+            case R.id.btnFinishCreation:
                 break;
             default:
                 break;

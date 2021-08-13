@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +31,8 @@ public class FavoriteAttractionsFragment extends Fragment {
     private static final String TAG = "FavoriteAttractionsFrag";
 
     private RecyclerView recViewFavoriteAttractions;
+    private Button btnFinishSelectFavAttr;
+    private TextView txtEmptyFavoriteList;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -48,8 +52,14 @@ public class FavoriteAttractionsFragment extends Fragment {
     private void setAdapters()
     {
         String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
+        if(ServerUtility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
+            txtEmptyFavoriteList.setVisibility(View.GONE);
+        else
+            txtEmptyFavoriteList.setVisibility(View.VISIBLE);
+
         if(callingActivity.equals(MainScreenActivity.class.getName()))
         {
+            btnFinishSelectFavAttr.setVisibility(View.GONE);
             AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
             adapter.setAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
             recViewFavoriteAttractions.setAdapter(adapter);
@@ -57,6 +67,10 @@ public class FavoriteAttractionsFragment extends Fragment {
         }
         else
         {
+            if(ServerUtility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
+                btnFinishSelectFavAttr.setVisibility(View.VISIBLE);
+            else
+                btnFinishSelectFavAttr.setVisibility(View.GONE);
             AddingAttrToMustVisitAttrAdapter adapter = new AddingAttrToMustVisitAttrAdapter(getActivity());
             adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
             adapter.setSelectedAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
@@ -74,5 +88,7 @@ public class FavoriteAttractionsFragment extends Fragment {
     private void initViews(View view) {
         Log.d(TAG, "initViews: started");
         recViewFavoriteAttractions = view.findViewById(R.id.recViewFavoriteAttractions);
+        btnFinishSelectFavAttr = view.findViewById(R.id.btnFinishSelectFavAttr);
+        txtEmptyFavoriteList = view.findViewById(R.id.txtEmptyFavoriteList);
     }
 }
