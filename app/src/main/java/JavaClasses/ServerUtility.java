@@ -40,6 +40,7 @@ public class ServerUtility {
 
 
     private String cookie;
+//----------------------------------------------------------------------------------------
 
     public static void attTestFiller()
     {
@@ -51,6 +52,7 @@ public class ServerUtility {
                 "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
     }
 
+//----------------------------------------------------------------------------------------
 
     //REMEMBER TO CHANGE TO attractions ArrayList;
     public Attraction getAttractionByID(String id)
@@ -66,14 +68,17 @@ public class ServerUtility {
         return selectedAttraction;
     }
 
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getFavoriteAttractions() {
         return favoriteAttractions;
     }
+//----------------------------------------------------------------------------------------
 
     public void setFavoriteAttractions(ArrayList<Attraction> favoriteAttractions) {
         this.favoriteAttractions = favoriteAttractions;
     }
+//----------------------------------------------------------------------------------------
 
     public boolean addAttractionToFavoriteList(Attraction attraction){
         if(favoriteAttractions.contains(attraction))
@@ -82,6 +87,7 @@ public class ServerUtility {
             favoriteAttractions.add(attraction);
         return true;
     }
+//----------------------------------------------------------------------------------------
 
     public boolean removeAttractionFromFavoriteList(Attraction attraction){
         if(favoriteAttractions.contains(attraction))
@@ -91,11 +97,13 @@ public class ServerUtility {
         return true;
     }
 
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getHotelsByDestination(String destination) {
         getHotelsFromServer(destination.toLowerCase().trim()+"_hotels");
         return hotels;
     }
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getAttractions() {
         if(instance.attractions.size() == 0)
@@ -104,6 +112,7 @@ public class ServerUtility {
         }
         return instance.attractions;
     }
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getHotels() {
         if(hotels == null)
@@ -112,6 +121,7 @@ public class ServerUtility {
         }
         return hotels;
     }
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getTripSelectedAttrations() {
         return tripSelectedAttractions;
@@ -126,6 +136,7 @@ public class ServerUtility {
 
 
 
+//----------------------------------------------------------------------------------------
 
     public static synchronized ServerUtility getInstance(Context context)
     {
@@ -150,6 +161,7 @@ public class ServerUtility {
     public void setAttractionsTest(ArrayList<Attraction> attractionsTest) {
         ServerUtility.attractionsTest = attractionsTest;
     }
+//----------------------------------------------------------------------------------------
 
      */
 
@@ -160,12 +172,13 @@ public class ServerUtility {
         //attTestFiller();
 
     }
-
+//----------------------------------------------------------------------------------------
     public void getTrip(TripDetails tripDetails)
     {
         lastCreatedTrip = instance.sendTripDetailsToServer(tripDetails);
     }
 
+//----------------------------------------------------------------------------------------
 
 
     private void getHotelsFromServer(String destination)
@@ -212,6 +225,7 @@ public class ServerUtility {
         queue.add(request);
     }
 
+//----------------------------------------------------------------------------------------
 
 
     private void getAttractionsFromServer(String destination)
@@ -271,6 +285,7 @@ public class ServerUtility {
         instance.queue.add(request);
     }
 
+//----------------------------------------------------------------------------------------
 
 
     private ArrayList<DayPlan> sendTripDetailsToServer(TripDetails tripDetails)

@@ -80,9 +80,9 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                         //selectedHours.add(String.format("%02d:%02d", hourOfDay, minute));
                         desiredHours.get(position).setEndTime(String.format("%02d:%02d", hourOfDay, minute));
                         Log.e("HERE END TIME======>>>", desiredHours.toString());
-
                     }
                 }, 20, 0, true);
+
                 timePicker.show();
             }
         });
@@ -116,4 +116,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
             btnTimeTo = itemView.findViewById(R.id.btnTimeTo);
         }
     }
+
+
+
 }

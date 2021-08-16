@@ -1,5 +1,6 @@
 package TripCreation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -115,6 +117,24 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 materialDatePicker1.show(getActivity().getSupportFragmentManager(), "DATE_PICKER");
             }
         });
+
+
+        materialDatePicker1.addOnNegativeButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "This is on Negative", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        materialDatePicker1.addOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                Toast.makeText(getContext(), "This is on Dissmiss", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        materialDatePicker1.getSelection();
+        //materialDatePicker1.set
 
         materialDatePicker1.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
