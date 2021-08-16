@@ -68,8 +68,6 @@ public class TripDetails {
 
         return trip;
 
-
-
     }
 
 
