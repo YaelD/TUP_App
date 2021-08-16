@@ -21,7 +21,11 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
+import AttractionSearch.SearchAttractionsActivity;
+import FavoriteAttractions.FavoriteAttractionsActivity;
 import JavaClasses.ServerUtility;
+import MyTrips.MyTripsActivity;
+import TripCreation.CreateNewTripActivity;
 
 public class MainScreenActivity extends AppCompatActivity{
 
@@ -87,12 +91,13 @@ public class MainScreenActivity extends AppCompatActivity{
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                Intent intent;
                 switch (item.getItemId()){
                     case R.id.userDetails:
                         Toast.makeText(MainScreenActivity.this, "userDetails selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.home:
-                        Intent intent= new Intent(MainScreenActivity.this, MainScreenActivity.class);
+                        intent= new Intent(MainScreenActivity.this, MainScreenActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.about:
@@ -106,6 +111,22 @@ public class MainScreenActivity extends AppCompatActivity{
                             }
                         });
                         builder.create().show();
+                        break;
+                    case R.id.createTrip:
+                        intent= new Intent(MainScreenActivity.this, CreateNewTripActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.search:
+                        intent= new Intent(MainScreenActivity.this, SearchAttractionsActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.favorites:
+                        intent= new Intent(MainScreenActivity.this, FavoriteAttractionsActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.trips:
+                        intent= new Intent(MainScreenActivity.this, MyTripsActivity.class);
+                        startActivity(intent);
                         break;
                     default:
                         break;

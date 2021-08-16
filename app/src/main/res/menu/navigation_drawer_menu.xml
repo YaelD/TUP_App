@@ -12,6 +12,28 @@
         android:icon="@drawable/ic_home"/>
 
     <item
+        android:title="Create new Trip"
+        android:id="@+id/createTrip"
+        android:icon="@drawable/ic_create"/>
+
+    <item
+        android:title="Search Attractions"
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search"
+        android:iconTint="@color/black"/>
+
+    <item
+        android:title="My Favorites"
+        android:id="@+id/favorites"
+        android:icon="@drawable/ic_favorite_painted"
+        android:iconTint="@color/black"/>
+
+    <item
+        android:title="My Trips"
+        android:id="@+id/trips"
+        android:icon="@drawable/ic_map" />
+
+    <item
         android:title="About"
         android:id="@+id/about"
         android:icon="@drawable/ic_about"/>
