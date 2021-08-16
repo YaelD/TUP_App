@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import JavaClasses.Traveler;
-import MainScreen.MainScreenActivity;
+import BaseActivity.BaseActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                         String jsonUserString = json.getString("message");
                         Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
 
-                        Intent intent = new Intent(LoginActivity.this, MainScreenActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
                         intent.putExtra("User", traveler);
 
                         startActivity(intent);

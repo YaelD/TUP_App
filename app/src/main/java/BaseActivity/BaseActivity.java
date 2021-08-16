@@ -1,4 +1,4 @@
-package MainScreen;
+package BaseActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,13 +23,13 @@ import org.jetbrains.annotations.NotNull;
 
 import AttractionSearch.SearchAttractionsActivity;
 import FavoriteAttractions.FavoriteAttractionsActivity;
-import JavaClasses.ServerUtility;
+import MainScreen.MainScreenFragment;
 import MyTrips.MyTripsActivity;
 import TripCreation.CreateNewTripActivity;
 
 import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
-public class MainScreenActivity extends AppCompatActivity{
+public class BaseActivity extends AppCompatActivity{
 
     private static final String TAG = "MainScreenActivity";
     private DrawerLayout drawer;
@@ -44,47 +44,19 @@ public class MainScreenActivity extends AppCompatActivity{
 
         initViews();
         setToolBarAndDrawer();
-        //ServerUtility.getInstance(this).getAttractions();
-
-        /*setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.drawer_open, R.string.drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();*/
-
 
 
         this.func();
 
-     /*   navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.userDetails:
-                        Toast.makeText(MainScreenActivity.this, "userDetails selected", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.home:
-                        Intent intent= new Intent(MainScreenActivity.this, MainScreenActivity.class);
-                        startActivity(intent);
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });*/
 
-        //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        //transaction.replace(R.id.container, new MainScreenFragment());
-        //transaction.commit();
         this.setContainer(new MainScreenFragment());
 
     }
 
-    public void setContainer(Fragment fragmet)
+    public void setContainer(Fragment fragment)
     {
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragmet);
+        transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
 
@@ -96,16 +68,16 @@ public class MainScreenActivity extends AppCompatActivity{
                 Intent intent;
                 switch (item.getItemId()){
                     case R.id.userDetails:
-                        Toast.makeText(MainScreenActivity.this, "userDetails selected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseActivity.this, "userDetails selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.home:
-                        intent= new Intent(MainScreenActivity.this, MainScreenActivity.class);
+                        intent= new Intent(BaseActivity.this, BaseActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.about:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainScreenActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
                         builder.setTitle(getString(R.string.app_name));
-                        builder.setMessage("Matan is a genius");
+                        builder.setMessage("Matan is a genius (AWWWWWW <3)"); //AWWWWWWWW <3
                         builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -115,21 +87,21 @@ public class MainScreenActivity extends AppCompatActivity{
                         builder.create().show();
                         break;
                     case R.id.createTrip:
-                        intent= new Intent(MainScreenActivity.this, CreateNewTripActivity.class);
+                        intent= new Intent(BaseActivity.this, CreateNewTripActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.search:
-                        intent= new Intent(MainScreenActivity.this, SearchAttractionsActivity.class);
+                        intent= new Intent(BaseActivity.this, SearchAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         break;
                     case R.id.favorites:
-                        intent= new Intent(MainScreenActivity.this, FavoriteAttractionsActivity.class);
+                        intent= new Intent(BaseActivity.this, FavoriteAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         break;
                     case R.id.trips:
-                        intent= new Intent(MainScreenActivity.this, MyTripsActivity.class);
+                        intent= new Intent(BaseActivity.this, MyTripsActivity.class);
                         startActivity(intent);
                         break;
                     default:

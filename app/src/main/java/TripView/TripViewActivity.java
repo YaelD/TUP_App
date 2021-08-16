@@ -6,18 +6,16 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import com.example.TupApp.R;
 
+import BaseActivity.BaseActivity;
 import FavoriteAttractions.FavoriteAttractionsFragment;
 
-public class TripViewActivity extends AppCompatActivity {
+public class TripViewActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
+        //setContentView(R.layout.activity_main_screen);
 
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, new FavoriteAttractionsFragment());
-        transaction.commit();
+        setContainer(new TripViewFragment());
     }
 }

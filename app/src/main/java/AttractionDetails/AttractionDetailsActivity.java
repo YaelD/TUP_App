@@ -13,8 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import MainScreen.MainScreenActivity;
-import TripCreation.CreateNewTripActivity;
+import BaseActivity.BaseActivity;
 
 import com.example.TupApp.R;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -22,65 +21,16 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
-public class AttractionDetailsActivity extends AppCompatActivity {
+public class AttractionDetailsActivity extends BaseActivity {
 
     private static final String TAG = "AttractionDetailsActivity";
-    private DrawerLayout drawer;
-    private NavigationView navigationView;
-    private MaterialToolbar toolbar;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
+        setContainer(new AttractionDetailsFragment());
         initViews();
-
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.drawer_open, R.string.drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.userDetails:
-                        Toast.makeText(AttractionDetailsActivity.this, "userDetails selected", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.home:
-                        Intent intent= new Intent(AttractionDetailsActivity.this, MainScreenActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.about:
-                        new AlertDialog.Builder(AttractionDetailsActivity.this)
-                                .setTitle(getString(R.string.app_name))
-                                .setMessage("Matan is a genius")
-                                .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                    }
-                                }).create().show();
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, new AttractionDetailsFragment());
-        transaction.commit();
-
     }
 
-    private void initViews() {
-        drawer = findViewById(R.id.drawer);
-        navigationView = findViewById(R.id.navigationView);
-        toolbar = findViewById(R.id.toolbar);
-    }
 }

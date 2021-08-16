@@ -78,8 +78,9 @@ public class DayPlan {
     public static ArrayList<DayPlan> getStaticDayPlan()
     {
         ArrayList<DayPlan> dayPlans = new ArrayList<>();
-
-
         return dayPlans;
     }
+
+
+
 }

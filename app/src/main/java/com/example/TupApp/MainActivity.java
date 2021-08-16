@@ -9,14 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-
-import JavaClasses.DayPlan;
-import JavaClasses.ServerUtility;
-import JavaClasses.TripDetails;
 import LoginAndRegister.LoginActivity;
 import LoginAndRegister.RegisterActivity;
-import MainScreen.MainScreenActivity;
+import BaseActivity.BaseActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         btnGeust.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MainScreenActivity.class);
+                Intent intent = new Intent(MainActivity.this, BaseActivity.class);
                 startActivity(intent);
                 finish();
             }

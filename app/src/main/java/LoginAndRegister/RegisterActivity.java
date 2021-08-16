@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import JavaClasses.Traveler;
-import MainScreen.MainScreenActivity;
+import BaseActivity.BaseActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -173,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
                     else
                     {
                         btnRegisterSystem.setClickable(false);
-                        Intent intent= new Intent(RegisterActivity.this, MainScreenActivity.class);
+                        Intent intent= new Intent(RegisterActivity.this, BaseActivity.class);
                         Traveler traveler = new Gson().fromJson(json.getString("message"), Traveler.class);
                         intent.putExtra("Traveler", traveler);
                         showSnackBar();

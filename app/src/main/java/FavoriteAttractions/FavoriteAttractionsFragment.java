@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.TupApp.R;
@@ -22,9 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import AttractionSearch.AddingAttrToMustVisitAttrAdapter;
 import AttractionSearch.AttractionsSearchRecAdapter;
 import JavaClasses.ServerUtility;
-import MainScreen.MainScreenActivity;
 import TripCreation.CreateNewTripActivity;
-import TripCreation.MustVisitAttrRecViewAdapter;
 
 import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
