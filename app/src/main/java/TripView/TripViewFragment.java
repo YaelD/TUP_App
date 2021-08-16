@@ -21,6 +21,7 @@ public class TripViewFragment extends Fragment {
     private RecyclerView dateRecView;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
