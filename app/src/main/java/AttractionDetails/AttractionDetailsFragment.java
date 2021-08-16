@@ -144,6 +144,7 @@ public class AttractionDetailsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         if(null != intent){
             String attractionID = getActivity().getIntent().getStringExtra(ATTRACTION_KEY);
+            //Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
             Attraction attraction = ServerUtility.getInstance(getContext()).getAttractionByID(attractionID);
             if(attraction != null){
                 txtAttrName.setText(attraction.getName());

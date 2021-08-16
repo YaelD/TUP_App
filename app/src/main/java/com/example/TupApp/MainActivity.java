@@ -31,11 +31,16 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
+        //Matan Test
+        //ServerUtility.getInstance(this).getAttractions();
+
+        //ServerUtility.getInstance(this).getTrip(TripDetails.staticTrip());
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MainScreenActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

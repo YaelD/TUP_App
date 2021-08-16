@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServerUtility {
-    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
 
@@ -31,59 +31,54 @@ public class ServerUtility {
     private RequestQueue queue;
     private Context context;
 
-
-    private static ArrayList<Attraction> tempAttractions = new ArrayList<>();
-
-    private static ArrayList<Attraction> tripSelectedAttrations = new ArrayList<>();
+    private static ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
     private static ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private static ArrayList<Attraction> attractions = new ArrayList<>();
     private static ArrayList<Attraction> hotels = new ArrayList<>();
-    private static ArrayList<Attraction> attractionsTest = new ArrayList<>();
+    //private static ArrayList<Attraction> attractionsTest = new ArrayList<>();
+    private static ArrayList<DayPlan> lastCreatedTrip = new ArrayList<>();
 
 
-    public static ArrayList<Attraction> getTempAttractions() {
-        return tempAttractions;
-    }
+    private String cookie;
+//----------------------------------------------------------------------------------------
 
-    public static void setTempAttractions(ArrayList<Attraction> tempAttractions) {
-        ServerUtility.tempAttractions = tempAttractions;
-    }
-
-    public Attraction getAttractionByID(String ID)
+    public static void attTestFiller()
     {
-        for(Attraction currentAttracion: attractionsTest)
-        {
-            if(currentAttracion.getPlaceID().equals(ID))
-            {
-                return currentAttracion;
-            }
-        }
-        return null;
-    }
-
-    public static void attTestFiiler()
-    {
-
-        attractionsTest.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
+        attractions.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
                 "+44 20 7967 8021", "https://www.londoneye.com/", "1",
                 "https://media.cntraveler.com/photos/55c8be0bd36458796e4ca38a/master/pass/london-eye-2-cr-getty.jpg"));
-        attractionsTest.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
+        attractions.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
                 "+44 303 123 7300", "https://www.royal.uk/royal-residences-buckingham-palace", "2",
                 "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
-
     }
 
+//----------------------------------------------------------------------------------------
 
+    //REMEMBER TO CHANGE TO attractions ArrayList;
+    public Attraction getAttractionByID(String id)
+    {
+        Attraction selectedAttraction = null;
+        for(Attraction currentAttraction: attractions)
+        {
+            if(currentAttraction.getPlaceID().equals(id))
+            {
+                selectedAttraction = currentAttraction;
+            }
+        }
+        return selectedAttraction;
+    }
 
-
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getFavoriteAttractions() {
         return favoriteAttractions;
     }
+//----------------------------------------------------------------------------------------
 
     public void setFavoriteAttractions(ArrayList<Attraction> favoriteAttractions) {
         this.favoriteAttractions = favoriteAttractions;
     }
+//----------------------------------------------------------------------------------------
 
     public boolean addAttractionToFavoriteList(Attraction attraction){
         if(favoriteAttractions.contains(attraction))
@@ -92,6 +87,7 @@ public class ServerUtility {
             favoriteAttractions.add(attraction);
         return true;
     }
+//----------------------------------------------------------------------------------------
 
     public boolean removeAttractionFromFavoriteList(Attraction attraction){
         if(favoriteAttractions.contains(attraction))
@@ -101,15 +97,13 @@ public class ServerUtility {
         return true;
     }
 
-    private Traveler travelerDetails;
-    //private
-
-    private String cookie;
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getHotelsByDestination(String destination) {
         getHotelsFromServer(destination.toLowerCase().trim()+"_hotels");
         return hotels;
     }
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getAttractions() {
         if(instance.attractions.size() == 0)
@@ -118,6 +112,7 @@ public class ServerUtility {
         }
         return instance.attractions;
     }
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getHotels() {
         if(hotels == null)
@@ -126,14 +121,22 @@ public class ServerUtility {
         }
         return hotels;
     }
+//----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getTripSelectedAttrations() {
-        return this.tripSelectedAttrations;
+        return tripSelectedAttractions;
     }
 
-    public void setTripSelectedAttrations(ArrayList<Attraction> tripSelectedAttrations) {
-        this.tripSelectedAttrations = tripSelectedAttrations;
-    }
+     /*
+
+        public void setTripSelectedAttrations(ArrayList<Attraction> tripSelectedAttrations) {
+            this.tripSelectedAttractions = tripSelectedAttrations;
+        }
+      */
+
+
+
+//----------------------------------------------------------------------------------------
 
     public static synchronized ServerUtility getInstance(Context context)
     {
@@ -144,27 +147,38 @@ public class ServerUtility {
         return instance;
     }
 
+    /*
 
-    public ArrayList<Attraction> getAttractionsTest() {
-        return attractionsTest;
-    }
+        public ArrayList<Attraction> getAttractionsTest() {
+            return attractionsTest;
+        }
+
+     */
+
+
+    /*
 
     public void setAttractionsTest(ArrayList<Attraction> attractionsTest) {
         ServerUtility.attractionsTest = attractionsTest;
     }
+//----------------------------------------------------------------------------------------
+
+     */
 
     private ServerUtility(Context context) {
         queue = Volley.newRequestQueue(context);
         this.context = context;
-        attTestFiiler();
+        //Test function
+        //attTestFiller();
 
     }
-
-    public ArrayList<DayPlan> getTrip(TripDetails tripDetails)
+//----------------------------------------------------------------------------------------
+    public void getTrip(TripDetails tripDetails)
     {
-        return instance.sendTripDetailsToServer(tripDetails);
+        lastCreatedTrip = instance.sendTripDetailsToServer(tripDetails);
     }
 
+//----------------------------------------------------------------------------------------
 
 
     private void getHotelsFromServer(String destination)
@@ -211,33 +225,38 @@ public class ServerUtility {
         queue.add(request);
     }
 
+//----------------------------------------------------------------------------------------
 
 
     private void getAttractionsFromServer(String destination)
     {
         ArrayList<Attraction> arr = new ArrayList<>();
         String url =ServerUtility.instance.baseURL + ServerUtility.instance.allAttractionsURL;
-        StringRequest request = new StringRequest(Request.Method.POST,"http://10.0.2.2:8080/web_war_exploded/attractions/all" ,new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST,url ,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.e("HERE==>", response);
                     JSONObject jsonResponse = new JSONObject(response);
                     if(jsonResponse.getString("status").equals("error"))
                     {
-                        Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(instance.context, jsonResponse.getString("message") ,Toast.LENGTH_SHORT);
                         toast.show();
                     }
                     else
                     {
-                        JSONArray jsonArray = jsonResponse.getJSONArray("message");
+
+                        JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
+                        Log.e("HERE==>", "GOOD RESPONSE");
                         Gson gson = new Gson();
                         for(int i =0; i < jsonArray.length(); ++i)
                         {
                             String attractionJsonString = jsonArray.getString(i);
+                            Log.e("attraction==>", attractionJsonString);
 
-                            arr.add(gson.fromJson(attractionJsonString, Attraction.class));
+                            instance.getAttractions().add(gson.fromJson(attractionJsonString, Attraction.class));
+
                         }
-                        instance.attractions = arr;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -246,7 +265,7 @@ public class ServerUtility {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast toast = Toast.makeText(instance.context,"Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(instance.context,error.toString() ,Toast.LENGTH_SHORT);
                 toast.show();
             }
         })
@@ -266,6 +285,7 @@ public class ServerUtility {
         instance.queue.add(request);
     }
 
+//----------------------------------------------------------------------------------------
 
 
     private ArrayList<DayPlan> sendTripDetailsToServer(TripDetails tripDetails)

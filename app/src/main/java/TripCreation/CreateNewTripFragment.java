@@ -1,5 +1,6 @@
 package TripCreation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,18 +13,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import AttractionSearch.SearchAttractionsActivity;
+import FavoriteAttractions.FavoriteAttractionsActivity;
 import JavaClasses.Attraction;
 import JavaClasses.DesiredHoursInDay;
 import JavaClasses.ServerUtility;
+import JavaClasses.TripDetails;
 
 import com.bumptech.glide.Glide;
 import com.example.TupApp.R;
@@ -56,7 +62,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     private static final String TAG = "CreateNewTripFragment";
     private TextView txtTripDetails, txtEndDatePickError, txtFrom, txtTo;
-    private Button btnDestination, btnTripDates, btnDesiredHoursInDay, btnMustVisitAtt, btnHotel, btnTest;
+    private Button btnDestination, btnTripDates, btnDesiredHoursInDay, btnMustVisitAtt, btnHotel, btnFinishCreation;
     private Spinner destinationSpinner, spinnerHotels;
     private FloatingActionButton fltBtnAddAttr, fltBtnSearchAttr;
     private boolean isBtnDestinationClicked = false, isBtnTripDatesClicked = false, isBtnDesiredHoursInDayClicked = false, isBtnMustVisitAtt = false;
@@ -112,6 +118,24 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             }
         });
 
+
+        materialDatePicker1.addOnNegativeButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "This is on Negative", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        materialDatePicker1.addOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                Toast.makeText(getContext(), "This is on Dissmiss", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        materialDatePicker1.getSelection();
+        //materialDatePicker1.set
+
         materialDatePicker1.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -157,13 +181,12 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
 
 
-
         btnDestination.setOnClickListener(this);
         btnTripDates.setOnClickListener(this);
         btnDesiredHoursInDay.setOnClickListener(this);
         btnMustVisitAtt.setOnClickListener(this);
         btnHotel.setOnClickListener(this);
-
+        btnFinishCreation.setOnClickListener(this);
 
         fltBtnSearchAttr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,14 +194,59 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 Intent intent = new Intent(getActivity(), SearchAttractionsActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
                 startActivity(intent);
+            }
+        });
 
+        fltBtnAddAttr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FavoriteAttractionsActivity.class);
+                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
+                startActivity(intent);
             }
         });
 
 
 
+        /*
+            MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
+            adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
+
+            recViewMustVisitAttr.setAdapter(adapter);
+            recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
+         */
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finish();
+            }
+        };
+
+
+
+        btnFinishCreation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initFinButton();
+            }
+        });
 
         return view;
+    }
+
+
+    private void initFinButton() {
+        TripDetails tripDetails = new TripDetails();
+        tripDetails.setHotelID(spinnerHotels.getSelectedItem().toString());
+        tripDetails.setDestination(destinationSpinner.getSelectedItem().toString());
+        for (Attraction attraction : ServerUtility.getInstance(getContext()).getTripSelectedAttrations()) {
+            tripDetails.getMustSeenAttractionsID().add(attraction.getPlaceID());
+        }
+        ServerUtility.getInstance(getContext()).getTripSelectedAttrations().clear();
+        tripDetails.setHoursEveryDay(desiredHours);
+        ServerUtility.getInstance(getContext()).getTrip(tripDetails);
+
     }
 
     @Override
@@ -188,8 +256,10 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
 
         recViewMustVisitAttr.setAdapter(adapter);
-        recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recViewMustVisitAttr.setLayoutManager(new GridLayoutManager(getActivity(),2));
     }
+
+/*
 
 
     //   @RequiresApi(api = Build.VERSION_CODES.O)
@@ -215,6 +285,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 //            }
 //        });
 //    }
+ */
 
     private LocalDate positiveButtonClick(MaterialDatePicker<Long> materialDatePicker2, LocalDate startDate) {
         materialDatePicker2.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
@@ -245,6 +316,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         }
 
         callAdapter(desiredHours);
+/*
 
 //        DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter(getActivity());
 //        adapter.setDesiredHours(desiredHours);
@@ -259,6 +331,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 //                System.out.println(desiredHours.toString());
 //            }
 //        });
+ */
     }
 
     private void callAdapter(ArrayList<DesiredHoursInDay> desiredHours) {
@@ -268,11 +341,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
         recViewDesiredHours.setAdapter(adapter);
         recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-       /* Intent intent = getActivity().getIntent();
-        if (intent != null){
-
-        }*/
 
     }
 
@@ -296,8 +364,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         fltBtnAddAttr = view.findViewById(R.id.fltBtnAddAttr);
         fltBtnSearchAttr = view.findViewById(R.id.fltBtnSearchAttr);
         recViewMustVisitAttr = view.findViewById(R.id.recViewMustVisitAttr);
-
-        btnTest = view.findViewById(R.id.btnTest);
+        btnFinishCreation = view.findViewById(R.id.btnFinishCreation);
     }
 
     @Override
@@ -344,16 +411,20 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 if(!isBtnMustVisitAtt) {
                     fltBtnSearchAttr.setVisibility(View.VISIBLE);
                     fltBtnAddAttr.setVisibility(View.VISIBLE);
+                    recViewMustVisitAttr.setVisibility(View.VISIBLE);
                     isBtnMustVisitAtt = true;
                 }
                 else {
                     fltBtnSearchAttr.setVisibility(View.GONE);
                     fltBtnAddAttr.setVisibility(View.GONE);
+                    recViewMustVisitAttr.setVisibility(View.GONE);
                     isBtnMustVisitAtt = false;
                 }
                 break;
             case R.id.btnHotel:
                 spinnerHotels.setVisibility(View.VISIBLE);
+                break;
+            case R.id.btnFinishCreation:
                 break;
             default:
                 break;
