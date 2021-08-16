@@ -136,7 +136,10 @@ public class SearchAttractionsFragment extends Fragment {
             attractionsRecView.setAdapter(adapterToDetailesAttr);
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-            ArrayList<Attraction> array = ServerUtility.getInstance(getContext()).getAttractionsTest();
+
+            //ArrayList<Attraction> array = ServerUtility.getInstance(getContext()).getAttractionsTest();
+            //The normal Attractions!!
+            ArrayList<Attraction> array = ServerUtility.getInstance(getContext()).getAttractions();
 
             adapterToDetailesAttr.setAttractions(array);
             /*
@@ -165,7 +168,9 @@ public class SearchAttractionsFragment extends Fragment {
             //adapterToMustVisitAttr.setMustVisitAttractions(attractions);
 
              */
-            adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
+            //adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
+            adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractions());
+
             adapterToMustVisitAttr.setSelectedAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
             btnFinish.setOnClickListener(new View.OnClickListener() {
                 @Override

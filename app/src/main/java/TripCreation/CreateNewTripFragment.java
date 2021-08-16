@@ -205,31 +205,29 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
 
 
+        btnFinishCreation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initFinButton();
+            }
+        });
 
         return view;
     }
 
 
-    private void initFinButton()
-    {
-        btnFinishCreation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TripDetails tripDetails = new TripDetails();
-                tripDetails.setHotelID(spinnerHotels.getSelectedItem().toString());
-                tripDetails.setDestination(destinationSpinner.getSelectedItem().toString());
-                for(Attraction attraction: ServerUtility.getInstance(getContext()).getTripSelectedAttrations())
-                {
-                    tripDetails.getMustSeenAttractionsID().add(attraction.getPlaceID());
-                }
-                ServerUtility.getInstance(getContext()).getTripSelectedAttrations().clear();
-                tripDetails.setHoursEveryDay(desiredHours);
-                ServerUtility.getInstance(getContext()).getTrip(tripDetails);
+    private void initFinButton() {
+        TripDetails tripDetails = new TripDetails();
+        tripDetails.setHotelID(spinnerHotels.getSelectedItem().toString());
+        tripDetails.setDestination(destinationSpinner.getSelectedItem().toString());
+        for (Attraction attraction : ServerUtility.getInstance(getContext()).getTripSelectedAttrations()) {
+            tripDetails.getMustSeenAttractionsID().add(attraction.getPlaceID());
+        }
+        ServerUtility.getInstance(getContext()).getTripSelectedAttrations().clear();
+        tripDetails.setHoursEveryDay(desiredHours);
+        ServerUtility.getInstance(getContext()).getTrip(tripDetails);
 
-            }
-        });
     }
-
 
     @Override
     public void onResume() {

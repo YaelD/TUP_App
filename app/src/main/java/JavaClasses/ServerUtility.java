@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServerUtility {
-    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
 
@@ -35,7 +35,7 @@ public class ServerUtility {
     private static ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private static ArrayList<Attraction> attractions = new ArrayList<>();
     private static ArrayList<Attraction> hotels = new ArrayList<>();
-    private static ArrayList<Attraction> attractionsTest = new ArrayList<>();
+    //private static ArrayList<Attraction> attractionsTest = new ArrayList<>();
     private static ArrayList<DayPlan> lastCreatedTrip = new ArrayList<>();
 
 
@@ -43,10 +43,10 @@ public class ServerUtility {
 
     public static void attTestFiller()
     {
-        attractionsTest.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
+        attractions.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
                 "+44 20 7967 8021", "https://www.londoneye.com/", "1",
                 "https://media.cntraveler.com/photos/55c8be0bd36458796e4ca38a/master/pass/london-eye-2-cr-getty.jpg"));
-        attractionsTest.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
+        attractions.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
                 "+44 303 123 7300", "https://www.royal.uk/royal-residences-buckingham-palace", "2",
                 "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
     }
@@ -56,7 +56,7 @@ public class ServerUtility {
     public Attraction getAttractionByID(String id)
     {
         Attraction selectedAttraction = null;
-        for(Attraction currentAttraction: attractionsTest)
+        for(Attraction currentAttraction: attractions)
         {
             if(currentAttraction.getPlaceID().equals(id))
             {
@@ -136,19 +136,28 @@ public class ServerUtility {
         return instance;
     }
 
+    /*
 
-    public ArrayList<Attraction> getAttractionsTest() {
-        return attractionsTest;
-    }
+        public ArrayList<Attraction> getAttractionsTest() {
+            return attractionsTest;
+        }
+
+     */
+
+
+    /*
 
     public void setAttractionsTest(ArrayList<Attraction> attractionsTest) {
         ServerUtility.attractionsTest = attractionsTest;
     }
 
+     */
+
     private ServerUtility(Context context) {
         queue = Volley.newRequestQueue(context);
         this.context = context;
-        attTestFiller();
+        //Test function
+        //attTestFiller();
 
     }
 
@@ -209,27 +218,31 @@ public class ServerUtility {
     {
         ArrayList<Attraction> arr = new ArrayList<>();
         String url =ServerUtility.instance.baseURL + ServerUtility.instance.allAttractionsURL;
-        StringRequest request = new StringRequest(Request.Method.POST,"http://10.0.2.2:8080/web_war_exploded/attractions/all" ,new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST,url ,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.e("HERE==>", response);
                     JSONObject jsonResponse = new JSONObject(response);
                     if(jsonResponse.getString("status").equals("error"))
                     {
-                        Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(instance.context, jsonResponse.getString("message") ,Toast.LENGTH_SHORT);
                         toast.show();
                     }
                     else
                     {
-                        JSONArray jsonArray = jsonResponse.getJSONArray("message");
+
+                        JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
+                        Log.e("HERE==>", "GOOD RESPONSE");
                         Gson gson = new Gson();
                         for(int i =0; i < jsonArray.length(); ++i)
                         {
                             String attractionJsonString = jsonArray.getString(i);
+                            Log.e("attraction==>", attractionJsonString);
 
-                            arr.add(gson.fromJson(attractionJsonString, Attraction.class));
+                            instance.getAttractions().add(gson.fromJson(attractionJsonString, Attraction.class));
+
                         }
-                        instance.attractions = arr;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -238,7 +251,7 @@ public class ServerUtility {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast toast = Toast.makeText(instance.context,"Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(instance.context,error.toString() ,Toast.LENGTH_SHORT);
                 toast.show();
             }
         })
