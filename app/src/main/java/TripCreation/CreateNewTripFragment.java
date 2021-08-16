@@ -30,6 +30,7 @@ import JavaClasses.Attraction;
 import JavaClasses.DesiredHoursInDay;
 import JavaClasses.ServerUtility;
 import JavaClasses.TripDetails;
+import TripView.TripViewActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.TupApp.R;
@@ -132,9 +133,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 Toast.makeText(getContext(), "This is on Dissmiss", Toast.LENGTH_SHORT).show();
             }
         });
-
-        materialDatePicker1.getSelection();
-        //materialDatePicker1.set
 
         materialDatePicker1.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -246,6 +244,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         ServerUtility.getInstance(getContext()).getTripSelectedAttrations().clear();
         tripDetails.setHoursEveryDay(desiredHours);
         ServerUtility.getInstance(getContext()).getTrip(tripDetails);
+        Intent intent = new Intent(this.getActivity(), TripViewActivity.class);
+        startActivity(intent);
+        getActivity().finish();
 
     }
 

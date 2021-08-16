@@ -34,8 +34,6 @@ public class FavoriteAttractionsFragment extends Fragment {
     private Button btnFinishSelectFavAttr;
     private TextView txtEmptyFavoriteList;
 
-    @Nullable
-    @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite_attractions, container, false);

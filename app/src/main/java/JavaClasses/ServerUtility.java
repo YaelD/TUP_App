@@ -37,9 +37,18 @@ public class ServerUtility {
     private static ArrayList<Attraction> hotels = new ArrayList<>();
     //private static ArrayList<Attraction> attractionsTest = new ArrayList<>();
     private static ArrayList<DayPlan> lastCreatedTrip = new ArrayList<>();
-
-
     private String cookie;
+
+
+
+
+//----------------------------------------------------------------------------------------
+
+    public ArrayList<DayPlan> getLastCreatedTrip() {
+        return lastCreatedTrip;
+    }
+
+
 //----------------------------------------------------------------------------------------
 
     public static void attTestFiller()
@@ -169,7 +178,7 @@ public class ServerUtility {
         queue = Volley.newRequestQueue(context);
         this.context = context;
         //Test function
-        //attTestFiller();
+        attTestFiller();
 
     }
 //----------------------------------------------------------------------------------------
