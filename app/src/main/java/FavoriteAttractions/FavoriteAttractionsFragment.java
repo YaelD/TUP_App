@@ -23,6 +23,7 @@ import AttractionSearch.AddingAttrToMustVisitAttrAdapter;
 import AttractionSearch.AttractionsSearchRecAdapter;
 import JavaClasses.ServerUtility;
 import MainScreen.MainScreenActivity;
+import TripCreation.CreateNewTripActivity;
 import TripCreation.MustVisitAttrRecViewAdapter;
 
 import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
@@ -65,15 +66,7 @@ public class FavoriteAttractionsFragment extends Fragment {
         {
             txtEmptyFavoriteList.setVisibility(View.VISIBLE);
         }
-        if(callingActivity.equals(MainScreenActivity.class.getName()))
-        {
-            btnFinishSelectFavAttr.setVisibility(View.GONE);
-            AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
-            adapter.setAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
-            recViewFavoriteAttractions.setAdapter(adapter);
-            recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        }
-        else
+        if(callingActivity.equals(CreateNewTripActivity.class.getName()))
         {
             if(ServerUtility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
             {
@@ -86,6 +79,14 @@ public class FavoriteAttractionsFragment extends Fragment {
             AddingAttrToMustVisitAttrAdapter adapter = new AddingAttrToMustVisitAttrAdapter(getActivity());
             adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
             adapter.setSelectedAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
+            recViewFavoriteAttractions.setAdapter(adapter);
+            recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        }
+        else
+        {
+            btnFinishSelectFavAttr.setVisibility(View.GONE);
+            AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
+            adapter.setAttractions(ServerUtility.getInstance(getContext()).getFavoriteAttractions());
             recViewFavoriteAttractions.setAdapter(adapter);
             recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }

@@ -27,6 +27,8 @@ import JavaClasses.ServerUtility;
 import MyTrips.MyTripsActivity;
 import TripCreation.CreateNewTripActivity;
 
+import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
+
 public class MainScreenActivity extends AppCompatActivity{
 
     private static final String TAG = "MainScreenActivity";
@@ -118,10 +120,12 @@ public class MainScreenActivity extends AppCompatActivity{
                         break;
                     case R.id.search:
                         intent= new Intent(MainScreenActivity.this, SearchAttractionsActivity.class);
+                        intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         break;
                     case R.id.favorites:
                         intent= new Intent(MainScreenActivity.this, FavoriteAttractionsActivity.class);
+                        intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         break;
                     case R.id.trips:

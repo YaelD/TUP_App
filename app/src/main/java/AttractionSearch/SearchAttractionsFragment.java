@@ -129,28 +129,7 @@ public class SearchAttractionsFragment extends Fragment {
         String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
 
 
-        if(callingActivity.equals(MainScreenActivity.class.getName())){
-
-            btnFinish.setVisibility(View.GONE);
-            adapterToDetailesAttr = new AttractionsSearchRecAdapter(getActivity());
-            attractionsRecView.setAdapter(adapterToDetailesAttr);
-            attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
-
-            //ArrayList<Attraction> array = ServerUtility.getInstance(getContext()).getAttractionsTest();
-            //The normal Attractions!!
-            ArrayList<Attraction> array = ServerUtility.getInstance(getContext()).getAttractions();
-
-            adapterToDetailesAttr.setAttractions(array);
-            /*
-
-            //adapter.setAttractions(ServerUtility.getInstance(getContext()).getAttractions());
-            //adapterToDetailesAttr.setAttractions(attractions);
-            //adapterToDetailesAttr.setAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
-
-             */
-        }
-        else{
+        if(callingActivity.equals(CreateNewTripActivity.class.getName())){
 
             btnFinish.setVisibility(View.VISIBLE);
 
@@ -188,9 +167,27 @@ public class SearchAttractionsFragment extends Fragment {
                 }
             });
         }
+        else{
+            btnFinish.setVisibility(View.GONE);
+            adapterToDetailesAttr = new AttractionsSearchRecAdapter(getActivity());
+            attractionsRecView.setAdapter(adapterToDetailesAttr);
+            attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
 
-    }
+            //ArrayList<Attraction> array = ServerUtility.getInstance(getContext()).getAttractionsTest();
+            //The normal Attractions!!
+            ArrayList<Attraction> array = ServerUtility.getInstance(getContext()).getAttractions();
+
+            adapterToDetailesAttr.setAttractions(array);
+            /*
+
+            //adapter.setAttractions(ServerUtility.getInstance(getContext()).getAttractions());
+            //adapterToDetailesAttr.setAttractions(attractions);
+            //adapterToDetailesAttr.setAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
+
+             */
+        }
+     }
 
     private void initView(View view) {
         searchViewAttractions = view.findViewById(R.id.searchViewAttr);
