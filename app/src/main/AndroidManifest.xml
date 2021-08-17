@@ -19,7 +19,8 @@
         <activity android:name="LoginAndRegister.UserDetailsActivity" />
         <activity
             android:name="TripView.TripViewActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.TUPApp.NoActionBar"/>
         <activity
             android:name="AttractionDetails.AttractionDetailsActivity"
             android:label="@string/acivity_attraction_details"
