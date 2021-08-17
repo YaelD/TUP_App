@@ -103,10 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (json.getString("status").equals("ok")) {
                         String jsonUserString = json.getString("message");
                         Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
-
                         Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
-                        intent.putExtra("User", traveler);
-
                         startActivity(intent);
                         finish();
                     }
@@ -130,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                 data.put("password", password);
                 return data;
             }
+
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
