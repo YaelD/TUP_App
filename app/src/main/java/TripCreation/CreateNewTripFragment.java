@@ -28,11 +28,11 @@ import AttractionSearch.SearchAttractionsActivity;
 import FavoriteAttractions.FavoriteAttractionsActivity;
 import JavaClasses.Attraction;
 import JavaClasses.DesiredHoursInDay;
+import JavaClasses.ServerConnection;
 import JavaClasses.ServerUtility;
 import JavaClasses.TripDetails;
 import TripView.TripViewActivity;
 
-import com.bumptech.glide.Glide;
 import com.example.TupApp.R;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.CompositeDateValidator;
@@ -243,10 +243,16 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         }
         ServerUtility.getInstance(getContext()).getTripSelectedAttrations().clear();
         tripDetails.setHoursEveryDay(desiredHours);
-        ServerUtility.getInstance(getContext()).getTrip(tripDetails);
-        Intent intent = new Intent(this.getActivity(), TripViewActivity.class);
-        startActivity(intent);
-        getActivity().finish();
+        try {
+            ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
+            Intent intent = new Intent(this.getActivity(), TripViewActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+        catch (ServerConnection.serverErrorException exception)
+        {
+            Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT);
+        }
 
     }
 

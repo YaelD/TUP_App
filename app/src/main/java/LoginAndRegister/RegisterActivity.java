@@ -12,24 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.TupApp.R;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-
+import JavaClasses.ServerConnection;
 import JavaClasses.Traveler;
 import BaseActivity.BaseActivity;
 
@@ -160,6 +146,18 @@ public class RegisterActivity extends AppCompatActivity {
         email = txtEmailAddr.getText().toString().trim();
         password = txtPasswordRegister.getText().toString().trim();
         Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
+        try {
+            ServerConnection.getInstance(this).register(registerTraveler);
+            Intent intent = new Intent(RegisterActivity.this, BaseActivity.class);
+            startActivity(intent);
+            finish();
+        } catch (ServerConnection.serverErrorException serverErrorException) {
+            Toast.makeText(this, serverErrorException.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        /*
+
+
         Gson gson = new Gson();
         //make a new request
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -206,5 +204,6 @@ public class RegisterActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
+         */
     }
 }

@@ -74,21 +74,6 @@ public class Traveler implements Serializable {
     }
      */
 
-    public static class IllegalValueException extends Exception{
-        public IllegalValueException(String message) {
-            super(message);
-        }
-    }
-
-    public static class AlreadyExistsException extends Exception {
-        public AlreadyExistsException(String message) {
-            super(message);
-        }
-    }
-
-    public static class NotFoundException extends Exception {
-        public NotFoundException(String message) {super(message);}
-    }
 
 
     @Override
@@ -104,5 +89,21 @@ public class Traveler implements Serializable {
 
     public static class InvalidUsernameOrPasswordException extends Exception {
         public InvalidUsernameOrPasswordException(String message) {super(message);}
+    }
+
+    public static class IllegalValueException extends Exception{
+        public IllegalValueException(String message) {
+            super(message);
+        }
+    }
+
+    public static class AlreadyExistsException extends Exception {
+        public AlreadyExistsException(String message) {
+            super(message);
+        }
+    }
+
+    public static class NotFoundException extends Exception {
+        public NotFoundException(String message) {super(message);}
     }
 }

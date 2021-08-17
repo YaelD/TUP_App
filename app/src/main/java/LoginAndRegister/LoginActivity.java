@@ -11,23 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.TupApp.R;
-import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import JavaClasses.Traveler;
+import JavaClasses.ServerConnection;
 import BaseActivity.BaseActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -92,8 +78,24 @@ public class LoginActivity extends AppCompatActivity {
 
     public void getLogInInfoFromDB()
     {
+
+
         email = txtEmail.getText().toString().trim();
         password = txtPassword.getText().toString().trim();
+        try {
+            ServerConnection.getInstance(this).logIn(email, password);
+            Intent intent = new Intent(this, BaseActivity.class);
+            startActivity(intent);
+            finish();
+        } catch (ServerConnection.serverErrorException e)
+        {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
+
+
+        /*
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -131,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
+         */
 
     }
 }

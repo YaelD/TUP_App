@@ -1,6 +1,7 @@
 package JavaClasses;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.TupApp.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -29,6 +31,8 @@ public class ServerUtility {
     private static ServerUtility instance;
     private RequestQueue queue;
     private Context context;
+    private static Traveler traveler;
+    private String travelerID;
 
 
 
@@ -37,6 +41,29 @@ public class ServerUtility {
     private static ArrayList<Attraction> attractions = new ArrayList<>();
     private static ArrayList<Attraction> hotels = new ArrayList<>();
     private static ArrayList<DayPlan> lastCreatedTrip = new ArrayList<>();
+
+
+
+    public String getTravelerID() {
+        return travelerID;
+    }
+
+    public void setTravelerID(String travelerID) {
+        this.travelerID = travelerID;
+    }
+
+    //----------------------------------------------------------------------------------------
+
+
+
+
+    public Traveler getTraveler() {
+        return traveler;
+    }
+
+    public void setTraveler(Traveler traveler) {
+        ServerUtility.traveler = traveler;
+    }
 
 
     //----------------------------------------------------------------------------------------
@@ -164,31 +191,17 @@ public class ServerUtility {
         if(null == instance)
         {
             instance = new ServerUtility(context);
+            instance.SharedPreferencesReader();
         }
         return instance;
     }
 
-    /*
-
-        public ArrayList<Attraction> getAttractionsTest() {
-            return attractionsTest;
-        }
-
-     */
-
-
-    /*
-
-    public void setAttractionsTest(ArrayList<Attraction> attractionsTest) {
-        ServerUtility.attractionsTest = attractionsTest;
-    }
 //----------------------------------------------------------------------------------------
 
-     */
-
     private ServerUtility(Context context) {
-        queue = Volley.newRequestQueue(context);
         this.context = context;
+        queue = Volley.newRequestQueue(context);
+        //SharedPreferencesReader();
         //Test function
         attTestFiller();
 
@@ -196,8 +209,36 @@ public class ServerUtility {
 //----------------------------------------------------------------------------------------
 
 
+    public void SharedPreferencesWriter()
+    {
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("emailAddress", traveler.getEmailAddress());
+        editor.putString("password", traveler.getPassword());
+        editor.putString("firstName", traveler.getFirstName());
+        editor.putString("lastName", traveler.getLastName());
+        editor.putString("travelerID", this.travelerID);
+        editor.commit();
 
-//----------------------------------------------------------------------------------------
+    }
+
+    private void SharedPreferencesReader()
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        if(sharedPreferences!= null)
+        {
+            this.setTravelerID(sharedPreferences.getString("travelerID", null));
+            String firstName, lastName, password, email;
+            firstName = sharedPreferences.getString("firstName", null);
+            lastName = sharedPreferences.getString("lastName", null);
+            password = sharedPreferences.getString("password", null);
+            email = sharedPreferences.getString("emailAddress", null);
+            instance.setTraveler(new Traveler(firstName, lastName, email, password));
+        }
+
+    }
+
+    //----------------------------------------------------------------------------------------
 
 
 
