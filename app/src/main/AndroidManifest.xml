@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.TUPApp">
+        <activity android:name="LoginAndRegister.UserDetailsActivity"></activity>
         <activity
             android:name="TripView.TripViewActivity"
             android:exported="true" />
