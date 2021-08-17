@@ -41,6 +41,22 @@ public class ServerUtility {
     private static ArrayList<Attraction> attractions = new ArrayList<>();
     private static ArrayList<Attraction> hotels = new ArrayList<>();
     private static ArrayList<DayPlan> lastCreatedTrip = new ArrayList<>();
+    private static ArrayList<TripPlan> allTrips = new ArrayList<>();
+    private Traveler traveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
+
+
+
+    public void deleteTrip(int id)
+    {
+        for(TripPlan trip: allTrips)
+        {
+            if(trip.getId() == id)
+            {
+                allTrips.remove(trip);
+                return;
+            }
+        }
+    }
 
 
 
@@ -66,7 +82,23 @@ public class ServerUtility {
     }
 
 
-    //----------------------------------------------------------------------------------------
+    public ArrayList<TripPlan> getAllTrips() {
+        return allTrips;
+    }
+
+    public void setAllTrips(ArrayList<TripPlan> allTrips) {
+        ServerUtility.allTrips = allTrips;
+    }
+
+
+    public Traveler getTraveler() {
+        return traveler;
+    }
+
+    public void setTraveler(Traveler traveler) {
+        this.traveler = traveler;
+    }
+//----------------------------------------------------------------------------------------
 
 
     public void setHotels(ArrayList<Attraction> hotels) {

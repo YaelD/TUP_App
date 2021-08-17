@@ -16,7 +16,9 @@
         <activity
             android:name="LoadingScreen.LoadingScreen"
             android:exported="true" />
-        <activity android:name="LoginAndRegister.UserDetailsActivity" />
+        <activity android:name="LoginAndRegister.UserDetailsActivity"
+            android:label="@string/activity_user_details"
+            android:theme="@style/Theme.TUPApp.NoActionBar" />
         <activity
             android:name="TripView.TripViewActivity"
             android:exported="true"

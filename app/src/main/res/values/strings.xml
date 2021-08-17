@@ -8,6 +8,7 @@
     <string name="acivity_my_trips">My trips</string>
     <string name="acivity_search_attractions">Search attractions</string>
     <string name="acivity_attraction_details">Attraction details</string>
+    <string name="activity_user_details">User details</string>
     <string name="drawer_open">drawer_open</string>
     <string name="drawer_close">drawer_close</string>
     <string-array name="destinations">

@@ -28,7 +28,7 @@ import JavaClasses.Attraction;
 
 public class FavoriteAttractionsRecAdapter extends RecyclerView.Adapter<FavoriteAttractionsRecAdapter.ViewHolder> {
 
-    private static final String TAG = "AttrSearchRecAdapter";
+    private static final String TAG = "FavoriteAttractionsRecAdapter";
     private ArrayList<Attraction> attractionsArr = new ArrayList<>();
     private Context mContext;
 
@@ -43,6 +43,7 @@ public class FavoriteAttractionsRecAdapter extends RecyclerView.Adapter<Favorite
         return new FavoriteAttractionsRecAdapter.ViewHolder(view);
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Log.d(TAG, "onBindViewHolder: called");

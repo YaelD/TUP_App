@@ -35,6 +35,7 @@ public class TripViewFragment extends Fragment {
         dateRecView = view.findViewById(R.id.dateRecView);
         DatesRecViewAdapter adapter = new DatesRecViewAdapter(getContext());
         adapter.setPlans(ServerUtility.getInstance(getContext()).getLastCreatedTrip());
+        //TODO: setLastCreatedTrip in Utility class
 
         dateRecView.setAdapter(adapter);
         Log.e("HERE==>>", "Set Adapter DateRecView");

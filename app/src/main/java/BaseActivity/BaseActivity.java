@@ -1,5 +1,6 @@
 package BaseActivity;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import AttractionSearch.SearchAttractionsActivity;
 import FavoriteAttractions.FavoriteAttractionsActivity;
+import LoginAndRegister.UserDetailsActivity;
 import MainScreen.MainScreenFragment;
 import MyTrips.MyTripsActivity;
 import TripCreation.CreateNewTripActivity;
@@ -31,7 +33,7 @@ import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
 public class BaseActivity extends AppCompatActivity{
 
-    private static final String TAG = "MainScreenActivity";
+    private static final String TAG = "BaseActivity";
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private MaterialToolbar toolbar;
@@ -47,6 +49,14 @@ public class BaseActivity extends AppCompatActivity{
 
 
         this.func();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+               finish();
+
+            }
+        };
 
 
         this.setContainer(new MainScreenFragment());
@@ -68,7 +78,8 @@ public class BaseActivity extends AppCompatActivity{
                 Intent intent;
                 switch (item.getItemId()){
                     case R.id.userDetails:
-                        Toast.makeText(BaseActivity.this, "userDetails selected", Toast.LENGTH_SHORT).show();
+                        intent= new Intent(BaseActivity.this, UserDetailsActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.home:
                         intent= new Intent(BaseActivity.this, BaseActivity.class);
@@ -107,6 +118,7 @@ public class BaseActivity extends AppCompatActivity{
                     default:
                         break;
                 }
+                //finish();
                 return false;
             }
         });
