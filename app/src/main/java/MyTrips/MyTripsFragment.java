@@ -52,6 +52,7 @@ public class MyTripsFragment extends Fragment {
             txtEmptyTripList.setVisibility(View.GONE);
             MyTripsRecAdapter adapter = new MyTripsRecAdapter(getActivity());
             adapter.setTrips(Utility.getInstance(getContext()).getAllTrips());
+            adapter.setEmptyListTxt(txtEmptyTripList);
             recViewMyTrips.setAdapter(adapter);
             recViewMyTrips.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         }

@@ -36,10 +36,10 @@ public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitA
     }
 
 
-    @NonNull
-    @NotNull
+
+
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attractions, parent, false);
         return new MustVisitAttrRecViewAdapter.ViewHolder(view);
     }

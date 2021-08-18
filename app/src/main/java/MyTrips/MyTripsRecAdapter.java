@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
     private static final String TAG = "MyTripsRecAdapter";
     private ArrayList<TripPlan> trips = new ArrayList<>();
     private Context mContext;
+
+    private TextView emptyListTxt;
 
     public MyTripsRecAdapter(Context mContext) {
         this.mContext = mContext;
@@ -58,6 +61,10 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
                         if(Utility.getInstance(mContext).deleteTrip(trips.get(position).getId())) {
                             Toast.makeText(mContext, tripName + " was deleted successfully", Toast.LENGTH_LONG).show();
                             notifyDataSetChanged();
+                            if(getItemCount() == 0)
+                            {
+                                emptyListTxt.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 });
@@ -67,6 +74,8 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
 
                     }
                 });
+                builder.create().show();
+
             }
         });
 
@@ -89,6 +98,10 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
     public void setTrips(ArrayList<TripPlan> trips) {
         this.trips = trips;
         notifyDataSetChanged();
+    }
+
+    public void setEmptyListTxt(TextView emptyListTxt) {
+        this.emptyListTxt = emptyListTxt;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
