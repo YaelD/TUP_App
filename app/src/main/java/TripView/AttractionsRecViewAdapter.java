@@ -54,8 +54,8 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtHours = itemView.findViewById(R.id.hourTxt);
-            txtAttractionName = itemView.findViewById(R.id.attractionNameTxt);
+            txtHours = itemView.findViewById(R.id.txtHour);
+            txtAttractionName = itemView.findViewById(R.id.txtNameOfAttr);
 
         }
     }
