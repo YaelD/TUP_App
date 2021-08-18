@@ -9,6 +9,14 @@ public class OnePlan {
     Attraction attraction;
     LocalTime startTime;
     LocalTime finishTime;
+    String startTimeStr;
+    String finishTimeStr;
+
+    public OnePlan(Attraction attraction, String startTimeStr, String finishTimeStr) {
+        this.attraction = attraction;
+        this.startTimeStr = startTimeStr;
+        this.finishTimeStr = finishTimeStr;
+    }
 
     public Attraction getAttraction() {
         return attraction;
