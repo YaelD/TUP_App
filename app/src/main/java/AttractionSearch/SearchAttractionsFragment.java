@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import JavaClasses.Attraction;
-import JavaClasses.ServerUtility;
+import JavaClasses.Utility;
 import TripCreation.CreateNewTripActivity;
 
 import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
@@ -73,9 +73,9 @@ public class SearchAttractionsFragment extends Fragment {
             attractionsRecView.setAdapter(adapterToMustVisitAttr);
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             //adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
-            adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractions());
+            adapterToMustVisitAttr.setMustVisitAttractions(Utility.getInstance(getContext()).getAttractions());
 
-            adapterToMustVisitAttr.setSelectedAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
+            adapterToMustVisitAttr.setSelectedAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
             btnFinish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -88,7 +88,7 @@ public class SearchAttractionsFragment extends Fragment {
             adapterToDetailesAttr = new AttractionsSearchRecAdapter(getActivity());
             attractionsRecView.setAdapter(adapterToDetailesAttr);
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-            ArrayList<Attraction> array = ServerUtility.getInstance(getContext()).getAttractions();
+            ArrayList<Attraction> array = Utility.getInstance(getContext()).getAttractions();
             adapterToDetailesAttr.setAttractions(array);
         }
      }

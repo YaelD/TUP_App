@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,8 +16,7 @@ import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import AttractionSearch.AddingAttrToMustVisitAttrAdapter;
-import JavaClasses.ServerUtility;
+import JavaClasses.Utility;
 
 public class MyTripsFragment extends Fragment {
 
@@ -33,10 +31,10 @@ public class MyTripsFragment extends Fragment {
 
         initViews(view);
 
-        if(ServerUtility.getInstance(getContext()).getAllTrips().size() != 0){
+        if(Utility.getInstance(getContext()).getAllTrips().size() != 0){
             txtEmptyTripList.setVisibility(View.GONE);
             MyTripsRecAdapter adapter = new MyTripsRecAdapter(getActivity());
-            adapter.setTrips(ServerUtility.getInstance(getContext()).getAllTrips());
+            adapter.setTrips(Utility.getInstance(getContext()).getAllTrips());
             recViewMyTrips.setAdapter(adapter);
             recViewMyTrips.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         }

@@ -19,7 +19,7 @@ import com.example.TupApp.R;
 import org.jetbrains.annotations.NotNull;
 
 import BaseActivity.BaseActivity;
-import JavaClasses.ServerUtility;
+import JavaClasses.Utility;
 import JavaClasses.Traveler;
 
 public class UserDetailsFragment extends Fragment {
@@ -35,7 +35,7 @@ public class UserDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_details, container, false);
         initView(view);
 
-        traveler = ServerUtility.getInstance(getContext()).getTraveler();
+        traveler = Utility.getInstance(getContext()).getTraveler();
         editTxtFirstName.setHint(traveler.getFirstName());
         editTxtLastName.setHint(traveler.getLastName());
         editTxtEmail.setHint(traveler.getEmailAddress());
@@ -82,7 +82,7 @@ public class UserDetailsFragment extends Fragment {
                 }
 
                 Traveler newTraveler = new Traveler(firstName, lastName, email, password);
-                ServerUtility.getInstance(getContext()).setTraveler(newTraveler);
+                Utility.getInstance(getContext()).setTraveler(newTraveler);
 
             }
         });

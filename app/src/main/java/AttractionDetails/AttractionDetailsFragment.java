@@ -3,7 +3,6 @@ package AttractionDetails;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +20,8 @@ import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import AttractionSearch.SearchAttractionsActivity;
 import JavaClasses.Attraction;
-import JavaClasses.ServerUtility;
-
-import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
+import JavaClasses.Utility;
 
 public class AttractionDetailsFragment extends Fragment {
 
@@ -145,7 +141,7 @@ public class AttractionDetailsFragment extends Fragment {
         if(null != intent){
             String attractionID = getActivity().getIntent().getStringExtra(ATTRACTION_KEY);
             //Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
-            Attraction attraction = ServerUtility.getInstance(getContext()).getAttractionByID(attractionID);
+            Attraction attraction = Utility.getInstance(getContext()).getAttractionByID(attractionID);
             if(attraction != null){
                 txtAttrName.setText(attraction.getName());
                 txtAttrPhone.setText(attraction.getPhoneNumber());
@@ -155,7 +151,7 @@ public class AttractionDetailsFragment extends Fragment {
                         .asBitmap()
                         .load(attraction.getImageUrl())
                         .into(imgAttr);
-                    if(ServerUtility.getInstance(getContext()).getFavoriteAttractions().contains(attraction))
+                    if(Utility.getInstance(getContext()).getFavoriteAttractions().contains(attraction))
                     {
                         imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
                         isImgFavoriteClicked = true;
@@ -174,13 +170,13 @@ public class AttractionDetailsFragment extends Fragment {
                             if (!isImgFavoriteClicked) {
                                 imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
                                 isImgFavoriteClicked = true;
-                                boolean isAdded = ServerUtility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
+                                boolean isAdded = Utility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
                                 if(isAdded)
                                     Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
                             } else {
                                 imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
                                 isImgFavoriteClicked = false;
-                                boolean isRemoved = ServerUtility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
+                                boolean isRemoved = Utility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
                                 if(isRemoved)
                                     Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();;
                             }

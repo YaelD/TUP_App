@@ -2,33 +2,17 @@ package JavaClasses;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.TupApp.R;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-public class ServerUtility {
+public class Utility {
 
 
-    private static ServerUtility instance;
+    private static Utility instance;
     private RequestQueue queue;
     private Context context;
     private static Traveler traveler;
@@ -42,7 +26,8 @@ public class ServerUtility {
     private static ArrayList<Attraction> hotels = new ArrayList<>();
     private static ArrayList<DayPlan> lastCreatedTrip = new ArrayList<>();
     private static ArrayList<TripPlan> allTrips = new ArrayList<>();
-    private Traveler traveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
+
+    private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
 
 
@@ -73,21 +58,12 @@ public class ServerUtility {
 
 
 
-    public Traveler getTraveler() {
-        return traveler;
-    }
-
-    public void setTraveler(Traveler traveler) {
-        ServerUtility.traveler = traveler;
-    }
-
-
     public ArrayList<TripPlan> getAllTrips() {
         return allTrips;
     }
 
     public void setAllTrips(ArrayList<TripPlan> allTrips) {
-        ServerUtility.allTrips = allTrips;
+        Utility.allTrips = allTrips;
     }
 
 
@@ -102,11 +78,11 @@ public class ServerUtility {
 
 
     public void setHotels(ArrayList<Attraction> hotels) {
-        ServerUtility.hotels = hotels;
+        Utility.hotels = hotels;
     }
 
     public void setAttractions(ArrayList<Attraction> attractions) {
-        ServerUtility.attractions = attractions;
+        Utility.attractions = attractions;
     }
 
 
@@ -117,7 +93,7 @@ public class ServerUtility {
     }
 
     public void setLastCreatedTrip(ArrayList<DayPlan> lastCreatedTrip) {
-        ServerUtility.lastCreatedTrip = lastCreatedTrip;
+        Utility.lastCreatedTrip = lastCreatedTrip;
     }
 
     //----------------------------------------------------------------------------------------
@@ -218,11 +194,11 @@ public class ServerUtility {
 
 //----------------------------------------------------------------------------------------
 
-    public static synchronized ServerUtility getInstance(Context context)
+    public static synchronized Utility getInstance(Context context)
     {
         if(null == instance)
         {
-            instance = new ServerUtility(context);
+            instance = new Utility(context);
             instance.SharedPreferencesReader();
         }
         return instance;
@@ -230,7 +206,7 @@ public class ServerUtility {
 
 //----------------------------------------------------------------------------------------
 
-    private ServerUtility(Context context) {
+    private Utility(Context context) {
         this.context = context;
         queue = Volley.newRequestQueue(context);
         //SharedPreferencesReader();

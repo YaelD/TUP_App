@@ -12,7 +12,7 @@ import com.example.TupApp.MainActivity;
 import com.example.TupApp.R;
 
 import BaseActivity.BaseActivity;
-import JavaClasses.ServerUtility;
+import JavaClasses.Utility;
 
 public class LoadingScreen extends AppCompatActivity {
 
@@ -32,7 +32,7 @@ public class LoadingScreen extends AppCompatActivity {
         {
             cookie = sharedPreferences.getString(COOKIE_USER_TOKEN, null);
         }
-        ServerUtility.getInstance(this).getAttractions();
+        Utility.getInstance(this).getAttractions();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

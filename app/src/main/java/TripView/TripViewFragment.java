@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.TupApp.R;
 
-import JavaClasses.ServerUtility;
+import JavaClasses.Utility;
 
 public class TripViewFragment extends Fragment {
 
@@ -34,7 +34,7 @@ public class TripViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_trip_view, container, false);
         dateRecView = view.findViewById(R.id.dateRecView);
         DatesRecViewAdapter adapter = new DatesRecViewAdapter(getContext());
-        adapter.setPlans(ServerUtility.getInstance(getContext()).getLastCreatedTrip());
+        adapter.setPlans(Utility.getInstance(getContext()).getLastCreatedTrip());
         //TODO: setLastCreatedTrip in Utility class
 
         dateRecView.setAdapter(adapter);

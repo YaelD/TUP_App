@@ -68,7 +68,7 @@ public class ServerConnection {
                             arr.add(gson.fromJson(attractionJsonString, DayPlan.class));
                         }
 
-                        ServerUtility.getInstance(context).setLastCreatedTrip(arr);
+                        Utility.getInstance(context).setLastCreatedTrip(arr);
                         Log.e("HERE==>", "Successfully got Trip!");
 
                     }
@@ -93,7 +93,7 @@ public class ServerConnection {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("travelerID", ServerUtility.getInstance(context).getTravelerID());
+                params.put("travelerID", Utility.getInstance(context).getTravelerID());
                 params.put("Content-Type", "application/json");
                 return params;
             }
@@ -128,7 +128,7 @@ public class ServerConnection {
                     else
                     {
                         //attractions = new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class);
-                        ServerUtility.getInstance(context).setHotels(new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class));
+                        Utility.getInstance(context).setHotels(new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -189,7 +189,7 @@ public class ServerConnection {
                             attractions.add(gson.fromJson(attractionJsonString, Attraction.class));
 
                         }
-                        ServerUtility.getInstance(context).setAttractions(attractions);
+                        Utility.getInstance(context).setAttractions(attractions);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -232,7 +232,7 @@ public class ServerConnection {
                     if (json.getString("status").equals("ok")) {
                         String jsonUserString = json.getString("message");
                         Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
-                        ServerUtility.getInstance(context).setTraveler(traveler);
+                        Utility.getInstance(context).setTraveler(traveler);
                         Log.e("HERE==>", "Successfully LoggedIn");
                     }
                     else {
@@ -254,7 +254,7 @@ public class ServerConnection {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> data = new HashMap<>();
-                data.put("travelerID", ServerUtility.getInstance(context).getTravelerID());
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
                 data.put("Content-Type", "application/json");
                 return data;
             }
@@ -286,8 +286,8 @@ public class ServerConnection {
                     JSONObject json = new JSONObject(response);
                     if (json.getString("status").equals("ok")) {
                         Traveler traveler = new Gson().fromJson(json.getString("message"), Traveler.class);
-                        ServerUtility.getInstance(context).setTraveler(traveler);
-                        ServerUtility.getInstance(context).SharedPreferencesWriter();
+                        Utility.getInstance(context).setTraveler(traveler);
+                        Utility.getInstance(context).SharedPreferencesWriter();
                         Log.e("HERE==>", "Successfully Registered!");
                     }
                     else
@@ -323,7 +323,7 @@ public class ServerConnection {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 Map<String, String> headers = response.headers;
-                ServerUtility.getInstance(context).setTravelerID(headers.get("travelerID"));
+                Utility.getInstance(context).setTravelerID(headers.get("travelerID"));
                 return super.parseNetworkResponse(response);
             }
         };

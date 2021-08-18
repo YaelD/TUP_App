@@ -29,7 +29,7 @@ import FavoriteAttractions.FavoriteAttractionsActivity;
 import JavaClasses.Attraction;
 import JavaClasses.DesiredHoursInDay;
 import JavaClasses.ServerConnection;
-import JavaClasses.ServerUtility;
+import JavaClasses.Utility;
 import JavaClasses.TripDetails;
 import TripView.TripViewActivity;
 
@@ -238,10 +238,10 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         TripDetails tripDetails = new TripDetails();
         tripDetails.setHotelID(spinnerHotels.getSelectedItem().toString());
         tripDetails.setDestination(destinationSpinner.getSelectedItem().toString());
-        for (Attraction attraction : ServerUtility.getInstance(getContext()).getTripSelectedAttrations()) {
+        for (Attraction attraction : Utility.getInstance(getContext()).getTripSelectedAttrations()) {
             tripDetails.getMustSeenAttractionsID().add(attraction.getPlaceID());
         }
-        ServerUtility.getInstance(getContext()).getTripSelectedAttrations().clear();
+        Utility.getInstance(getContext()).getTripSelectedAttrations().clear();
         tripDetails.setHoursEveryDay(desiredHours);
         try {
             //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
@@ -261,7 +261,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     public void onResume() {
         super.onResume();
         MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
-        adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
+        adapter.setMustVisitAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
 
         recViewMustVisitAttr.setAdapter(adapter);
         recViewMustVisitAttr.setLayoutManager(new GridLayoutManager(getActivity(),2));

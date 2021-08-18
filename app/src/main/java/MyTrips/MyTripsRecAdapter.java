@@ -16,9 +16,7 @@ import com.example.TupApp.R;
 
 import java.util.ArrayList;
 
-import FavoriteAttractions.FavoriteAttractionsRecAdapter;
-import JavaClasses.Attraction;
-import JavaClasses.ServerUtility;
+import JavaClasses.Utility;
 import JavaClasses.TripPlan;
 
 public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.ViewHolder>{
@@ -45,7 +43,7 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
         holder.imgDeleteTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ServerUtility.getInstance(mContext).deleteTrip(trips.get(position).getId());
+                Utility.getInstance(mContext).deleteTrip(trips.get(position).getId());
             }
         });
 

@@ -1,20 +1,8 @@
 package LoginAndRegister;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.TupApp.R;
-
-import AttractionDetails.AttractionDetailsFragment;
 import BaseActivity.BaseActivity;
-import JavaClasses.ServerUtility;
-import JavaClasses.Traveler;
 
 public class UserDetailsActivity extends BaseActivity {
 

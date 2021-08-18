@@ -10,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -24,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import JavaClasses.Attraction;
-import JavaClasses.ServerUtility;
 
 public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<AddingAttrToMustVisitAttrAdapter.ViewHolder>{
 
