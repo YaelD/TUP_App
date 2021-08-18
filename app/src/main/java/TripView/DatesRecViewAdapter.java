@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,7 +45,7 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //holder.txtDate.setText(plans.get(position).getDate().toString());
         holder.txtDate.setText(plans.get(position).getDateStr());
-        AttractionsRecViewAdapter adapter = new AttractionsRecViewAdapter();
+        AttractionsRecViewAdapter adapter = new AttractionsRecViewAdapter(mContext);
         adapter.setOnePlans(plans.get(position).getDaySchedule());
         holder.recViewAttractions.setAdapter(adapter);
         holder.recViewAttractions.setLayoutManager(new LinearLayoutManager(mContext));

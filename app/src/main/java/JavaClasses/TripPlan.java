@@ -40,7 +40,10 @@ public class TripPlan {
         ArrayList<DayPlan> plans = new ArrayList<>();
 
         ArrayList<OnePlan> onePlans = new ArrayList<>();
-        onePlans.add(new OnePlan(new Attraction("London Eye"), "09:00", "11:00"));
+        Attraction att = new Attraction("London Eye");
+        att.setPlaceID("1");
+        //onePlans.add(new OnePlan(new Attraction("London Eye"), "09:00", "11:00"));
+        onePlans.add(new OnePlan(att, "09:00", "11:00"));
         onePlans.add(new OnePlan(new Attraction("Big Ben"), "11:00", "12:00"));
         plans.add(new DayPlan(onePlans, "4.6.21"));
         ArrayList<OnePlan> twoPlans = new ArrayList<>();

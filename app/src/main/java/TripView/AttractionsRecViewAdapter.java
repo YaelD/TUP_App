@@ -1,5 +1,8 @@
 package TripView;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,21 +10,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.TupApp.R;
 
 import java.util.ArrayList;
 
+import AttractionDetails.AttractionDetailsActivity;
 import JavaClasses.OnePlan;
 
 public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsRecViewAdapter.ViewHolder> {
 
+    public static final String ATTRACTION_KEY = "attraction";
+
+    private Context mContext;
     private ArrayList<OnePlan> onePlans = new ArrayList<>();
 
     public void setOnePlans(ArrayList<OnePlan> onePlans) {
         this.onePlans = onePlans;
         notifyDataSetChanged();
+    }
+
+    public AttractionsRecViewAdapter(Context mContext) {
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -34,11 +46,18 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         //holder.txtHours.setText(onePlans.get(position).getStartTime().toString());
         holder.txtHours.setText(onePlans.get(position).getStartTimeStr());
         holder.txtAttractionName.setText(onePlans.get(position).getAttraction().getName());
-        Log.e("HERE==>", "Set attraction: " + onePlans.get(position).getAttraction().getName());
+        holder.attractionCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AttractionDetailsActivity.class);
+                intent.putExtra(ATTRACTION_KEY, onePlans.get(position).getAttraction().getPlaceID());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -48,13 +67,16 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
+
         TextView txtHours;
         TextView txtAttractionName;
+        CardView attractionCardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtHours = itemView.findViewById(R.id.txtHour);
             txtAttractionName = itemView.findViewById(R.id.txtNameOfAttr);
+            attractionCardView = itemView.findViewById(R.id.attractionCardView);
         }
     }
 }
