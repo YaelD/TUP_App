@@ -1,10 +1,14 @@
 package AttractionSearch;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -29,11 +33,14 @@ public class SearchAttractionsFragment extends Fragment {
 
     public static final String SELECTED_ATTRACTIONS = "selected attractions";
 
-    private SearchView searchViewAttractions;
+    private EditText txtSearchAttr;
     private RecyclerView attractionsRecView;
     private Button btnFinish;
+    private ImageView imgSearch;
     private AttractionsSearchRecAdapter adapterToDetailesAttr;
     private AddingAttrToMustVisitAttrAdapter adapterToMustVisitAttr;
+
+
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -41,7 +48,6 @@ public class SearchAttractionsFragment extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_attractions, container, false);
         initView(view);
-
 
         return view;
     }
@@ -90,12 +96,42 @@ public class SearchAttractionsFragment extends Fragment {
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             ArrayList<Attraction> array = Utility.getInstance(getContext()).getAttractions();
             adapterToDetailesAttr.setAttractions(array);
+
+            txtSearchAttr.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    initSearch();
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
         }
      }
 
+    private void initSearch() {
+        if(!txtSearchAttr.getText().toString().equals("")){
+            String name = txtSearchAttr.getText().toString();
+            ArrayList<Attraction> searchedAttractions = Utility.getInstance(getContext()).searchAttractions(name);
+            if(null != searchedAttractions){
+                adapterToDetailesAttr.setAttractions(searchedAttractions);
+            }
+        }
+    }
+
     private void initView(View view) {
-        searchViewAttractions = view.findViewById(R.id.searchViewAttr);
+        txtSearchAttr = view.findViewById(R.id.txtSearchAttr);
         attractionsRecView = view.findViewById(R.id.searchAttrRecView);
         btnFinish = view.findViewById(R.id.btnFinish);
+        imgSearch = view.findViewById(R.id.imgSearch);
     }
 }
+

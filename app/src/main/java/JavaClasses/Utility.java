@@ -252,7 +252,34 @@ public class Utility {
 
     //----------------------------------------------------------------------------------------
 
+    public ArrayList<Attraction> searchAttractions (String text){
+        if (null != attractions) {
+            ArrayList<Attraction> searchedAttractions = new ArrayList<>();
+            for (Attraction attraction: attractions) {
+                if (attraction.getName().equalsIgnoreCase(text)) {
+                    searchedAttractions.add(attraction);
+                }
 
+                String[] names = attraction.getName().split(" ");
+                for (int i=0; i< names.length; i++) {
+                    if(text.equalsIgnoreCase(names [i])){
+                        boolean doesExist = false;
+
+                        for (Attraction attr: searchedAttractions) {
+                            if(attr.getPlaceID() == attraction.getPlaceID()) {
+                                doesExist = true;
+                            }
+                        }
+                        if(!doesExist) {
+                            searchedAttractions.add(attraction);
+                        }
+                    }
+                }
+            }
+            return searchedAttractions;
+        }
+        return null;
+    }
 
 
 

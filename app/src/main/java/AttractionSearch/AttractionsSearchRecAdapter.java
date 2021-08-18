@@ -21,10 +21,12 @@ import com.example.TupApp.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import AttractionDetails.AttractionDetailsActivity;
 import AttractionDetails.AttractionDetailsFragment;
 import JavaClasses.Attraction;
+import JavaClasses.Utility;
 
 import static AttractionDetails.AttractionDetailsFragment.ATTRACTION_KEY;
 import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
@@ -33,6 +35,8 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
     private static final String TAG = "AttrSearchRecAdapter";
 
     private ArrayList<Attraction> attractions = new ArrayList<>();
+
+
     private Context mContext;
 
 
@@ -77,6 +81,7 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
         this.attractions = attractions;
         notifyDataSetChanged();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CardView parent;

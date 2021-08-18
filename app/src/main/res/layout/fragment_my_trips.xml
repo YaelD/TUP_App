@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context="MyTrips.MyTripsActivity">
 
+
+
     <TextView
         android:id="@+id/txtEmptyTripList"
         android:layout_width="wrap_content"

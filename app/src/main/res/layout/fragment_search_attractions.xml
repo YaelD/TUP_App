@@ -6,18 +6,18 @@
     android:layout_height="match_parent"
     tools:context="AttractionSearch.SearchAttractionsActivity">
 
-    <SearchView
-        android:id="@+id/searchViewAttr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
+    <EditText
+        android:id="@+id/txtSearchAttr"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
         android:background="#fff0d1"
+        android:hint="Search Attractions"
         android:iconifiedByDefault="false"
-        android:queryHint="Search Attractions"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imgSearch"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -41,6 +41,20 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchViewAttr" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchAttr" />
+
+    <ImageView
+        android:id="@+id/imgSearch"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="50dp"
+        android:background="#fff0d1"
+        app:layout_constraintBottom_toBottomOf="@+id/txtSearchAttr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtSearchAttr"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_search"
+        app:tint="#79000000"
+        tools:ignore="VectorDrawableCompat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
