@@ -1,5 +1,6 @@
 package FavoriteAttractions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import AttractionSearch.AddingAttrToMustVisitAttrAdapter;
 import AttractionSearch.AttractionsSearchRecAdapter;
 import JavaClasses.Utility;
+import NavigationDrawer.NavigationDrawerActivity;
 import TripCreation.CreateNewTripActivity;
 
 import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
@@ -82,6 +85,20 @@ public class FavoriteAttractionsFragment extends Fragment {
         else
         {
             btnFinishSelectFavAttr.setVisibility(View.GONE);
+
+
+            OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getActivity().startActivity(intent);
+                    getActivity().finish();
+                }
+            };
+            getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
+
             AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
             adapter.setAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
             recViewFavoriteAttractions.setAdapter(adapter);

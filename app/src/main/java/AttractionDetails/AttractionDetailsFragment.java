@@ -1,6 +1,7 @@
 package AttractionDetails;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -19,6 +21,8 @@ import com.bumptech.glide.Glide;
 import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.net.URI;
 
 import JavaClasses.Attraction;
 import JavaClasses.Utility;
@@ -42,8 +46,6 @@ public class AttractionDetailsFragment extends Fragment {
 
 
         initViews(view);
-
-
 
         /*
 
@@ -180,6 +182,17 @@ public class AttractionDetailsFragment extends Fragment {
                                 if(isRemoved)
                                     Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();;
                             }
+                        }
+                    });
+                    imgMap.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                           // Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4194");
+                            Uri gmmIntentUri = Uri.parse("geo:" + attraction.getGeometry().getLat() + "," + attraction.getGeometry().getLng());
+                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                            mapIntent.setPackage("com.google.android.apps.maps");
+                            startActivity(mapIntent);
+
                         }
                     });
 

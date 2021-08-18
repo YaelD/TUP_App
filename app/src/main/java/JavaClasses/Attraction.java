@@ -48,7 +48,7 @@ public class Attraction implements Parcelable {
         this.setPhoneNumber(other.phoneNumber);
         this.setWebsite(other.website);
         this.setPlaceID(other.placeID);
-        this.setGeometry(other.geometry);
+        //this.setGeometry(other.geometry);
         this.setOpeningHoursArr(other.OpeningHoursArr);
         this.setImageUrl(other.imageUrl);
         this.setDescription(other.description);
@@ -135,7 +135,7 @@ public class Attraction implements Parcelable {
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", website='" + website + '\'' +
-                ", geometry=" + geometry +
+                //", geometry=" + geometry +
                 ", placeID='" + placeID + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", description='" + description + '\'' +

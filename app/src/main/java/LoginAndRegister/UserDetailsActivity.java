@@ -12,8 +12,13 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main_screen);
 
-        setContainer(new UserDetailsFragment());
         initViews();
+        setContainer(new UserDetailsFragment());
+
+
+
+
+
     }
 
 //        setContentView(R.layout.activity_user_details);

@@ -1,7 +1,9 @@
 package TripView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.TupApp.R;
 
 import JavaClasses.Utility;
+import NavigationDrawer.NavigationDrawerActivity;
 
 public class TripViewFragment extends Fragment {
 
@@ -33,6 +36,20 @@ public class TripViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trip_view, container, false);
         initViews(view);
+
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finish();
+            }
+        };
+
+        getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
+
+
+
         return view;
     }
 

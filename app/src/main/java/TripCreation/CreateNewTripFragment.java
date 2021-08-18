@@ -32,6 +32,7 @@ import JavaClasses.ServerConnection;
 import JavaClasses.TripPlan;
 import JavaClasses.Utility;
 import JavaClasses.TripDetails;
+import NavigationDrawer.NavigationDrawerActivity;
 import TripView.TripViewActivity;
 
 import com.bumptech.glide.util.Util;
@@ -86,6 +87,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_create_new_trip, container, false);
 
         initView(view);
+
 
         txtSelectDateFrom.setInputType(InputType.TYPE_NULL);
         txtSelectDateTo.setInputType(InputType.TYPE_NULL);
@@ -216,12 +218,22 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
          */
 
+
+
+
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                getActivity().startActivity(intent);
                 getActivity().finish();
             }
         };
+
+        getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
 
 
 

@@ -1,11 +1,13 @@
 package MyTrips;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,8 @@ import com.example.TupApp.R;
 import org.jetbrains.annotations.NotNull;
 
 import JavaClasses.Utility;
+import MainScreen.MainScreenFragment;
+import NavigationDrawer.NavigationDrawerActivity;
 
 public class MyTripsFragment extends Fragment {
 
@@ -30,6 +34,21 @@ public class MyTripsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_trips, container, false);
 
         initViews(view);
+
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                getActivity().finish();
+                getActivity().startActivity(intent);
+            }
+        };
+
+        getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
+
 
 
         return view;

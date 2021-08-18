@@ -1,5 +1,6 @@
 package AttractionSearch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 
 import JavaClasses.Attraction;
 import JavaClasses.Utility;
+import NavigationDrawer.NavigationDrawerActivity;
 import TripCreation.CreateNewTripActivity;
 
 import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
@@ -91,6 +94,19 @@ public class SearchAttractionsFragment extends Fragment {
         }
         else{
             btnFinish.setVisibility(View.GONE);
+
+            OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getActivity().startActivity(intent);
+                    getActivity().finish();
+                }
+            };
+            getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
+
             adapterToDetailesAttr = new AttractionsSearchRecAdapter(getActivity());
             attractionsRecView.setAdapter(adapterToDetailesAttr);
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));

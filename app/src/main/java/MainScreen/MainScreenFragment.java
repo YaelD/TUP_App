@@ -48,6 +48,7 @@ public class MainScreenFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateNewTripActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
         btnSearchAtt.setOnClickListener(new View.OnClickListener() {
@@ -55,8 +56,9 @@ public class MainScreenFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SearchAttractionsActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
-                Log.e("MAIN Screen===>", getActivity().getClass().getName());
                 startActivity(intent);
+                getActivity().finish();
+
             }
         });
         btnFavoriteAtt.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +67,8 @@ public class MainScreenFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), FavoriteAttractionsActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
                 startActivity(intent);
+                getActivity().finish();
+
             }
         });
         btnMyTrips.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +76,7 @@ public class MainScreenFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MyTripsActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
         btnTestAttractionDetails.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +84,7 @@ public class MainScreenFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AttractionDetailsActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 
