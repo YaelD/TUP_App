@@ -38,7 +38,6 @@ public class TripViewFragment extends Fragment {
         //TODO: setLastCreatedTrip in Utility class
 
         dateRecView.setAdapter(adapter);
-        Log.e("HERE==>>", "Set Adapter DateRecView");
         dateRecView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         return view;

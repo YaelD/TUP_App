@@ -43,6 +43,10 @@ public class Utility {
         return false;
     }
 
+    public void addTrip(TripPlan trip)
+    {
+        allTrips.add(trip);
+    }
 
 
     public String getTravelerID() {

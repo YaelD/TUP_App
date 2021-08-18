@@ -29,10 +29,12 @@ import FavoriteAttractions.FavoriteAttractionsActivity;
 import JavaClasses.Attraction;
 import JavaClasses.DesiredHoursInDay;
 import JavaClasses.ServerConnection;
+import JavaClasses.TripPlan;
 import JavaClasses.Utility;
 import JavaClasses.TripDetails;
 import TripView.TripViewActivity;
 
+import com.bumptech.glide.util.Util;
 import com.example.TupApp.R;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.CompositeDateValidator;
@@ -245,7 +247,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         tripDetails.setHoursEveryDay(desiredHours);
         try {
             //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
-            ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.staticTrip());
+            //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.staticTrip());
+            Utility.getInstance(getContext()).setLastCreatedTrip(TripPlan.getStaticTripPlan());
             Intent intent = new Intent(this.getActivity(), TripViewActivity.class);
             startActivity(intent);
             getActivity().finish();

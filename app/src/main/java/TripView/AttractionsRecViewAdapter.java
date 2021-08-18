@@ -35,11 +35,10 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtHours.setText(onePlans.get(position).getStartTime().toString());
+        //holder.txtHours.setText(onePlans.get(position).getStartTime().toString());
+        holder.txtHours.setText(onePlans.get(position).getStartTimeStr());
         holder.txtAttractionName.setText(onePlans.get(position).getAttraction().getName());
         Log.e("HERE==>", "Set attraction: " + onePlans.get(position).getAttraction().getName());
-
-
     }
 
     @Override
@@ -56,7 +55,6 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
             super(itemView);
             txtHours = itemView.findViewById(R.id.txtHour);
             txtAttractionName = itemView.findViewById(R.id.txtNameOfAttr);
-
         }
     }
 }
