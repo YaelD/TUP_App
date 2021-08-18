@@ -52,12 +52,16 @@ public class ServerConnection {
 
     public ArrayList<DayPlan> sendTripDetailsToServer(TripDetails tripDetails) throws serverErrorException
     {
+        Log.e("HERE==>", "Send A trip!!!!");
+
         ArrayList<DayPlan> arr = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST,baseURL+tripURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
+                    Log.e("HERE==>", "Got A response!" + response);
+
                     if(jsonResponse.getString("status").equals("ok"))
                     {
                         JSONArray jsonArray = jsonResponse.getJSONArray("message");
@@ -75,6 +79,7 @@ public class ServerConnection {
                     }
                     else
                     {
+                        Log.e("ERROR==>", jsonResponse.getString("message"));
                         throw new serverErrorException(jsonResponse.getString("message"));
                     }
                 } catch (JSONException e) {
@@ -87,7 +92,7 @@ public class ServerConnection {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
-
+                Log.e("ERROR==>", error.getMessage());
             }
         })
         {

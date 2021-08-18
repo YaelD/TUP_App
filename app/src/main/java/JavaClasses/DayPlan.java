@@ -19,6 +19,24 @@ public class DayPlan {
     LocalTime finishTime;
     int durationDay = 0;
 
+    String dateStr;
+
+    public DayPlan(ArrayList<OnePlan> daySchedule, String dateStr) {
+        this.daySchedule = daySchedule;
+        this.dateStr = dateStr;
+    }
+
+    public DayPlan(double durationDesireByUser, ArrayList<OnePlan> daySchedule, LocalDate date,
+                   Attraction hotel, LocalTime startTime, LocalTime finishTime, int durationDay) {
+        this.durationDesireByUser = durationDesireByUser;
+        this.daySchedule = daySchedule;
+        this.date = date;
+        this.hotel = hotel;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+        this.durationDay = durationDay;
+    }
+
     public double getDurationDesireByUser() {
         return durationDesireByUser;
     }

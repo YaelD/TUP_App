@@ -24,6 +24,10 @@ public class Attraction implements Parcelable {
     private String description;
     private ArrayList<DayOpeningHours> OpeningHoursArr = new ArrayList<>();//
 
+    public Attraction(String name) {
+        this.name = name;
+    }
+
     public Attraction(String name, String address, String phoneNumber, String website, /*Geometry geometry,*/ String placeID,
                       String imageUrl/*, ArrayList<AttractionType> types, ArrayList<DayOpeningHours> openingHoursArr*//*, String description*/) {
         this.setName(name);
