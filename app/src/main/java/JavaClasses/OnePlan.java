@@ -9,14 +9,11 @@ public class OnePlan {
     Attraction attraction;
     LocalTime startTime;
     LocalTime finishTime;
+
+    //TODO: delete startTimeStr, finishTimeStr when finish testing
     String startTimeStr;
     String finishTimeStr;
 
-    public OnePlan(Attraction attraction, String startTimeStr, String finishTimeStr) {
-        this.attraction = attraction;
-        this.startTimeStr = startTimeStr;
-        this.finishTimeStr = finishTimeStr;
-    }
 
     public Attraction getAttraction() {
         return attraction;
@@ -40,5 +37,22 @@ public class OnePlan {
 
     public void setFinishTime(LocalTime finishTime) {
         this.finishTime = finishTime;
+    }
+
+
+    //----------------------------------------------------------------------------------
+
+    public OnePlan(Attraction attraction, String startTimeStr, String finishTimeStr) {
+        this.attraction = attraction;
+        this.startTimeStr = startTimeStr;
+        this.finishTimeStr = finishTimeStr;
+    }
+
+    public String getStartTimeStr() {
+        return startTimeStr;
+    }
+
+    public String getFinishTimeStr() {
+        return finishTimeStr;
     }
 }

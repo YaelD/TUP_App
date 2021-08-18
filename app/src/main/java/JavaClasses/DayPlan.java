@@ -18,13 +18,8 @@ public class DayPlan {
     LocalTime startTime;
     LocalTime finishTime;
     int durationDay = 0;
-
+    //TODO: delete dateStr when finish testing
     String dateStr;
-
-    public DayPlan(ArrayList<OnePlan> daySchedule, String dateStr) {
-        this.daySchedule = daySchedule;
-        this.dateStr = dateStr;
-    }
 
     public DayPlan(double durationDesireByUser, ArrayList<OnePlan> daySchedule, LocalDate date,
                    Attraction hotel, LocalTime startTime, LocalTime finishTime, int durationDay) {
@@ -100,6 +95,17 @@ public class DayPlan {
         return dayPlans;
     }
 
+    //---------------------------------------------------------------------
+    public DayPlan(ArrayList<OnePlan> daySchedule, String dateStr) {
+        this.daySchedule = daySchedule;
+        this.dateStr = dateStr;
+    }
 
+    public String getDateStr() {
+        return dateStr;
+    }
 
+    public void setDateStr(String dateStr) {
+        this.dateStr = dateStr;
+    }
 }
