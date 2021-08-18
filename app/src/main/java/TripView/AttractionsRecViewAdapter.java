@@ -27,7 +27,7 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.attraction_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attraction_layout, parent, false);
         AttractionsRecViewAdapter.ViewHolder holder = new ViewHolder(view);
         return holder;
 

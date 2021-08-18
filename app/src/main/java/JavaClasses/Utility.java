@@ -31,16 +31,16 @@ public class Utility {
 
 
 
-    public void deleteTrip(int id)
+    public boolean deleteTrip(int id)
     {
         for(TripPlan trip: allTrips)
         {
             if(trip.getId() == id)
             {
-                allTrips.remove(trip);
-                return;
+                return allTrips.remove(trip);
             }
         }
+        return false;
     }
 
 

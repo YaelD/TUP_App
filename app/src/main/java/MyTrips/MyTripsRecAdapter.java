@@ -2,14 +2,17 @@ package MyTrips;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,8 +48,25 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
         holder.imgDeleteTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.getInstance(mContext).deleteTrip(trips.get(position).getId());
-                //TODO: check how to delete item from recview in run time
+                String tripName = trips.get(position).getName();
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage("Are you sure you want to delete " + trips.get(position).getName() + " trip?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(Utility.getInstance(mContext).deleteTrip(trips.get(position).getId())) {
+                            Toast.makeText(mContext, tripName + " was deleted successfully", Toast.LENGTH_LONG).show();
+                            notifyDataSetChanged();
+                        }
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
             }
         });
 
@@ -55,8 +75,7 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, TripViewActivity.class);
                 Utility.getInstance(mContext).setLastCreatedTrip(trips.get(position));
-
-
+                mContext.startActivity(intent);
             }
         });
     }
@@ -66,6 +85,7 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
         return trips.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setTrips(ArrayList<TripPlan> trips) {
         this.trips = trips;
         notifyDataSetChanged();
