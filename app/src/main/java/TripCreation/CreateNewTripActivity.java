@@ -2,10 +2,9 @@ package TripCreation;
 
 import android.os.Bundle;
 
-import BaseActivity.BaseActivity;
-import com.example.TupApp.R;
+import NavigationDrawer.NavigationDrawerActivity;
 
-public class CreateNewTripActivity extends BaseActivity {
+public class CreateNewTripActivity extends NavigationDrawerActivity {
 
     private static final String TAG = "CreateNewTripActivity";
 

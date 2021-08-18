@@ -24,7 +24,7 @@ public class Utility {
     private static ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private static ArrayList<Attraction> attractions = new ArrayList<>();
     private static ArrayList<Attraction> hotels = new ArrayList<>();
-    private static ArrayList<DayPlan> lastCreatedTrip = new ArrayList<>();
+    private static TripPlan lastCreatedTrip;
     private static ArrayList<TripPlan> allTrips = new ArrayList<>();
 
     private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
@@ -88,11 +88,11 @@ public class Utility {
 
     //----------------------------------------------------------------------------------------
 
-    public ArrayList<DayPlan> getLastCreatedTrip() {
+    public TripPlan getLastCreatedTrip() {
         return lastCreatedTrip;
     }
 
-    public void setLastCreatedTrip(ArrayList<DayPlan> lastCreatedTrip) {
+    public void setLastCreatedTrip(TripPlan lastCreatedTrip) {
         Utility.lastCreatedTrip = lastCreatedTrip;
     }
 

@@ -2,6 +2,7 @@ package MyTrips;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 import JavaClasses.Utility;
 import JavaClasses.TripPlan;
+import TripView.TripViewActivity;
 
 public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.ViewHolder>{
 
@@ -44,12 +46,16 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
             @Override
             public void onClick(View v) {
                 Utility.getInstance(mContext).deleteTrip(trips.get(position).getId());
+                //TODO: check how to delete item from recview in run time
             }
         });
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(mContext, TripViewActivity.class);
+                Utility.getInstance(mContext).setLastCreatedTrip(trips.get(position));
+
 
             }
         });

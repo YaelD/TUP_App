@@ -18,7 +18,7 @@ import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import BaseActivity.BaseActivity;
+import NavigationDrawer.NavigationDrawerActivity;
 import JavaClasses.Utility;
 import JavaClasses.Traveler;
 
@@ -51,7 +51,7 @@ public class UserDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "You didn't make any changes", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), BaseActivity.class);
+                Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }

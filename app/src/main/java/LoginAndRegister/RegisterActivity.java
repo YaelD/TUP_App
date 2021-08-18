@@ -15,9 +15,9 @@ import android.widget.Toast;
 import com.example.TupApp.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import NavigationDrawer.NavigationDrawerActivity;
 import JavaClasses.ServerConnection;
 import JavaClasses.Traveler;
-import BaseActivity.BaseActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
         Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
         try {
             ServerConnection.getInstance(this).register(registerTraveler);
-            Intent intent = new Intent(RegisterActivity.this, BaseActivity.class);
+            Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
             startActivity(intent);
             finish();
         } catch (ServerConnection.serverErrorException serverErrorException) {
@@ -171,7 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
                     else
                     {
                         btnRegisterSystem.setClickable(false);
-                        Intent intent= new Intent(RegisterActivity.this, BaseActivity.class);
+                        Intent intent= new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
                         Traveler traveler = new Gson().fromJson(json.getString("message"), Traveler.class);
                         intent.putExtra("Traveler", traveler);
                         showSnackBar();

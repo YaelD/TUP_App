@@ -68,7 +68,8 @@ public class ServerConnection {
                             arr.add(gson.fromJson(attractionJsonString, DayPlan.class));
                         }
 
-                        Utility.getInstance(context).setLastCreatedTrip(arr);
+                        TripPlan tripPlan = new TripPlan(-1, "", arr);
+                        Utility.getInstance(context).setLastCreatedTrip(tripPlan);
                         Log.e("HERE==>", "Successfully got Trip!");
 
                     }

@@ -1,4 +1,4 @@
-package BaseActivity;
+package NavigationDrawer;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.TupApp.R;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -31,9 +30,9 @@ import TripCreation.CreateNewTripActivity;
 
 import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
-public class BaseActivity extends AppCompatActivity{
+public class NavigationDrawerActivity extends AppCompatActivity{
 
-    private static final String TAG = "BaseActivity";
+    private static final String TAG = "NavigationDrawer";
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private MaterialToolbar toolbar;
@@ -78,15 +77,15 @@ public class BaseActivity extends AppCompatActivity{
                 Intent intent;
                 switch (item.getItemId()){
                     case R.id.userDetails:
-                        intent= new Intent(BaseActivity.this, UserDetailsActivity.class);
+                        intent= new Intent(NavigationDrawerActivity.this, UserDetailsActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.home:
-                        intent= new Intent(BaseActivity.this, BaseActivity.class);
+                        intent= new Intent(NavigationDrawerActivity.this, NavigationDrawerActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.about:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NavigationDrawerActivity.this);
                         builder.setTitle(getString(R.string.app_name));
                         builder.setMessage("Matan is a genius (AWWWWWW <3)"); //AWWWWWWWW <3
                         builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
@@ -98,21 +97,21 @@ public class BaseActivity extends AppCompatActivity{
                         builder.create().show();
                         break;
                     case R.id.createTrip:
-                        intent= new Intent(BaseActivity.this, CreateNewTripActivity.class);
+                        intent= new Intent(NavigationDrawerActivity.this, CreateNewTripActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.search:
-                        intent= new Intent(BaseActivity.this, SearchAttractionsActivity.class);
+                        intent= new Intent(NavigationDrawerActivity.this, SearchAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         break;
                     case R.id.favorites:
-                        intent= new Intent(BaseActivity.this, FavoriteAttractionsActivity.class);
+                        intent= new Intent(NavigationDrawerActivity.this, FavoriteAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         break;
                     case R.id.trips:
-                        intent= new Intent(BaseActivity.this, MyTripsActivity.class);
+                        intent= new Intent(NavigationDrawerActivity.this, MyTripsActivity.class);
                         startActivity(intent);
                         break;
                     default:

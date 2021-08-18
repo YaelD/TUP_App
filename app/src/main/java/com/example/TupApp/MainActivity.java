@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import NavigationDrawer.NavigationDrawerActivity;
 import LoginAndRegister.LoginActivity;
 import LoginAndRegister.RegisterActivity;
-import BaseActivity.BaseActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         btnGeust.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BaseActivity.class);
+                Intent intent = new Intent(MainActivity.this, NavigationDrawerActivity.class);
                 startActivity(intent);
                 finish();
             }

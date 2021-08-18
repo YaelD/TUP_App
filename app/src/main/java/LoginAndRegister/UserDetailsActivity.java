@@ -2,9 +2,9 @@ package LoginAndRegister;
 
 import android.os.Bundle;
 
-import BaseActivity.BaseActivity;
+import NavigationDrawer.NavigationDrawerActivity;
 
-public class UserDetailsActivity extends BaseActivity {
+public class UserDetailsActivity extends NavigationDrawerActivity {
 
 
     @Override
@@ -30,7 +30,7 @@ public class UserDetailsActivity extends BaseActivity {
 //        btnCancle.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Intent intent = new Intent(UserDetailsActivity.this, BaseActivity.class);
+//                Intent intent = new Intent(UserDetailsActivity.this, NavigationDrawerActivity.class);
 //                startActivity(intent);
 //            }
 //        });

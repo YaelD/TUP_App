@@ -2,9 +2,9 @@ package TripView;
 
 import android.os.Bundle;
 
-import BaseActivity.BaseActivity;
+import NavigationDrawer.NavigationDrawerActivity;
 
-public class TripViewActivity extends BaseActivity {
+public class TripViewActivity extends NavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

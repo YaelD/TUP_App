@@ -44,7 +44,7 @@
             android:label="@string/acivity_create_new_trip"
             android:theme="@style/Theme.TUPApp.NoActionBar" />
         <activity
-            android:name="BaseActivity.BaseActivity"
+            android:name="NavigationDrawer.NavigationDrawerActivity"
             android:label="@string/acivity_main_screen"
             android:theme="@style/Theme.TUPApp.NoActionBar" />
         <activity

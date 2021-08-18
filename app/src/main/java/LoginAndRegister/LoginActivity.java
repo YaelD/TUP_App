@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.example.TupApp.R;
 
+import NavigationDrawer.NavigationDrawerActivity;
 import JavaClasses.ServerConnection;
-import BaseActivity.BaseActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         password = txtPassword.getText().toString().trim();
         try {
             ServerConnection.getInstance(this).logIn(email, password);
-            Intent intent = new Intent(this, BaseActivity.class);
+            Intent intent = new Intent(this, NavigationDrawerActivity.class);
             startActivity(intent);
             finish();
         } catch (ServerConnection.serverErrorException e)
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (json.getString("status").equals("ok")) {
                         String jsonUserString = json.getString("message");
                         Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
-                        Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, NavigationDrawerActivity.class);
                         startActivity(intent);
                         finish();
                     }

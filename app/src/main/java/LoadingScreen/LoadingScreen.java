@@ -11,7 +11,7 @@ import android.os.Handler;
 import com.example.TupApp.MainActivity;
 import com.example.TupApp.R;
 
-import BaseActivity.BaseActivity;
+import NavigationDrawer.NavigationDrawerActivity;
 import JavaClasses.Utility;
 
 public class LoadingScreen extends AppCompatActivity {
@@ -39,7 +39,7 @@ public class LoadingScreen extends AppCompatActivity {
                 Intent intent = new Intent(LoadingScreen.this, MainActivity.class);
                 if(cookie != null)
                 {
-                    intent = new Intent(LoadingScreen.this, BaseActivity.class);
+                    intent = new Intent(LoadingScreen.this, NavigationDrawerActivity.class);
                 }
                 startActivity(intent);
                 finish();
