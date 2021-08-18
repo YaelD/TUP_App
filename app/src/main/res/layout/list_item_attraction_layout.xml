@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/txtHour"
-            android:layout_width="90dp"
+            android:layout_width="80dp"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="Hour"
@@ -29,7 +29,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView2"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="end"
             app:cardBackgroundColor="#FFEDA7"
@@ -47,7 +47,7 @@
                     android:id="@+id/txtNameOfAttr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lily_script_one"
+                    android:fontFamily="@font/courgette"
                     android:gravity="center"
                     android:text="Attraction"
                     android:textSize="24sp"

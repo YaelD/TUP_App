@@ -249,6 +249,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
             //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.staticTrip());
             Utility.getInstance(getContext()).setLastCreatedTrip(TripPlan.getStaticTripPlan());
+            Utility.getInstance(getContext()).addTrip(TripPlan.getStaticTripPlan());
             Intent intent = new Intent(this.getActivity(), TripViewActivity.class);
             startActivity(intent);
             getActivity().finish();

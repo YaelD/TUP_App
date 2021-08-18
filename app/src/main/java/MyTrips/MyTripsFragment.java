@@ -31,15 +31,6 @@ public class MyTripsFragment extends Fragment {
 
         initViews(view);
 
-        if(Utility.getInstance(getContext()).getAllTrips().size() != 0){
-            txtEmptyTripList.setVisibility(View.GONE);
-            MyTripsRecAdapter adapter = new MyTripsRecAdapter(getActivity());
-            adapter.setTrips(Utility.getInstance(getContext()).getAllTrips());
-            recViewMyTrips.setAdapter(adapter);
-            recViewMyTrips.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        }
-        else
-            txtEmptyTripList.setVisibility(View.VISIBLE);
 
         return view;
     }
@@ -48,4 +39,29 @@ public class MyTripsFragment extends Fragment {
         recViewMyTrips = view.findViewById(R.id.recViewMyTrips);
         txtEmptyTripList = view.findViewById(R.id.txtEmptyTripList);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setAdapter();
+    }
+
+    private void setAdapter()
+    {
+        if(Utility.getInstance(getContext()).getAllTrips().size() != 0){
+            txtEmptyTripList.setVisibility(View.GONE);
+            MyTripsRecAdapter adapter = new MyTripsRecAdapter(getActivity());
+            adapter.setTrips(Utility.getInstance(getContext()).getAllTrips());
+            recViewMyTrips.setAdapter(adapter);
+            recViewMyTrips.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        }
+        else {
+            txtEmptyTripList.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+
+
+
 }

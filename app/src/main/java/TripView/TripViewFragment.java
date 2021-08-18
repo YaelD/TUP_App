@@ -32,7 +32,22 @@ public class TripViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trip_view, container, false);
+        initViews(view);
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setAdapter();
+    }
+    private void initViews(View view) {
         dateRecView = view.findViewById(R.id.dateRecView);
+    }
+
+
+    private void setAdapter()
+    {
         DatesRecViewAdapter adapter = new DatesRecViewAdapter(getContext());
         adapter.setPlans(Utility.getInstance(getContext()).getLastCreatedTrip().getPlans());
         //TODO: setLastCreatedTrip in Utility class
@@ -40,6 +55,7 @@ public class TripViewFragment extends Fragment {
         dateRecView.setAdapter(adapter);
         dateRecView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        return view;
     }
+
+
 }
