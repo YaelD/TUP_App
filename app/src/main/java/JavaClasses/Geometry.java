@@ -17,10 +17,7 @@ public class Geometry {
 
     @Override
     public String toString() {
-        return "Geometry{" +
-                "lat='" + lat + '\'' +
-                ", lng='" + lng + '\'' +
-                '}';
+        return lat +',' +lng;
     }
 
 

@@ -187,8 +187,8 @@ public class AttractionDetailsFragment extends Fragment {
                     imgMap.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                           // Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4194");
-                            Uri gmmIntentUri = Uri.parse("geo:" + attraction.getGeometry().getLat() + "," + attraction.getGeometry().getLng());
+                            Uri gmmIntentUri = Uri.parse("geo:"+ attraction.getGeometry().toString() + "?q=" +attraction.getGeometry().toString()+"(" + attraction.getName() + ")");
+                            //+ "?q=" + attraction.getAddress()
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                             mapIntent.setPackage("com.google.android.apps.maps");
                             startActivity(mapIntent);
