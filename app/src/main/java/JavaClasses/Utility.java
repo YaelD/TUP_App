@@ -252,6 +252,9 @@ public class Utility {
 
     //----------------------------------------------------------------------------------------
 
+    /*
+
+
     public ArrayList<Attraction> searchAttractions (String text){
         if (null != attractions) {
             ArrayList<Attraction> searchedAttractions = new ArrayList<>();
@@ -280,6 +283,7 @@ public class Utility {
         }
         return null;
     }
+     */
 
 
 

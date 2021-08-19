@@ -7,7 +7,7 @@
     android:id="@+id/parent"
     app:cardCornerRadius="7dp"
     app:cardElevation="7dp"
-    android:layout_margin="5dp">
+    android:layout_margin="7dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
