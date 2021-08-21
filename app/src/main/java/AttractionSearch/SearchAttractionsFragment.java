@@ -2,24 +2,18 @@ package AttractionSearch;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.TupApp.R;
@@ -27,7 +21,6 @@ import com.example.TupApp.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import JavaClasses.Attraction;
 import JavaClasses.Utility;
@@ -44,11 +37,9 @@ public class SearchAttractionsFragment extends Fragment {
     private SearchView searchViewAttr;
     private RecyclerView attractionsRecView;
     private Button btnFinish;
-    private AttractionsSearchRecAdapter adapterToDetailesAttr;
+    private AttractionsSearchRecAdapter adapterToDetailsAttr;
     private AddingAttrToMustVisitAttrAdapter adapterToMustVisitAttr;
     private String callingActivity;
-
-
     private ArrayList<Attraction> attractions = new ArrayList<>();
 
     @Nullable
@@ -114,7 +105,7 @@ public class SearchAttractionsFragment extends Fragment {
         else
         {
             Log.e("HERE==>", "In adapterDoDetails");
-            adapterToDetailesAttr.setAttractions(filteredList);
+            adapterToDetailsAttr.setAttractions(filteredList);
         }
     }
 
@@ -157,11 +148,11 @@ public class SearchAttractionsFragment extends Fragment {
             getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
 
-            adapterToDetailesAttr = new AttractionsSearchRecAdapter(getActivity());
-            attractionsRecView.setAdapter(adapterToDetailesAttr);
+            adapterToDetailsAttr = new AttractionsSearchRecAdapter(getActivity());
+            attractionsRecView.setAdapter(adapterToDetailsAttr);
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             ArrayList<Attraction> array = Utility.getInstance(getContext()).getAttractions();
-            adapterToDetailesAttr.setAttractions(array);
+            adapterToDetailsAttr.setAttractions(array);
         }
      }
 

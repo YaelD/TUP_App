@@ -44,7 +44,7 @@
         android:id="@+id/OpeningHoursText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="Opening Hours:"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -55,7 +55,7 @@
         android:id="@+id/PhoneText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="Phone:"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -66,7 +66,7 @@
         android:id="@+id/WebsiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="Website:"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -77,7 +77,7 @@
         android:id="@+id/DescriptionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="Description:"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -86,13 +86,16 @@
 
     <TextView
         android:id="@+id/txtAttrAddress"
-        android:layout_width="wrap_content"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/AddressText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/AddressText"
-        app:layout_constraintTop_toTopOf="@+id/AddressText" />
+        app:layout_constraintTop_toTopOf="@+id/AddressText"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txtAttrOpeningHours"
@@ -109,27 +112,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="10dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/PhoneText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/PhoneText"
-        app:layout_constraintTop_toTopOf="@+id/PhoneText" />
+        app:layout_constraintTop_toTopOf="@+id/PhoneText"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txtAttrWebsite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="10dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/WebsiteText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/WebsiteText"
-        app:layout_constraintTop_toTopOf="@+id/WebsiteText" />
+        app:layout_constraintTop_toTopOf="@+id/WebsiteText"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txtAttrDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
         android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toBottomOf="@+id/DescriptionText" />
 
@@ -137,7 +151,7 @@
         android:id="@+id/RestaurantsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="Restaurants nearby:"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -170,10 +184,28 @@
         android:layout_width="34dp"
         android:layout_height="51dp"
         android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/imgAttr"
         app:srcCompat="@drawable/ic_favorite_painted"
+        app:tint="@color/red"
+        tools:ignore="VectorDrawableCompat"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/imgFavoriteBorder"
+        android:layout_width="34dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/imgAttr"
+        app:srcCompat="@drawable/ic_favorite"
         app:tint="@color/black"
         tools:ignore="VectorDrawableCompat" />
 
@@ -181,12 +213,11 @@
         android:id="@+id/imgMap"
         android:layout_width="36dp"
         android:layout_height="49dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/imgFavorite"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
         app:srcCompat="@drawable/ic_map"
         tools:ignore="VectorDrawableCompat" />
 
@@ -196,6 +227,18 @@
         android:layout_height="wrap_content"
         android:text="Add to favorites"
         android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/imgFavoriteBorder"
+        app:layout_constraintStart_toStartOf="@+id/imgFavoriteBorder"
+        app:layout_constraintTop_toBottomOf="@+id/imgFavoriteBorder" />
+
+    <TextView
+        android:id="@+id/txtRemoveFromFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove from favorites"
+        android:textSize="10sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/imgFavorite"
         app:layout_constraintStart_toStartOf="@+id/imgFavorite"
         app:layout_constraintTop_toBottomOf="@+id/imgFavorite" />
@@ -209,5 +252,12 @@
         app:layout_constraintEnd_toEndOf="@+id/imgMap"
         app:layout_constraintStart_toStartOf="@+id/imgMap"
         app:layout_constraintTop_toBottomOf="@+id/imgMap" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="170dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

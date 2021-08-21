@@ -79,15 +79,6 @@ public class MainScreenFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        btnTestAttractionDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AttractionDetailsActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-
         return view;
     }
 
@@ -98,7 +89,7 @@ public class MainScreenFragment extends Fragment {
         btnSearchAtt = view.findViewById(R.id.btnSearchAtt);
         btnFavoriteAtt = view.findViewById(R.id.btnFavoriteAtt);
         btnMyTrips = view.findViewById(R.id.btnMyTrips);
-        btnTestAttractionDetails = view.findViewById(R.id.btnTestAttractionDetails);
+       // btnTestAttractionDetails = view.findViewById(R.id.btnTestAttractionDetails);
     }
 
 }

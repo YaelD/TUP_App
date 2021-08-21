@@ -32,9 +32,9 @@ public class AttractionDetailsFragment extends Fragment {
     public static final String ATTRACTION_KEY = "attraction";
 
     private TextView txtAttrName, txtAddress, txtOpeningHours, txtPhone, txtWebsite, txtDescription,txtRestaurants, txtMap;
-    private TextView txtAttrAddress, txtAttrOpeningHours, txtAttrPhone, txtAttrWebsite, txtAttrDescription, txtAddToFavorites;
-    private ImageView imgFavorite, imgMap, imgAttr;
-    private boolean isImgFavoriteClicked = false;
+    private TextView txtAttrAddress, txtAttrOpeningHours, txtAttrPhone, txtAttrWebsite, txtAttrDescription, txtAddToFavorites, txtRemoveFromFavorite;
+    private ImageView imgFavorite, imgMap, imgAttr, imgFavoriteBorder;
+    private boolean isImgAddToFavoriteClicked = false, isImgRemoveFromFavoriteClicked = false;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -130,6 +130,8 @@ public class AttractionDetailsFragment extends Fragment {
         txtAddToFavorites = view.findViewById(R.id.txtAddToFavorite);
         txtMap = view.findViewById(R.id.txtMap);
         imgAttr = view.findViewById(R.id.imgAttr);
+        imgFavoriteBorder = view.findViewById(R.id.imgFavoriteBorder);
+        txtRemoveFromFavorite = view.findViewById(R.id.txtRemoveFromFavorite);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -155,33 +157,57 @@ public class AttractionDetailsFragment extends Fragment {
                         .into(imgAttr);
                     if(Utility.getInstance(getContext()).getFavoriteAttractions().contains(attraction))
                     {
-                        imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
-                        isImgFavoriteClicked = true;
+                        imgFavorite.setVisibility(View.VISIBLE);
+                        imgFavoriteBorder.setVisibility(View.GONE);
+                        txtRemoveFromFavorite.setVisibility(View.VISIBLE);
+                        txtAddToFavorites.setVisibility(View.GONE);
                     }
                     else
                     {
-                        imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
-                        isImgFavoriteClicked = false;
+                        imgFavorite.setVisibility(View.GONE);
+                        imgFavoriteBorder.setVisibility(View.VISIBLE);
+                        txtRemoveFromFavorite.setVisibility(View.GONE);
+                        txtAddToFavorites.setVisibility(View.VISIBLE);
                     }
 
-                    //imgFavorite.setVisibility(View.VISIBLE);
                     imgFavorite.setOnClickListener(new View.OnClickListener() {
                         @RequiresApi(api = Build.VERSION_CODES.M)
                         @Override
                         public void onClick(View v) {
-                            if (!isImgFavoriteClicked) {
-                                imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
-                                isImgFavoriteClicked = true;
-                                boolean isAdded = Utility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
-                                if(isAdded)
-                                    Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
-                            } else {
-                                imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
-                                isImgFavoriteClicked = false;
-                                boolean isRemoved = Utility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
-                                if(isRemoved)
-                                    Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();;
-                            }
+                            imgFavorite.setVisibility(View.GONE);
+                            txtRemoveFromFavorite.setVisibility(View.GONE);
+                            imgFavoriteBorder.setVisibility(View.VISIBLE);
+                            txtAddToFavorites.setVisibility(View.VISIBLE);
+                            boolean isRemoved = Utility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
+                            if(isRemoved)
+                                Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();
+//                            if (!isImgFavoriteClicked) {
+//                                imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
+//                                isImgFavoriteClicked = true;
+//                                boolean isAdded = Utility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
+//                                if(isAdded)
+//                                    Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
+//                                isImgFavoriteClicked = false;
+//                                boolean isRemoved = Utility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
+//                                if(isRemoved)
+//                                    Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();;
+//                            }
+
+                        }
+                    });
+
+                    imgFavoriteBorder.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            imgFavoriteBorder.setVisibility(View.GONE);
+                            txtAddToFavorites.setVisibility(View.GONE);
+                            imgFavorite.setVisibility(View.VISIBLE);
+                            txtRemoveFromFavorite.setVisibility(View.VISIBLE);
+                            boolean isAdded = Utility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
+                            if(isAdded)
+                                Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
                         }
                     });
                     imgMap.setOnClickListener(new View.OnClickListener() {

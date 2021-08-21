@@ -2,11 +2,15 @@ package LoginAndRegister;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,11 +28,14 @@ import JavaClasses.Utility;
 import JavaClasses.Traveler;
 
 public class UserDetailsFragment extends Fragment {
-    private Button btnSaveChanges, btnCancle;
+    private Button btnSaveChanges, btnCancel;
     private EditText editTxtFirstName, editTxtLastName, editTxtEmail, editTxtPassword, editTxtConfirmPassword;
-    private TextView txtEmailError, txtConfirmPassError;
+    private TextView txtEmailError, txtConfirmPassError, txtTitleConfirmPassword;
     private Traveler traveler;
     private String firstName, lastName, email, password;
+    private ImageView imgShowPassword, imgShowConfirmPassword, imgHidePassword, imgHideConfirmPassword;
+
+
 
     @Nullable
     @Override
@@ -50,6 +57,47 @@ public class UserDetailsFragment extends Fragment {
 
 
 
+
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (editTxtFirstName.getText().toString().length() == 0 &&
+                        editTxtLastName.getText().toString().length() == 0 &&
+                        editTxtEmail.getText().toString().length() == 0 &&
+                        editTxtPassword.getText().toString().length() == 0){
+                    btnSaveChanges.setEnabled(false);
+                }
+                else {
+                    btnSaveChanges.setEnabled(true);
+                }
+                if (!editTxtPassword.getText().toString().isEmpty()){
+                    editTxtConfirmPassword.setVisibility(View.VISIBLE);
+                    txtTitleConfirmPassword.setVisibility(View.VISIBLE);
+                    imgShowConfirmPassword.setVisibility(View.VISIBLE);
+                }
+                else if(editTxtPassword.getText().toString().isEmpty()){
+                    editTxtConfirmPassword.setVisibility(View.GONE);
+                    txtTitleConfirmPassword.setVisibility(View.GONE);
+                    imgShowConfirmPassword.setVisibility(View.GONE);
+                }
+            }
+        };
+
+        editTxtFirstName.addTextChangedListener(watcher);
+        editTxtLastName.addTextChangedListener(watcher);
+        editTxtEmail.addTextChangedListener(watcher);
+        editTxtPassword.addTextChangedListener(watcher);
+
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -60,7 +108,7 @@ public class UserDetailsFragment extends Fragment {
 
 
 
-        btnCancle.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "You didn't make any changes", Toast.LENGTH_SHORT).show();
@@ -69,7 +117,6 @@ public class UserDetailsFragment extends Fragment {
                 getActivity().finish();
             }
         });
-
 
         btnSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +137,7 @@ public class UserDetailsFragment extends Fragment {
                     else{
                         txtConfirmPassError.setVisibility(View.GONE);
                         password = editTxtPassword.getText().toString();
-                        Toast.makeText(getActivity(), "Changes saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Changes saved", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -101,12 +148,52 @@ public class UserDetailsFragment extends Fragment {
         });
 
 
+
+
+
+        imgShowPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTxtPassword.setTransformationMethod(null);
+                imgShowPassword.setVisibility(View.GONE);
+                imgHidePassword.setVisibility(View.VISIBLE);
+            }
+        });
+
+        imgShowConfirmPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTxtConfirmPassword.setTransformationMethod(null);
+                imgShowConfirmPassword.setVisibility(View.GONE);
+                imgHideConfirmPassword.setVisibility(View.VISIBLE);
+            }
+        });
+
+        imgHidePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTxtPassword.setTransformationMethod(new PasswordTransformationMethod());
+                imgShowPassword.setVisibility(View.VISIBLE);
+                imgHidePassword.setVisibility(View.GONE);
+            }
+        });
+
+        imgHideConfirmPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTxtConfirmPassword.setTransformationMethod(new PasswordTransformationMethod());
+                imgShowConfirmPassword.setVisibility(View.VISIBLE);
+                imgHideConfirmPassword.setVisibility(View.GONE);
+            }
+        });
+
+
         return view;
     }
 
     private void initView(View view) {
         btnSaveChanges = view.findViewById(R.id.btnSaveChanges);
-        btnCancle = view.findViewById(R.id.btnCancle);
+        btnCancel = view.findViewById(R.id.btnCancle);
         editTxtFirstName = view.findViewById(R.id.editTxtFirstName);
         editTxtLastName = view.findViewById(R.id.editTxtLastName);
         editTxtEmail = view.findViewById(R.id.editTxtEmail);
@@ -114,5 +201,10 @@ public class UserDetailsFragment extends Fragment {
         editTxtConfirmPassword = view.findViewById(R.id.editTxtConfirmPassword);
         txtEmailError = view.findViewById(R.id.txtEmailError);
         txtConfirmPassError = view.findViewById(R.id.txtConfirmPassError);
+        imgShowPassword = view.findViewById(R.id.imgShowPassword);
+        imgShowConfirmPassword = view.findViewById(R.id.imgShowConfirmPassword);
+        imgHidePassword = view.findViewById(R.id.imgHidePassword);
+        imgHideConfirmPassword = view.findViewById(R.id.imgHideConfirmPassword);
+        txtTitleConfirmPassword = view.findViewById(R.id.txtTitleConfirmPassword);
     }
 }

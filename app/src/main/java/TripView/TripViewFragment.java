@@ -1,5 +1,7 @@
 package TripView;
 
+import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,16 +14,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.TupApp.R;
 
 import JavaClasses.Utility;
+import MyTrips.MyTripsActivity;
 import NavigationDrawer.NavigationDrawerActivity;
+import TripCreation.CreateNewTripActivity;
 
 public class TripViewFragment extends Fragment {
 
 
     private RecyclerView dateRecView;
+    private Button btnSaveTrip;
+    private String callingActivity;
 
 
 
@@ -37,6 +44,11 @@ public class TripViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_trip_view, container, false);
         initViews(view);
 
+        callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
+        if(callingActivity.equals(MyTripsActivity.class.getName()))
+            btnSaveTrip.setVisibility(View.GONE);
+        else
+            btnSaveTrip.setVisibility(View.VISIBLE);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -60,6 +72,7 @@ public class TripViewFragment extends Fragment {
     }
     private void initViews(View view) {
         dateRecView = view.findViewById(R.id.dateRecView);
+        btnSaveTrip = view.findViewById(R.id.btnSaveTrip);
     }
 
 

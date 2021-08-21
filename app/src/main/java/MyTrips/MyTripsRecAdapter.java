@@ -1,5 +1,7 @@
 package MyTrips;
 
+import static MainScreen.MainScreenFragment.CALLING_ACTIVITY;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -83,6 +85,7 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, TripViewActivity.class);
+                intent.putExtra(CALLING_ACTIVITY, mContext.getClass().getName());
                 Utility.getInstance(mContext).setLastCreatedTrip(trips.get(position));
                 mContext.startActivity(intent);
             }
