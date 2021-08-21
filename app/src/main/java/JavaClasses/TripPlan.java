@@ -44,12 +44,12 @@ public class TripPlan {
         att.setPlaceID("1");
         //onePlans.add(new OnePlan(new Attraction("London Eye"), "09:00", "11:00"));
         onePlans.add(new OnePlan(att, "09:00", "11:00"));
-        onePlans.add(new OnePlan(new Attraction("Big Ben"), "11:00", "12:00"));
-        plans.add(new DayPlan(onePlans, "4.6.21"));
+        onePlans.add(new OnePlan(new Attraction("Big Ben"), "12:00", "14:00"));
+        plans.add(new DayPlan(onePlans, "10.10.21"));
         ArrayList<OnePlan> twoPlans = new ArrayList<>();
-        twoPlans.add(new OnePlan(new Attraction("Oxford Street"), "10:00", "13:00"));
+        twoPlans.add(new OnePlan(new Attraction("Buckingham Palace"), "10:00", "13:00"));
         twoPlans.add(new OnePlan(new Attraction("Piccadilly Street"), "14:00", "16:00"));
-        plans.add(new DayPlan(twoPlans, "5.6.21"));
+        plans.add(new DayPlan(twoPlans, "11.10.21"));
         TripPlan trip = new TripPlan(48, "London Trip", plans);
         return trip;
     }

@@ -16,10 +16,10 @@
         <item>London, UK</item>
     </string-array>
     <string-array name="hotels">
-        <item>Matan</item>
-        <item>Yael</item>
-        <item>Maya</item>
-        <item>Gal</item>
+        <item>Central Park Hotel</item>
+        <item>Park Plaza Hotel</item>
+        <item>Britannia International Hotel</item>
+        <item>Holiday Inn London </item>
     </string-array>
     <string name="title_activity_matan_test">MatanTest</string>
     <!-- Strings used for fragments for navigation -->

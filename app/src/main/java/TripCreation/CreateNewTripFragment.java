@@ -250,18 +250,18 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     private void initFinButton() {
         TripDetails tripDetails = new TripDetails();
-        tripDetails.setHotelID(spinnerHotels.getSelectedItem().toString());
-        tripDetails.setDestination(destinationSpinner.getSelectedItem().toString());
+        tripDetails.setHotelID("ChIJ1TVZs1UFdkgRIeWxo-jEYaE");
+        tripDetails.setDestination("london");
         for (Attraction attraction : Utility.getInstance(getContext()).getTripSelectedAttrations()) {
             tripDetails.getMustSeenAttractionsID().add(attraction.getPlaceID());
         }
         Utility.getInstance(getContext()).getTripSelectedAttrations().clear();
         tripDetails.setHoursEveryDay(desiredHours);
         try {
-            //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
+            ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
             //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.staticTrip());
-            Utility.getInstance(getContext()).setLastCreatedTrip(TripPlan.getStaticTripPlan());
-            Utility.getInstance(getContext()).addTrip(TripPlan.getStaticTripPlan());
+            //Utility.getInstance(getContext()).setLastCreatedTrip(TripPlan.getStaticTripPlan());
+            //Utility.getInstance(getContext()).addTrip(TripPlan.getStaticTripPlan());
             Intent intent = new Intent(this.getActivity(), TripViewActivity.class);
             intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName()); //TODO: this is for test
             startActivity(intent);

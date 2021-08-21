@@ -13,10 +13,10 @@ public class Utility {
 
 
     private static Utility instance;
-    private RequestQueue queue;
-    private Context context;
+    private static RequestQueue queue;
+    private static Context context;
     private static Traveler traveler;
-    private String travelerID;
+    private static String travelerID;
 
 
 
@@ -204,7 +204,6 @@ public class Utility {
         if(null == instance)
         {
             instance = new Utility(context);
-            instance.SharedPreferencesReader();
         }
         return instance;
     }
@@ -215,11 +214,12 @@ public class Utility {
         this.context = context;
         //SharedPreferencesReader();
         //Test function
-        attTestFiller();
+        //attTestFiller();
 
     }
 //----------------------------------------------------------------------------------------
 
+    /*
 
     public void SharedPreferencesWriter()
     {
@@ -249,6 +249,8 @@ public class Utility {
         }
 
     }
+     */
+
 
     //----------------------------------------------------------------------------------------
 

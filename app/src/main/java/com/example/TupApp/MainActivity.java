@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import JavaClasses.ServerConnection;
 import NavigationDrawer.NavigationDrawerActivity;
 import LoginAndRegister.LoginActivity;
 import LoginAndRegister.RegisterActivity;
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         initViews();
 
         //Matan Test
-        //ServerUtility.getInstance(this).getAttractions();
+        ServerConnection.getInstance(this.getApplicationContext()).getAttractionsFromServer("london");
+
 
         //ServerUtility.getInstance(this).getTrip(TripDetails.staticTrip());
         btnLogin.setOnClickListener(new View.OnClickListener() {
