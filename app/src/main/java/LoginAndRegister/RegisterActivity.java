@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,6 +19,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;
+
+import JavaClasses.ServerConnection;
+import JavaClasses.Traveler;
+import NavigationDrawer.NavigationDrawerActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -99,8 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                 confirmPasswordLayout.setError(null);
 
                 if(RegisterActivity.this.validateData()) {
-                    //sendRegisterInfoToServer();
-                    showSnackBar();
+                    sendRegisterInfoToServer();
                 }
             }
         });
@@ -201,20 +205,31 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-//        private void sendRegisterInfoToServer()
-//        {
-//            firstName = txtFirstName.getText().toString().trim();
-//            lastName = txtLastName.getText().toString().trim();
-//            email = txtEmail.getText().toString().trim();
-//            password = txtPassword.getText().toString().trim();
-//            Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
-//            try {
-//                ServerConnection.getInstance(this).register(registerTraveler);
-//                Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
-//                startActivity(intent);
-//                finish();
-//            } catch (ServerConnection.serverErrorException serverErrorException) {
-//                Toast.makeText(this, serverErrorException.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        }
+        private void sendRegisterInfoToServer()
+        {
+            firstName = txtFirstName.getText().toString().trim();
+            lastName = txtLastName.getText().toString().trim();
+            email = txtEmail.getText().toString().trim();
+            password = txtPassword.getText().toString().trim();
+            Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
+            ServerConnection.getInstance(this).register(registerTraveler);
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    ServerConnection.serverErrorException exception = ServerConnection.getInstance(getApplication().getApplicationContext()).getException();
+                    if(exception != null)
+                    {
+                        Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            };
+            new Handler().postDelayed(runnable, 3000);
+
+        }
 }

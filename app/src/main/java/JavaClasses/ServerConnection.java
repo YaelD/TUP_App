@@ -1,16 +1,12 @@
 package JavaClasses;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
-import android.os.Handler;
-import android.os.LocaleList;
+import android.telephony.mbms.StreamingServiceInfo;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -28,10 +24,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -42,13 +34,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
-import java.security.PublicKey;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SimpleTimeZone;
 
 public class ServerConnection {
 
@@ -61,8 +50,9 @@ public class ServerConnection {
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
-    private final String registerURL = "/register";
-    private final String updateURL = "/login";
+    private final String registerURL = "/traveler";
+    private final String updateURL = "/traveler";
+    private final String favAttractionsURL = "/attractions/favorites";
 //----------------------------------------------------------------------------------------
 
     public static synchronized ServerConnection getInstance(Context context) {
@@ -90,7 +80,9 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
 
     public serverErrorException getException() {
-        return this.exception;
+        ServerConnection.serverErrorException exceptionSaver = this.exception;
+        this.exception = null;
+        return exceptionSaver;
     }
 
     public void setException(serverErrorException exception) {
@@ -110,7 +102,8 @@ public class ServerConnection {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendTripDetailsToServer(TripDetails tripDetails) throws serverErrorException {
         Log.e("HERE==>", "Send A trip!!!!");
-        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter()).create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
+                .registerTypeAdapter(LocalDate.class,new LocalDateAdapter()).create();
         TripPlan tripPlan = new TripPlan(-1, "", null);
         ArrayList<DayPlan> arr = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + tripURL, new Response.Listener<String>() {
@@ -275,7 +268,7 @@ public class ServerConnection {
 
 //----------------------------------------------------------------------------------------
 
-    public void logIn(String email, String password) throws serverErrorException {
+    public void logIn(String email, String password) {
         /*
 
          */
@@ -333,7 +326,7 @@ public class ServerConnection {
     }
 //----------------------------------------------------------------------------------------
 
-    public void register(Traveler traveler) throws serverErrorException {
+    public void register(Traveler traveler) {
         Gson gson = new Gson();
         //make a new request
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + registerURL, new Response.Listener<String>() {
@@ -346,21 +339,22 @@ public class ServerConnection {
                         Utility.getInstance(context).setTraveler(traveler);
                         //Utility.getInstance(context).SharedPreferencesWriter();
                         Log.e("HERE==>", "Successfully Registered!");
+
                     } else {
-                        throw new serverErrorException(json.getString("message"));
+                        ServerConnection.getInstance(context).setException(new serverErrorException(json.getString("message")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("HERE==>", e.getMessage());
-                    throw new serverErrorException(e.getMessage());
-
+                    ServerConnection.getInstance(context).setException(new serverErrorException(e.getMessage()));
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("HERE==>", error.getMessage());
-                throw new serverErrorException("Error connecting to server, please try again");
+                ServerConnection.getInstance(context).setException
+                        (new serverErrorException("Error connecting to server, please try again"));
             }
         }) {
             @Override
@@ -389,7 +383,87 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
+    public void getFavoritesFromServer()
+    {
+        ArrayList<Attraction> favAttractions = new ArrayList<>();
 
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + favAttractionsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if(jsonObject.getString("status").equals("ok"))
+                            {
+                                JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
+                                for(int i =0; i < jsonArray.length(); ++i)
+                                {
+                                    favAttractions.add(new Gson().fromJson(jsonArray.get(i).toString(), Attraction.class));
+                                }
+                                Utility.getInstance(context).setFavoriteAttractions(favAttractions);
+                                Log.e("HERE==>", "got FavAttractions!!");
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("travelerID", Utility.getInstance(context).getTravelerID());
+                return params;
+            }
+        };
+        addToRequestQueue(stringRequest);
+    }
+
+//----------------------------------------------------------------------------------------
+
+    public void sendFavAttractions()
+    {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + favAttractionsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("travelerID", Utility.getInstance(context).getTravelerID());
+                return params;
+
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String body = new Gson().toJson(Utility.getInstance(context).getFavoriteAttractions());
+                return body.getBytes();
+            }
+        };
+    }
+
+
+
+//----------------------------------------------------------------------------------------
 
     public void updateUser(Traveler newTravelerDetails) throws serverErrorException
     {
@@ -404,19 +478,19 @@ public class ServerConnection {
                     }
                     else
                     {
-                        throw new serverErrorException("Error connecting to Server");
+                        ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("VolleyError==>", e.getMessage());
-                    throw new serverErrorException("Error connecting to Server");
+                    ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("VolleyError==>", error.getMessage());
-                throw new serverErrorException("Error connecting to Server");
+                ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
             }
         }){
             @Nullable
@@ -444,15 +518,6 @@ public class ServerConnection {
         }
     }
 
-
-    public class TUPStringRequest extends StringRequest
-    {
-
-        public TUPStringRequest(int method, String url, Response.Listener<String> listener, @Nullable Response.ErrorListener errorListener) throws  serverErrorException {
-            super(method, url, listener, errorListener);
-
-        }
-    }
 
     class LocalTimeAdapter extends TypeAdapter<LocalTime> {
 
@@ -484,6 +549,40 @@ public class ServerConnection {
             in.endObject();
             //Log.e("GSON ADAPTER==>", time.substring(1,6));
             return LocalTime.parse(time.substring(1,6));
+        }
+    }
+
+    class LocalDateAdapter extends TypeAdapter<LocalDate>
+    {
+
+        @Override
+        public void write(JsonWriter out, LocalDate value) throws IOException {
+
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public LocalDate read(JsonReader in) throws IOException {
+            in.beginObject();
+            String date = "";
+            String fieldName = null;
+            while(in.hasNext())
+            {
+                JsonToken token = in.peek();
+                if(token.equals(JsonToken.NAME))
+                {
+                    fieldName = in.nextName();
+                }
+                String curr = in.nextString();
+                if(curr.length() == 1)
+                {
+                    curr = "0" + curr;
+                }
+                date = date + "-" + curr;
+            }
+            in.endObject();
+            return LocalDate.parse(date.substring(1,11));
+
         }
     }
 

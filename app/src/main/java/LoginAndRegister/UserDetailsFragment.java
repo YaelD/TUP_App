@@ -2,6 +2,7 @@ package LoginAndRegister;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
@@ -23,6 +24,7 @@ import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import JavaClasses.ServerConnection;
 import NavigationDrawer.NavigationDrawerActivity;
 import JavaClasses.Utility;
 import JavaClasses.Traveler;
@@ -142,7 +144,25 @@ public class UserDetailsFragment extends Fragment {
                 }
 
                 Traveler newTraveler = new Traveler(firstName, lastName, email, password);
-                Utility.getInstance(getContext()).setTraveler(newTraveler);
+                ServerConnection.getInstance(getContext()).updateUser(newTraveler);
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        ServerConnection.serverErrorException exception = ServerConnection.getInstance(getContext()).getException();
+                        if(exception!= null)
+                        {
+                            Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Utility.getInstance(getContext()).setTraveler(newTraveler);
+                            Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                        }
+                    }
+                };
+                new Handler().postDelayed(runnable, 3000);
 
             }
         });
