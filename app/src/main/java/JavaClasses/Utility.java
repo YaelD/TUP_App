@@ -205,6 +205,7 @@ public class Utility {
         {
             instance = new Utility(context);
         }
+        instance.setTraveler(instance.TestTraveler);
         return instance;
     }
 

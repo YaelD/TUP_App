@@ -268,14 +268,10 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-
                 Intent intent = new Intent(getActivity(), TripViewActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName()); //TODO: this is for test
                 startActivity(intent);
                 getActivity().finish();
-
-
             }
         }, 5000);
 
