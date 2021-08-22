@@ -2,10 +2,21 @@ package JavaClasses;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
+import android.os.Handler;
+import android.os.LocaleList;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -16,24 +27,37 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.security.PublicKey;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SimpleTimeZone;
 
 public class ServerConnection {
 
     private static ServerConnection instance;
-    private static RequestQueue queue;
-    private static Context context;
-    private static ServerConnection.serverErrorException exception;
+    private RequestQueue queue;
+    private Context context;
+    private ServerConnection.serverErrorException exception;
 
-    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -83,29 +107,35 @@ public class ServerConnection {
 
 //----------------------------------------------------------------------------------------
 
-    public ArrayList<DayPlan> sendTripDetailsToServer(TripDetails tripDetails) throws serverErrorException {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void sendTripDetailsToServer(TripDetails tripDetails) throws serverErrorException {
         Log.e("HERE==>", "Send A trip!!!!");
-
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter()).create();
+        TripPlan tripPlan = new TripPlan(-1, "", null);
         ArrayList<DayPlan> arr = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + tripURL, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    Log.e("HERE==>", "Got A response!" + response);
-
                     if (jsonResponse.getString("status").equals("ok")) {
-                        JSONArray jsonArray = jsonResponse.getJSONArray("message");
-                        Gson gson = new Gson();
+
+                        JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
+                        //Gson gson = new Gson();
                         for (int i = 0; i < jsonArray.length(); ++i) {
-                            String attractionJsonString = jsonArray.getString(i);
-                            arr.add(gson.fromJson(attractionJsonString, DayPlan.class));
+                            String dayPlan = jsonArray.getString(i);
+                            JSONObject json = new JSONObject(dayPlan);
+
+                            LocalTime localTime = gson.fromJson(json.getString("startTime"), LocalTime.class);
+                            Log.e("StartTime==>", localTime.format(DateTimeFormatter.ISO_TIME));
+
+                            arr.add(gson.fromJson(dayPlan, DayPlan.class));
+                            Log.e("EndTime==>", json.getString("finishTime"));
                         }
-
-                        TripPlan tripPlan = new TripPlan(-1, "", arr);
+                        tripPlan.setPlans(arr);
                         Utility.getInstance(context).setLastCreatedTrip(tripPlan);
-                        Log.e("HERE==>", "Successfully got Trip!");
-
+                        //TripPlan tripPlan = new TripPlan(-1, "", arr);
                     } else {
                         Log.e("ERROR==>", jsonResponse.getString("message"));
                         throw new serverErrorException(jsonResponse.getString("message"));
@@ -113,8 +143,6 @@ public class ServerConnection {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -140,7 +168,7 @@ public class ServerConnection {
 
         //instance.queue.add(stringRequest);
         addToRequestQueue(stringRequest);
-        return arr;
+        //return arr;
     }
 
 //----------------------------------------------------------------------------------------
@@ -248,55 +276,59 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
 
     public void logIn(String email, String password) throws serverErrorException {
-            StringRequest stringRequest = new StringRequest( Request.Method.POST, baseURL + loginURL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject json = new JSONObject(response);
-                        if (json.getString("status").equals("ok")) {
-                            String jsonUserString = json.getString("message");
-                            Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
-                            Utility.getInstance(context).setTraveler(traveler);
-                            ServerConnection.getInstance(context).setException(null);
-                            Log.e("HERE==>", "Successfully LoggedIn");
-                        } else {
-                            Log.e("HERE==>", "Didn't Login");
-                            ServerConnection.getInstance(context).setException
-                                    (new serverErrorException(json.getString("message")));
-                        }
-                    } catch (JSONException e) {
-                        Log.e("HERE==>", e.getMessage());
+        /*
+
+         */
+        StringRequest stringRequest = new StringRequest( Request.Method.POST, baseURL + loginURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    if (json.getString("status").equals("ok")) {
+                        String jsonUserString = json.getString("message");
+                        Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
+                        Utility.getInstance(context).setTraveler(traveler);
+                        ServerConnection.getInstance(context).setException(null);
+                        Log.e("HERE==>", "Successfully LoggedIn");
+                    } else {
+                        Log.e("HERE==>", "Didn't Login");
                         ServerConnection.getInstance(context).setException
-                                (new serverErrorException(e.getMessage()));
-
+                                (new serverErrorException(json.getString("message")));
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("HERE==>", error.getMessage());
+                } catch (JSONException e) {
+                    Log.e("HERE==>", e.getMessage());
                     ServerConnection.getInstance(context).setException
-                            (new serverErrorException("Error connecting to server, please try again"));
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> data = new HashMap<>();
-                    data.put("travelerID", Utility.getInstance(context).getTravelerID());
-                    data.put("Content-Type", "application/json");
-                    return data;
-                }
+                            (new serverErrorException(e.getMessage()));
 
-                @Override
-                public byte[] getBody() throws AuthFailureError {
-                    String res = "{" +
-                            "\"emailAddress\":\"" + email + "\",\n" +
-                            "\"password\":\"" + password + "\"" +
-                            "}";
-                    return res.getBytes(StandardCharsets.UTF_8);
                 }
-            };
-            //queue.add(stringRequest);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("HERE==>", error.getMessage());
+                ServerConnection.getInstance(context).setException
+                        (new serverErrorException("Error connecting to server, please try again"));
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String res = "{" +
+                        "\"emailAddress\":\"" + email + "\",\n" +
+                        "\"password\":\"" + password + "\"" +
+                        "}";
+                return res.getBytes(StandardCharsets.UTF_8);
+            }
+        };
+
+        //queue.add(stringRequest);
             addToRequestQueue(stringRequest);
     }
 //----------------------------------------------------------------------------------------
@@ -411,6 +443,50 @@ public class ServerConnection {
             super(message);
         }
     }
+
+
+    public class TUPStringRequest extends StringRequest
+    {
+
+        public TUPStringRequest(int method, String url, Response.Listener<String> listener, @Nullable Response.ErrorListener errorListener) throws  serverErrorException {
+            super(method, url, listener, errorListener);
+
+        }
+    }
+
+    class LocalTimeAdapter extends TypeAdapter<LocalTime> {
+
+        @Override
+        public void write(JsonWriter out, LocalTime value) throws IOException {
+
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public LocalTime read(JsonReader in) throws IOException {
+            in.beginObject();
+            String time = "";
+            String fieldName = null;
+            while(in.hasNext())
+            {
+                JsonToken token = in.peek();
+                if(token.equals(JsonToken.NAME))
+                {
+                    fieldName = in.nextName();
+                }
+                String curr = in.nextString();
+                if(curr.length() == 1)
+                {
+                    curr = "0" + curr;
+                }
+                time += ":" + curr;
+            }
+            in.endObject();
+            //Log.e("GSON ADAPTER==>", time.substring(1,6));
+            return LocalTime.parse(time.substring(1,6));
+        }
+    }
+
 
 
 }

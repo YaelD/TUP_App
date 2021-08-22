@@ -22,7 +22,6 @@ import JavaClasses.Traveler;
 public class RegisterActivity extends AppCompatActivity {
 
 
-    private final String URL = "http://10.0.0.5:8080/web_war_exploded/register";
     private static final String TAG = "RegisterActivity";
     private EditText txtFirstName, txtLastName, txtEmailAddr, txtPasswordRegister, txtRePassword;
     private TextView txtWarnFirstName, txtWarnLastName, txtWarningEmail, txtWarningPassword, txtWarningComfirmPass;

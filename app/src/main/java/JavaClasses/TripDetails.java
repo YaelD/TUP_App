@@ -1,5 +1,9 @@
 package JavaClasses;
 
+import androidx.annotation.NonNull;
+
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class TripDetails {
@@ -70,5 +74,20 @@ public class TripDetails {
 
     }
 
+    public static TripDetails getTrip2()
+    {
+        String str = "{\"destination\":\"london\",\"hotelID\":\"ChIJGeIsmrgEdkgRlsvY9Maa0A0\",\"mustSeenAttractionsID\":[\"ChIJ_R7u-6QcdkgR_TvWQJZsm3k\",\"ChIJ2_19mdYEdkgRadLE5rfxLPU\",\"ChIJ7bDgv2IadkgRkIbzf3FdF5M\",\"ChIJG1YB2m4RdkgRsetv9D40NGY\",\"ChIJVbSVrt0EdkgRQH_FO4ZkHc0\"],\"hoursEveryDay\":[{\"date\":\"2021-08-11\",\"startTime\":\"10:00\",\"endTime\":\"20:00\"},{\"date\":\"2021-08-12\",\"startTime\":\"10:00\",\"endTime\":\"18:00\"},{\"date\":\"2021-08-13\",\"startTime\":\"15:00\",\"endTime\":\"20:00\"}]}";
+        return new Gson().fromJson(str, TripDetails.class);
+    }
 
+
+    @Override
+    public String toString() {
+        return "TripDetails{" +
+                "destination='" + destination + '\'' +
+                ", hotelID='" + hotelID + '\'' +
+                ", mustSeenAttractionsID=" + mustSeenAttractionsID +
+                ", hoursEveryDay=" + hoursEveryDay +
+                '}';
+    }
 }

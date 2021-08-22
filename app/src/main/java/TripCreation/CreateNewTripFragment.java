@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -238,16 +240,17 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
 
         btnFinishCreation.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 initFinButton();
             }
         });
-
         return view;
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initFinButton() {
         TripDetails tripDetails = new TripDetails();
         tripDetails.setHotelID("ChIJ1TVZs1UFdkgRIeWxo-jEYaE");
@@ -257,20 +260,24 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         }
         Utility.getInstance(getContext()).getTripSelectedAttrations().clear();
         tripDetails.setHoursEveryDay(desiredHours);
-        try {
-            ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
-            //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.staticTrip());
-            //Utility.getInstance(getContext()).setLastCreatedTrip(TripPlan.getStaticTripPlan());
-            //Utility.getInstance(getContext()).addTrip(TripPlan.getStaticTripPlan());
-            Intent intent = new Intent(this.getActivity(), TripViewActivity.class);
-            intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName()); //TODO: this is for test
-            startActivity(intent);
-            getActivity().finish();
-        }
-        catch (ServerConnection.serverErrorException exception)
-        {
-            Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT);
-        }
+        Log.e("TRIP==>", tripDetails.toString());
+        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
+        //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.staticTrip());
+        //Utility.getInstance(getContext()).setLastCreatedTrip(TripPlan.getStaticTripPlan());
+        //Utility.getInstance(getContext()).addTrip(TripPlan.getStaticTripPlan());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+
+                Intent intent = new Intent(getActivity(), TripViewActivity.class);
+                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName()); //TODO: this is for test
+                startActivity(intent);
+                getActivity().finish();
+
+
+            }
+        }, 5000);
 
     }
 

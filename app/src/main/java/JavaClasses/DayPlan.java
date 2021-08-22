@@ -19,7 +19,9 @@ public class DayPlan {
     LocalTime finishTime;
     int durationDay = 0;
     //TODO: delete dateStr when finish testing
-    String dateStr;
+    //String dateStr;
+    ArrayList<Attraction> mustSeenAttractionsForDay = new ArrayList<>();
+
 
     public DayPlan(double durationDesireByUser, ArrayList<OnePlan> daySchedule, LocalDate date,
                    Attraction hotel, LocalTime startTime, LocalTime finishTime, int durationDay) {
@@ -96,6 +98,8 @@ public class DayPlan {
     }
 
     //---------------------------------------------------------------------
+   /*
+
     public DayPlan(ArrayList<OnePlan> daySchedule, String dateStr) {
         this.daySchedule = daySchedule;
         this.dateStr = dateStr;
@@ -108,4 +112,6 @@ public class DayPlan {
     public void setDateStr(String dateStr) {
         this.dateStr = dateStr;
     }
+
+    */
 }

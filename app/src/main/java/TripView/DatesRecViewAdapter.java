@@ -43,13 +43,12 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.txtDate.setText(plans.get(position).getDate().toString());
-        holder.txtDate.setText(plans.get(position).getDateStr());
+        holder.txtDate.setText(plans.get(position).getDate().toString());
+        //holder.txtDate.setText(plans.get(position).getDateStr());
         AttractionsRecViewAdapter adapter = new AttractionsRecViewAdapter(mContext);
         adapter.setOnePlans(plans.get(position).getDaySchedule());
         holder.recViewAttractions.setAdapter(adapter);
         holder.recViewAttractions.setLayoutManager(new LinearLayoutManager(mContext));
-        Log.e("HERE==>", "Set Attractions RecView for holder");
     }
 
     @Override

@@ -48,7 +48,7 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         //holder.txtHours.setText(onePlans.get(position).getStartTime().toString());
-        holder.txtHours.setText(onePlans.get(position).getStartTimeStr());
+        holder.txtHours.setText(onePlans.get(position).getStartTime().toString());
         holder.txtAttractionName.setText(onePlans.get(position).getAttraction().getName());
         holder.attractionCardView.setOnClickListener(new View.OnClickListener() {
             @Override
