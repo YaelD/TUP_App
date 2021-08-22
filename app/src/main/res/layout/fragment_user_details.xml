@@ -16,11 +16,14 @@
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="First Name"
-        android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:inputType="textCapSentences|textPersonName"
+        android:maxLines="1"
+        android:singleLine="true"/>
 
 
     <EditText
@@ -31,7 +34,10 @@
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="Last Name"
-        android:inputType="textPersonName"
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:inputType="textCapSentences|textPersonName"
+        android:maxLines="1"
+        android:singleLine="true"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +52,10 @@
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="Email"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
         android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:singleLine="true"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,11 +70,14 @@
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitlePassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitlePassword"
+        android:inputType="textPassword"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
+        android:maxLines="1"
+        android:singleLine="true"/>
 
 
     <EditText
@@ -76,12 +88,15 @@
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="Confirm Password"
-        android:inputType="textPassword"
         android:minHeight="48dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitleConfirmPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitleConfirmPassword"
+        android:inputType="textPassword"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
+        android:maxLines="1"
+        android:singleLine="true"/>
 
     <Button
         android:id="@+id/btnSaveChanges"

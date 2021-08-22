@@ -67,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else if (isEmailValid(txtEmail.getText().toString())){
                     mailLayout.setError(null);
+
                 }
 
                 if(txtFirstName.getText().toString().length() > 0){
