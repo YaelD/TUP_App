@@ -286,7 +286,7 @@ public class ServerConnection {
                     } else {
                         Log.e("HERE==>", "Didn't Login");
                         ServerConnection.getInstance(context).setException
-                                (new serverErrorException(json.getString("message")));
+                                (new serverErrorException("Invalid password or email address. Please try again"));
                     }
                 } catch (JSONException e) {
                     Log.e("HERE==>", e.getMessage());
@@ -352,9 +352,9 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("HERE==>", error.getMessage());
+                //Log.e("HERE==>", error.getMessage());
                 ServerConnection.getInstance(context).setException
-                        (new serverErrorException("Error connecting to server, please try again"));
+                        (new serverErrorException("Error connecting to server, please try later"));
             }
         }) {
             @Override

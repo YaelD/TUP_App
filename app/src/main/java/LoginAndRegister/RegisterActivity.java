@@ -31,7 +31,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister;
     private TextInputLayout FirstNameLayout, LastNameLayout, mailLayout, passwordLayout, confirmPasswordLayout;
     private  String firstName, lastName, email, password;
-    private ConstraintLayout parent;
 
 
     @Override
@@ -123,7 +122,6 @@ public class RegisterActivity extends AppCompatActivity {
         LastNameLayout = findViewById(R.id.LastNameLayout);
         passwordLayout = findViewById(R.id.passwordLayout);
         confirmPasswordLayout = findViewById(R.id.confirmPasswordLayout);
-        parent = findViewById(R.id.parent);
     }
 
     private boolean validateData() {
@@ -186,24 +184,6 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         return pat.matcher(email).matches();
     }
-
-    private void showSnackBar() {
-        Log.d(TAG, "showSnackBar: started");
-
-        Snackbar.make(parent, "You have successfully registered", Snackbar.LENGTH_LONG)
-                .setAction("Dismiss", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        txtFirstName.setText("");
-                        txtLastName.setText("");
-                        txtEmail.setText("");
-                        txtPassword.setText("");
-                        txtConfirmPassword.setText("");
-                    }
-                })
-                .show();
-    }
-
 
         private void sendRegisterInfoToServer()
         {
