@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import JavaClasses.ServerConnection;
-import NavigationDrawer.NavigationDrawerActivity;
-import LoginAndRegister.LoginActivity;
-import LoginAndRegister.RegisterActivity;
+import javaClasses.ServerConnection;
+import navigationDrawer.NavigationDrawerActivity;
+import loginAndRegister.LoginActivity;
+import loginAndRegister.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
