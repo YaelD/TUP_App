@@ -45,7 +45,7 @@ public class ServerConnection {
     private Context context;
     private ServerConnection.serverErrorException exception;
 
-    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -127,7 +127,6 @@ public class ServerConnection {
                         }
                         tripPlan.setPlans(arr);
                         Utility.getInstance(context).setLastCreatedTrip(tripPlan);
-                        //TripPlan tripPlan = new TripPlan(-1, "", arr);
                     } else {
                         Log.e("ERROR==>", jsonResponse.getString("message"));
                         throw new serverErrorException(jsonResponse.getString("message"));
@@ -297,7 +296,7 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("HERE==>", error.getMessage());
+                //Log.e("HERE==>", error.getMessage());
                 ServerConnection.getInstance(context).setException
                         (new serverErrorException("Error connecting to server, please try again"));
             }

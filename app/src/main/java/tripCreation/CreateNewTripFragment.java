@@ -254,7 +254,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         Utility.getInstance(getContext()).getTripSelectedAttrations().clear();
         tripDetails.setHoursEveryDay(desiredHours);
         Log.e("TRIP==>", tripDetails.toString());
-        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
+        //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
+        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
