@@ -45,13 +45,17 @@ public class ServerConnection {
     private Context context;
     private ServerConnection.serverErrorException exception;
 
-    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
     private final String registerURL = "/traveler";
     private final String updateURL = "/traveler";
     private final String favAttractionsURL = "/attractions/favorites";
+
+    //TODO: function that sends trips to DB
+
+
 //----------------------------------------------------------------------------------------
 
     public static synchronized ServerConnection getInstance(Context context) {
@@ -302,11 +306,12 @@ public class ServerConnection {
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> data = new HashMap<>();
                 data.put("travelerID", Utility.getInstance(context).getTravelerID());
                 data.put("Content-Type", "application/json");
                 return data;
+
             }
 
             @Override
@@ -357,9 +362,10 @@ public class ServerConnection {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                return params;
+                Map<String, String> data = new HashMap<>();
+                data.put("Content-Type", "application/json");
+                return data;
+
             }
 
             @Override
@@ -413,12 +419,13 @@ public class ServerConnection {
             }
         })
         {
-            @Nullable
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("travelerID", Utility.getInstance(context).getTravelerID());
-                return params;
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+
             }
         };
         addToRequestQueue(stringRequest);
@@ -442,12 +449,12 @@ public class ServerConnection {
             }
         })
         {
-            @Nullable
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("travelerID", Utility.getInstance(context).getTravelerID());
-                return params;
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
 
             }
 
@@ -491,13 +498,13 @@ public class ServerConnection {
                 ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
             }
         }){
-            @Nullable
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                params.put("travelerID", Utility.getInstance(context).getTravelerID());
-                return params;
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+
             }
 
             @Override

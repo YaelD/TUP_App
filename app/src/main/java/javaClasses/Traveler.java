@@ -10,7 +10,6 @@ public class Traveler implements Serializable {
     private String lastName;
     private String emailAddress;
     private String password;
-    //private RouteTrip routeTrip;
 
     public Traveler(String firstName, String lastName, String emailAddress, String password) {
         this.firstName = firstName;

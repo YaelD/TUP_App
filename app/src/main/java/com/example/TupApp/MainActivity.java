@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import javaClasses.ServerConnection;
+import javaClasses.Utility;
 import navigationDrawer.NavigationDrawerActivity;
 import loginAndRegister.LoginActivity;
 import loginAndRegister.RegisterActivity;
@@ -26,12 +27,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initViews();
-
-        //Matan Test
-        ServerConnection.getInstance(this.getApplicationContext()).getAttractionsFromServer("london");
+        preLaunch();
 
 
-        //ServerUtility.getInstance(this).getTrip(TripDetails.staticTrip());
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +66,14 @@ public class MainActivity extends AppCompatActivity {
 
         backgroundImage = findViewById(R.id.backgroundImage);
         logoImage = findViewById(R.id.logoImage);
+    }
 
+
+    private void preLaunch()
+    {
+        ServerConnection.getInstance(this.getApplicationContext()).getAttractionsFromServer("london");
+        Utility.getInstance(getApplicationContext()).setTravelerID("3");
+        ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
 
     }
 }

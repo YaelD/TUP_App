@@ -1,8 +1,11 @@
 package javaClasses;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.android.volley.RequestQueue;
+import com.example.TupApp.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -10,19 +13,19 @@ public class Utility {
 
 
     private static Utility instance;
-    private static RequestQueue queue;
-    private static Context context;
-    private static Traveler traveler;
-    private static String travelerID;
+    private Context context;
+    private Traveler traveler;
+    private String travelerID;
+    private SharedPreferences sharedPreferences;
 
 
 
-    private static ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
-    private static ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
-    private static ArrayList<Attraction> attractions = new ArrayList<>();
-    private static ArrayList<Attraction> hotels = new ArrayList<>();
-    private static TripPlan lastCreatedTrip;
-    private static ArrayList<TripPlan> allTrips = new ArrayList<>();
+    private ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
+    private ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
+    private ArrayList<Attraction> attractions = new ArrayList<>();
+    private ArrayList<Attraction> hotels = new ArrayList<>();
+    private TripPlan lastCreatedTrip;
+    private ArrayList<TripPlan> allTrips = new ArrayList<>();
 
     private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
@@ -64,7 +67,7 @@ public class Utility {
     }
 
     public void setAllTrips(ArrayList<TripPlan> allTrips) {
-        Utility.allTrips = allTrips;
+        instance.allTrips = allTrips;
     }
 
 
@@ -79,11 +82,11 @@ public class Utility {
 
 
     public void setHotels(ArrayList<Attraction> hotels) {
-        Utility.hotels = hotels;
+        instance.hotels = hotels;
     }
 
     public void setAttractions(ArrayList<Attraction> attractions) {
-        Utility.attractions = attractions;
+        instance.attractions = attractions;
     }
 
 
@@ -94,18 +97,18 @@ public class Utility {
     }
 
     public void setLastCreatedTrip(TripPlan lastCreatedTrip) {
-        Utility.lastCreatedTrip = lastCreatedTrip;
+        instance.lastCreatedTrip = lastCreatedTrip;
     }
 
     //----------------------------------------------------------------------------------------
 
     public static void attTestFiller()
     {
-        attractions.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
+        instance.attractions.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
                 "+44 20 7967 8021", "https://www.londoneye.com/", "1",
                 "https://media.cntraveler.com/photos/55c8be0bd36458796e4ca38a/master/pass/london-eye-2-cr-getty.jpg"));
-        attractions.get(0).setGeometry(new Geometry("0", "0"));
-        attractions.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
+        instance.attractions.get(0).setGeometry(new Geometry("0", "0"));
+        instance.attractions.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
                 "+44 303 123 7300", "https://www.royal.uk/royal-residences-buckingham-palace", "2",
                 "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
     }
@@ -210,44 +213,34 @@ public class Utility {
 
     private Utility(Context context) {
         this.context = context;
-        //SharedPreferencesReader();
-        //Test function
-        //attTestFiller();
+        this.sharedPreferences = context.getSharedPreferences("sharedPreference", Context.MODE_PRIVATE);
+        initData();
+    }
 
+    private void saveData()
+    {
+        ServerConnection.getInstance(context).sendFavAttractions();
+        ServerConnection.getInstance(context).updateUser(instance.getTraveler());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("travelerID", instance.getTravelerID());
+        editor.putString("traveler", new Gson().toJson(instance.getTraveler()));
+        editor.commit();
+    }
+
+    private void initData() {
+        if(sharedPreferences.contains("travelerID"))
+        {
+            instance.setTravelerID(sharedPreferences.getString("travelerID", ""));
+            String travelerJson = sharedPreferences.getString("traveler", "");
+            Traveler traveler = new Gson().fromJson(travelerJson, Traveler.class);
+            Utility.instance.setTraveler(traveler);
+            ServerConnection.getInstance(context).getFavoritesFromServer();
+            ServerConnection.getInstance(context).getAttractionsFromServer("london");
+            ServerConnection.getInstance(context).getHotelsFromServer("london");
+        }
     }
 //----------------------------------------------------------------------------------------
 
-    /*
-
-    public void SharedPreferencesWriter()
-    {
-        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("emailAddress", traveler.getEmailAddress());
-        editor.putString("password", traveler.getPassword());
-        editor.putString("firstName", traveler.getFirstName());
-        editor.putString("lastName", traveler.getLastName());
-        editor.putString("travelerID", this.travelerID);
-        editor.commit();
-
-    }
-
-    private void SharedPreferencesReader()
-    {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        if(sharedPreferences!= null)
-        {
-            this.setTravelerID(sharedPreferences.getString("travelerID", null));
-            String firstName, lastName, password, email;
-            firstName = sharedPreferences.getString("firstName", null);
-            lastName = sharedPreferences.getString("lastName", null);
-            password = sharedPreferences.getString("password", null);
-            email = sharedPreferences.getString("emailAddress", null);
-            instance.setTraveler(new Traveler(firstName, lastName, email, password));
-        }
-
-    }
-     */
 
 
     //----------------------------------------------------------------------------------------
