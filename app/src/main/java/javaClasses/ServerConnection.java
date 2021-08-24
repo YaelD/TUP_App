@@ -107,7 +107,7 @@ public class ServerConnection {
         Log.e("HERE==>", "Send A trip!!!!");
         Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                 .registerTypeAdapter(LocalDate.class,new LocalDateAdapter()).create();
-        TripPlan tripPlan = new TripPlan(-1, "", null);
+        TripPlan tripPlan = new TripPlan("", null);
         ArrayList<DayPlan> arr = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + tripURL, new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -131,6 +131,7 @@ public class ServerConnection {
                         }
                         tripPlan.setPlans(arr);
                         Utility.getInstance(context).setLastCreatedTrip(tripPlan);
+                        Utility.getInstance(context).getAllTrips().add(tripPlan);
                     } else {
                         Log.e("ERROR==>", jsonResponse.getString("message"));
                         throw new serverErrorException(jsonResponse.getString("message"));
@@ -168,6 +169,165 @@ public class ServerConnection {
 
 //----------------------------------------------------------------------------------------
 
+    public void sendTripPlan(TripPlan tripPlan)
+    {
+        Log.e("HERE==>", "Send A trip!!!!");
+        ArrayList<DayPlan> arr = new ArrayList<>();
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + tripURL, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    if (jsonResponse.getString("status").equals("ok")) {
+
+                        int id  = jsonResponse.getInt("message");
+                        int lastIndex =Utility.getInstance(context).getAllTrips().size() -1;
+                        Utility.getInstance(context).getAllTrips().get(lastIndex).setTripID(id);
+                        Utility.getInstance(context).getLastCreatedTrip().setTripID(id);
+                        Utility.getInstance(context).setLastCreatedTrip(null);
+
+                    } else {
+                        Log.e("ERROR==>", jsonResponse.getString("message"));
+                        ServerConnection.getInstance(context).setException(new serverErrorException(jsonResponse.getString("message")));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ERROR==>", error.getMessage());
+                ServerConnection.getInstance(context).setException(new serverErrorException(error.getMessage()));
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("travelerID", Utility.getInstance(context).getTravelerID());
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String body = new Gson().toJson(tripPlan);
+                return body.getBytes();
+            }
+        };
+
+        //instance.queue.add(stringRequest);
+        addToRequestQueue(stringRequest);
+
+    }
+
+//----------------------------------------------------------------------------------------
+
+    public void getTripsFromServer()
+    {
+        ArrayList<TripPlan> trips = new ArrayList<>();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + tripURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    if (jsonResponse.getString("status").equals("ok")) {
+                        Log.e("HERE==>", "Got OK Response");
+                        JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
+                        for(int i =0; i < jsonArray.length(); ++i)
+                        {
+                            TripPlan tripPlan  = new Gson().fromJson(jsonArray.get(i).toString(), TripPlan.class);
+                            trips.add(tripPlan);
+                        }
+
+                        Utility.getInstance(context).setAllTrips(trips);
+                    } else {
+                        Log.e("ERROR==>", jsonResponse.getString("message"));
+                        throw new serverErrorException(jsonResponse.getString("message"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                Log.e("ERROR==>", error.getMessage());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("travelerID", Utility.getInstance(context).getTravelerID());
+                return params;
+            }
+        };
+
+
+    }
+
+
+//----------------------------------------------------------------------------------------
+
+    public void sendTripPlansToDelete()
+    {
+        Log.e("HERE==>", "Send A trip!!!!");
+        ArrayList<DayPlan> arr = new ArrayList<>();
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + tripURL, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    if (jsonResponse.getString("status").equals("ok")) {
+
+                        int id  = jsonResponse.getInt("message");
+                        int lastIndex =Utility.getInstance(context).getAllTrips().size() -1;
+                        Utility.getInstance(context).getAllTrips().get(lastIndex).setTripID(id);
+                        Utility.getInstance(context).getLastCreatedTrip().setTripID(id);
+                        Utility.getInstance(context).setLastCreatedTrip(null);
+
+                    } else {
+                        Log.e("ERROR==>", jsonResponse.getString("message"));
+                        ServerConnection.getInstance(context).setException(new serverErrorException(jsonResponse.getString("message")));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ERROR==>", error.getMessage());
+                ServerConnection.getInstance(context).setException(new serverErrorException(error.getMessage()));
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("travelerID", Utility.getInstance(context).getTravelerID());
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String body = "";
+
+                return body.getBytes();
+            }
+        };
+        //instance.queue.add(stringRequest);
+        addToRequestQueue(stringRequest);
+
+    }
+
+//----------------------------------------------------------------------------------------
 
     public void getHotelsFromServer(String destination) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + allAttractionsURL, new Response.Listener<String>() {
@@ -212,7 +372,6 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
-
 
     public void getAttractionsFromServer(String destination) {
         String url = baseURL + allAttractionsURL;

@@ -2,6 +2,7 @@ package tripView;
 
 import static mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -16,6 +17,7 @@ import android.widget.Button;
 
 import com.example.TupApp.R;
 
+import javaClasses.ServerConnection;
 import javaClasses.Utility;
 import myTrips.MyTripsActivity;
 
@@ -55,6 +57,30 @@ public class TripViewFragment extends Fragment {
 
         getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
+
+        btnSaveTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip());
+                Runnable run = new Runnable() {
+                    @Override
+                    public void run() {
+                        ServerConnection.serverErrorException exception =
+                                ServerConnection.getInstance(getContext()).getException();
+                        if(exception == null)
+                        {
+                            //TODO: add a new name for the created trip!
+                            Utility.getInstance(getContext()).getLastCreatedTrip().setName("Test");
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                };
+
+            }
+        });
 
 
 

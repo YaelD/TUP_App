@@ -3,22 +3,14 @@ package javaClasses;
 import java.util.ArrayList;
 
 public class TripPlan {
-    private int id;
     private String name;
     private ArrayList<DayPlan> plans = new ArrayList<>();
+    private int tripID;
 
-    public TripPlan(int id, String name, ArrayList<DayPlan> plans) {
-        this.id = id;
+
+    public TripPlan(String name, ArrayList<DayPlan> plans) {
         this.name = name;
         this.plans = plans;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public ArrayList<DayPlan> getPlans() {
@@ -37,6 +29,14 @@ public class TripPlan {
         this.plans = plans;
     }
 
+    public int getTripID() {
+        return tripID;
+    }
+
+    public void setTripID(int tripID) {
+        this.tripID = tripID;
+    }
+
     public static TripPlan getStaticTripPlan()
     {
         ArrayList<DayPlan> plans = new ArrayList<>();
@@ -52,7 +52,7 @@ public class TripPlan {
         //twoPlans.add(new OnePlan(new Attraction("Buckingham Palace"), "10:00", "13:00"));
         //twoPlans.add(new OnePlan(new Attraction("Piccadilly Street"), "14:00", "16:00"));
         //plans.add(new DayPlan(twoPlans, "11.10.21"));
-        TripPlan trip = new TripPlan(48, "London Trip", plans);
+        TripPlan trip = new TripPlan( "London Trip", plans);
         return trip;
     }
 

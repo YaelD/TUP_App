@@ -24,8 +24,6 @@ import org.jetbrains.annotations.NotNull;
 
 import attractionSearch.SearchAttractionsActivity;
 import favoriteAttractions.FavoriteAttractionsActivity;
-import javaClasses.ServerConnection;
-import javaClasses.Utility;
 import loginAndRegister.UserDetailsActivity;
 import mainScreen.MainScreenFragment;
 import myTrips.MyTripsActivity;
@@ -142,15 +140,5 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         drawer = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

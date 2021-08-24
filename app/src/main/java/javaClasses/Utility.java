@@ -19,7 +19,7 @@ public class Utility {
     private SharedPreferences sharedPreferences;
 
 
-
+    private ArrayList<Integer> tripsToDelete = new ArrayList<>();
     private ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
     private ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private ArrayList<Attraction> attractions = new ArrayList<>();
@@ -30,50 +30,59 @@ public class Utility {
     private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
 
+//----------------------------------------------------------------------------------------
 
     public boolean deleteTrip(int id)
     {
         for(TripPlan trip: allTrips)
         {
-            if(trip.getId() == id)
+            if(trip.getTripID() == id)
             {
+                tripsToDelete.add(id);
                 return allTrips.remove(trip);
             }
         }
         return false;
     }
+//----------------------------------------------------------------------------------------
 
     public void addTrip(TripPlan trip)
     {
         allTrips.add(trip);
     }
 
+//----------------------------------------------------------------------------------------
 
     public String getTravelerID() {
         return travelerID;
     }
 
+//----------------------------------------------------------------------------------------
+
     public void setTravelerID(String travelerID) {
         this.travelerID = travelerID;
     }
 
-    //----------------------------------------------------------------------------------------
-
-
-
+//----------------------------------------------------------------------------------------
 
     public ArrayList<TripPlan> getAllTrips() {
         return allTrips;
     }
 
+//----------------------------------------------------------------------------------------
+
     public void setAllTrips(ArrayList<TripPlan> allTrips) {
         instance.allTrips = allTrips;
     }
+
+//----------------------------------------------------------------------------------------
 
 
     public Traveler getTraveler() {
         return traveler;
     }
+
+//----------------------------------------------------------------------------------------
 
     public void setTraveler(Traveler traveler) {
         this.traveler = traveler;
@@ -217,7 +226,7 @@ public class Utility {
         initData();
     }
 
-    private void saveData()
+    public void saveData()
     {
         ServerConnection.getInstance(context).sendFavAttractions();
         ServerConnection.getInstance(context).updateUser(instance.getTraveler());
