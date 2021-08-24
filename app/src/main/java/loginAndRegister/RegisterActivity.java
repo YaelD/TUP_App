@@ -110,17 +110,17 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        txtFirstName = findViewById(R.id.txtFirstName);
+        txtFirstName = findViewById(R.id.txtFirstNameUserDetails);
         btnRegister = findViewById(R.id.btnRegister);
-        txtEmail = findViewById(R.id.txtEmail);
-        mailLayout = findViewById(R.id.mailLayout);
-        txtLastName = findViewById(R.id.txtLastName);
-        txtPassword = findViewById(R.id.txtPassword);
-        txtConfirmPassword = findViewById(R.id.txtConfirmPassword);
-        FirstNameLayout = findViewById(R.id.FirstNameLayout);
-        LastNameLayout = findViewById(R.id.LastNameLayout);
-        passwordLayout = findViewById(R.id.passwordLayout);
-        confirmPasswordLayout = findViewById(R.id.confirmPasswordLayout);
+        txtEmail = findViewById(R.id.txtEmailUserDetails);
+        mailLayout = findViewById(R.id.userDetailsMailLayout);
+        txtLastName = findViewById(R.id.txtLastNameUserDetails);
+        txtPassword = findViewById(R.id.txtPasswordUserDetails);
+        txtConfirmPassword = findViewById(R.id.txtConfirmPasswordUserDetails);
+        FirstNameLayout = findViewById(R.id.userDetailsFirstNameLayout);
+        LastNameLayout = findViewById(R.id.userDetailsLastNameLayout);
+        passwordLayout = findViewById(R.id.userDetailsPasswordLayout);
+        confirmPasswordLayout = findViewById(R.id.userDetailsConfirmPasswordLayout);
     }
 
     private boolean validateData() {

@@ -7,108 +7,260 @@
     android:visibility="visible"
     tools:context="loginAndRegister.UserDetailsActivity">
 
-    <EditText
-        android:id="@+id/editTxtFirstName"
-        android:layout_width="250dp"
+    <TextView
+        android:id="@+id/txtTitleFirstName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:drawableLeft="@drawable/ic_create"
-        android:drawablePadding="5dp"
-        android:ems="10"
-        android:hint="First Name"
-        android:minHeight="48dp"
+        android:layout_marginTop="40dp"
+        android:text="First Name"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/userDetailsFirstNameLayout"
+        app:layout_constraintStart_toStartOf="@+id/userDetailsFirstNameLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userDetailsFirstNameLayout"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        app:boxBackgroundColor="#FDF4D2"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperText="*required"
+        app:helperTextTextColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        android:inputType="textCapSentences|textPersonName"
-        android:maxLines="1"
-        android:singleLine="true"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtTitleFirstName"
+        app:startIconDrawable="@drawable/ic_person">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtFirstNameUserDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:inputType="textCapSentences|textPersonName"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:hint="First Name"
+            android:textColorHint="#686868"/>
 
-    <EditText
-        android:id="@+id/editTxtLastName"
-        android:layout_width="250dp"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtTitleLastName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_create"
-        android:drawablePadding="5dp"
-        android:ems="10"
-        android:hint="Last Name"
-        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        android:inputType="textCapSentences|textPersonName"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:minHeight="48dp"
+        android:layout_marginTop="10dp"
+        android:text="Last Name"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@+id/userDetailsLastNameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/userDetailsFirstNameLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userDetailsLastNameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        app:boxBackgroundColor="#FDF4D2"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperText="*required"
+        app:helperTextTextColor="@color/red"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitleLastName"
+        app:startIconDrawable="@drawable/ic_person">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtLastNameUserDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="Last Name"
+            android:inputType="textCapSentences|textPersonName"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHint="#686868" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtTitleEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Email "
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@+id/userDetailsMailLayout"
+        app:layout_constraintTop_toBottomOf="@+id/userDetailsLastNameLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userDetailsMailLayout"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        app:boxBackgroundColor="#FDF4D2"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperText="*required"
+        app:helperTextTextColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitleLastName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitleEmail"
+        app:startIconDrawable="@drawable/ic_email">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEmailUserDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:hint="Email"
+            android:textColorHint="#686868"/>
 
-    <EditText
-        android:id="@+id/editTxtEmail"
-        android:layout_width="250dp"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtTitlePassword"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_create"
-        android:drawablePadding="5dp"
-        android:ems="10"
-        android:hint="Email"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
-        android:inputType="textEmailAddress"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitleEmail" />
+        android:layout_marginTop="10dp"
+        android:text="Password"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@+id/userDetailsPasswordLayout"
+        app:layout_constraintTop_toBottomOf="@+id/userDetailsMailLayout" />
 
-
-    <EditText
-        android:id="@+id/editTxtPassword"
-        android:layout_width="250dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userDetailsPasswordLayout"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_create"
-        android:drawablePadding="5dp"
-        android:ems="10"
-        android:hint="Password"
-        android:minHeight="48dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        app:boxBackgroundColor="#FDF4D2"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:endIconMode="password_toggle"
+        app:errorEnabled="true"
+        app:helperText="*required"
+        app:helperTextTextColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitlePassword"
-        android:inputType="textPassword"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
-        android:maxLines="1"
-        android:singleLine="true"/>
+        app:startIconDrawable="@drawable/ic_password">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtPasswordUserDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:hint="Password"
+            android:textColorHint="#686868"/>
 
-    <EditText
-        android:id="@+id/editTxtConfirmPassword"
-        android:layout_width="250dp"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtTitleConfirmPassword"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_create"
-        android:drawablePadding="5dp"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:minHeight="48dp"
+        android:layout_marginTop="10dp"
+        android:text="Confirm Password"
+        android:textStyle="bold|italic"
         android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/userDetailsConfirmPasswordLayout"
+        app:layout_constraintTop_toBottomOf="@+id/userDetailsPasswordLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userDetailsConfirmPasswordLayout"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        app:boxBackgroundColor="#FDF4D2"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:endIconMode="password_toggle"
+        app:errorEnabled="true"
+        app:helperText="*required"
+        app:helperTextTextColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitleConfirmPassword"
-        android:inputType="textPassword"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
-        android:maxLines="1"
-        android:singleLine="true"/>
+        app:startIconDrawable="@drawable/ic_password"
+        android:visibility="gone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtConfirmPasswordUserDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:hint="Confirm Password"
+            android:textColorHint="#686868"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSaveChanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:text="Save changes"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="30dp"
         android:enabled="false"
+        android:text="Save changes"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtConfirmPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/userDetailsConfirmPasswordLayout"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btnCancle"
@@ -127,121 +279,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="205dp" />
 
-    <TextView
-        android:id="@+id/txtTitleFirstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="First Name"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/editTxtFirstName"
-        app:layout_constraintStart_toStartOf="@+id/editTxtFirstName" />
 
-    <TextView
-        android:id="@+id/txtTitleLastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Last Name"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@+id/editTxtLastName"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtFirstName" />
-
-    <TextView
-        android:id="@+id/txtTitleEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Email "
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@+id/editTxtEmail"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtLastName" />
-
-    <TextView
-        android:id="@+id/txtTitlePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Password"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@+id/editTxtPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailError" />
-
-    <TextView
-        android:id="@+id/txtTitleConfirmPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Confirm Password"
-        android:textStyle="bold|italic"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/editTxtConfirmPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtPassword" />
-
-    <TextView
-        android:id="@+id/txtEmailError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="*This email already exists"
-        android:textColor="?attr/colorError"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/editTxtEmail"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtEmail" />
-
-    <TextView
-        android:id="@+id/txtConfirmPassError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="*Password doesn't match"
-        android:textColor="@color/design_default_color_error"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/editTxtConfirmPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtConfirmPassword" />
-
-    <ImageView
-        android:id="@+id/imgShowPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/editTxtPassword"
-        app:layout_constraintStart_toEndOf="@+id/editTxtPassword"
-        app:layout_constraintTop_toTopOf="@+id/editTxtPassword"
-        app:srcCompat="@drawable/ic_visability"
-        tools:ignore="VectorDrawableCompat"
-        android:visibility="visible"/>
-
-    <ImageView
-        android:id="@+id/imgShowConfirmPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/editTxtConfirmPassword"
-        app:layout_constraintStart_toEndOf="@+id/editTxtConfirmPassword"
-        app:layout_constraintTop_toTopOf="@+id/editTxtConfirmPassword"
-        app:srcCompat="@drawable/ic_visability"
-        tools:ignore="VectorDrawableCompat"
-        android:visibility="gone"/>
-
-    <ImageView
-        android:id="@+id/imgHideConfirmPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/editTxtConfirmPassword"
-        app:layout_constraintStart_toEndOf="@+id/editTxtConfirmPassword"
-        app:layout_constraintTop_toTopOf="@+id/editTxtConfirmPassword"
-        app:srcCompat="@drawable/ic_visability_off"
-        tools:ignore="VectorDrawableCompat"
-        android:visibility="gone"/>
-
-    <ImageView
-        android:id="@+id/imgHidePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/editTxtPassword"
-        app:layout_constraintStart_toEndOf="@+id/editTxtPassword"
-        app:layout_constraintTop_toTopOf="@+id/editTxtPassword"
-        app:srcCompat="@drawable/ic_visability_off"
-        tools:ignore="VectorDrawableCompat"
-        android:visibility="gone"/>
 
 
 

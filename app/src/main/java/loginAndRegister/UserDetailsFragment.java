@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.TupApp.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,12 +32,11 @@ import javaClasses.Traveler;
 
 public class UserDetailsFragment extends Fragment {
     private Button btnSaveChanges, btnCancel;
-    private EditText editTxtFirstName, editTxtLastName, editTxtEmail, editTxtPassword, editTxtConfirmPassword;
-    private TextView txtEmailError, txtConfirmPassError, txtTitleConfirmPassword;
+    private EditText txtFirstName, txtLastName,txtEmail, txtPassword, txtConfirmPassword;
+    private TextInputLayout firstNameLayout, lastNameLayout, emailLayout, passwordLayout, confirmPasswordLayout;
+    private TextView txtTitleConfirmPassword;
     private Traveler traveler;
     private String firstName, lastName, email, password;
-    private ImageView imgShowPassword, imgShowConfirmPassword, imgHidePassword, imgHideConfirmPassword;
-
 
 
     @Nullable
@@ -46,11 +46,11 @@ public class UserDetailsFragment extends Fragment {
         initView(view);
 
         traveler = Utility.getInstance(getContext()).getTraveler();
-        editTxtFirstName.setHint(traveler.getFirstName());
-        editTxtLastName.setHint(traveler.getLastName());
-        editTxtEmail.setHint(traveler.getEmailAddress());
-        editTxtPassword.setHint(traveler.getPassword());
-        editTxtConfirmPassword.setHint(traveler.getPassword());
+        txtFirstName.setHint(traveler.getFirstName());
+        txtLastName.setHint(traveler.getLastName());
+        txtEmail.setHint(traveler.getEmailAddress());
+        txtPassword.setHint(traveler.getPassword());
+        txtConfirmPassword.setHint(traveler.getPassword());
 
         firstName = traveler.getFirstName();
         lastName = traveler.getLastName();
@@ -72,32 +72,30 @@ public class UserDetailsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (editTxtFirstName.getText().toString().length() == 0 &&
-                        editTxtLastName.getText().toString().length() == 0 &&
-                        editTxtEmail.getText().toString().length() == 0 &&
-                        editTxtPassword.getText().toString().length() == 0){
+                if (txtFirstName.getText().toString().length() == 0 &&
+                        txtLastName.getText().toString().length() == 0 &&
+                        txtEmail.getText().toString().length() == 0 &&
+                        txtPassword.getText().toString().length() == 0){
                     btnSaveChanges.setEnabled(false);
                 }
                 else {
                     btnSaveChanges.setEnabled(true);
                 }
-                if (!editTxtPassword.getText().toString().isEmpty()){
-                    editTxtConfirmPassword.setVisibility(View.VISIBLE);
+                if (!txtPassword.getText().toString().isEmpty()){
+                    confirmPasswordLayout.setVisibility(View.VISIBLE);
                     txtTitleConfirmPassword.setVisibility(View.VISIBLE);
-                    imgShowConfirmPassword.setVisibility(View.VISIBLE);
                 }
-                else if(editTxtPassword.getText().toString().isEmpty()){
-                    editTxtConfirmPassword.setVisibility(View.GONE);
+                else if(txtPassword.getText().toString().isEmpty()){
+                    confirmPasswordLayout.setVisibility(View.GONE);
                     txtTitleConfirmPassword.setVisibility(View.GONE);
-                    imgShowConfirmPassword.setVisibility(View.GONE);
                 }
             }
         };
 
-        editTxtFirstName.addTextChangedListener(watcher);
-        editTxtLastName.addTextChangedListener(watcher);
-        editTxtEmail.addTextChangedListener(watcher);
-        editTxtPassword.addTextChangedListener(watcher);
+        txtFirstName.addTextChangedListener(watcher);
+        txtLastName.addTextChangedListener(watcher);
+        txtEmail.addTextChangedListener(watcher);
+        txtPassword.addTextChangedListener(watcher);
 
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -125,20 +123,19 @@ public class UserDetailsFragment extends Fragment {
             public void onClick(View v) {
                 //TODO: show snackBar
 
-                if(!editTxtFirstName.getText().toString().equals(""))
-                    firstName = editTxtFirstName.getText().toString();
-                if(!editTxtLastName.getText().toString().equals(""))
-                    lastName = editTxtLastName.getText().toString();
-                if(!editTxtEmail.getText().toString().equals("")) {
-                    email = editTxtEmail.getText().toString();
+                if(!txtFirstName.getText().toString().isEmpty())
+                    firstName = txtFirstName.getText().toString();
+                if(!txtLastName.getText().toString().isEmpty())
+                    lastName = txtLastName.getText().toString();
+                if(!txtEmail.getText().toString().isEmpty()) {
+                    email = txtEmail.getText().toString();
                     //TODO: check if email exists in DB
                 }
-                if(!editTxtPassword.getText().toString().equals("")){
-                    if (!editTxtPassword.getText().toString().equals(editTxtConfirmPassword.getText().toString()))
-                        txtConfirmPassError.setVisibility(View.VISIBLE);
+                if(!txtPassword.getText().toString().isEmpty()){
+                    if (!txtPassword.getText().toString().equals(txtConfirmPassword.getText().toString()))
+                        confirmPasswordLayout.setError("Password doesn't match");
                     else{
-                        txtConfirmPassError.setVisibility(View.GONE);
-                        password = editTxtPassword.getText().toString();
+                        password = txtPassword.getText().toString();
                         Toast.makeText(getActivity(), "Changes saved", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -168,63 +165,22 @@ public class UserDetailsFragment extends Fragment {
         });
 
 
-
-
-
-        imgShowPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editTxtPassword.setTransformationMethod(null);
-                imgShowPassword.setVisibility(View.GONE);
-                imgHidePassword.setVisibility(View.VISIBLE);
-            }
-        });
-
-        imgShowConfirmPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editTxtConfirmPassword.setTransformationMethod(null);
-                imgShowConfirmPassword.setVisibility(View.GONE);
-                imgHideConfirmPassword.setVisibility(View.VISIBLE);
-            }
-        });
-
-        imgHidePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editTxtPassword.setTransformationMethod(new PasswordTransformationMethod());
-                imgShowPassword.setVisibility(View.VISIBLE);
-                imgHidePassword.setVisibility(View.GONE);
-            }
-        });
-
-        imgHideConfirmPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editTxtConfirmPassword.setTransformationMethod(new PasswordTransformationMethod());
-                imgShowConfirmPassword.setVisibility(View.VISIBLE);
-                imgHideConfirmPassword.setVisibility(View.GONE);
-            }
-        });
-
-
         return view;
     }
 
     private void initView(View view) {
         btnSaveChanges = view.findViewById(R.id.btnSaveChanges);
         btnCancel = view.findViewById(R.id.btnCancle);
-        editTxtFirstName = view.findViewById(R.id.editTxtFirstName);
-        editTxtLastName = view.findViewById(R.id.editTxtLastName);
-        editTxtEmail = view.findViewById(R.id.editTxtEmail);
-        editTxtPassword = view.findViewById(R.id.editTxtPassword);
-        editTxtConfirmPassword = view.findViewById(R.id.editTxtConfirmPassword);
-        txtEmailError = view.findViewById(R.id.txtEmailError);
-        txtConfirmPassError = view.findViewById(R.id.txtConfirmPassError);
-        imgShowPassword = view.findViewById(R.id.imgShowPassword);
-        imgShowConfirmPassword = view.findViewById(R.id.imgShowConfirmPassword);
-        imgHidePassword = view.findViewById(R.id.imgHidePassword);
-        imgHideConfirmPassword = view.findViewById(R.id.imgHideConfirmPassword);
         txtTitleConfirmPassword = view.findViewById(R.id.txtTitleConfirmPassword);
+        txtFirstName = view.findViewById(R.id.txtFirstNameUserDetails);
+        txtLastName = view.findViewById(R.id.txtLastNameUserDetails);
+        txtEmail = view.findViewById(R.id.txtEmailUserDetails);
+        txtPassword = view.findViewById(R.id.txtPasswordUserDetails);
+        txtConfirmPassword = view.findViewById(R.id.txtConfirmPasswordUserDetails);
+        firstNameLayout = view.findViewById(R.id.userDetailsFirstNameLayout);
+        lastNameLayout = view.findViewById(R.id.userDetailsLastNameLayout);
+        emailLayout = view.findViewById(R.id.userDetailsMailLayout);
+        passwordLayout = view.findViewById(R.id.userDetailsPasswordLayout);
+        confirmPasswordLayout = view.findViewById(R.id.userDetailsConfirmPasswordLayout);
     }
 }
