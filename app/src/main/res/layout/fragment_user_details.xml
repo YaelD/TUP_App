@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context="loginAndRegister.UserDetailsActivity">
+    tools:context="loginAndRegister.UserDetailsActivity"
+    android:id="@+id/userDetailsParent">
 
     <TextView
         android:id="@+id/txtTitleFirstName"
@@ -49,8 +50,7 @@
             android:inputType="textCapSentences|textPersonName"
             android:maxLines="1"
             android:singleLine="true"
-            android:hint="First Name"
-            android:textColorHint="#686868"/>
+            android:hint="First Name" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,8 +96,7 @@
             android:hint="Last Name"
             android:inputType="textCapSentences|textPersonName"
             android:maxLines="1"
-            android:singleLine="true"
-            android:textColorHint="#686868" />
+            android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,8 +141,7 @@
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true"
-            android:hint="Email"
-            android:textColorHint="#686868"/>
+            android:hint="Email" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -191,8 +189,7 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
-            android:hint="Password"
-            android:textColorHint="#686868"/>
+            android:hint="Password" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -241,8 +238,7 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
-            android:hint="Confirm Password"
-            android:textColorHint="#686868"/>
+            android:hint="Confirm Password" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

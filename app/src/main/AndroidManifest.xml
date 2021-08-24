@@ -15,46 +15,59 @@
         android:theme="@style/Theme.TUPApp.light">
         <activity
             android:name="loadingScreen.LoadingScreen"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity android:name="loginAndRegister.UserDetailsActivity"
             android:label="@string/activity_user_details"
-            android:theme="@style/Theme.TUPApp.NoActionBar" />
+            android:theme="@style/Theme.TUPApp.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="tripView.TripViewActivity"
             android:exported="true"
-            android:theme="@style/Theme.TUPApp.NoActionBar"/>
+            android:theme="@style/Theme.TUPApp.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="attractionDetails.AttractionDetailsActivity"
             android:label="@string/acivity_attraction_details"
-            android:theme="@style/Theme.TUPApp.NoActionBar" />
+            android:theme="@style/Theme.TUPApp.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="myTrips.MyTripsActivity"
             android:label="@string/acivity_my_trips"
-            android:theme="@style/Theme.TUPApp.NoActionBar" />
+            android:theme="@style/Theme.TUPApp.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="favoriteAttractions.FavoriteAttractionsActivity"
             android:label="@string/acivity_favorite_attractions"
-            android:theme="@style/Theme.TUPApp.NoActionBar" />
+            android:theme="@style/Theme.TUPApp.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="attractionSearch.SearchAttractionsActivity"
             android:label="@string/acivity_search_attractions"
             android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.TUPApp.NoActionBar" />
+            android:theme="@style/Theme.TUPApp.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="tripCreation.CreateNewTripActivity"
             android:label="@string/acivity_create_new_trip"
-            android:theme="@style/Theme.TUPApp.NoActionBar" />
+            android:theme="@style/Theme.TUPApp.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="navigationDrawer.NavigationDrawerActivity"
             android:label="@string/acivity_main_screen"
-            android:theme="@style/Theme.TUPApp.NoActionBar" />
+            android:theme="@style/Theme.TUPApp.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="loginAndRegister.RegisterActivity"
-            android:label="@string/acivity_register" />
+            android:label="@string/acivity_register"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="loginAndRegister.LoginActivity"
-            android:label="@string/login_activity" />
-        <activity android:name="MainActivity">
+            android:label="@string/login_activity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="MainActivity"
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -483,7 +483,7 @@ public class ServerConnection {
                     }
                     else
                     {
-                        ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
+                        ServerConnection.getInstance(context).setException(new serverErrorException(jsonResponse.getString("message")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -494,7 +494,7 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("VolleyError==>", error.getMessage());
+                //Log.e("VolleyError==>", error.getMessage());
                 ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
             }
         }){
