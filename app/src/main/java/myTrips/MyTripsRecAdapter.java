@@ -47,19 +47,19 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.txtTripName.setText(trips.get(position).getName());
+        holder.txtTripName.setText(trips.get(position).getTripName());
 
         holder.imgDeleteTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tripName = trips.get(position).getName();
+                String tripName = trips.get(position).getTripName();
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setMessage("Are you sure you want to delete " + trips.get(position).getName() + " trip?");
+                builder.setMessage("Are you sure you want to delete " + trips.get(position).getTripName() + " trip?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(Utility.getInstance(mContext).deleteTrip(trips.get(position).getId())) {
+                        if(Utility.getInstance(mContext).deleteTrip(trips.get(position).getTripID())) {
                             Toast.makeText(mContext, tripName + " was deleted successfully", Toast.LENGTH_LONG).show();
                             notifyDataSetChanged();
                             if(getItemCount() == 0)

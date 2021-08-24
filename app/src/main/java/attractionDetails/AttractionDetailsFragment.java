@@ -218,6 +218,22 @@ public class AttractionDetailsFragment extends Fragment {
 
                         }
                     });
+                    txtAttrWebsite.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(attraction.getWebsite()));
+                            startActivity(browserIntent);
+                        }
+                    });
+                    txtAttrPhone.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:" + attraction.getPhoneNumber()));
+                            startActivity(intent);
+
+                        }
+                    });
 
             }
         }

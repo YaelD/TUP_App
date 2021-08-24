@@ -2,7 +2,6 @@ package tripView;
 
 import static mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -14,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.TupApp.R;
 
@@ -70,11 +70,13 @@ public class TripViewFragment extends Fragment {
                         if(exception == null)
                         {
                             //TODO: add a new name for the created trip!
-                            Utility.getInstance(getContext()).getLastCreatedTrip().setName("Test");
+                            Utility.getInstance(getContext()).getLastCreatedTrip().setTripName("Test");
+                            int last = Utility.getInstance(getContext()).getAllTrips().size()-1;
+                            Utility.getInstance(getContext()).getAllTrips().get(last).setTripName("test");
                         }
                         else
                         {
-
+                            Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 };

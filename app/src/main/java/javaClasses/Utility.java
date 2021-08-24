@@ -222,8 +222,8 @@ public class Utility {
 
     private Utility(Context context) {
         this.context = context;
-        this.sharedPreferences = context.getSharedPreferences("sharedPreference", Context.MODE_PRIVATE);
-        initData();
+        //this.sharedPreferences = context.getSharedPreferences("sharedPreference", Context.MODE_PRIVATE);
+        //initData();
     }
 
     public void saveData()

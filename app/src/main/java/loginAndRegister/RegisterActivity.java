@@ -1,5 +1,6 @@
 package loginAndRegister;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -38,6 +39,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         firstName = lastName = email = password = "";
         initViews();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+
+        getOnBackPressedDispatcher().addCallback(callback);
+
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -203,6 +214,7 @@ public class RegisterActivity extends AppCompatActivity {
                     else
                     {
                         Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
                     }

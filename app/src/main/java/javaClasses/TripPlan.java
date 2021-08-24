@@ -3,13 +3,13 @@ package javaClasses;
 import java.util.ArrayList;
 
 public class TripPlan {
-    private String name;
+    private String tripName;
     private ArrayList<DayPlan> plans = new ArrayList<>();
     private int tripID;
 
 
-    public TripPlan(String name, ArrayList<DayPlan> plans) {
-        this.name = name;
+    public TripPlan(String tripName, ArrayList<DayPlan> plans) {
+        this.tripName = tripName;
         this.plans = plans;
     }
 
@@ -17,12 +17,12 @@ public class TripPlan {
         return plans;
     }
 
-    public String getName() {
-        return name;
+    public String getTripName() {
+        return tripName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTripName(String tripName) {
+        this.tripName = tripName;
     }
 
     public void setPlans(ArrayList<DayPlan> plans) {
