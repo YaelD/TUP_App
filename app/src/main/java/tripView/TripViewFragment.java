@@ -2,9 +2,11 @@ package tripView;
 
 import static mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.TupApp.R;
@@ -20,13 +24,15 @@ import com.example.TupApp.R;
 import javaClasses.ServerConnection;
 import javaClasses.Utility;
 import myTrips.MyTripsActivity;
+import navigationDrawer.NavigationDrawerActivity;
 
 public class TripViewFragment extends Fragment {
 
 
     private RecyclerView dateRecView;
     private Button btnSaveTrip;
-    private String callingActivity;
+    private String callingActivity, tripName;
+
 
 
 
@@ -61,6 +67,26 @@ public class TripViewFragment extends Fragment {
         btnSaveTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle("Trip name");
+                alertDialog.setMessage("Enter trip's name:"); //AWWWWWWWW <3
+
+                final EditText input = new EditText(getActivity());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+                input.setHint("Trip " +Utility.getInstance(getContext()).getAllTrips().size());
+                alertDialog.setView(input);
+
+                alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tripName = input.getText().toString();
+                        Utility.getInstance(getContext()).getLastCreatedTrip().setTripName(tripName);
+                    }
+                });
+                alertDialog.create().show();
                 ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip());
                 Runnable run = new Runnable() {
                     @Override
@@ -70,6 +96,7 @@ public class TripViewFragment extends Fragment {
                         if(exception == null)
                         {
                             //TODO: add a new name for the created trip!
+
                             Utility.getInstance(getContext()).getLastCreatedTrip().setTripName("Test");
                             int last = Utility.getInstance(getContext()).getAllTrips().size()-1;
                             Utility.getInstance(getContext()).getAllTrips().get(last).setTripName("test");
