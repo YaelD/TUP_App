@@ -90,6 +90,8 @@ public class AttractionDetailsFragment extends Fragment {
                 txtAttrPhone.setText(attraction.getPhoneNumber());
                 txtAttrAddress.setText(attraction.getAddress());
                 txtAttrWebsite.setText(attraction.getWebsite());
+                txtAttrDescription.setText(attraction.getDescription());
+                txtAttrOpeningHours.setText(attraction.OpeningHoursStr());
                 Glide.with(getActivity())
                         .asBitmap()
                         .load(attraction.getImageUrl())

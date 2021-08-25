@@ -82,11 +82,20 @@ public class DayOpeningHours {
 
     @Override
     public String toString() {
-        return "dayOpeningHours{" +
-                "day=" + day +
-                ", openingHours=" + openingHours +
-                ", closingHours=" + closingHours +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.day + "\n");
+        if(this.isOpen)
+        {
+            for (int i = 0; i < this.openingHours.size(); ++i)
+            {
+                stringBuilder.append(openingHours.get(i) + "-" + closingHours.get(i) + "\n");
+            }
+        }
+        else
+        {
+            stringBuilder.append("Closed\n");
+        }
+        return stringBuilder.toString();
     }
 }
 

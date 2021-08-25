@@ -28,13 +28,13 @@ public class Attraction implements Parcelable {
     }
 
     public Attraction(String name, String address, String phoneNumber, String website, /*Geometry geometry,*/ String placeID,
-                      String imageUrl/*, ArrayList<AttractionType> types, ArrayList<DayOpeningHours> openingHoursArr*//*, String description*/) {
+                      String imageUrl/*, ArrayList<AttractionType> types, ArrayList<DayOpeningHours> openingHoursArr*/, String description) {
         this.setName(name);
         this.setAddress(address);
         this.setPhoneNumber(phoneNumber);
         this.setWebsite(website);
         this.setPlaceID(placeID);
-        //this.setDescription(description);
+        this.setDescription(description);
         //this.setGeometry(geometry);
         //this.setOpeningHoursArr(openingHoursArr);
         this.setImageUrl(imageUrl);
@@ -140,6 +140,17 @@ public class Attraction implements Parcelable {
                 ", description='" + description + '\'' +
                 ", OpeningHoursArr=" + OpeningHoursArr +
                 '}';
+    }
+
+
+    public String OpeningHoursStr()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(DayOpeningHours dayOpeningHours: this.OpeningHoursArr)
+        {
+            stringBuilder.append(dayOpeningHours.toString());
+        }
+        return stringBuilder.toString();
     }
 
     @Override
