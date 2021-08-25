@@ -206,6 +206,7 @@ public class ServerConnection {
             @Override
             public byte[] getBody() throws AuthFailureError {
                 String body = new Gson().toJson(tripPlan);
+                Log.e("TRIPPLAN==>", body);
                 return body.getBytes();
             }
         };
@@ -691,9 +692,19 @@ public class ServerConnection {
 
     class LocalTimeAdapter extends TypeAdapter<LocalTime> {
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void write(JsonWriter out, LocalTime value) throws IOException {
-
+            out.beginObject();
+            out.name("hour");
+            out.value(value.getHour());
+            out.name("nano");
+            out.value(0);
+            out.name("minute");
+            out.value(value.getMinute());
+            out.value("second");
+            out.value(0);
+            out.endObject();
         }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
@@ -725,9 +736,17 @@ public class ServerConnection {
     class LocalDateAdapter extends TypeAdapter<LocalDate>
     {
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void write(JsonWriter out, LocalDate value) throws IOException {
-
+            out.beginObject();
+            out.name("day");
+            out.value(value.getDayOfMonth());
+            out.name("year");
+            out.value(value.getYear());
+            out.name("month");
+            out.value(value.getMonthValue());
+            out.endObject();
         }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
