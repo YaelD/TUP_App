@@ -83,7 +83,7 @@ public class DayOpeningHours {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.day + "\n");
+        stringBuilder.append(this.day +": ");
         if(this.isOpen)
         {
             for (int i = 0; i < this.openingHours.size(); ++i)
