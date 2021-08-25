@@ -227,7 +227,7 @@ public class ServerConnection {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.getString("status").equals("ok")) {
-                        Log.e("HERE==>", "Got OK Response");
+                        Log.e("HERE==>", "Got OK Response with body" + jsonResponse.getString("message"));
                         JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
                         for(int i =0; i < jsonArray.length(); ++i)
                         {
@@ -236,8 +236,9 @@ public class ServerConnection {
                         }
 
                         Utility.getInstance(context).setAllTrips(trips);
+                        Log.e("HERE==>", "Got A trip==>" + trips.toString());
                     } else {
-                        Log.e("ERROR==>", jsonResponse.getString("message"));
+                        //Log.e("ERROR==>", jsonResponse.getString("message"));
                         throw new serverErrorException(jsonResponse.getString("message"));
                     }
                 } catch (JSONException e) {
@@ -248,13 +249,13 @@ public class ServerConnection {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
-                Log.e("ERROR==>", error.getMessage());
+                //Log.e("ERROR==>", error.getMessage());
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("travelerID", Utility.getInstance(context).getTravelerID());
+                params.put("travelerID", "5");
                 return params;
             }
         };
@@ -500,8 +501,6 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
     public void getFavoritesFromServer()
     {
-        ArrayList<Attraction> favAttractions = new ArrayList<>();
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + favAttractionsURL,
                 new Response.Listener<String>() {
                     @Override
@@ -513,10 +512,11 @@ public class ServerConnection {
                                 JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
                                 for(int i =0; i < jsonArray.length(); ++i)
                                 {
+                                    Log.e("For Yael==>", jsonArray.getString(i));
                                     Utility.getInstance(context).getFavoriteAttractions().add(new Gson().fromJson(jsonArray.get(i).toString(), Attraction.class));
                                 }
                                 //Utility.getInstance(context).setFavoriteAttractions(favAttractions);
-                                Log.e("HERE==>", "FAVS Attractions==>"+ Utility.getInstance(context).getFavoriteAttractions().toString());
+                                //Log.e("HERE==>", "FAVS Attractions==>"+ Utility.getInstance(context).getFavoriteAttractions().toString());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

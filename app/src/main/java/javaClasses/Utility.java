@@ -31,6 +31,17 @@ public class Utility {
     private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
 
+    public void testAttractions()
+    {
+        String att1 = "{\"name\":\"The Mall\",\"address\":\"The Mall, London, UK\",\"phoneNumber\":\"N\\\\A\",\"website\":\"N\\\\A\",\"geometry\":{\"lat\":\"51.5045039\",\"lng\":\"-0.1342032\"},\"placeID\":\"ChIJ1SnFptAEdkgRCQABqtg50Cw\",\"types\":[\"route\"],\"OpeningHoursArr\":[{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"SUNDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"MONDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"TUESDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"WEDNESDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"THURSDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"FRIDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"SATURDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]}],\"imageUrl\":\"https:\\/\\/upload.wikimedia.org\\/wikipedia\\/commons\\/thumb\\/0\\/07\\/The_Coldstream_Guards_Troop_Their_Colour_MOD_45165212.jpg\\/300px-The_Coldstream_Guards_Troop_Their_Colour_MOD_45165212.jpg\",\"description\":\"The Mall () is a road in the City of Westminster, central London, between Buckingham Palace at its western end and Trafalgar Square via Admiralty Arch to the east.\\nNear the east end at Trafalgar Square and Whitehall it is met by Horse Guards Road and Spring Gardens where the Metropolitan Board of Works and London County Council were once based.\\nIt is closed to traffic on Saturdays, Sundays, public holidays and on ceremonial occasions.\\nHistory\\n\\nThe Mall began as a field for playing pall-mall.\\n\",\"duration\":3}";
+        String att2 = "{\"name\":\"London Transport Museum\",\"address\":\"Covent Garden, London WC2E 7BB, UK\",\"phoneNumber\":\"N\\\\A\",\"website\":\"https:\\/\\/ltmuseum.co.uk\\/\",\"geometry\":{\"lat\":\"51.5119054\",\"lng\":\"-0.1215648\"},\"placeID\":\"ChIJ4bF21K8FdkgRDXc6FiSVAzE\",\"types\":[\"museum\",\"tourist_attraction\",\"cafe\",\"point_of_interest\",\"establishment\"],\"OpeningHoursArr\":[{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"SUNDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"MONDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"TUESDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"WEDNESDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"THURSDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"FRIDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"SATURDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]}],\"imageUrl\":\"https:\\/\\/upload.wikimedia.org\\/wikipedia\\/commons\\/thumb\\/d\\/d1\\/London_Transport_Museum_%2842206944281%29.jpg\\/300px-London_Transport_Museum_%2842206944281%29.jpg\",\"description\":\"The London Transport Museum (often abbreviated as the LTM) is a transport museum based in Covent Garden, London.\\nThe museum mainly hosts exhibits related to the heritage of London's transport, as well as  conserving and explaining the history of it.\\nThe majority of the museum's exhibits originated in the collections of London Transport, but, since the creation of Transport for London (TfL) in 2000, the remit of the museum has expanded to cover all aspects of transportation in the city.\\nThe museum operates from two sites within London.\\n\",\"duration\":3}";
+        attractions.add(new Gson().fromJson(att1, Attraction.class));
+        attractions.add(new Gson().fromJson(att2, Attraction.class));
+
+    }
+
+
+
 //----------------------------------------------------------------------------------------
 
     public boolean deleteTrip(int id)
@@ -108,19 +119,6 @@ public class Utility {
         instance.lastCreatedTrip = lastCreatedTrip;
     }
 
-    //----------------------------------------------------------------------------------------
-
-    public static void attTestFiller()
-    {
-        instance.attractions.add(new Attraction("London eye", "Riverside Building, County Hall, London SE1 7PB, United Kingdom",
-                "+44 20 7967 8021", "https://www.londoneye.com/", "1",
-                "https://media.cntraveler.com/photos/55c8be0bd36458796e4ca38a/master/pass/london-eye-2-cr-getty.jpg"));
-        instance.attractions.get(0).setGeometry(new Geometry("0", "0"));
-        instance.attractions.add(new Attraction("Buckingham Palace", "London SW1A 1AA, United Kingdom",
-                "+44 303 123 7300", "https://www.royal.uk/royal-residences-buckingham-palace", "2",
-                "https://zamanturkmenistan.com.tm/wp-content/uploads/2021/04/buckingham-palace-london.jpg"));
-    }
-
 //----------------------------------------------------------------------------------------
 
     //TODO: REMEMBER TO CHANGE TO attractions ArrayList;
@@ -196,7 +194,7 @@ public class Utility {
     public ArrayList<Attraction> getAttractions() {
         if(instance.attractions.size() == 0)
         {
-            ServerConnection.getInstance(context).getAttractionsFromServer("london");
+            //ServerConnection.getInstance(context).getAttractionsFromServer("london");
         }
         return instance.attractions;
     }
@@ -242,6 +240,8 @@ public class Utility {
         this.context = context;
         //this.sharedPreferences = context.getSharedPreferences("sharedPreference", Context.MODE_PRIVATE);
         //initData();
+        //TODO: This is a test, delete it!
+        testAttractions();
     }
 
     public void saveData()
@@ -262,7 +262,7 @@ public class Utility {
             Traveler traveler = new Gson().fromJson(travelerJson, Traveler.class);
             Utility.instance.setTraveler(traveler);
             ServerConnection.getInstance(context).getFavoritesFromServer();
-            ServerConnection.getInstance(context).getAttractionsFromServer("london");
+            //ServerConnection.getInstance(context).getAttractionsFromServer("london");
             ServerConnection.getInstance(context).getHotelsFromServer("london");
         }
     }
