@@ -76,7 +76,7 @@ public class TripViewFragment extends Fragment {
 
                 final EditText input = new EditText(getActivity());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
                 input.setHint("Trip " +Utility.getInstance(getContext()).getAllTrips().size());

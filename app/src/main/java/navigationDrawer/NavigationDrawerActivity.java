@@ -114,9 +114,26 @@ public class NavigationDrawerActivity extends AppCompatActivity{
                         finish();
                         break;
                     case R.id.logout:
-                        intent= new Intent(NavigationDrawerActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(NavigationDrawerActivity.this);
+                        alertDialog.setTitle("Logout");
+                        alertDialog.setMessage("Are you sure you want to logout the application?");
+                        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent= new Intent(NavigationDrawerActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        alertDialog.show();
+
                     default:
                         break;
                 }
