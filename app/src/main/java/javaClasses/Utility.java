@@ -124,7 +124,7 @@ public class Utility {
 
 //----------------------------------------------------------------------------------------
 
-    //REMEMBER TO CHANGE TO attractions ArrayList;
+    //TODO: REMEMBER TO CHANGE TO attractions ArrayList;
     public Attraction getAttractionByID(String id)
     {
         Attraction selectedAttraction = null;
@@ -136,6 +136,18 @@ public class Utility {
             }
         }
         return selectedAttraction;
+    }
+
+    public boolean isAttractionIsInFavorites(String id)
+    {
+        for(Attraction attraction: favoriteAttractions)
+        {
+            if(attraction.getPlaceID() == id)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 //----------------------------------------------------------------------------------------

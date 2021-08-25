@@ -152,7 +152,7 @@ public class AttractionDetailsFragment extends Fragment {
                         .asBitmap()
                         .load(attraction.getImageUrl())
                         .into(imgAttr);
-                    if(Utility.getInstance(getContext()).getFavoriteAttractions().contains(attraction))
+                    if(Utility.getInstance(getContext()).isAttractionIsInFavorites(attraction.getPlaceID()))
                     {
                         imgFavorite.setVisibility(View.VISIBLE);
                         imgFavoriteBorder.setVisibility(View.GONE);
