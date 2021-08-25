@@ -1,5 +1,7 @@
 package attractionDetails;
 
+import static mainScreen.MainScreenFragment.CALLING_ACTIVITY;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -21,8 +23,10 @@ import com.example.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import favoriteAttractions.FavoriteAttractionsActivity;
 import javaClasses.Attraction;
 import javaClasses.Utility;
+import tripCreation.CreateNewTripActivity;
 
 public class AttractionDetailsFragment extends Fragment {
 
@@ -136,7 +140,7 @@ public class AttractionDetailsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        //String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
+        String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
 
         Intent intent = getActivity().getIntent();
         if(null != intent){
@@ -152,7 +156,7 @@ public class AttractionDetailsFragment extends Fragment {
                         .asBitmap()
                         .load(attraction.getImageUrl())
                         .into(imgAttr);
-                    if(Utility.getInstance(getContext()).isAttractionIsInFavorites(attraction.getPlaceID()))
+                    if(callingActivity.equals(FavoriteAttractionsActivity.class.getName()))
                     {
                         imgFavorite.setVisibility(View.VISIBLE);
                         imgFavoriteBorder.setVisibility(View.GONE);

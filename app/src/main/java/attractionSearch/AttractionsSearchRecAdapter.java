@@ -26,6 +26,7 @@ import attractionDetails.AttractionDetailsActivity;
 import javaClasses.Attraction;
 
 import static attractionDetails.AttractionDetailsFragment.ATTRACTION_KEY;
+import static mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
 public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<AttractionsSearchRecAdapter.ViewHolder> {
     private static final String TAG = "AttrSearchRecAdapter";
@@ -62,7 +63,7 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
                 Intent intent = new Intent(mContext, AttractionDetailsActivity.class);
                 intent.putExtra(ATTRACTION_KEY, attractions.get(position).getPlaceID());
                 Toast.makeText(mContext, "The selected: " + attractions.get(position).getName(), Toast.LENGTH_LONG).show();
-                //intent.putExtra(CALLING_ACTIVITY, mContext.getClass().getName());
+                intent.putExtra(CALLING_ACTIVITY, mContext.getClass().getName());
                 mContext.startActivity(intent);
             }
         });
