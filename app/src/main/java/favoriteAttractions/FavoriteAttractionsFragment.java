@@ -101,6 +101,7 @@ public class FavoriteAttractionsFragment extends Fragment {
 
             AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
             adapter.setAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
+            Log.e("HERE==>", "SET FAVS" + Utility.getInstance(getContext()).getFavoriteAttractions().toString());
             recViewFavoriteAttractions.setAdapter(adapter);
             recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,69 +48,6 @@ public class AttractionDetailsFragment extends Fragment {
 
 
         initViews(view);
-
-        /*
-
-
-//        imgFavorite.setOnClickListener(new View.OnClickListener() {
-//            @RequiresApi(api = Build.VERSION_CODES.M)
-//            @Override
-//            public void onClick(View v) {
-//                if (!isImgFavoriteClicked) {
-//                    imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
-//                    isImgFavoriteClicked = true;
-//                } else {
-//                    imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
-//                    isImgFavoriteClicked = false;
-//                }
-//            }
-//        });
-
-//        String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
-//
-//        Intent intent = getActivity().getIntent();
-//        if(null != intent){
-//            Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
-//            if(attraction != null){
-//                txtAttrName.setText(attraction.getName());
-//                txtAttrPhone.setText(attraction.getPhoneNumber());
-//                txtAttrAddress.setText(attraction.getAddress());
-//                txtAttrWebsite.setText(attraction.getWebsite());
-//                Glide.with(getActivity())
-//                        .asBitmap()
-//                        .load(attraction.getImageUrl())
-//                        .into(imgAttr);
-//
-//                if(callingActivity.equals(SearchAttractionsActivity.class.getName())){
-//                    imgFavorite.setVisibility(View.VISIBLE);
-//                    imgFavorite.setOnClickListener(new View.OnClickListener() {
-//                        @RequiresApi(api = Build.VERSION_CODES.M)
-//                        @Override
-//                        public void onClick(View v) {
-//                            if (!isImgFavoriteClicked) {
-//                                imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
-//                                isImgFavoriteClicked = true;
-//                                boolean isAdded = ServerUtility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
-//                                if(isAdded)
-//                                    Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
-//                                isImgFavoriteClicked = false;
-//                                boolean isRemoved = ServerUtility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
-//                                if(isRemoved)
-//                                    Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();;
-//                            }
-//                        }
-//                    });
-//                }
-//                else{
-//                    imgFavorite.setVisibility(View.GONE);
-//                }
-//
-//            }
-//        }
-         */
-
         return view;
     }
 
@@ -140,7 +78,7 @@ public class AttractionDetailsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
+        //String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
 
         Intent intent = getActivity().getIntent();
         if(null != intent){
@@ -156,8 +94,9 @@ public class AttractionDetailsFragment extends Fragment {
                         .asBitmap()
                         .load(attraction.getImageUrl())
                         .into(imgAttr);
-                    if(callingActivity.equals(FavoriteAttractionsActivity.class.getName()))
+                    if(Utility.getInstance(getContext()).isAttractionIsInFavorites(attraction.getPlaceID()))
                     {
+                        Log.e("HERE==>", "Attraction in Favs(DetailFrag)");
                         imgFavorite.setVisibility(View.VISIBLE);
                         imgFavoriteBorder.setVisibility(View.GONE);
                         txtRemoveFromFavorite.setVisibility(View.VISIBLE);
@@ -165,12 +104,12 @@ public class AttractionDetailsFragment extends Fragment {
                     }
                     else
                     {
+                        Log.e("HERE==>", "Attraction not in fav Favs(DetailFrag)");
                         imgFavorite.setVisibility(View.GONE);
                         imgFavoriteBorder.setVisibility(View.VISIBLE);
                         txtRemoveFromFavorite.setVisibility(View.GONE);
                         txtAddToFavorites.setVisibility(View.VISIBLE);
                     }
-
                     imgFavorite.setOnClickListener(new View.OnClickListener() {
                         @RequiresApi(api = Build.VERSION_CODES.M)
                         @Override
@@ -181,20 +120,9 @@ public class AttractionDetailsFragment extends Fragment {
                             txtAddToFavorites.setVisibility(View.VISIBLE);
                             boolean isRemoved = Utility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
                             if(isRemoved)
-                                Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();
-//                            if (!isImgFavoriteClicked) {
-//                                imgFavorite.setColorFilter(getActivity().getColor(R.color.red));
-//                                isImgFavoriteClicked = true;
-//                                boolean isAdded = Utility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
-//                                if(isAdded)
-//                                    Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                imgFavorite.setColorFilter(getActivity().getColor(R.color.black));
-//                                isImgFavoriteClicked = false;
-//                                boolean isRemoved = Utility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
-//                                if(isRemoved)
-//                                    Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,Toast.LENGTH_SHORT).show();;
-//                            }
+                                Log.e("HERE", "Att" + attraction.getName() + "Removed");
+                                Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,
+                                        Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -215,7 +143,6 @@ public class AttractionDetailsFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Uri gmmIntentUri = Uri.parse("geo:"+ attraction.getGeometry().toString() + "?q=" +attraction.getGeometry().toString()+"(" + attraction.getName() + ")");
-                            //+ "?q=" + attraction.getAddress()
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                             mapIntent.setPackage("com.google.android.apps.maps");
                             startActivity(mapIntent);

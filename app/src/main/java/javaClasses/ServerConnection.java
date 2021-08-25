@@ -52,6 +52,7 @@ public class ServerConnection {
     private final String registerURL = "/traveler";
     private final String updateURL = "/traveler";
     private final String favAttractionsURL = "/attractions/favorites";
+    private final String hotelsURL = "/hotles";
 
     //TODO: function that sends trips to DB
 
@@ -225,7 +226,7 @@ public class ServerConnection {
 
 //----------------------------------------------------------------------------------------
 
-    public void getTripsFromServer()
+    public void getMyTripsFromServer()
     {
         ArrayList<TripPlan> trips = new ArrayList<>();
 
@@ -266,8 +267,7 @@ public class ServerConnection {
                 return params;
             }
         };
-
-
+        addToRequestQueue(stringRequest);
     }
 
 
@@ -392,7 +392,6 @@ public class ServerConnection {
                         Gson gson = new Gson();
                         for (int i = 0; i < jsonArray.length(); ++i) {
                             String attractionJsonString = jsonArray.getString(i);
-                            Log.e("attraction==>", attractionJsonString);
                             attractions.add(gson.fromJson(attractionJsonString, Attraction.class));
 
                         }
@@ -561,11 +560,10 @@ public class ServerConnection {
                                 JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
                                 for(int i =0; i < jsonArray.length(); ++i)
                                 {
-                                    favAttractions.add(new Gson().fromJson(jsonArray.get(i).toString(), Attraction.class));
+                                    Utility.getInstance(context).getFavoriteAttractions().add(new Gson().fromJson(jsonArray.get(i).toString(), Attraction.class));
                                 }
-                                Utility.getInstance(context).setFavoriteAttractions(favAttractions);
-                                Log.e("HERE==>", "got FavAttractions!!");
-
+                                //Utility.getInstance(context).setFavoriteAttractions(favAttractions);
+                                Log.e("HERE==>", "FAVS Attractions==>"+ Utility.getInstance(context).getFavoriteAttractions().toString());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -625,8 +623,6 @@ public class ServerConnection {
         };
     }
 
-
-
 //----------------------------------------------------------------------------------------
 
     public void updateUser(Traveler newTravelerDetails) throws serverErrorException
@@ -674,6 +670,7 @@ public class ServerConnection {
         addToRequestQueue(stringRequest);
     }
 
+//----------------------------------------------------------------------------------------
 
     public static class serverErrorException extends RuntimeException
     {

@@ -2,6 +2,7 @@ package javaClasses;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.example.TupApp.R;
@@ -23,7 +24,7 @@ public class Utility {
     private ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
     private ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private ArrayList<Attraction> attractions = new ArrayList<>();
-    private ArrayList<Attraction> hotels = new ArrayList<>();
+    private ArrayList<String> hotels = new ArrayList<>();
     private TripPlan lastCreatedTrip;
     private ArrayList<TripPlan> allTrips = new ArrayList<>();
 
@@ -45,6 +46,9 @@ public class Utility {
         return false;
     }
 //----------------------------------------------------------------------------------------
+
+
+
 
     public void addTrip(TripPlan trip)
     {
@@ -90,7 +94,7 @@ public class Utility {
 //----------------------------------------------------------------------------------------
 
 
-    public void setHotels(ArrayList<Attraction> hotels) {
+    public void setHotels(ArrayList<String> hotels) {
         instance.hotels = hotels;
     }
 
@@ -142,7 +146,7 @@ public class Utility {
     {
         for(Attraction attraction: favoriteAttractions)
         {
-            if(attraction.getPlaceID() == id)
+            if(attraction.getPlaceID().equals(id))
             {
                 return true;
             }
@@ -172,16 +176,23 @@ public class Utility {
 //----------------------------------------------------------------------------------------
 
     public boolean removeAttractionFromFavoriteList(Attraction attraction){
-        if(favoriteAttractions.contains(attraction))
-            favoriteAttractions.remove(attraction);
-        else
-            return false;
-        return true;
+        Log.e("HERE==>", "Check on Attraction " + attraction.getPlaceID());
+        for(Attraction currAttraction: favoriteAttractions)
+        {
+            if(currAttraction.getPlaceID().equals(attraction.getPlaceID()))
+            {
+
+                favoriteAttractions.remove(currAttraction);
+                Log.e("HERE==>", "Removed Attraction" + attraction.getPlaceID());
+                return true;
+            }
+        }
+        return false;
     }
 
 //----------------------------------------------------------------------------------------
 
-    public ArrayList<Attraction> getHotelsByDestination(String destination) {
+    public ArrayList<String> getHotelsByDestination(String destination) {
         ServerConnection.getInstance(context).getHotelsFromServer(destination.toLowerCase().trim()+"_hotels");
         return hotels;
     }
@@ -196,7 +207,7 @@ public class Utility {
     }
 //----------------------------------------------------------------------------------------
 
-    public ArrayList<Attraction> getHotels() {
+    public ArrayList<String> getHotels() {
         if(hotels == null)
         {
             ServerConnection.getInstance(context).getHotelsFromServer("london_hotels");
