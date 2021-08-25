@@ -2,7 +2,9 @@ package tripView;
 
 import static mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -11,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,34 +87,35 @@ public class TripViewFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         tripName = input.getText().toString();
                         Utility.getInstance(getContext()).getLastCreatedTrip().setTripName(tripName);
+                        ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip());
+                        Runnable run = new Runnable() {
+                            @Override
+                            public void run() {
+                                ServerConnection.serverErrorException exception =
+                                        ServerConnection.getInstance(getContext()).getException();
+                                if(exception == null)
+                                {
+                                    Utility.getInstance(getContext()).getAllTrips().add
+                                            (Utility.getInstance(getContext()).getLastCreatedTrip());
+                                    Toast.makeText(getContext(), "Trip Saved Successfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
+                                    getActivity().startActivity(intent);
+                                    getActivity().finish();
+                                }
+                                else
+                                {
+                                    Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        };
+                        new Handler().postDelayed(run, 3000);
+
                     }
                 });
                 alertDialog.create().show();
-                ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip());
-                Runnable run = new Runnable() {
-                    @Override
-                    public void run() {
-                        ServerConnection.serverErrorException exception =
-                                ServerConnection.getInstance(getContext()).getException();
-                        if(exception == null)
-                        {
-                            //TODO: add a new name for the created trip!
-
-                            Utility.getInstance(getContext()).getLastCreatedTrip().setTripName("Test");
-                            int last = Utility.getInstance(getContext()).getAllTrips().size()-1;
-                            Utility.getInstance(getContext()).getAllTrips().get(last).setTripName("test");
-                        }
-                        else
-                        {
-                            Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                };
 
             }
         });
-
-
 
         return view;
     }

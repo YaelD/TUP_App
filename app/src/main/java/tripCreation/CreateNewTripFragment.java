@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -254,8 +256,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         Utility.getInstance(getContext()).getTripSelectedAttrations().clear();
         tripDetails.setHoursEveryDay(desiredHours);
         Log.e("TRIP==>", tripDetails.toString());
-        //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
-        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
+        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
+        //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -335,22 +337,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         }
 
         callAdapter(desiredHours);
-/*
-
-//        DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter(getActivity());
-//        adapter.setDesiredHours(desiredHours);
-//
-//        recViewDesiredHours.setAdapter(adapter);
-//        recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
-//
-//        btnTest.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                desiredHours = adapter.getDesiredHours();
-//                System.out.println(desiredHours.toString());
-//            }
-//        });
- */
     }
 
     private void callAdapter(ArrayList<DesiredHoursInDay> desiredHours) {
@@ -441,6 +427,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 }
                 break;
             case R.id.btnHotel:
+
                 spinnerHotels.setVisibility(View.VISIBLE);
                 break;
             case R.id.btnFinishCreation:

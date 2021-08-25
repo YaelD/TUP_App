@@ -125,16 +125,12 @@ public class ServerConnection {
                             JSONObject json = new JSONObject(dayPlan);
 
                             LocalTime localTime = gson.fromJson(json.getString("startTime"), LocalTime.class);
-                            Log.e("StartTime==>", localTime.format(DateTimeFormatter.ISO_TIME));
 
                             arr.add(gson.fromJson(dayPlan, DayPlan.class));
-                            Log.e("EndTime==>", json.getString("finishTime"));
                         }
                         tripPlan.setPlans(arr);
                         Utility.getInstance(context).setLastCreatedTrip(tripPlan);
-                        Utility.getInstance(context).getAllTrips().add(tripPlan);
                     } else {
-                        Log.e("ERROR==>", jsonResponse.getString("message"));
                         throw new serverErrorException(jsonResponse.getString("message"));
                     }
                 } catch (JSONException e) {
@@ -145,7 +141,6 @@ public class ServerConnection {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
-                Log.e("ERROR==>", error.getMessage());
             }
         }) {
             @Override
@@ -183,11 +178,7 @@ public class ServerConnection {
                     if (jsonResponse.getString("status").equals("ok")) {
 
                         int id  = jsonResponse.getInt("message");
-                        int lastIndex =Utility.getInstance(context).getAllTrips().size() -1;
-                        Utility.getInstance(context).getAllTrips().get(lastIndex).setTripID(id);
                         Utility.getInstance(context).getLastCreatedTrip().setTripID(id);
-                        Utility.getInstance(context).setLastCreatedTrip(null);
-
                     } else {
                         Log.e("ERROR==>", jsonResponse.getString("message"));
                         ServerConnection.getInstance(context).setException(new serverErrorException(jsonResponse.getString("message")));
@@ -199,8 +190,8 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("ERROR==>", error.getMessage());
-                ServerConnection.getInstance(context).setException(new serverErrorException(error.getMessage()));
+                //Log.e("ERROR==>", error.getMessage());
+                ServerConnection.getInstance(context).setException(new serverErrorException("Error Connecting to Server"));
 
             }
         }) {
@@ -328,49 +319,6 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
-
-    public void getHotelsFromServer(String destination) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + allAttractionsURL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("HERE==>", response);
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    if (jsonResponse.getString("status").equals("error")) {
-                        Toast toast = Toast.makeText(context, "Error Connecting to Server, please try again", Toast.LENGTH_SHORT);
-                        toast.show();
-                    } else {
-                        //attractions = new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class);
-                        Utility.getInstance(context).setHotels(new Gson().fromJson(jsonResponse.getString("message"), ArrayList.class));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast toast = Toast.makeText(context, "Error Connecting to Server, please try again", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "text/html");
-                return headers;
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                return destination.getBytes();
-            }
-        };
-        //queue.add(request);
-        addToRequestQueue(stringRequest);
-
-    }
-
 //----------------------------------------------------------------------------------------
 
     public void getAttractionsFromServer(String destination) {
@@ -488,12 +436,16 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
 
     public void register(Traveler traveler) {
+        Log.e("HERE==>", "In Register");
         Gson gson = new Gson();
         //make a new request
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + registerURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.e("HERE==>", "In Register- good Response");
+                    Log.e("HERE==>", "Response Register==" + response);
+
                     JSONObject json = new JSONObject(response);
                     if (json.getString("status").equals("ok")) {
                         Traveler traveler = new Gson().fromJson(json.getString("message"), Traveler.class);
@@ -503,6 +455,7 @@ public class ServerConnection {
 
                     } else {
                         ServerConnection.getInstance(context).setException(new serverErrorException(json.getString("message")));
+                        Log.e("HERE==>", "Json Bad");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -583,6 +536,53 @@ public class ServerConnection {
                 data.put("Content-Type", "application/json");
                 return data;
 
+            }
+        };
+        addToRequestQueue(stringRequest);
+    }
+
+//----------------------------------------------------------------------------------------
+
+    public void getHotelsFromServer(String destination)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + hotelsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if(jsonObject.getString("status").equals("ok"))
+                            {
+                                JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
+                                for(int i =0; i < jsonArray.length(); ++i)
+                                {
+                                    Utility.getInstance(context).getHotels().add(new Gson().fromJson(jsonArray.get(i).toString(), Hotel.class));
+                                }
+                                Log.e("HERE==>", "Hotels==>"+ Utility.getInstance(context).getFavoriteAttractions().toString());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return destination.getBytes();
             }
         };
         addToRequestQueue(stringRequest);

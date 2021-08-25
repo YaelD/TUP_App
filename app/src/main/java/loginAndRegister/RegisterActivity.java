@@ -203,6 +203,7 @@ public class RegisterActivity extends AppCompatActivity {
             password = txtPassword.getText().toString().trim();
             Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
             ServerConnection.getInstance(this).register(registerTraveler);
+            Log.e("HERE==>", "In Register activity");
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {

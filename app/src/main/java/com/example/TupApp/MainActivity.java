@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private void preLaunch()
     {
         ServerConnection.getInstance(this.getApplicationContext()).getAttractionsFromServer("london");
-        Utility.getInstance(getApplicationContext()).setTravelerID("4");
-        ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
+        //Utility.getInstance(getApplicationContext()).setTravelerID("4");
+        //ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
     }
 }

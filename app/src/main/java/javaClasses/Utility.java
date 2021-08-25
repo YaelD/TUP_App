@@ -24,7 +24,7 @@ public class Utility {
     private ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
     private ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private ArrayList<Attraction> attractions = new ArrayList<>();
-    private ArrayList<String> hotels = new ArrayList<>();
+    private ArrayList<Hotel> hotels = new ArrayList<>();
     private TripPlan lastCreatedTrip;
     private ArrayList<TripPlan> allTrips = new ArrayList<>();
 
@@ -92,11 +92,6 @@ public class Utility {
         this.traveler = traveler;
     }
 //----------------------------------------------------------------------------------------
-
-
-    public void setHotels(ArrayList<String> hotels) {
-        instance.hotels = hotels;
-    }
 
     public void setAttractions(ArrayList<Attraction> attractions) {
         instance.attractions = attractions;
@@ -192,7 +187,7 @@ public class Utility {
 
 //----------------------------------------------------------------------------------------
 
-    public ArrayList<String> getHotelsByDestination(String destination) {
+    public ArrayList<Hotel> getHotelsByDestination(String destination) {
         ServerConnection.getInstance(context).getHotelsFromServer(destination.toLowerCase().trim()+"_hotels");
         return hotels;
     }
@@ -207,7 +202,7 @@ public class Utility {
     }
 //----------------------------------------------------------------------------------------
 
-    public ArrayList<String> getHotels() {
+    public ArrayList<Hotel> getHotels() {
         if(hotels == null)
         {
             ServerConnection.getInstance(context).getHotelsFromServer("london_hotels");
