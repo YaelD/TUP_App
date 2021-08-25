@@ -69,11 +69,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void preLaunch()
     {
-        //ServerConnection.getInstance(this.getApplicationContext()).getAttractionsFromServer("london");
+        ServerConnection.getInstance(this.getApplicationContext()).getAttractionsFromServer("london");
+        Utility.getInstance(this.getApplicationContext()).setTravelerID("0");
 
-        Utility.getInstance(getApplicationContext()).setTravelerID("5");
+        //Utility.getInstance(getApplicationContext()).setTravelerID("5");
         //ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
-        //ServerConnection.getInstance(getApplicationContext()).getMyTripsFromServer();
+       // ServerConnection.getInstance(getApplicationContext()).getMyTripsFromServer();
 
     }
 }

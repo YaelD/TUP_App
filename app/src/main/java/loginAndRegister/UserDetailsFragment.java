@@ -191,15 +191,6 @@ public class UserDetailsFragment extends Fragment {
                     Traveler newTraveler = new Traveler(firstName, lastName, email, password);
                     Log.e("HERE==>", newTraveler.toString());
                     ServerConnection.getInstance(getContext()).updateUser(newTraveler);
-//                    Snackbar.make(userDetailsParent, "Changes saved", Snackbar.LENGTH_LONG)
-////                                        .setAction("CLOSE", new View.OnClickListener() {
-////                                            @Override
-////                                            public void onClick(View view) {
-////
-////                                            }
-////                                        })
-////                                        .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
-//                            .show();
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
@@ -219,7 +210,6 @@ public class UserDetailsFragment extends Fragment {
                         }
                     };
                     new Handler().postDelayed(runnable, 3000);
-
                 }
 
             }

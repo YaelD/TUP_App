@@ -87,6 +87,7 @@ public class TripViewFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         tripName = input.getText().toString();
                         Utility.getInstance(getContext()).getLastCreatedTrip().setTripName(tripName);
+                        Utility.getInstance(getContext()).getLastCreatedTrip().setDestination("london");
                         ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip());
                         Runnable run = new Runnable() {
                             @Override

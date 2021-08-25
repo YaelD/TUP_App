@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 import javaClasses.ServerConnection;
 import javaClasses.Traveler;
+import javaClasses.Utility;
 import navigationDrawer.NavigationDrawerActivity;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -214,6 +215,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     else
                     {
+                        Log.e("HERE==>", "travelerID is--" + Utility.getInstance(getApplicationContext()).getTravelerID());
                         Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

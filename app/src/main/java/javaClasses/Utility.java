@@ -28,7 +28,7 @@ public class Utility {
     private TripPlan lastCreatedTrip;
     private ArrayList<TripPlan> allTrips = new ArrayList<>();
 
-    private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
+    //private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
 
     public void testAttractions()
@@ -230,7 +230,7 @@ public class Utility {
         {
             instance = new Utility(context);
         }
-        instance.setTraveler(instance.TestTraveler);
+        //instance.setTraveler(instance.TestTraveler);
         return instance;
     }
 
@@ -241,7 +241,7 @@ public class Utility {
         //this.sharedPreferences = context.getSharedPreferences("sharedPreference", Context.MODE_PRIVATE);
         //initData();
         //TODO: This is a test, delete it!
-        testAttractions();
+        //testAttractions();
     }
 
     public void saveData()

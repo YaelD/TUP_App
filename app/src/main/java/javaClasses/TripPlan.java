@@ -6,11 +6,20 @@ public class TripPlan {
     private String tripName;
     private ArrayList<DayPlan> plans = new ArrayList<>();
     private int tripID;
+    private String destination;
 
 
     public TripPlan(String tripName, ArrayList<DayPlan> plans) {
         this.tripName = tripName;
         this.plans = plans;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public ArrayList<DayPlan> getPlans() {

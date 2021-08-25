@@ -225,6 +225,7 @@ public class ServerConnection {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.e("HERE=>", "gOT RESPONSE");
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.getString("status").equals("ok")) {
                         Log.e("HERE==>", "Got OK Response with body" + jsonResponse.getString("message"));
@@ -255,7 +256,7 @@ public class ServerConnection {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("travelerID", "5");
+                params.put("travelerID", Utility.getInstance(context).getTravelerID());
                 return params;
             }
         };
@@ -378,20 +379,20 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
 
     public void logIn(String email, String password) {
-        /*
-
-         */
         StringRequest stringRequest = new StringRequest( Request.Method.POST, baseURL + loginURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject json = new JSONObject(response);
+                    Log.e("HERE==>", "Didnt log in response=" + response);
                     if (json.getString("status").equals("ok")) {
                         String jsonUserString = json.getString("message");
                         Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
                         Utility.getInstance(context).setTraveler(traveler);
+
                         ServerConnection.getInstance(context).setException(null);
                         Log.e("HERE==>", "Successfully LoggedIn");
+                        Log.e("HERE==>", "Traveler ID after log in=" + Utility.getInstance(context).getTravelerID());
                     } else {
                         Log.e("HERE==>", "Didn't Login");
                         ServerConnection.getInstance(context).setException
@@ -407,7 +408,6 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Log.e("HERE==>", error.getMessage());
                 ServerConnection.getInstance(context).setException
                         (new serverErrorException("Error connecting to server, please try again"));
             }
@@ -415,7 +415,7 @@ public class ServerConnection {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> data = new HashMap<>();
-                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("travelerID", "0");
                 data.put("Content-Type", "application/json");
                 return data;
 
@@ -428,6 +428,13 @@ public class ServerConnection {
                         "\"password\":\"" + password + "\"" +
                         "}";
                 return res.getBytes(StandardCharsets.UTF_8);
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                Map<String, String > header = response.headers;
+                Utility.getInstance(context).setTravelerID(header.get("travelerID"));
+                return super.parseNetworkResponse(response);
             }
         };
 
@@ -475,6 +482,7 @@ public class ServerConnection {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> data = new HashMap<>();
+                data.put("travelerID","0");
                 data.put("Content-Type", "application/json");
                 return data;
 
@@ -489,6 +497,7 @@ public class ServerConnection {
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 Map<String, String> headers = response.headers;
                 Utility.getInstance(context).setTravelerID(headers.get("travelerID"));
+                //Log.e("travelerID==>", Utility.getInstance(context).getTravelerID());
                 return super.parseNetworkResponse(response);
             }
         };

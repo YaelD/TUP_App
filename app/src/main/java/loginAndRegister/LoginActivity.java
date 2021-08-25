@@ -157,8 +157,8 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 if(ServerConnection.getInstance(getApplicationContext()).getException()== null)
                 {
-                    Log.e("HERE:", "EXCEPTION = NULL");
                     ServerConnection.getInstance(getApplicationContext()).setException(null);
+                    ServerConnection.getInstance(getApplicationContext()).getMyTripsFromServer();
                     Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -166,7 +166,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Log.e("HERE:", "EXCEPTION != NULL");
                     Toast.makeText(getApplicationContext(),
                             ServerConnection.getInstance(getApplicationContext()).getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
