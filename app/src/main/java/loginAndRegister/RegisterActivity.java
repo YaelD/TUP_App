@@ -3,6 +3,7 @@ package loginAndRegister;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +28,7 @@ import navigationDrawer.NavigationDrawerActivity;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterActivity";
+    private ProgressDialog progressDialog;
     private EditText txtFirstName,txtLastName, txtEmail, txtPassword, txtConfirmPassword;
     private Button btnRegister;
     private TextInputLayout FirstNameLayout, LastNameLayout, mailLayout, passwordLayout, confirmPasswordLayout;
@@ -205,6 +207,10 @@ public class RegisterActivity extends AppCompatActivity {
             Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
             ServerConnection.getInstance(this).register(registerTraveler);
             Log.e("HERE==>", "In Register activity");
+            progressDialog = new ProgressDialog(RegisterActivity.this);
+            progressDialog.setMessage("Processing... Please wait ");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {

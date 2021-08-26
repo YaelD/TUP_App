@@ -3,6 +3,7 @@ package loginAndRegister;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private final String URL = "http://10.0.0.5/login.php";
     private static final String TAG = "LoginActivity";
+    private ProgressDialog progressDialog;
     private EditText txtEmail, txtPassword;
     private Button btnLoginActivity;
     private String email, password;
@@ -152,6 +154,10 @@ public class LoginActivity extends AppCompatActivity {
         email = txtEmail.getText().toString().trim();
         password = txtPassword.getText().toString().trim();
         ServerConnection.getInstance(this).logIn(email, password);
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setMessage("Processing... Please wait ");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         Runnable r = new Runnable() {
             @Override
             public void run() {

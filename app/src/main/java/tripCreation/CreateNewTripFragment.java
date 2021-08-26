@@ -1,5 +1,6 @@
 package tripCreation;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -34,6 +35,7 @@ import javaClasses.DesiredHoursInDay;
 import javaClasses.ServerConnection;
 import javaClasses.Utility;
 import javaClasses.TripDetails;
+import loginAndRegister.RegisterActivity;
 import navigationDrawer.NavigationDrawerActivity;
 import tripView.TripViewActivity;
 
@@ -79,6 +81,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private LocalDate startDate, endDate;
     private MaterialDatePicker<Long> materialDatePicker2;
     private ArrayList<String> selectedHours;
+    private ProgressDialog progressDialog;
 
 
     @Nullable
@@ -258,6 +261,10 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         Log.e("TRIP==>", tripDetails.toString());
         ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
         //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Processing... Please wait");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
