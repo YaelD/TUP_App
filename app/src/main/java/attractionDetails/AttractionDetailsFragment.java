@@ -98,7 +98,6 @@ public class AttractionDetailsFragment extends Fragment {
                         .into(imgAttr);
                     if(Utility.getInstance(getContext()).isAttractionIsInFavorites(attraction.getPlaceID()))
                     {
-                        Log.e("HERE==>", "Attraction in Favs(DetailFrag)");
                         imgFavorite.setVisibility(View.VISIBLE);
                         imgFavoriteBorder.setVisibility(View.GONE);
                         txtRemoveFromFavorite.setVisibility(View.VISIBLE);
@@ -106,7 +105,6 @@ public class AttractionDetailsFragment extends Fragment {
                     }
                     else
                     {
-                        Log.e("HERE==>", "Attraction not in fav Favs(DetailFrag)");
                         imgFavorite.setVisibility(View.GONE);
                         imgFavoriteBorder.setVisibility(View.VISIBLE);
                         txtRemoveFromFavorite.setVisibility(View.GONE);
@@ -122,7 +120,6 @@ public class AttractionDetailsFragment extends Fragment {
                             txtAddToFavorites.setVisibility(View.VISIBLE);
                             boolean isRemoved = Utility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
                             if(isRemoved)
-                                Log.e("HERE", "Att" + attraction.getName() + "Removed");
                                 Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,
                                         Toast.LENGTH_SHORT).show();
 
@@ -170,6 +167,12 @@ public class AttractionDetailsFragment extends Fragment {
                     txtRestaurants.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
+
+                            Uri gmmIntentUri = Uri.parse("geo:"+attraction.getGeometry().toString()+"?q=restaurants");
+                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                            mapIntent.setPackage("com.google.android.apps.maps");
+                            startActivity(mapIntent);
 
                         }
                     });

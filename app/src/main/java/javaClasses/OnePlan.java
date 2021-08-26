@@ -12,6 +12,12 @@ public class OnePlan {
     private Boolean isFavoriteAttraction = false;
 
 
+    public OnePlan(Attraction attraction, LocalTime startTime, LocalTime finishTime) {
+        this.attraction = attraction;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+    }
+
     public Attraction getAttraction() {
         return attraction;
     }

@@ -119,17 +119,14 @@ public class ServerConnection {
                     if (jsonResponse.getString("status").equals("ok")) {
 
                         JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
-                        //Gson gson = new Gson();
                         for (int i = 0; i < jsonArray.length(); ++i) {
                             String dayPlanjson = jsonArray.getString(i);
-                            //JSONObject json = new JSONObject(dayPlan);
-                            Log.e("HERE==>", "The day plan is" + dayPlanjson);
 
                             DayPlan dayPlan = gson.fromJson(dayPlanjson, DayPlan.class);
                             OnePlan currentPlan = dayPlan.getDaySchedule().get(0);
-                            Log.e("HERE==>", "The Hotel is " + currentPlan.getAttraction().getName());
                             dayPlan.setHotel(new Hotel(currentPlan.getAttraction().getName(), currentPlan.getAttraction().getPlaceID()));
                             dayPlan.getDaySchedule().remove(0);
+                            arr.add(dayPlan);
                         }
                         tripPlan.setPlans(arr);
                         Utility.getInstance(context).setLastCreatedTrip(tripPlan);
@@ -213,7 +210,7 @@ public class ServerConnection {
                         .registerTypeAdapter(LocalDate.class,new LocalDateAdapter()).create();
                 String body = gson.toJson(tripPlan);
                 Log.e("TRIPPLAN==>", body);
-                return body.getBytes();
+                return body.getBytes(StandardCharsets.UTF_8);
             }
         };
 
@@ -392,7 +389,7 @@ public class ServerConnection {
             public void onResponse(String response) {
                 try {
                     JSONObject json = new JSONObject(response);
-                    Log.e("HERE==>", "Didnt log in response=" + response);
+                    Log.e("HERE==>", "log in response=" + response);
                     if (json.getString("status").equals("ok")) {
                         String jsonUserString = json.getString("message");
                         Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);

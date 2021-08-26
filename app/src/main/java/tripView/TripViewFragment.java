@@ -2,6 +2,7 @@ package tripView;
 
 import static mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import com.example.TupApp.R;
 
 import javaClasses.ServerConnection;
 import javaClasses.Utility;
+import loginAndRegister.LoginActivity;
 import myTrips.MyTripsActivity;
 import navigationDrawer.NavigationDrawerActivity;
 
@@ -37,6 +39,7 @@ public class TripViewFragment extends Fragment {
     private Button btnSaveTrip;
     private String callingActivity, tripName;
     private RelativeLayout relativeLayoutTripView;
+    private ProgressDialog progressDialog;
 
 
 
@@ -91,9 +94,15 @@ public class TripViewFragment extends Fragment {
                         Utility.getInstance(getContext()).getLastCreatedTrip().setTripName(tripName);
                         Utility.getInstance(getContext()).getLastCreatedTrip().setDestination("london");
                         ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip());
+                        progressDialog = new ProgressDialog(getContext());
+                        progressDialog.setMessage("Processing... Please wait ");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+
                         Runnable run = new Runnable() {
                             @Override
                             public void run() {
+                                progressDialog.dismiss();
                                 ServerConnection.serverErrorException exception =
                                         ServerConnection.getInstance(getContext()).getException();
                                 if(exception == null)

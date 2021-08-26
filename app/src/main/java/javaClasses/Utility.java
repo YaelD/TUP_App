@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class Utility {
 
 
+    public final static String SHARED_PREF_FILE_NAME = "TupPref";
+
     private static Utility instance;
     private Context context;
     private Traveler traveler;
@@ -136,7 +138,6 @@ public class Utility {
 
 //----------------------------------------------------------------------------------------
 
-    //TODO: REMEMBER TO CHANGE TO attractions ArrayList;
     public Attraction getAttractionByID(String id)
     {
         Attraction selectedAttraction = null;

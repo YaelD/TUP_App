@@ -101,14 +101,12 @@ public class FavoriteAttractionsFragment extends Fragment {
 
             AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
             adapter.setAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
-            Log.e("HERE==>", "SET FAVS" + Utility.getInstance(getContext()).getFavoriteAttractions().toString());
             recViewFavoriteAttractions.setAdapter(adapter);
             recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
     }
 
     private void initViews(View view) {
-        Log.d(TAG, "initViews: started");
         recViewFavoriteAttractions = view.findViewById(R.id.recViewFavoriteAttractions);
         btnFinishSelectFavAttr = view.findViewById(R.id.btnFinishSelectFavAttr);
         txtEmptyFavoriteList = view.findViewById(R.id.txtEmptyFavoriteList);

@@ -1,5 +1,6 @@
 package loginAndRegister;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,6 +46,7 @@ public class UserDetailsFragment extends Fragment {
     private Traveler traveler;
     private String firstName, lastName, email, password;
     private ConstraintLayout userDetailsParent;
+    private ProgressDialog progressDialog;
 
 
     @Nullable
@@ -190,10 +192,16 @@ public class UserDetailsFragment extends Fragment {
 
                     Traveler newTraveler = new Traveler(firstName, lastName, email, password);
                     Log.e("HERE==>", newTraveler.toString());
+
+                        progressDialog = new ProgressDialog(getContext());
+                    progressDialog.setMessage("Processing... Please wait ");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
                     ServerConnection.getInstance(getContext()).updateUser(newTraveler);
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
+                            progressDialog.dismiss();
                             ServerConnection.serverErrorException exception = ServerConnection.getInstance(getContext()).getException();
                             if(exception!= null)
                             {

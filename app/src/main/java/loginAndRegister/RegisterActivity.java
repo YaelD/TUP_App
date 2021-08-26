@@ -206,7 +206,6 @@ public class RegisterActivity extends AppCompatActivity {
             password = txtPassword.getText().toString().trim();
             Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
             ServerConnection.getInstance(this).register(registerTraveler);
-            Log.e("HERE==>", "In Register activity");
             progressDialog = new ProgressDialog(RegisterActivity.this);
             progressDialog.setMessage("Processing... Please wait ");
             progressDialog.setCancelable(false);
