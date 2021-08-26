@@ -108,7 +108,7 @@
 
             <TextView
                 android:id="@+id/txtAttrOpeningHours"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="TextView"
@@ -117,7 +117,7 @@
 
             <TextView
                 android:id="@+id/txtAttrPhone"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="10dp"
@@ -132,7 +132,7 @@
 
             <TextView
                 android:id="@+id/txtAttrWebsite"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="10dp"
