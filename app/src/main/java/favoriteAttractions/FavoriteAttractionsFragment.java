@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import attractionSearch.AddingAttrToMustVisitAttrAdapter;
 import attractionSearch.AttractionsSearchRecAdapter;
+import javaClasses.ServerConnection;
 import javaClasses.Utility;
 import navigationDrawer.NavigationDrawerActivity;
 import tripCreation.CreateNewTripActivity;
@@ -97,13 +98,17 @@ public class FavoriteAttractionsFragment extends Fragment {
                 }
             };
             getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-
-
             AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
             adapter.setAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
             recViewFavoriteAttractions.setAdapter(adapter);
             recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ServerConnection.getInstance(getContext()).sendFavAttractions();
     }
 
     private void initViews(View view) {

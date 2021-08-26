@@ -25,11 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initViews();
-        preLaunch();
-
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,15 +62,4 @@ public class MainActivity extends AppCompatActivity {
         logoImage = findViewById(R.id.logoImage);
     }
 
-
-    private void preLaunch()
-    {
-        ServerConnection.getInstance(this.getApplicationContext()).getAttractionsFromServer("london");
-        Utility.getInstance(this.getApplicationContext()).setTravelerID("0");
-
-        //Utility.getInstance(getApplicationContext()).setTravelerID("5");
-        //ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
-       // ServerConnection.getInstance(getApplicationContext()).getMyTripsFromServer();
-
-    }
 }

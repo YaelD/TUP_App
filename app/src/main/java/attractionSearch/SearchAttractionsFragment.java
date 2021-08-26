@@ -99,12 +99,12 @@ public class SearchAttractionsFragment extends Fragment {
         }
         if(callingActivity.equals(CreateNewTripActivity.class.getName()))
         {
-            Log.e("HERE==>", "In adapterMustVisit");
+            //Log.e("HERE==>", "In adapterMustVisit");
             adapterToMustVisitAttr.setMustVisitAttractions(filteredList);
         }
         else
         {
-            Log.e("HERE==>", "In adapterDoDetails");
+            //Log.e("HERE==>", "In adapterDoDetails");
             adapterToDetailsAttr.setAttractions(filteredList);
         }
     }

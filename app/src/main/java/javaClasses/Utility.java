@@ -13,7 +13,12 @@ import java.util.ArrayList;
 public class Utility {
 
 
-    public final static String SHARED_PREF_FILE_NAME = "TupPref";
+    private final static String SHARED_PREF_FILE_NAME = "TupPref";
+
+    public final static String TRAVELER = "traveler";
+    public final static String TRAVELER_ID = "travelerID";
+
+
 
     private static Utility instance;
     private Context context;
@@ -47,6 +52,23 @@ public class Utility {
         return testHotels;
     }
 
+    public void writeToSharedPreferences()
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TRAVELER_ID, travelerID);
+        String travelerJson = new Gson().toJson(this.getTraveler());
+        Log.e("HERE==>", "Traveler is about to write:" + travelerJson);
+        editor.putString(TRAVELER, travelerJson);
+        editor.commit();
+    }
+
+    public void clearSharedPreferences()
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+    }
+
 
     public void testAttractions()
     {
@@ -76,6 +98,9 @@ public class Utility {
 //----------------------------------------------------------------------------------------
 
 
+    public SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
 
 
     public void addTrip(TripPlan trip)
@@ -254,7 +279,7 @@ public class Utility {
 
     private Utility(Context context) {
         this.context = context;
-        //this.sharedPreferences = context.getSharedPreferences("sharedPreference", Context.MODE_PRIVATE);
+        this.sharedPreferences = context.getSharedPreferences(SHARED_PREF_FILE_NAME, Context.MODE_PRIVATE);
         //initData();
         //TODO: This is a test, delete it!
         //testAttractions();

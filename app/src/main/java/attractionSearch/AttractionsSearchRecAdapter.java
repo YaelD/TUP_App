@@ -64,7 +64,6 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
                 intent.putExtra(ATTRACTION_KEY, attractions.get(position).getPlaceID());
                 Toast.makeText(mContext, "The selected: " + attractions.get(position).getName(), Toast.LENGTH_LONG).show();
                 intent.putExtra(CALLING_ACTIVITY, mContext.getClass().getName());
-                Log.e("HERE==>", "Context Class Name" + mContext.getClass().getName());
                 mContext.startActivity(intent);
             }
         });

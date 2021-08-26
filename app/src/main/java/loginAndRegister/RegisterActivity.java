@@ -222,6 +222,7 @@ public class RegisterActivity extends AppCompatActivity {
                     else
                     {
                         Log.e("HERE==>", "travelerID is--" + Utility.getInstance(getApplicationContext()).getTravelerID());
+                        Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
                         Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

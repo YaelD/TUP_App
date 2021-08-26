@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;
 
+import javaClasses.Utility;
 import navigationDrawer.NavigationDrawerActivity;
 import javaClasses.ServerConnection;
 
@@ -167,7 +168,9 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if(ServerConnection.getInstance(getApplicationContext()).getException()== null)
                 {
+
                     ServerConnection.getInstance(getApplicationContext()).setException(null);
+                    Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
                     Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

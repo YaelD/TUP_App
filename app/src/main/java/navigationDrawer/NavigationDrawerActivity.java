@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import attractionSearch.SearchAttractionsActivity;
 import favoriteAttractions.FavoriteAttractionsActivity;
+import javaClasses.Utility;
 import loginAndRegister.UserDetailsActivity;
 import mainScreen.MainScreenFragment;
 import myTrips.MyTripsActivity;
@@ -120,6 +121,7 @@ public class NavigationDrawerActivity extends AppCompatActivity{
                         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Utility.getInstance(getApplicationContext()).clearSharedPreferences();
                                 Intent intent= new Intent(NavigationDrawerActivity.this, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);

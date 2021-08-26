@@ -209,6 +209,7 @@ public class UserDetailsFragment extends Fragment {
                             }
                             else
                             {
+                                Utility.getInstance(getContext()).writeToSharedPreferences();
                                 Toast.makeText(getActivity(), "Changes saved", Toast.LENGTH_LONG).show();
                                 Utility.getInstance(getContext()).setTraveler(newTraveler);
                                 Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);

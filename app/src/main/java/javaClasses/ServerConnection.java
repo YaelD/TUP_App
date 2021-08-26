@@ -167,7 +167,7 @@ public class ServerConnection {
 
     public void sendTripPlan(TripPlan tripPlan)
     {
-        Log.e("HERE==>", "Send A trip!!!!");
+        Log.e("sendTripPlan==>", "Send A trip!!!!");
         ArrayList<DayPlan> arr = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + tripURL, new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -180,7 +180,7 @@ public class ServerConnection {
                         int id  = jsonResponse.getInt("message");
                         Utility.getInstance(context).getLastCreatedTrip().setTripID(id);
                     } else {
-                        Log.e("ERROR==>", jsonResponse.getString("message"));
+                        //Log.e("sendTripPlan==>==>", jsonResponse.getString("message"));
                         ServerConnection.getInstance(context).setException(new serverErrorException(jsonResponse.getString("message")));
                     }
                 } catch (JSONException e) {
@@ -190,7 +190,7 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Log.e("ERROR==>", error.getMessage());
+                //Log.e("sendTripPlan==>==>", error.getMessage());
                 ServerConnection.getInstance(context).setException(new serverErrorException("Error Connecting to Server"));
 
             }
@@ -209,7 +209,7 @@ public class ServerConnection {
                 Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                         .registerTypeAdapter(LocalDate.class,new LocalDateAdapter()).create();
                 String body = gson.toJson(tripPlan);
-                Log.e("TRIPPLAN==>", body);
+                Log.e("sendTripPlan==>", "TripPlan body" + body);
                 return body.getBytes(StandardCharsets.UTF_8);
             }
         };
@@ -231,10 +231,9 @@ public class ServerConnection {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("HERE=>", "gOT RESPONSE");
+                    Log.e("getMyTripsFromServer=>", "Got Response:" + response);
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.getString("status").equals("ok")) {
-                        Log.e("HERE==>", "Got OK Response with body" + jsonResponse.getString("message"));
                         JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
                         for(int i =0; i < jsonArray.length(); ++i)
                         {
@@ -245,17 +244,19 @@ public class ServerConnection {
                         Utility.getInstance(context).setAllTrips(trips);
                     } else {
                         //Log.e("ERROR==>", jsonResponse.getString("message"));
-                        throw new serverErrorException(jsonResponse.getString("message"));
+                        ServerConnection.getInstance(context).setException(
+                          new serverErrorException(jsonResponse.getString("message")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    ServerConnection.getInstance(context).setException(new serverErrorException("Error Connecting to Server"));
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
-                //Log.e("ERROR==>", error.getMessage());
+                ServerConnection.getInstance(context).setException(new serverErrorException("Error Connecting to Server"));
+                Log.e("ERROR==>", error.getMessage());
             }
         }) {
             @Override
@@ -302,8 +303,7 @@ public class ServerConnection {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("ERROR==>", error.getMessage());
-                ServerConnection.getInstance(context).setException(new serverErrorException(error.getMessage()));
-
+                ServerConnection.getInstance(context).setException(new serverErrorException("Error Connecting to Server"));
             }
         }) {
             @Override
@@ -334,7 +334,7 @@ public class ServerConnection {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("HERE==>", response);
+                    //Log.e("HERE==>", response);
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.getString("status").equals("error")) {
                         Toast toast = Toast.makeText(instance.context, jsonResponse.getString("message"), Toast.LENGTH_SHORT);
@@ -631,10 +631,12 @@ public class ServerConnection {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
+                //TODO: Convert FavAttractions arrayList to Json
                 String body = new Gson().toJson(Utility.getInstance(context).getFavoriteAttractions());
                 return body.getBytes();
             }
         };
+        addToRequestQueue(stringRequest);
     }
 
 //----------------------------------------------------------------------------------------
