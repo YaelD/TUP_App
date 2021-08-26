@@ -11,12 +11,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="60dp">
 
         <TextView
             android:id="@+id/txtHour"
             android:layout_width="80dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:gravity="center"
             android:text="Hour"
             android:textSize="24sp"
@@ -31,7 +31,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/attractionCardView"
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_gravity="end"
             app:cardBackgroundColor="#FFEDA7"
             app:cardCornerRadius="8dp"
@@ -42,7 +42,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="60dp">
 
                 <TextView
                     android:id="@+id/txtNameOfAttr"
@@ -51,7 +51,7 @@
                     android:fontFamily="@font/courgette"
                     android:gravity="center"
                     android:text="Attraction"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

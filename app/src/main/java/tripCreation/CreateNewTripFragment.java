@@ -32,6 +32,7 @@ import attractionSearch.SearchAttractionsActivity;
 import favoriteAttractions.FavoriteAttractionsActivity;
 import javaClasses.Attraction;
 import javaClasses.DesiredHoursInDay;
+import javaClasses.Hotel;
 import javaClasses.ServerConnection;
 import javaClasses.Utility;
 import javaClasses.TripDetails;
@@ -91,7 +92,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_create_new_trip, container, false);
 
         initView(view);
-
+        //initSpinnerDestination();
+        initSpinnerHotels();
 
         txtSelectDateFrom.setInputType(InputType.TYPE_NULL);
         txtSelectDateTo.setInputType(InputType.TYPE_NULL);
@@ -245,6 +247,28 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             }
         });
         return view;
+    }
+
+//    private void initSpinnerDestination() {
+//        ArrayList<String> destinations = Utility.getInstance(getContext()).getDestinations();
+//        ArrayAdapter<String> destinationsAdapter = new ArrayAdapter<>(
+//                getActivity(),
+//                android.R.layout.simple_spinner_dropdown_item,
+//                destinations
+//        );
+//    }
+
+    private void initSpinnerHotels() {
+        ArrayList<Hotel> hotels = Utility.getInstance(getContext()).getTestHotels();
+        ArrayList<String> hotelsName = new ArrayList<>();
+        for(Hotel hotel:hotels){
+            hotelsName.add(hotel.getName());
+        }
+        ArrayAdapter<String> hotelsAdapter = new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                hotelsName
+        );
     }
 
 
