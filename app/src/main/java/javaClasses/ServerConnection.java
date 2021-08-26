@@ -121,12 +121,15 @@ public class ServerConnection {
                         JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
                         //Gson gson = new Gson();
                         for (int i = 0; i < jsonArray.length(); ++i) {
-                            String dayPlan = jsonArray.getString(i);
-                            JSONObject json = new JSONObject(dayPlan);
+                            String dayPlanjson = jsonArray.getString(i);
+                            //JSONObject json = new JSONObject(dayPlan);
+                            Log.e("HERE==>", "The day plan is" + dayPlanjson);
 
-                            LocalTime localTime = gson.fromJson(json.getString("startTime"), LocalTime.class);
-
-                            arr.add(gson.fromJson(dayPlan, DayPlan.class));
+                            DayPlan dayPlan = gson.fromJson(dayPlanjson, DayPlan.class);
+                            OnePlan currentPlan = dayPlan.getDaySchedule().get(0);
+                            Log.e("HERE==>", "The Hotel is " + currentPlan.getAttraction().getName());
+                            dayPlan.setHotel(new Hotel(currentPlan.getAttraction().getName(), currentPlan.getAttraction().getPlaceID()));
+                            dayPlan.getDaySchedule().remove(0);
                         }
                         tripPlan.setPlans(arr);
                         Utility.getInstance(context).setLastCreatedTrip(tripPlan);
@@ -203,9 +206,12 @@ public class ServerConnection {
                 return params;
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String body = new Gson().toJson(tripPlan);
+                Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
+                        .registerTypeAdapter(LocalDate.class,new LocalDateAdapter()).create();
+                String body = gson.toJson(tripPlan);
                 Log.e("TRIPPLAN==>", body);
                 return body.getBytes();
             }
@@ -218,10 +224,12 @@ public class ServerConnection {
 
 //----------------------------------------------------------------------------------------
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void getMyTripsFromServer()
     {
         ArrayList<TripPlan> trips = new ArrayList<>();
-
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
+                .registerTypeAdapter(LocalDate.class,new LocalDateAdapter()).create();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + tripURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -233,12 +241,11 @@ public class ServerConnection {
                         JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
                         for(int i =0; i < jsonArray.length(); ++i)
                         {
-                            TripPlan tripPlan  = new Gson().fromJson(jsonArray.get(i).toString(), TripPlan.class);
+                            TripPlan tripPlan  =gson.fromJson(jsonArray.get(i).toString(), TripPlan.class);
                             trips.add(tripPlan);
                         }
 
                         Utility.getInstance(context).setAllTrips(trips);
-                        Log.e("HERE==>", "Got A trip==>" + trips.toString());
                     } else {
                         //Log.e("ERROR==>", jsonResponse.getString("message"));
                         throw new serverErrorException(jsonResponse.getString("message"));
@@ -267,6 +274,7 @@ public class ServerConnection {
 
 //----------------------------------------------------------------------------------------
 
+    //TODO: Delete trip from server function
     public void sendTripPlansToDelete()
     {
         Log.e("HERE==>", "Send A trip!!!!");
@@ -321,7 +329,6 @@ public class ServerConnection {
 
     }
 
-//----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
 
     public void getAttractionsFromServer(String destination) {
@@ -690,7 +697,7 @@ public class ServerConnection {
     }
 
 
-    class LocalTimeAdapter extends TypeAdapter<LocalTime> {
+    static class LocalTimeAdapter extends TypeAdapter<LocalTime> {
 
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
@@ -702,7 +709,7 @@ public class ServerConnection {
             out.value(0);
             out.name("minute");
             out.value(value.getMinute());
-            out.value("second");
+            out.name("second");
             out.value(0);
             out.endObject();
         }
@@ -733,8 +740,7 @@ public class ServerConnection {
         }
     }
 
-    class LocalDateAdapter extends TypeAdapter<LocalDate>
-    {
+    static class LocalDateAdapter extends TypeAdapter<LocalDate> {
 
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override

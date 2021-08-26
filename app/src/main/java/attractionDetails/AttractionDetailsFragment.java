@@ -167,6 +167,12 @@ public class AttractionDetailsFragment extends Fragment {
 
                         }
                     });
+                    txtRestaurants.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
 
             }
         }

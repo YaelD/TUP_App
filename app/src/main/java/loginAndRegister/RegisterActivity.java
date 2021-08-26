@@ -214,6 +214,7 @@ public class RegisterActivity extends AppCompatActivity {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
+                    progressDialog.dismiss();
                     ServerConnection.serverErrorException exception = ServerConnection.getInstance(getApplication().getApplicationContext()).getException();
                     if(exception != null)
                     {

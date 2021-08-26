@@ -11,27 +11,25 @@ import java.util.ArrayList;
 
 
 public class DayPlan {
-    double durationDesireByUser;
-    ArrayList<OnePlan> daySchedule = new ArrayList<>();
-    LocalDate date;
-    Attraction hotel;
-    LocalTime startTime;
-    LocalTime finishTime;
-    int durationDay = 0;
+    private double durationDesireByUser;
+    private ArrayList<OnePlan> daySchedule = new ArrayList<>();
+    private LocalDate date;
+    private Hotel hotel;
+    private LocalTime startTime;
+    private LocalTime finishTime;
     //TODO: delete dateStr when finish testing
     //String dateStr;
     ArrayList<Attraction> mustSeenAttractionsForDay = new ArrayList<>();
 
 
     public DayPlan(double durationDesireByUser, ArrayList<OnePlan> daySchedule, LocalDate date,
-                   Attraction hotel, LocalTime startTime, LocalTime finishTime, int durationDay) {
+                   Hotel hotel, LocalTime startTime, LocalTime finishTime, int durationDay) {
         this.durationDesireByUser = durationDesireByUser;
         this.daySchedule = daySchedule;
         this.date = date;
         this.hotel = hotel;
         this.startTime = startTime;
         this.finishTime = finishTime;
-        this.durationDay = durationDay;
     }
 
     public double getDurationDesireByUser() {
@@ -58,11 +56,11 @@ public class DayPlan {
         this.date = date;
     }
 
-    public Attraction getHotel() {
+    public Hotel getHotel() {
         return hotel;
     }
 
-    public void setHotel(Attraction hotel) {
+    public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
 
@@ -81,15 +79,6 @@ public class DayPlan {
     public void setFinishTime(LocalTime finishTime) {
         this.finishTime = finishTime;
     }
-
-    public int getDurationDay() {
-        return durationDay;
-    }
-
-    public void setDurationDay(int durationDay) {
-        this.durationDay = durationDay;
-    }
-
 
     public static ArrayList<DayPlan> getStaticDayPlan()
     {

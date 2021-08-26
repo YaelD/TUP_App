@@ -6,10 +6,10 @@ import java.time.LocalTime;
 //change the class name
 
 public class OnePlan {
-    Attraction attraction;
-    LocalTime startTime;
-    LocalTime finishTime;
-    Boolean isFavoriteAttraction = false;
+    private Attraction attraction;
+    private LocalTime startTime;
+    private LocalTime finishTime;
+    private Boolean isFavoriteAttraction = false;
 
 
     public Attraction getAttraction() {

@@ -1,7 +1,14 @@
 package javaClasses;
 
-import com.google.gson.Gson;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class TripDetails {
@@ -72,10 +79,13 @@ public class TripDetails {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static TripDetails getTrip2()
     {
+        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new ServerConnection.LocalTimeAdapter())
+            .registerTypeAdapter(LocalDate.class,new ServerConnection.LocalDateAdapter()).create();
         String str = "{\"destination\":\"london\",\"hotelID\":\"ChIJGeIsmrgEdkgRlsvY9Maa0A0\",\"mustSeenAttractionsID\":[\"ChIJ_R7u-6QcdkgR_TvWQJZsm3k\",\"ChIJ2_19mdYEdkgRadLE5rfxLPU\",\"ChIJ7bDgv2IadkgRkIbzf3FdF5M\",\"ChIJG1YB2m4RdkgRsetv9D40NGY\",\"ChIJVbSVrt0EdkgRQH_FO4ZkHc0\"],\"hoursEveryDay\":[{\"date\":\"2021-08-11\",\"startTime\":\"10:00\",\"endTime\":\"20:00\"},{\"date\":\"2021-08-12\",\"startTime\":\"10:00\",\"endTime\":\"18:00\"},{\"date\":\"2021-08-13\",\"startTime\":\"15:00\",\"endTime\":\"20:00\"}]}";
-        return new Gson().fromJson(str, TripDetails.class);
+        return gson.fromJson(str, TripDetails.class);
     }
 
 
