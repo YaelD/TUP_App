@@ -256,19 +256,23 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 //                android.R.layout.simple_spinner_dropdown_item,
 //                destinations
 //        );
+//        destinationSpinner.setAdapter(destinationsAdapter);
 //    }
 
     private void initSpinnerHotels() {
         ArrayList<Hotel> hotels = Utility.getInstance(getContext()).getTestHotels();
         ArrayList<String> hotelsName = new ArrayList<>();
+        hotelsName.add("Select");
         for(Hotel hotel:hotels){
             hotelsName.add(hotel.getName());
         }
+        System.out.println(hotelsName.toString());
         ArrayAdapter<String> hotelsAdapter = new ArrayAdapter<>(
                 getActivity(),
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 hotelsName
         );
+        spinnerHotels.setAdapter(hotelsAdapter);
     }
 
 
