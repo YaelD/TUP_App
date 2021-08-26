@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.TupApp.R;
@@ -35,6 +36,7 @@ public class TripViewFragment extends Fragment {
     private RecyclerView dateRecView;
     private Button btnSaveTrip;
     private String callingActivity, tripName;
+    private RelativeLayout relativeLayoutTripView;
 
 
 
@@ -129,6 +131,7 @@ public class TripViewFragment extends Fragment {
     private void initViews(View view) {
         dateRecView = view.findViewById(R.id.dateRecView);
         btnSaveTrip = view.findViewById(R.id.btnSaveTrip);
+        relativeLayoutTripView = view.findViewById(R.id.relativeLayoutTripView);
     }
 
 
