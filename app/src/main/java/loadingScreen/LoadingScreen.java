@@ -23,6 +23,20 @@ public class LoadingScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
+
+
+        Handler handler = new Handler();
+        //TODO: upload all the relevant data from the server
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //TODO: CHECK FOR COOKIE TO NAVIGATE THE USER TO RELEVANT INTENT
+                Intent intent = new Intent(LoadingScreen.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 4000);
+
     }
 
 }
