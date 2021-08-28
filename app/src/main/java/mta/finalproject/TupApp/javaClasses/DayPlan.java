@@ -17,8 +17,6 @@ public class DayPlan {
     private Hotel hotel;
     private LocalTime startTime;
     private LocalTime finishTime;
-    //TODO: delete dateStr when finish testing
-    //String dateStr;
     ArrayList<Attraction> mustSeenAttractionsForDay = new ArrayList<>();
 
 

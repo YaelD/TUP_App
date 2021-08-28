@@ -43,14 +43,14 @@ public class ServerConnection {
     private Context context;
     private ServerConnection.serverErrorException exception;
 
-    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
     private final String registerURL = "/traveler";
     private final String updateURL = "/traveler";
     private final String favAttractionsURL = "/attractions/favorites";
-    private final String hotelsURL = "/hotles";
+    private final String hotelsURL = "/hotels";
 
     //TODO: function that sends trips to DB
 
@@ -236,6 +236,7 @@ public class ServerConnection {
                         for(int i =0; i < jsonArray.length(); ++i)
                         {
                             TripPlan tripPlan  =gson.fromJson(jsonArray.get(i).toString(), TripPlan.class);
+                            Log.e("getMyTripsFromServer=>", "Got plan with id-" + tripPlan.getTripID());
                             trips.add(tripPlan);
                         }
 
@@ -254,7 +255,7 @@ public class ServerConnection {
             @Override
             public void onErrorResponse(VolleyError error) {
                 ServerConnection.getInstance(context).setException(new serverErrorException("Error Connecting to Server"));
-                Log.e("ERROR==>", error.getMessage());
+                //Log.e("ERROR==>", error.getMessage());
             }
         }) {
             @Override
@@ -325,7 +326,6 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
-
     public void getAttractionsFromServer(String destination) {
         String url = baseURL + allAttractionsURL;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -380,7 +380,167 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
+    public void getFavoritesFromServer()
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + favAttractionsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if(jsonObject.getString("status").equals("ok"))
+                            {
+                                JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
+                                for(int i =0; i < jsonArray.length(); ++i)
+                                {
+                                    Log.e("For Yael==>", jsonArray.getString(i));
+                                    Utility.getInstance(context).getFavoriteAttractions().add(new Gson().fromJson(jsonArray.get(i).toString(), Attraction.class));
+                                }
+                                //Utility.getInstance(context).setFavoriteAttractions(favAttractions);
+                                //Log.e("HERE==>", "FAVS Attractions==>"+ Utility.getInstance(context).getFavoriteAttractions().toString());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+
+            }
+        };
+        addToRequestQueue(stringRequest);
+    }
+
+//----------------------------------------------------------------------------------------
+    public void sendFavAttractions()
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + favAttractionsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                //TODO: Convert FavAttractions arrayList to Json
+                String body = new Gson().toJson(Utility.getInstance(context).getFavAttractionsToAdd());
+                return body.getBytes();
+            }
+        };
+        addToRequestQueue(stringRequest);
+    }
+
+
+    public void deleteFavAttractions()
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, baseURL + favAttractionsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                //TODO: Convert FavAttractions arrayList to Json
+                String body = new Gson().toJson(Utility.getInstance(context).getFavAttractionsToDelete());
+                return body.getBytes();
+            }
+        };
+        addToRequestQueue(stringRequest);
+    }
+
+
+
+    //----------------------------------------------------------------------------------------
+    public void getHotelsFromServer(String destination)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + hotelsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if(jsonObject.getString("status").equals("ok"))
+                            {
+                                JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
+                                for(int i =0; i < jsonArray.length(); ++i)
+                                {
+                                    Utility.getInstance(context).getHotels().add(new Gson().fromJson(jsonArray.get(i).toString(), Hotel.class));
+                                }
+                                Log.e("HERE==>", "Hotels==>"+ Utility.getInstance(context).getFavoriteAttractions().toString());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return destination.getBytes();
+            }
+        };
+        addToRequestQueue(stringRequest);
+    }
+
+//----------------------------------------------------------------------------------------
     public void logIn(String email, String password) {
         StringRequest stringRequest = new StringRequest( Request.Method.POST, baseURL + loginURL, new Response.Listener<String>() {
             @Override
@@ -442,10 +602,10 @@ public class ServerConnection {
         };
 
         //queue.add(stringRequest);
-            addToRequestQueue(stringRequest);
+        addToRequestQueue(stringRequest);
     }
-//----------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------
     public void register(Traveler traveler) {
         Log.e("HERE==>", "In Register");
         Gson gson = new Gson();
@@ -511,134 +671,6 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
-    public void getFavoritesFromServer()
-    {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + favAttractionsURL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if(jsonObject.getString("status").equals("ok"))
-                            {
-                                JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
-                                for(int i =0; i < jsonArray.length(); ++i)
-                                {
-                                    Log.e("For Yael==>", jsonArray.getString(i));
-                                    Utility.getInstance(context).getFavoriteAttractions().add(new Gson().fromJson(jsonArray.get(i).toString(), Attraction.class));
-                                }
-                                //Utility.getInstance(context).setFavoriteAttractions(favAttractions);
-                                //Log.e("HERE==>", "FAVS Attractions==>"+ Utility.getInstance(context).getFavoriteAttractions().toString());
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> data = new HashMap<>();
-                data.put("travelerID", Utility.getInstance(context).getTravelerID());
-                data.put("Content-Type", "application/json");
-                return data;
-
-            }
-        };
-        addToRequestQueue(stringRequest);
-    }
-
-//----------------------------------------------------------------------------------------
-
-    public void getHotelsFromServer(String destination)
-    {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + hotelsURL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if(jsonObject.getString("status").equals("ok"))
-                            {
-                                JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
-                                for(int i =0; i < jsonArray.length(); ++i)
-                                {
-                                    Utility.getInstance(context).getHotels().add(new Gson().fromJson(jsonArray.get(i).toString(), Hotel.class));
-                                }
-                                Log.e("HERE==>", "Hotels==>"+ Utility.getInstance(context).getFavoriteAttractions().toString());
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> data = new HashMap<>();
-                data.put("travelerID", Utility.getInstance(context).getTravelerID());
-                data.put("Content-Type", "application/json");
-                return data;
-
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                return destination.getBytes();
-            }
-        };
-        addToRequestQueue(stringRequest);
-    }
-
-//----------------------------------------------------------------------------------------
-
-    public void sendFavAttractions()
-    {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + favAttractionsURL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> data = new HashMap<>();
-                data.put("travelerID", Utility.getInstance(context).getTravelerID());
-                data.put("Content-Type", "application/json");
-                return data;
-
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                //TODO: Convert FavAttractions arrayList to Json
-                String body = new Gson().toJson(Utility.getInstance(context).getFavoriteAttractions());
-                return body.getBytes();
-            }
-        };
-        addToRequestQueue(stringRequest);
-    }
-
-//----------------------------------------------------------------------------------------
-
     public void updateUser(Traveler newTravelerDetails) throws serverErrorException
     {
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + updateURL, new Response.Listener<String>() {

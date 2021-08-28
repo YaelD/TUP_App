@@ -34,6 +34,11 @@ public class Utility {
     private TripPlan lastCreatedTrip;
     private ArrayList<TripPlan> allTrips = new ArrayList<>();
 
+
+    private ArrayList<String> favAttractionsToDelete = new ArrayList<>();
+    private ArrayList<String> favAttractionsToAdd = new ArrayList<>();
+
+
     //private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
     public void initTestHotels(){
@@ -43,6 +48,23 @@ public class Utility {
         testHotels.add(hotel1);
         testHotels.add(hotel2);
         testHotels.add(hotel3);
+    }
+
+
+    public ArrayList<String> getFavAttractionsToDelete() {
+        return favAttractionsToDelete;
+    }
+
+    public void setFavAttractionsToDelete(ArrayList<String> favAttractionsToDelete) {
+        this.favAttractionsToDelete = favAttractionsToDelete;
+    }
+
+    public ArrayList<String> getFavAttractionsToAdd() {
+        return favAttractionsToAdd;
+    }
+
+    public void setFavAttractionsToAdd(ArrayList<String> favAttractionsToAdd) {
+        this.favAttractionsToAdd = favAttractionsToAdd;
     }
 
     public ArrayList<Hotel> getTestHotels(){
@@ -202,8 +224,15 @@ public class Utility {
         if(favoriteAttractions.contains(attraction))
             return false;
         else
+        {
             favoriteAttractions.add(attraction);
-        return true;
+            this.favAttractionsToAdd.add(attraction.getPlaceID());
+            this.favAttractionsToDelete.remove(attraction.getPlaceID());
+            Log.e("In Add from Favs==>","Delete Arr" + favAttractionsToDelete.toString());
+            Log.e("In Add from Favs==>","Add Arr" + favAttractionsToAdd.toString());
+            return true;
+        }
+
     }
 //----------------------------------------------------------------------------------------
 
@@ -213,9 +242,12 @@ public class Utility {
         {
             if(currAttraction.getPlaceID().equals(attraction.getPlaceID()))
             {
-
                 favoriteAttractions.remove(currAttraction);
-                Log.e("HERE==>", "Removed Attraction" + attraction.getPlaceID());
+                this.favAttractionsToAdd.remove(currAttraction.getPlaceID());
+                this.favAttractionsToDelete.add(currAttraction.getPlaceID());
+                Log.e("In Remove From Favs==>","Delete Arr" + favAttractionsToDelete.toString());
+                Log.e("In Remove From Favs==>","Add Arr" + favAttractionsToAdd.toString());
+
                 return true;
             }
         }

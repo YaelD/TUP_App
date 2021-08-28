@@ -18,6 +18,14 @@ public class OnePlan {
         this.finishTime = finishTime;
     }
 
+    public Boolean getFavoriteAttraction() {
+        return isFavoriteAttraction;
+    }
+
+    public void setFavoriteAttraction(Boolean favoriteAttraction) {
+        isFavoriteAttraction = favoriteAttraction;
+    }
+
     public Attraction getAttraction() {
         return attraction;
     }

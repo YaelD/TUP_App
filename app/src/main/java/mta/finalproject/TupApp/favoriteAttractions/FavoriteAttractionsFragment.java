@@ -28,12 +28,17 @@ import mta.finalproject.TupApp.tripCreation.CreateNewTripActivity;
 
 import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
+import java.util.ArrayList;
+
 public class FavoriteAttractionsFragment extends Fragment {
     private static final String TAG = "FavoriteAttractionsFrag";
 
     private RecyclerView recViewFavoriteAttractions;
     private Button btnFinishSelectFavAttr;
     private TextView txtEmptyFavoriteList;
+
+
+
 
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -107,7 +112,8 @@ public class FavoriteAttractionsFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        ServerConnection.getInstance(getContext()).sendFavAttractions();
+
+        //ServerConnection.getInstance(getContext()).sendFavAttractions();
     }
 
     private void initViews(View view) {
