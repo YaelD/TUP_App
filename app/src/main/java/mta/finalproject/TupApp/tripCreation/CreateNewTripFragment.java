@@ -166,8 +166,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                     materialDatePicker2 = builder2.build();
                     materialDatePicker2.show(getActivity().getSupportFragmentManager(), "DATE_PICKER2");
                     isDateToSelected = false;
-
                     endDate = positiveButtonClick(materialDatePicker2, startDate);
+
                 } else {
                     txtSelectDateTo.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -178,6 +178,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                         }
                     });
                 }
+
+
+                //materialDatePicker2.setCancelable(false);
                 //dismissButtonclick(materialDatePicker2, startDate, endDate);
                 //cancelButtonClick(materialDatePicker2, startDate, endDate);
                 if (isDateToSelected)
