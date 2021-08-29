@@ -43,7 +43,7 @@ public class ServerConnection {
     private Context context;
     private ServerConnection.serverErrorException exception;
 
-    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -102,7 +102,7 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void sendTripDetailsToServer(TripDetails tripDetails) throws serverErrorException {
+    public void sendTripDetailsToServer(TripDetails tripDetails) {
         Log.e("HERE==>", "Send A trip!!!!");
         Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                 .registerTypeAdapter(LocalDate.class,new LocalDateAdapter()).create();
@@ -129,16 +129,22 @@ public class ServerConnection {
                         tripPlan.setPlans(arr);
                         Utility.getInstance(context).setLastCreatedTrip(tripPlan);
                     } else {
-                        throw new serverErrorException(jsonResponse.getString("message"));
+                        ServerConnection.getInstance(context).
+                                setException(new serverErrorException(jsonResponse.getString("message")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    ServerConnection.getInstance(context).
+                            setException(new serverErrorException(e.getMessage()));
+
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Toast toast = Toast.makeText(instance.context, "Error Connecting to Server, please try again" ,Toast.LENGTH_SHORT);
+                ServerConnection.getInstance(context).
+                        setException(new serverErrorException(error.getMessage()));
+
             }
         }) {
             @Override
@@ -188,9 +194,7 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Log.e("sendTripPlan==>==>", error.getMessage());
                 ServerConnection.getInstance(context).setException(new serverErrorException("Error Connecting to Server"));
-
             }
         }) {
             @Override

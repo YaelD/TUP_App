@@ -247,7 +247,6 @@ public class Utility {
                 this.favAttractionsToDelete.add(currAttraction.getPlaceID());
                 Log.e("In Remove From Favs==>","Delete Arr" + favAttractionsToDelete.toString());
                 Log.e("In Remove From Favs==>","Add Arr" + favAttractionsToAdd.toString());
-
                 return true;
             }
         }

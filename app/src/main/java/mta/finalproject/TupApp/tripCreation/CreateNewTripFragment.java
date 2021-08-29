@@ -213,19 +213,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         });
 
 
-
-        /*
-            MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
-            adapter.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getTripSelectedAttrations());
-
-            recViewMustVisitAttr.setAdapter(adapter);
-            recViewMustVisitAttr.setLayoutManager(new LinearLayoutManager(getActivity()));
-         */
-
-
-
-
-
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -247,16 +234,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         return view;
     }
 
-//    private void initSpinnerDestination() {
-//        ArrayList<String> destinations = Utility.getInstance(getContext()).getDestinations();
-//        ArrayAdapter<String> destinationsAdapter = new ArrayAdapter<>(
-//                getActivity(),
-//                android.R.layout.simple_spinner_dropdown_item,
-//                destinations
-//        );
-//        destinationSpinner.setAdapter(destinationsAdapter);
-//    }
-
     private void initSpinnerHotels() {
         ArrayList<Hotel> hotels = Utility.getInstance(getContext()).getTestHotels();
         ArrayList<String> hotelsName = new ArrayList<>();
@@ -272,7 +249,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         );
         spinnerHotels.setAdapter(hotelsAdapter);
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initFinButton() {
@@ -314,33 +290,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         recViewMustVisitAttr.setLayoutManager(new GridLayoutManager(getActivity(),2));
     }
 
-/*
-
-
-    //   @RequiresApi(api = Build.VERSION_CODES.O)
-//    private void cancelButtonClick(MaterialDatePicker<Long> materialDatePicker2, LocalDate startDate, LocalDate endDate) {
-//        materialDatePicker2.addOnCancelListener(new DialogInterface.OnCancelListener() {
-//            @Override
-//            public void onCancel(DialogInterface dialog) {
-//                if(isDateToSelected && (endDate.isBefore(startDate) || ((startDate.plusDays(6)).isBefore(endDate)))){
-//                    txtEndDatePickError.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//    }
-//
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    private void dismissButtonclick(MaterialDatePicker<Long> materialDatePicker2, LocalDate startDate, LocalDate endDate) {
-//        materialDatePicker2.addOnDismissListener(new DialogInterface.OnDismissListener() {
-//            @Override
-//            public void onDismiss(DialogInterface dialog) {
-//                if(isDateToSelected && (endDate.isBefore(startDate) || ((startDate.plusDays(6)).isBefore(endDate)))){
-//                    txtEndDatePickError.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//    }
- */
 
     private LocalDate positiveButtonClick(MaterialDatePicker<Long> materialDatePicker2, LocalDate startDate) {
         materialDatePicker2.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
@@ -385,7 +334,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     private void initView(View view) {
         Log.d(TAG, "CreateNewTripFragment: started");
-
         txtTripDetails = view.findViewById(R.id.txtTripDetails);
         btnDestination = view.findViewById(R.id.btnDestination);
         btnTripDates = view.findViewById(R.id.btnTripDates);
@@ -470,7 +418,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 break;
         }
     }
-
 }
 
 

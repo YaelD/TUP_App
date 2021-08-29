@@ -11,7 +11,7 @@ import java.time.DayOfWeek;
 
 import java.util.ArrayList;
 
-public class Attraction implements Parcelable {
+public class Attraction {
 
     private String name;
     private String address;
@@ -27,19 +27,6 @@ public class Attraction implements Parcelable {
         this.name = name;
     }
 
-    public Attraction(String name, String address, String phoneNumber, String website, /*Geometry geometry,*/ String placeID,
-                      String imageUrl/*, ArrayList<AttractionType> types, ArrayList<DayOpeningHours> openingHoursArr*/, String description) {
-        this.setName(name);
-        this.setAddress(address);
-        this.setPhoneNumber(phoneNumber);
-        this.setWebsite(website);
-        this.setPlaceID(placeID);
-        this.setDescription(description);
-        //this.setGeometry(geometry);
-        //this.setOpeningHoursArr(openingHoursArr);
-        this.setImageUrl(imageUrl);
-    }
-
     public Attraction(Attraction other)
     {
         this.setName(other.name);
@@ -47,7 +34,7 @@ public class Attraction implements Parcelable {
         this.setPhoneNumber(other.phoneNumber);
         this.setWebsite(other.website);
         this.setPlaceID(other.placeID);
-        //this.setGeometry(other.geometry);
+        this.setGeometry(other.geometry);
         this.setOpeningHoursArr(other.OpeningHoursArr);
         this.setImageUrl(other.imageUrl);
         this.setDescription(other.description);
@@ -62,18 +49,6 @@ public class Attraction implements Parcelable {
         placeID = in.readString();
         imageUrl = in.readString();
     }
-
-    public static final Creator<Attraction> CREATOR = new Creator<Attraction>() {
-        @Override
-        public Attraction createFromParcel(Parcel in) {
-            return new Attraction(in);
-        }
-
-        @Override
-        public Attraction[] newArray(int size) {
-            return new Attraction[size];
-        }
-    };
 
     public String getName() {
         return name;
@@ -116,7 +91,7 @@ public class Attraction implements Parcelable {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public DayOpeningHours getOpeningHoursByDay(DayOfWeek day){
-        return OpeningHoursArr.get(day.getValue());
+        return OpeningHoursArr.get(day.getValue()%7);
     }
 
     public void setDescription(String description) {
@@ -151,20 +126,5 @@ public class Attraction implements Parcelable {
             stringBuilder.append(dayOpeningHours.toString());
         }
         return stringBuilder.toString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(address);
-        dest.writeString(phoneNumber);
-        dest.writeString(website);
-        dest.writeString(placeID);
-        dest.writeString(imageUrl);
     }
 }

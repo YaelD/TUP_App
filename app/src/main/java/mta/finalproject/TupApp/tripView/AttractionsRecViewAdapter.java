@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +49,7 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -53,7 +57,9 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
         holder.txtHours.setText(onePlans.get(position).getStartTime().toString());
         holder.txtAttractionName.setText(onePlans.get(position).getAttraction().getName());
         if(onePlans.get(position).getFavoriteAttraction())
-            holder.attractionCardView.setCardBackgroundColor(R.color.bright_red);
+        {
+            holder.attractionCardView.setCardBackgroundColor(mContext.getColor(R.color.bright_red));
+        }
 
         holder.attractionCardView.setOnClickListener(new View.OnClickListener() {
             @Override
