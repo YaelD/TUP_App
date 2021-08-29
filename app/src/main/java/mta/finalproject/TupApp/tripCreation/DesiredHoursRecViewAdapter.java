@@ -21,6 +21,7 @@ import mta.finalproject.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,10 +48,22 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
         return holder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull @NotNull DesiredHoursRecViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.txtDate.setText(desiredHours.get(position).getDate() + ":");
-
+        /*
+        //Check if the Date is today, start from the current time
+        if(desiredHours.get(position).getDate().toString().equals(LocalDate.now().toString()))
+        {
+            if(holder.startTime.isBefore(LocalTime.now().plusMinutes(3)))
+            {
+                holder.startTime = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute()+1);
+            }
+        }
+         */
+        holder.btnTimeFrom.setText(holder.startTime.toString());
+        holder.btnTimeTo.setText(holder.endTime.toString());
         holder.btnTimeFrom.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -64,6 +77,13 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         holder.startTime = LocalTime.of(hourOfDay, minute);
+                        if(LocalDate.now().toString().equals(desiredHours.get(position).getDate().toString()))
+                        {
+                            if(holder.startTime.isBefore(LocalTime.now().plusMinutes(3)))
+                            {
+                                holder.startTime = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute()+1);
+                            }
+                        }
                         //holder.btnTimeFrom.setText(String.format("%02d:%02d", hourOfDay, minute));
                         holder.btnTimeFrom.setText(holder.startTime.toString());
                         //selectedHours.add(String.format("%02d:%02d", hourOfDay, minute));
