@@ -1,7 +1,6 @@
 package mta.finalproject.TupApp.tripCreation;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,15 +71,15 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private Spinner destinationSpinner, spinnerHotels;
     private FloatingActionButton fltBtnAddAttr, fltBtnSearchAttr;
     private boolean isBtnDestinationClicked = false, isBtnTripDatesClicked = false, isBtnDesiredHoursInDayClicked = false, isBtnMustVisitAtt = false;
-    private boolean isDateToSelected = false;
+    private boolean isSelectedEndDate = false, isSelectedStartDate = false;
     private EditText txtSelectDateFrom, txtSelectDateTo;
     private RecyclerView recViewDesiredHours, recViewMustVisitAttr;
-    private List<LocalDate> rangeDates;
+    private List<LocalDate> rangeDates = new ArrayList<>();
     private ArrayList<DesiredHoursInDay> desiredHours;
     private LocalDate startDate, endDate;
     private MaterialDatePicker<Long> materialDatePicker2;
-    private ArrayList<String> selectedHours;
     private ProgressDialog progressDialog;
+
 
 
     @Nullable
@@ -93,9 +92,12 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         //initSpinnerDestination();
         initSpinnerHotels();
 
+        //מניעה מהמשתמש להזין מידע בeditText
         txtSelectDateFrom.setInputType(InputType.TYPE_NULL);
         txtSelectDateTo.setInputType(InputType.TYPE_NULL);
 
+        //הגדרת לוח השנה
+        //TODO: CHANGE THE RANGE OF YEARS
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.clear();
         calendar.setTimeInMillis(MaterialDatePicker.todayInUtcMilliseconds());
@@ -105,6 +107,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         Long december = calendar.getTimeInMillis();
 
 
+        //בניה של לוח השנה
         CalendarConstraints.Builder constraintBuilder1 = new CalendarConstraints.Builder();
         constraintBuilder1.setStart(january);
         constraintBuilder1.setEnd(december);
@@ -113,6 +116,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         constraintBuilder2.setStart(january);
         constraintBuilder2.setEnd(december);
 
+        //בניה של הטיים פיקרים
         MaterialDatePicker.Builder<Long> builder1 = MaterialDatePicker.Builder.datePicker();
         builder1.setTitleText("Select start date");
         builder1.setCalendarConstraints(constraintBuilder1.build());
@@ -128,31 +132,22 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         });
 
 
-        materialDatePicker1.addOnNegativeButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "This is on Negative", Toast.LENGTH_SHORT).show();
-            }
-        });
+        //TODO: Here we have a material Date Picker!!!!
 
-        materialDatePicker1.addOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                Toast.makeText(getContext(), "This is on Dissmiss", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         materialDatePicker1.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onPositiveButtonClick(Long selection) {
                 txtSelectDateFrom.setText(materialDatePicker1.getHeaderText());
-
-                rangeDates = new ArrayList<LocalDate>();
                 startDate = Instant.ofEpochMilli(selection).atZone(ZoneId.systemDefault()).toLocalDate();
+                endDate = startDate;
+                isSelectedStartDate = true;
 
                 //Calendar Constraints
                 //CalendarConstraints.Builder constraintBuilder2 = new CalendarConstraints.Builder();
+                //TODO: show in 2nd datepicker from the startdate
                 ArrayList<CalendarConstraints.DateValidator> validators = new ArrayList<CalendarConstraints.DateValidator>();
                 validators.add(DateValidatorPointBackward.before(selection + TimeUnit.DAYS.toMillis(6)));
                 validators.add(DateValidatorPointForward.from(selection));
@@ -160,31 +155,35 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 //Material datePicker
                 //MaterialDatePicker.Builder<Long> builder2 = MaterialDatePicker.Builder.datePicker();
                 builder2.setTitleText("Select end date");
+                builder2.setSelection(selection);
                 builder2.setCalendarConstraints(constraintBuilder2.setValidator(CompositeDateValidator.allOf(validators)).build());
-
-                if (isDateToSelected && (endDate.isBefore(startDate) || ((startDate.plusDays(6)).isBefore(endDate)))) {
-                    materialDatePicker2 = builder2.build();
+                materialDatePicker2 = builder2.build();
+                txtSelectDateTo.setText(materialDatePicker1.getHeaderText());
+                if (isSelectedEndDate && (endDate.isBefore(startDate) || ((startDate.plusDays(6)).isBefore(endDate)))) {
+                    //materialDatePicker2 = builder2.build();
                     materialDatePicker2.show(getActivity().getSupportFragmentManager(), "DATE_PICKER2");
-                    isDateToSelected = false;
+                    isSelectedEndDate = false;
                     endDate = positiveButtonClick(materialDatePicker2, startDate);
 
-                } else {
+                }
+                else {
                     txtSelectDateTo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            materialDatePicker2 = builder2.build();
+                            //materialDatePicker2 = builder2.build();
                             materialDatePicker2.show(getActivity().getSupportFragmentManager(), "DATE_PICKER2");
                             endDate = positiveButtonClick(materialDatePicker2, startDate);
                         }
                     });
                 }
+                saveRangeOfDates(startDate, endDate);
 
 
                 //materialDatePicker2.setCancelable(false);
                 //dismissButtonclick(materialDatePicker2, startDate, endDate);
                 //cancelButtonClick(materialDatePicker2, startDate, endDate);
-                if (isDateToSelected)
-                    saveRangeOfDates(startDate, endDate);
+//                if (isDateToSelected)
+//                    saveRangeOfDates(startDate, endDate);
             }
         });
 
@@ -227,13 +226,15 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         };
 
         getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-        btnFinishCreation.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View view) {
-                initFinButton();
-            }
-        });
+        /*
+            btnFinishCreation.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onClick(View view) {
+                    initFinButton();
+                }
+            });
+         */
         return view;
     }
 
@@ -294,6 +295,14 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
+
+        desiredHours = new ArrayList<>();
+        for (LocalDate date : rangeDates) {
+            desiredHours.add(new DesiredHoursInDay(date.toString()));
+        }
+
+        callAdapter(desiredHours);
+
         MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
         adapter.setMustVisitAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
 
@@ -307,7 +316,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onPositiveButtonClick(Long selection) {
-                isDateToSelected = true;
+                isSelectedEndDate = true;
                 txtEndDatePickError.setVisibility(View.GONE);
                 txtSelectDateTo.setText(materialDatePicker2.getHeaderText());
                 endDate = Instant.ofEpochMilli(selection).atZone(ZoneId.systemDefault()).toLocalDate();
@@ -325,6 +334,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 .mapToObj(i -> CreateNewTripFragment.this.startDate.plusDays(i))
                 .collect(Collectors.toList());
 
+        //TODO: remove it to another function, and before that check if all the dates are correct
         desiredHours = new ArrayList<>();
         for (LocalDate date : rangeDates) {
             desiredHours.add(new DesiredHoursInDay(date.toString()));
@@ -365,6 +375,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         btnFinishCreation = view.findViewById(R.id.btnFinishCreation);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         Log.d(TAG, "onClick: started");
@@ -424,10 +435,35 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 spinnerHotels.setVisibility(View.VISIBLE);
                 break;
             case R.id.btnFinishCreation:
+                if(validation())
+                {
+                    initFinButton();
+                }
                 break;
             default:
                 break;
         }
+    }
+
+    private boolean validation() {
+        boolean res = true;
+        if(destinationSpinner.getSelectedItem().toString().equals("Select"))
+        {
+            Toast.makeText(getContext(), "Please select Destination", Toast.LENGTH_SHORT).show();
+            res = false;
+        }
+        else if(!isSelectedStartDate)
+        {
+            Toast.makeText(getContext(), "Please select Start date", Toast.LENGTH_SHORT).show();
+            res = false;
+        }
+        else if(spinnerHotels.getSelectedItem().toString().equals("Select"))
+        {
+            Toast.makeText(getContext(), "Please select Hotel", Toast.LENGTH_SHORT).show();
+            res = false;
+        }
+        return res;
+
     }
 }
 
