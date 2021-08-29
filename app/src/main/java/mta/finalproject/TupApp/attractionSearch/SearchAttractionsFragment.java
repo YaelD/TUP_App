@@ -120,6 +120,8 @@ public class SearchAttractionsFragment extends Fragment {
             btnFinish.setVisibility(View.VISIBLE);
 
             adapterToMustVisitAttr = new AddingAttrToMustVisitAttrAdapter(getActivity());
+            //adapterToMustVisitAttr.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
+
             attractionsRecView.setAdapter(adapterToMustVisitAttr);
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             //adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
@@ -149,7 +151,9 @@ public class SearchAttractionsFragment extends Fragment {
 
 
             adapterToDetailsAttr = new AttractionsSearchRecAdapter(getActivity());
+            adapterToDetailsAttr.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
             attractionsRecView.setAdapter(adapterToDetailsAttr);
+
             attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             ArrayList<Attraction> array = Utility.getInstance(getContext()).getAttractions();
             adapterToDetailsAttr.setAttractions(array);

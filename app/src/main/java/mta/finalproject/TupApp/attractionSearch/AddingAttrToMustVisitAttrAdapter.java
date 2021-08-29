@@ -90,6 +90,9 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
 
     }
 
+
+
+
     @Override
     public int getItemCount() {
         return attractions.size();

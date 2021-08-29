@@ -19,7 +19,7 @@
             android:layout_height="60dp"
             android:gravity="center"
             android:text="Hour"
-            android:textSize="24sp"
+            android:autoSizeTextType="uniform"
             android:textStyle="bold|italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/attractionCardView"
