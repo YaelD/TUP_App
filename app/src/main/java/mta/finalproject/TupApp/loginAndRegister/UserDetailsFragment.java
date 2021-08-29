@@ -172,7 +172,10 @@ public class UserDetailsFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                getActivity().finish();
+                Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
             }
         };
         getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);

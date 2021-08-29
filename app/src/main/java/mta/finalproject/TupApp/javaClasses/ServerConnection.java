@@ -43,7 +43,7 @@ public class ServerConnection {
     private Context context;
     private ServerConnection.serverErrorException exception;
 
-    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
+    private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -659,7 +659,9 @@ public class ServerConnection {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                return gson.toJson(traveler).getBytes(StandardCharsets.UTF_8);
+                String json = gson.toJson(traveler);
+                Log.e("HERE==>", json);
+                return json.getBytes(StandardCharsets.UTF_8);
             }
 
             @Override
