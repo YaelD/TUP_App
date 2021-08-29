@@ -17,7 +17,6 @@ public class DayPlan {
     private Hotel hotel;
     private LocalTime startTime;
     private LocalTime finishTime;
-    ArrayList<Attraction> mustSeenAttractionsForDay = new ArrayList<>();
 
 
     public DayPlan(double durationDesireByUser, ArrayList<OnePlan> daySchedule, LocalDate date,

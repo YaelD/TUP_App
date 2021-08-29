@@ -261,8 +261,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         Utility.getInstance(getContext()).getTripSelectedAttrations().clear();
         tripDetails.setHoursEveryDay(desiredHours);
         Log.e("TRIP To send=>", tripDetails.toString());
-        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
-        //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
+        //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
+        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Processing... Please wait");
         progressDialog.setCancelable(false);
@@ -270,13 +270,21 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                ServerConnection.serverErrorException exception = ServerConnection.getInstance(getContext()).getException();
                 progressDialog.dismiss();
-                Intent intent = new Intent(getActivity(), TripViewActivity.class);
-                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName()); //TODO: this is for test
-                startActivity(intent);
-                getActivity().finish();
+                if(exception == null)
+                {
+                    Intent intent = new Intent(getActivity(), TripViewActivity.class);
+                    intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName()); //TODO: this is for test
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+                else
+                {
+                    Toast.makeText(getContext(),exception.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
-        }, 5000);
+        }, 10000);
 
     }
 

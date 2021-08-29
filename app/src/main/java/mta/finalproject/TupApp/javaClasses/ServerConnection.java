@@ -114,13 +114,14 @@ public class ServerConnection {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
+
                     if (jsonResponse.getString("status").equals("ok")) {
 
                         JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
                         for (int i = 0; i < jsonArray.length(); ++i) {
                             String dayPlanjson = jsonArray.getString(i);
-
                             DayPlan dayPlan = gson.fromJson(dayPlanjson, DayPlan.class);
+
                             OnePlan currentPlan = dayPlan.getDaySchedule().get(0);
                             dayPlan.setHotel(new Hotel(currentPlan.getAttraction().getName(), currentPlan.getAttraction().getPlaceID()));
                             dayPlan.getDaySchedule().remove(0);
@@ -142,6 +143,7 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("sendTripDetails==>", "Error: " +error.getMessage());
                 ServerConnection.getInstance(context).
                         setException(new serverErrorException(error.getMessage()));
 
@@ -157,7 +159,7 @@ public class ServerConnection {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String body = new Gson().toJson(tripDetails);
+                String body = gson.toJson(tripDetails);
                 return body.getBytes();
             }
         };
@@ -211,7 +213,7 @@ public class ServerConnection {
                 Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                         .registerTypeAdapter(LocalDate.class,new LocalDateAdapter()).create();
                 String body = gson.toJson(tripPlan);
-                Log.e("sendTripPlan==>", "TripPlan body" + body);
+                //Log.e("sendTripPlan==>", "TripPlan body" + body);
                 return body.getBytes(StandardCharsets.UTF_8);
             }
         };
