@@ -1,16 +1,20 @@
 package mta.finalproject.TupApp.loginAndRegister;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodSubtype;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 import mta.finalproject.TupApp.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import mta.finalproject.TupApp.javaClasses.ServerConnection;
@@ -51,6 +56,18 @@ public class RegisterActivity extends AppCompatActivity {
         };
 
         getOnBackPressedDispatcher().addCallback(callback);
+
+        txtFirstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    String language = getKeyboardLanguage();
+                    System.out.println("The language: " + language);
+                    Log.e("HERE===>",  "language:"+ language);
+                }
+            }
+        });
 
 
         TextWatcher textWatcher = new TextWatcher() {
@@ -95,8 +112,11 @@ public class RegisterActivity extends AppCompatActivity {
                 else if(!txtConfirmPassword.getText().toString().isEmpty()){
                     confirmPasswordLayout.setError(null);
                 }
+
             }
         };
+
+
 
         txtFirstName.addTextChangedListener(textWatcher);
         txtLastName.addTextChangedListener(textWatcher);
@@ -121,6 +141,27 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private String getKeyboardLanguage() {
+//        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+//        InputMethodSubtype inputMethodSubtype = inputMethodManager.getCurrentInputMethodSubtype();
+//        String a = inputMethodSubtype.getLocale();
+//        InputMethodManager imm = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
+//        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
+//        String localeString = ims.getLanguageTag();
+//        Locale locale = new Locale(localeString);
+//        String currentLanguage = locale.getDisplayLanguage();
+
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
+        InputMethodSubtype inputMethodSubtype = inputMethodManager.getCurrentInputMethodSubtype();
+        Locale mLocale = new Locale(inputMethodSubtype.getLocale());
+        String localeDisplayName = mLocale.getDisplayName();
+
+        Log.e("HERE===>", "getLanguage:" + localeDisplayName);
+        //return inputMethodSubtype.getLocale();
+        return localeDisplayName;
     }
 
     private void initViews() {
