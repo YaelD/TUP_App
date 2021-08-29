@@ -66,7 +66,41 @@ public class UserDetailsFragment extends Fragment {
         email = traveler.getEmailAddress();
         password = traveler.getPassword();
 
+        View.OnFocusChangeListener listener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                switch (v.getId()){
+                    case R.id.txtFirstNameUserDetails:
+                        if(hasFocus)
+                            if(txtFirstName.getText().toString().isEmpty())
+                                firstNameLayout.setError("Please enter in English only");
+                        break;
+                    case R.id.txtLastNameUserDetails:
+                        if(hasFocus)
+                            if(txtLastName.getText().toString().isEmpty())
+                                lastNameLayout.setError("Please enter in English only");
+                        break;
+                    case R.id.txtPasswordUserDetails:
+                        if(hasFocus)
+                            if(txtPassword.getText().toString().isEmpty())
+                                passwordLayout.setError("Only English Letters, Numbers, Signs");
+                        break;
+                    case R.id.txtConfirmPasswordUserDetails:
+                        if(hasFocus)
+                            if(txtConfirmPassword.getText().toString().isEmpty())
+                                confirmPasswordLayout.setError("Only English Letters, Numbers, Signs");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
 
+        txtFirstName.setOnFocusChangeListener(listener);
+        txtLastName.setOnFocusChangeListener(listener);
+        txtEmail.setOnFocusChangeListener(listener);
+        txtPassword.setOnFocusChangeListener(listener);
+        txtConfirmPassword.setOnFocusChangeListener(listener);
 
 
         TextWatcher watcher = new TextWatcher() {
@@ -105,15 +139,6 @@ public class UserDetailsFragment extends Fragment {
                 else if (txtEmail.getText().toString().isEmpty() || isEmailValid(txtEmail.getText().toString())){
                     emailLayout.setError(null);
                 }
-//                else if (txtEmail.getText().toString().isEmpty())
-//                    emailLayout.setError(null);
-
-//                if(txtFirstName.getText().toString().length() > 0){
-//                    firstNameLayout.setError(null);
-//                }
-//                if(txtLastName.getText().toString().length() > 0){
-//                    lastNameLayout.setError(null);
-//                }
 
                 if (!txtPassword.getText().toString().isEmpty()){
                     confirmPasswordLayout.setVisibility(View.VISIBLE);
@@ -173,7 +198,6 @@ public class UserDetailsFragment extends Fragment {
                 emailLayout.setError(null);
                 passwordLayout.setError(null);
                 confirmPasswordLayout.setError(null);
-                //TODO: show snackBar
 
                 if(!txtFirstName.getText().toString().isEmpty())
                     firstName = txtFirstName.getText().toString();
@@ -191,7 +215,7 @@ public class UserDetailsFragment extends Fragment {
                     Traveler newTraveler = new Traveler(firstName, lastName, email, password);
                     Log.e("HERE==>", newTraveler.toString());
 
-                        progressDialog = new ProgressDialog(getContext());
+                    progressDialog = new ProgressDialog(getContext());
                     progressDialog.setMessage("Processing... Please wait ");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -208,7 +232,7 @@ public class UserDetailsFragment extends Fragment {
                             else
                             {
                                 Utility.getInstance(getContext()).writeToSharedPreferences();
-                                Toast.makeText(getActivity(), "Changes saved", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Changes saved successfully", Toast.LENGTH_LONG).show();
                                 Utility.getInstance(getContext()).setTraveler(newTraveler);
                                 Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
                                 startActivity(intent);
@@ -230,22 +254,6 @@ public class UserDetailsFragment extends Fragment {
         boolean isValid = true;
         Log.d(TAG, "validateData: started");
 
-//        if(txtFirstName.getText().toString().isEmpty()){
-//            firstNameLayout.setError("Enter your first name");
-//            isValid = false;
-//        }
-//        if(txtLastName.getText().toString().isEmpty()){
-//            lastNameLayout.setError("Enter your last name");
-//            isValid = false;
-//        }
-//        if(txtEmail.getText().toString().isEmpty()){
-//            emailLayout.setError("Enter your email");
-//            isValid = false;
-//        }
-//        if(txtPassword.getText().toString().isEmpty()){
-//            passwordLayout.setError("Enter your password");
-//            isValid = false;
-//        }
         if (txtPassword.getText().toString().length() > 0 && txtPassword.getText().toString().length() < 6) {
             passwordLayout.setError("Enter at least 6 characters");
             isValid = false;

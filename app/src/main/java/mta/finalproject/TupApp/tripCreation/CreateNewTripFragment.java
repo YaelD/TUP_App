@@ -285,8 +285,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         Utility.getInstance(getContext()).getTripSelectedAttrations().clear();
         tripDetails.setHoursEveryDay(desiredHours);
         Log.e("TRIP To send=>", tripDetails.toString());
-        //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
-        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
+        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
+        //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Processing... Please wait");
         progressDialog.setCancelable(false);

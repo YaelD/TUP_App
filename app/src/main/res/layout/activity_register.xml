@@ -8,7 +8,7 @@
     tools:context=".loginAndRegister.RegisterActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/userDetailsFirstNameLayout"
+        android:id="@+id/registerFirstNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
@@ -32,7 +32,7 @@
         app:helperTextTextColor="@color/red">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtFirstNameUserDetails"
+            android:id="@+id/txtFirstNameRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -43,7 +43,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/userDetailsLastNameLayout"
+        android:id="@+id/registerLastNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
@@ -62,13 +62,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDetailsFirstNameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/registerFirstNameLayout"
         app:startIconDrawable="@drawable/ic_person"
         app:endIconMode="clear_text"
         app:helperTextTextColor="@color/red">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtLastNameUserDetails"
+            android:id="@+id/txtLastNameRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -79,7 +79,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/userDetailsMailLayout"
+        android:id="@+id/registerMailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
@@ -97,13 +97,13 @@
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDetailsLastNameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/registerLastNameLayout"
         app:startIconDrawable="@drawable/ic_email"
         app:endIconMode="clear_text"
         app:helperTextTextColor="@color/red">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtEmailUserDetails"
+            android:id="@+id/txtEmailRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
@@ -114,7 +114,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/userDetailsPasswordLayout"
+        android:id="@+id/registerPasswordLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
@@ -134,14 +134,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDetailsMailLayout"
+        app:layout_constraintTop_toBottomOf="@+id/registerMailLayout"
         app:startIconDrawable="@drawable/ic_password"
         app:counterEnabled="true"
         app:counterMaxLength="20"
         app:helperTextTextColor="@color/red">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtPasswordUserDetails"
+            android:id="@+id/txtPasswordRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -152,7 +152,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/userDetailsConfirmPasswordLayout"
+        android:id="@+id/registerConfirmPasswordLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
@@ -171,14 +171,14 @@
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDetailsPasswordLayout"
+        app:layout_constraintTop_toBottomOf="@+id/registerPasswordLayout"
         app:startIconDrawable="@drawable/ic_password"
         app:counterEnabled="true"
         app:counterMaxLength="20"
         app:helperTextTextColor="@color/red">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtConfirmPasswordUserDetails"
+            android:id="@+id/txtConfirmPasswordRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -196,7 +196,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDetailsConfirmPasswordLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/registerConfirmPasswordLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

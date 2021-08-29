@@ -52,6 +52,14 @@ public class LoginActivity extends AppCompatActivity {
 
         getOnBackPressedDispatcher().addCallback(callback);
 
+        txtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                    if(txtPassword.getText().toString().isEmpty())
+                        passwordLoginLayout.setError("Only English Letters, Numbers, Signs");
+            }
+        });
 
 
         TextWatcher textWatcher = new TextWatcher() {

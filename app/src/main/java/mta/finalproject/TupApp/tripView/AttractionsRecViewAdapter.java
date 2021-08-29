@@ -3,11 +3,13 @@ package mta.finalproject.TupApp.tripView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,11 +46,14 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
 
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         //holder.txtHours.setText(onePlans.get(position).getStartTime().toString());
         holder.txtHours.setText(onePlans.get(position).getStartTime().toString());
         holder.txtAttractionName.setText(onePlans.get(position).getAttraction().getName());
+        if(onePlans.get(position).getFavoriteAttraction())
+            holder.attractionCardView.setCardBackgroundColor(R.color.bright_red);
 
         holder.attractionCardView.setOnClickListener(new View.OnClickListener() {
             @Override

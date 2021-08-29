@@ -33,6 +33,7 @@ import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterActivity";
+    public final static String LATIN_STRING = "a b c d e f g h i j k l m n o p q r s t u v w x y z";
     private ProgressDialog progressDialog;
     private EditText txtFirstName,txtLastName, txtEmail, txtPassword, txtConfirmPassword;
     private Button btnRegister;
@@ -57,17 +58,43 @@ public class RegisterActivity extends AppCompatActivity {
 
         getOnBackPressedDispatcher().addCallback(callback);
 
-        txtFirstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+
+
+        View.OnFocusChangeListener listener = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    String language = getKeyboardLanguage();
-                    System.out.println("The language: " + language);
-                    Log.e("HERE===>",  "language:"+ language);
+                switch (v.getId()){
+                    case R.id.txtFirstNameRegister:
+                        if(hasFocus)
+                            if(txtFirstName.getText().toString().isEmpty())
+                                FirstNameLayout.setError("Please enter in English only");
+                        break;
+                    case R.id.txtLastNameRegister:
+                        if(hasFocus)
+                            if(txtLastName.getText().toString().isEmpty())
+                                LastNameLayout.setError("Please enter in English only");
+                        break;
+                    case R.id.txtPasswordRegister:
+                        if(hasFocus)
+                            if(txtPassword.getText().toString().isEmpty())
+                                passwordLayout.setError("Only English Letters, Numbers, Signs");
+                        break;
+                    case R.id.txtConfirmPasswordRegister:
+                        if(hasFocus)
+                            if(txtConfirmPassword.getText().toString().isEmpty())
+                                confirmPasswordLayout.setError("Only English Letters, Numbers, Signs");
+                        break;
+                    default:
+                        break;
                 }
             }
-        });
+        };
+
+        txtFirstName.setOnFocusChangeListener(listener);
+        txtLastName.setOnFocusChangeListener(listener);
+        txtEmail.setOnFocusChangeListener(listener);
+        txtPassword.setOnFocusChangeListener(listener);
+        txtConfirmPassword.setOnFocusChangeListener(listener);
 
 
         TextWatcher textWatcher = new TextWatcher() {
@@ -143,39 +170,19 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private String getKeyboardLanguage() {
-//        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-//        InputMethodSubtype inputMethodSubtype = inputMethodManager.getCurrentInputMethodSubtype();
-//        String a = inputMethodSubtype.getLocale();
-//        InputMethodManager imm = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
-//        InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
-//        String localeString = ims.getLanguageTag();
-//        Locale locale = new Locale(localeString);
-//        String currentLanguage = locale.getDisplayLanguage();
-
-        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(this.INPUT_METHOD_SERVICE);
-        InputMethodSubtype inputMethodSubtype = inputMethodManager.getCurrentInputMethodSubtype();
-        Locale mLocale = new Locale(inputMethodSubtype.getLocale());
-        String localeDisplayName = mLocale.getDisplayName();
-
-        Log.e("HERE===>", "getLanguage:" + localeDisplayName);
-        //return inputMethodSubtype.getLocale();
-        return localeDisplayName;
-    }
 
     private void initViews() {
-        txtFirstName = findViewById(R.id.txtFirstNameUserDetails);
+        txtFirstName = findViewById(R.id.txtFirstNameRegister);
         btnRegister = findViewById(R.id.btnRegister);
-        txtEmail = findViewById(R.id.txtEmailUserDetails);
-        mailLayout = findViewById(R.id.userDetailsMailLayout);
-        txtLastName = findViewById(R.id.txtLastNameUserDetails);
-        txtPassword = findViewById(R.id.txtPasswordUserDetails);
-        txtConfirmPassword = findViewById(R.id.txtConfirmPasswordUserDetails);
-        FirstNameLayout = findViewById(R.id.userDetailsFirstNameLayout);
-        LastNameLayout = findViewById(R.id.userDetailsLastNameLayout);
-        passwordLayout = findViewById(R.id.userDetailsPasswordLayout);
-        confirmPasswordLayout = findViewById(R.id.userDetailsConfirmPasswordLayout);
+        txtEmail = findViewById(R.id.txtEmailRegister);
+        mailLayout = findViewById(R.id.registerMailLayout);
+        txtLastName = findViewById(R.id.txtLastNameRegister);
+        txtPassword = findViewById(R.id.txtPasswordRegister);
+        txtConfirmPassword = findViewById(R.id.txtConfirmPasswordRegister);
+        FirstNameLayout = findViewById(R.id.registerFirstNameLayout);
+        LastNameLayout = findViewById(R.id.registerLastNameLayout);
+        passwordLayout = findViewById(R.id.registerPasswordLayout);
+        confirmPasswordLayout = findViewById(R.id.registerConfirmPasswordLayout);
     }
 
     private boolean validateData() {
@@ -258,6 +265,7 @@ public class RegisterActivity extends AppCompatActivity {
                     ServerConnection.serverErrorException exception = ServerConnection.getInstance(getApplication().getApplicationContext()).getException();
                     if(exception != null)
                     {
+                        //Utility.getInstance(getApplicationContext()).setTraveler(registerTraveler);
                         Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                     else
