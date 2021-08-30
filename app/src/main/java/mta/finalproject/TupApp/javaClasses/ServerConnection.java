@@ -45,7 +45,8 @@ public class ServerConnection {
     private Context context;
     private ServerConnection.serverErrorException exception;
 
-    private final String baseURL = "http://Tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
+    //private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
+    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -151,7 +152,7 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendTripDetailsToServer(TripDetails tripDetails) {
-        Log.e("HERE==>", "Send A trip!!!!");
+        //Log.e("HERE==>", "Send A trip!!!!");
         Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
         TripPlan tripPlan = new TripPlan("", null);
@@ -320,7 +321,7 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
     //TODO: Delete trip from server function
     public void deleteTripFromServer() {
-        Log.e("HERE==>", "Send A tripPlans To delete!!!!");
+        //Log.e("HERE==>", "Send A tripPlans To delete!!!!");
         ArrayList<DayPlan> arr = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL+tripURL+deleteURL, new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -369,19 +370,16 @@ public class ServerConnection {
 
     //----------------------------------------------------------------------------------------
     public void getAttractionsFromServer(String destination) {
-        String url = baseURL + allAttractionsURL;
-        url = "http://Tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com/attractions/all";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL+allAttractionsURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.e("HERE==>", response);
                 try {
-                    Log.e("HERE==>", response);
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.getString("status").equals("error")) {
                         Toast toast = Toast.makeText(instance.context, jsonResponse.getString("message"), Toast.LENGTH_SHORT);
                         toast.show();
                     } else {
-
                         ArrayList<Attraction> attractions = new ArrayList<>();
                         JSONArray jsonArray = new JSONArray(jsonResponse.getString("message"));
                         Log.e("HERE==>", "GOOD RESPONSE");
@@ -407,16 +405,18 @@ public class ServerConnection {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
+                //headers.put("travelerID", Utility.getInstance(context).getTravelerID());
                 headers.put("travelerID", Utility.getInstance(context).getTravelerID());
                 headers.put("Content-Type", "text/html");
                 return headers;
             }
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    return destination.getBytes();
+
+                }
 
 
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                return destination.getBytes(StandardCharsets.UTF_8);
-            }
         };
         //instance.queue.add(request);
         addToRequestQueue(stringRequest);

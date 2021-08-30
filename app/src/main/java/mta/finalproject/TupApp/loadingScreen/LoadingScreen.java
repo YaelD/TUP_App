@@ -33,8 +33,8 @@ public class LoadingScreen extends AppCompatActivity {
         setContentView(R.layout.activity_loading_screen);
         SharedPreferences sharedPreferences = Utility.getInstance(getApplicationContext()).getSharedPreferences();
         Utility.getInstance(getApplicationContext()).setTravelerID(sharedPreferences.getString(TRAVELER_ID, "0"));
-        ServerConnection.getInstance(getApplicationContext()).getHotelsFromServer("london");
         ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
+        //ServerConnection.getInstance(getApplicationContext()).getHotelsFromServer("london");
         if(sharedPreferences.contains((TRAVELER_ID)))
         {
             String jsonTraveler = sharedPreferences.getString(TRAVELER, "");
@@ -42,8 +42,8 @@ public class LoadingScreen extends AppCompatActivity {
             Log.e("LoadingScreen==>", "TravelerID " + Utility.getInstance(getApplicationContext()).getTravelerID());
             Traveler traveler = new Gson().fromJson(jsonTraveler, Traveler.class);
             Utility.getInstance(getApplicationContext()).setTraveler(traveler);
-            ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
-            ServerConnection.getInstance(getApplicationContext()).getMyTripsFromServer();
+            //ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
+            //ServerConnection.getInstance(getApplicationContext()).getMyTripsFromServer();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
