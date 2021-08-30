@@ -315,7 +315,7 @@ public class UserDetailsFragment extends Fragment {
 
     private void initView(View view) {
         btnSaveChanges = view.findViewById(R.id.btnSaveChanges);
-        btnCancel = view.findViewById(R.id.btnCancle);
+        btnCancel = view.findViewById(R.id.btnCancel);
         txtTitleConfirmPassword = view.findViewById(R.id.txtTitleConfirmPassword);
         txtFirstName = view.findViewById(R.id.txtFirstNameUserDetails);
         txtLastName = view.findViewById(R.id.txtLastNameUserDetails);

@@ -34,7 +34,7 @@ public class TripViewFragment extends Fragment {
 
 
     private RecyclerView dateRecView;
-    private Button btnSaveTrip;
+    private Button btnSaveTrip, btnCancelTripView;
     private String callingActivity, tripName;
     private RelativeLayout relativeLayoutTripView;
     private ProgressDialog progressDialog;
@@ -55,10 +55,14 @@ public class TripViewFragment extends Fragment {
         initViews(view);
 
         callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
-        if(callingActivity.equals(MyTripsActivity.class.getName()))
+        if(callingActivity.equals(MyTripsActivity.class.getName())) {
             btnSaveTrip.setVisibility(View.GONE);
-        else
+            btnCancelTripView.setVisibility(View.GONE);
+        }
+        else {
             btnSaveTrip.setVisibility(View.VISIBLE);
+            btnCancelTripView.setVisibility(View.VISIBLE);
+        }
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -69,6 +73,15 @@ public class TripViewFragment extends Fragment {
 
         getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
+
+        btnCancelTripView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         btnSaveTrip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +95,7 @@ public class TripViewFragment extends Fragment {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
-                input.setHint("Trip " +Utility.getInstance(getContext()).getAllTrips().size());
+                input.setHint("Trip " + (Utility.getInstance(getContext()).getAllTrips().size() + 1));
                 alertDialog.setView(input);
 
                 alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
@@ -139,6 +152,7 @@ public class TripViewFragment extends Fragment {
         dateRecView = view.findViewById(R.id.dateRecView);
         btnSaveTrip = view.findViewById(R.id.btnSaveTrip);
         relativeLayoutTripView = view.findViewById(R.id.relativeLayoutTripView);
+        btnCancelTripView = view.findViewById(R.id.btnCancelTripView);
     }
 
 

@@ -55,6 +55,8 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
                 .load(attractions.get(position).getImageUrl())
                 .into(holder.imgAttraction);
 
+        holder.checkBox.setOnCheckedChangeListener(null);
+
         if(selectedAttractions.contains(attractions.get(position)))
         {
             holder.checkBox.setChecked(true);
@@ -63,8 +65,6 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
         {
             holder.checkBox.setChecked(false);
         }
-
-
 
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

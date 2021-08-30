@@ -27,7 +27,6 @@ public class Utility {
 
     private Activity oldActivity = null;
 
-
     private ArrayList<String> destinations = new ArrayList<>();
 
     private ArrayList<Integer> tripsToDelete = new ArrayList<>();
@@ -47,14 +46,31 @@ public class Utility {
     //private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
     public void initTestHotels(){
-        Hotel hotel1 = new Hotel("Matan", "1");
-        Hotel hotel2 = new Hotel("Yael", "2");
-        Hotel hotel3 = new Hotel("Maya", "3");
-        testHotels.add(hotel1);
-        testHotels.add(hotel2);
-        testHotels.add(hotel3);
+        if( testHotels.isEmpty()) {
+            Hotel hotel1 = new Hotel("Matan", "1");
+            Hotel hotel2 = new Hotel("Yael", "2");
+            Hotel hotel3 = new Hotel("Maya", "3");
+            testHotels.add(hotel1);
+            testHotels.add(hotel2);
+            testHotels.add(hotel3);
+        }
     }
 
+    public void initDestinations(){
+        if(destinations.isEmpty()){
+            destinations.add("Select");
+            destinations.add("Gal");
+            destinations.add("Maya");
+            destinations.add("Yael");
+            destinations.add("Yoela");
+            destinations.add("Mazal");
+        }
+    }
+
+    public ArrayList<String> getDestinations() {
+        initDestinations();
+        return destinations;
+    }
 
     public void finishOldActivity() {
         if(oldActivity != null)

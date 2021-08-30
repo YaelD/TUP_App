@@ -79,6 +79,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private LocalDate startDate, endDate;
     private MaterialDatePicker<Long> materialDatePicker2;
     private ProgressDialog progressDialog;
+    ArrayList<String> hotelsName = new ArrayList<>();
 
 
 
@@ -89,8 +90,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_create_new_trip, container, false);
 
         initView(view);
-        //initSpinnerDestination();
-        initSpinnerHotels();
+
 
         //מניעה מהמשתמש להזין מידע בeditText
         txtSelectDateFrom.setInputType(InputType.TYPE_NULL);
@@ -238,14 +238,22 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         return view;
     }
 
+    private void initSpinnerDestination(){
+        ArrayList<String> destinations = Utility.getInstance(getContext()).getDestinations();
+        ArrayAdapter<String> destinationsAdapter = new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                destinations
+        );
+        destinationSpinner.setAdapter(destinationsAdapter);
+    }
+
     private void initSpinnerHotels() {
         ArrayList<Hotel> hotels = Utility.getInstance(getContext()).getTestHotels();
-        ArrayList<String> hotelsName = new ArrayList<>();
         hotelsName.add("Select");
         for(Hotel hotel:hotels){
             hotelsName.add(hotel.getName());
         }
-        System.out.println(hotelsName.toString());
         ArrayAdapter<String> hotelsAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
@@ -295,6 +303,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
+
+        initSpinnerDestination();
+        initSpinnerHotels();
 
         desiredHours = new ArrayList<>();
         for (LocalDate date : rangeDates) {

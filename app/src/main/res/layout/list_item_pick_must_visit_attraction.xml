@@ -13,9 +13,9 @@
         android:layout_height="match_parent">
 
         <CheckBox
+            android:id="@+id/checkBoxPickAttr"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBoxPickAttr"/>
+            android:layout_height="wrap_content" />
 
 
         <ImageView
@@ -26,16 +26,16 @@
             android:layout_below="@+id/checkBoxPickAttr" />
 
         <TextView
+            android:id="@+id/txtAttractionName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txtAttractionName"
-            android:text="Attraction Name"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textSize="14sp"
             android:layout_below="@+id/imgAttraction"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="2dp"/>
+            android:layout_marginTop="2dp"
+            android:text="Attraction Name"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
