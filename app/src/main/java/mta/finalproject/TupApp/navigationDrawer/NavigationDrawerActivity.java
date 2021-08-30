@@ -167,7 +167,7 @@ public class NavigationDrawerActivity extends AppCompatActivity{
 
         if(Utility.getInstance(getApplicationContext()).getTripsToDelete().size() != 0)
         {
-            ServerConnection.getInstance(getApplicationContext()).sendTripPlansToDelete();
+            ServerConnection.getInstance(getApplicationContext()).deleteTripFromServer();
         }
 
 

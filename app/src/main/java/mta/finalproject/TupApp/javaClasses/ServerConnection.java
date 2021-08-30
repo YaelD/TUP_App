@@ -45,7 +45,7 @@ public class ServerConnection {
     private Context context;
     private ServerConnection.serverErrorException exception;
 
-    private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
+    private final String baseURL = "http://Tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -54,6 +54,7 @@ public class ServerConnection {
     private final String favAttractionsURL = "/attractions/favorites";
     private final String hotelsURL = "/hotels";
     private final String destinationsURL = "/destinations";
+    private final String deleteURL = "/delete";
 
     //TODO: function that sends trips to DB
 
@@ -316,14 +317,12 @@ public class ServerConnection {
         addToRequestQueue(stringRequest);
     }
 
-
 //----------------------------------------------------------------------------------------
-
     //TODO: Delete trip from server function
-    public void sendTripPlansToDelete() {
+    public void deleteTripFromServer() {
         Log.e("HERE==>", "Send A tripPlans To delete!!!!");
         ArrayList<DayPlan> arr = new ArrayList<>();
-        StringRequest stringRequest = new StringRequest(Request.Method.PATCH, baseURL + tripURL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL+tripURL+deleteURL, new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(String response) {
@@ -359,6 +358,7 @@ public class ServerConnection {
                 body = "{" +
                         "\"tripsIdToDeleteList\":" + body +
                         "}";
+                Utility.getInstance(context).getTripsToDelete().clear();
                 return body.getBytes();
             }
         };
@@ -370,11 +370,12 @@ public class ServerConnection {
     //----------------------------------------------------------------------------------------
     public void getAttractionsFromServer(String destination) {
         String url = baseURL + allAttractionsURL;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        url = "http://Tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com/attractions/all";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    //Log.e("HERE==>", response);
+                    Log.e("HERE==>", response);
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.getString("status").equals("error")) {
                         Toast toast = Toast.makeText(instance.context, jsonResponse.getString("message"), Toast.LENGTH_SHORT);
@@ -406,15 +407,15 @@ public class ServerConnection {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "text/html");
                 headers.put("travelerID", Utility.getInstance(context).getTravelerID());
+                headers.put("Content-Type", "text/html");
                 return headers;
             }
 
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                return destination.getBytes();
+                return destination.getBytes(StandardCharsets.UTF_8);
             }
         };
         //instance.queue.add(request);
@@ -458,7 +459,8 @@ public class ServerConnection {
     }
 
     //----------------------------------------------------------------------------------------
-    public void sendFavAttractionsToAdd() {
+    public void sendFavAttractionsToAdd()
+    {
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + favAttractionsURL,
                 new Response.Listener<String>() {
                     @Override
@@ -495,7 +497,6 @@ public class ServerConnection {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                //TODO: Convert FavAttractions arrayList to Json
                 String body = new Gson().toJson(Utility.getInstance(context).getFavAttractionsToAdd());
                 body = "{" +
                         "\"favoriteAttractionsList\":" + body +
@@ -509,7 +510,7 @@ public class ServerConnection {
     }
 
     public void sendFavAttractionsToDelete() {
-        StringRequest stringRequest = new StringRequest(Request.Method.PATCH, baseURL + favAttractionsURL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL+favAttractionsURL+deleteURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -558,9 +559,7 @@ public class ServerConnection {
         addToRequestQueue(stringRequest);
     }
 
-    //----------------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
     public void logIn(String email, String password) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + loginURL, new Response.Listener<String>() {
             @Override
@@ -595,13 +594,13 @@ public class ServerConnection {
                         (new serverErrorException("Error connecting to server, please try again"));
             }
         }) {
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> data = new HashMap<>();
                 data.put("travelerID", "0");
                 data.put("Content-Type", "application/json");
                 return data;
-
             }
 
             @Override

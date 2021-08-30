@@ -86,7 +86,7 @@ public class MyTripsFragment extends Fragment {
         super.onStop();
         if(Utility.getInstance(getContext()).getTripsToDelete().size() > 0)
         {
-            ServerConnection.getInstance(getContext()).sendTripPlansToDelete();
+            ServerConnection.getInstance(getContext()).deleteTripFromServer();
         }
     }
 }

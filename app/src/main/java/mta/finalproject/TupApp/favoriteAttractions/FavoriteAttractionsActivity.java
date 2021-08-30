@@ -80,6 +80,7 @@ public class FavoriteAttractionsActivity extends NavigationDrawerActivity {
                         finish();
                         break;
                     case R.id.favorites:
+
                         break;
                     case R.id.trips:
                         Utility.getInstance(getApplicationContext()).finishOldActivity();
