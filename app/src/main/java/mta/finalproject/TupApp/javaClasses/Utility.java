@@ -28,6 +28,7 @@ public class Utility {
     private Activity oldActivity = null;
 
 
+    private ArrayList<String> destinations = new ArrayList<>();
 
     private ArrayList<Integer> tripsToDelete = new ArrayList<>();
     private ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
@@ -63,9 +64,13 @@ public class Utility {
         oldActivity = null;
     }
 
+
     public void setOldActivity(Activity oldActivity) {
         this.oldActivity = oldActivity;
     }
+
+
+
 
     public ArrayList<Integer> getTripsToDelete() {
         return tripsToDelete;

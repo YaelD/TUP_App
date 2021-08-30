@@ -19,6 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpStack;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -52,6 +53,7 @@ public class ServerConnection {
     private final String updateURL = "/traveler";
     private final String favAttractionsURL = "/attractions/favorites";
     private final String hotelsURL = "/hotels";
+    private final String destinationsURL = "/destinations";
 
     //TODO: function that sends trips to DB
 
@@ -93,13 +95,59 @@ public class ServerConnection {
 
 
 //----------------------------------------------------------------------------------------
-
     public <T> void addToRequestQueue(Request<T> req) {
         getQueue().add(req);
     }
 
 //----------------------------------------------------------------------------------------
 
+    public void getHotelsFromServer(String destination) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + hotelsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.getString("status").equals("ok")) {
+                                JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
+                                for (int i = 0; i < jsonArray.length(); ++i) {
+                                    Utility.getInstance(context).getHotels().add(new Gson().fromJson(jsonArray.get(i).toString(), Hotel.class));
+                                }
+                                Log.e("HERE==>", "Hotels==>" + Utility.getInstance(context).getFavoriteAttractions().toString());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return destination.getBytes();
+            }
+        };
+        addToRequestQueue(stringRequest);
+    }
+
+    public void getDestinationsFromServer()
+    {
+
+    }
+
+
+//----------------------------------------------------------------------------------------
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendTripDetailsToServer(TripDetails tripDetails) {
         Log.e("HERE==>", "Send A trip!!!!");
@@ -169,7 +217,6 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
-
     public void sendTripPlan(TripPlan tripPlan) {
         Log.e("sendTripPlan==>", "Send A trip!!!!");
         ArrayList<DayPlan> arr = new ArrayList<>();
@@ -222,7 +269,6 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void getMyTripsFromServer() {
         ArrayList<TripPlan> trips = new ArrayList<>();
@@ -512,48 +558,7 @@ public class ServerConnection {
         addToRequestQueue(stringRequest);
     }
 
-
     //----------------------------------------------------------------------------------------
-    public void getHotelsFromServer(String destination) {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + hotelsURL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString("status").equals("ok")) {
-                                JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
-                                for (int i = 0; i < jsonArray.length(); ++i) {
-                                    Utility.getInstance(context).getHotels().add(new Gson().fromJson(jsonArray.get(i).toString(), Hotel.class));
-                                }
-                                Log.e("HERE==>", "Hotels==>" + Utility.getInstance(context).getFavoriteAttractions().toString());
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> data = new HashMap<>();
-                data.put("travelerID", Utility.getInstance(context).getTravelerID());
-                data.put("Content-Type", "application/json");
-                return data;
-
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                return destination.getBytes();
-            }
-        };
-        addToRequestQueue(stringRequest);
-    }
 
     //----------------------------------------------------------------------------------------
     public void logIn(String email, String password) {
@@ -730,13 +735,11 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
-
     public static class serverErrorException extends RuntimeException {
         public serverErrorException(String message) {
             super(message);
         }
     }
-
 
     static class LocalTimeAdapter extends TypeAdapter<LocalTime> {
 
@@ -815,5 +818,4 @@ public class ServerConnection {
 
         }
     }
-
 }

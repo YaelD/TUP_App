@@ -131,7 +131,6 @@ public class AttractionDetailsFragment extends Fragment {
                             if(isAdded)
                             {
                                 Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
-                                //Utility.getInstance(getContext()).addAttractionToAdd(attraction.getPlaceID());
                             }
                         }
                     });
@@ -163,13 +162,10 @@ public class AttractionDetailsFragment extends Fragment {
                     txtRestaurants.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
-
                             Uri gmmIntentUri = Uri.parse("geo:"+attraction.getGeometry().toString()+"?q=restaurants");
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                             mapIntent.setPackage("com.google.android.apps.maps");
                             startActivity(mapIntent);
-
                         }
                     });
 
