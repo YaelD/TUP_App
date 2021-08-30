@@ -2,6 +2,7 @@ package mta.finalproject.TupApp.favoriteAttractions;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,8 +113,17 @@ public class FavoriteAttractionsFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-
-        //ServerConnection.getInstance(getContext()).sendFavAttractions();
+        Log.e("FavAttractionsFrag==>", "SAVING and Deleting Attractions");
+        if(Utility.getInstance(getContext()).getFavAttractionsToAdd().size() > 0)
+        {
+            ServerConnection.getInstance(getContext()).sendFavAttractionsToAdd();
+            //Utility.getInstance(getContext()).getFavAttractionsToAdd().clear();
+        }
+        if(Utility.getInstance(getContext()).getFavAttractionsToDelete().size() > 0)
+        {
+            ServerConnection.getInstance(getContext()).sendFavAttractionsToDelete();
+            //Utility.getInstance(getContext()).getFavAttractionsToDelete().clear();
+        }
     }
 
     private void initViews(View view) {

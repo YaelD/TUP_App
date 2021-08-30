@@ -18,6 +18,7 @@ import mta.finalproject.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 
@@ -83,6 +84,9 @@ public class MyTripsFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-
+        if(Utility.getInstance(getContext()).getTripsToDelete().size() > 0)
+        {
+            ServerConnection.getInstance(getContext()).sendTripPlansToDelete();
+        }
     }
 }

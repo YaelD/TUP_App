@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,10 +39,6 @@ public class AttractionDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_attraction_details, container, false);
-
-
-
-
         initViews(view);
         return view;
     }
@@ -115,9 +112,11 @@ public class AttractionDetailsFragment extends Fragment {
                             txtAddToFavorites.setVisibility(View.VISIBLE);
                             boolean isRemoved = Utility.getInstance(getContext()).removeAttractionFromFavoriteList(attraction);
                             if(isRemoved)
+                            {
                                 Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,
                                         Toast.LENGTH_SHORT).show();
-
+                                //Utility.getInstance(getContext()).addAttractionToDelete(attraction.getPlaceID());
+                            }
                         }
                     });
 
@@ -130,7 +129,10 @@ public class AttractionDetailsFragment extends Fragment {
                             txtRemoveFromFavorite.setVisibility(View.VISIBLE);
                             boolean isAdded = Utility.getInstance(getContext()).addAttractionToFavoriteList(attraction);
                             if(isAdded)
+                            {
                                 Toast.makeText(getActivity(), attraction.getName()+" added to favorites successfully", Toast.LENGTH_SHORT).show();
+                                //Utility.getInstance(getContext()).addAttractionToAdd(attraction.getPlaceID());
+                            }
                         }
                     });
                     imgMap.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +158,6 @@ public class AttractionDetailsFragment extends Fragment {
                             Intent intent = new Intent(Intent.ACTION_DIAL);
                             intent.setData(Uri.parse("tel:" + attraction.getPhoneNumber()));
                             startActivity(intent);
-
                         }
                     });
                     txtRestaurants.setOnClickListener(new View.OnClickListener() {

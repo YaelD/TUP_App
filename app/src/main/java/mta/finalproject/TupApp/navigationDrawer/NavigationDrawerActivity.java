@@ -12,7 +12,6 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import mta.finalproject.TupApp.MainActivity;
@@ -24,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import mta.finalproject.TupApp.attractionSearch.SearchAttractionsActivity;
 import mta.finalproject.TupApp.favoriteAttractions.FavoriteAttractionsActivity;
+import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.loginAndRegister.UserDetailsActivity;
 import mta.finalproject.TupApp.mainScreen.MainScreenFragment;
@@ -35,8 +35,8 @@ import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTI
 public class NavigationDrawerActivity extends AppCompatActivity{
 
     private static final String TAG = "mta/finalproject/TupApp/navigationDrawer";
-    private DrawerLayout drawer;
-    private NavigationView navigationView;
+    protected DrawerLayout drawer;
+    protected NavigationView navigationView;
     private MaterialToolbar toolbar;
 
 
@@ -48,7 +48,7 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         initViews();
         setToolBarAndDrawer();
 
-        this.func();
+        this.navBarListeners();
 
         this.setContainer(new MainScreenFragment());
 
@@ -61,7 +61,7 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         transaction.commit();
     }
 
-    public void func()
+    public void navBarListeners()
     {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
@@ -159,5 +159,17 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         drawer = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(Utility.getInstance(getApplicationContext()).getTripsToDelete().size() != 0)
+        {
+            ServerConnection.getInstance(getApplicationContext()).sendTripPlansToDelete();
+        }
+
+
     }
 }

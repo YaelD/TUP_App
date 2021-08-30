@@ -42,7 +42,7 @@ public class LoadingScreen extends AppCompatActivity {
             Log.e("LoadingScreen==>", "TravelerID " + Utility.getInstance(getApplicationContext()).getTravelerID());
             Traveler traveler = new Gson().fromJson(jsonTraveler, Traveler.class);
             Utility.getInstance(getApplicationContext()).setTraveler(traveler);
-            //ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
+            ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
             ServerConnection.getInstance(getApplicationContext()).getMyTripsFromServer();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {

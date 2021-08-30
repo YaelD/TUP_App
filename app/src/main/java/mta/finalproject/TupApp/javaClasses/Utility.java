@@ -1,5 +1,6 @@
 package mta.finalproject.TupApp.javaClasses;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -23,6 +24,9 @@ public class Utility {
     private Traveler traveler;
     private String travelerID;
     private SharedPreferences sharedPreferences;
+
+    private Activity oldActivity = null;
+
 
 
     private ArrayList<Integer> tripsToDelete = new ArrayList<>();
@@ -51,20 +55,56 @@ public class Utility {
     }
 
 
+    public void finishOldActivity() {
+        if(oldActivity != null)
+        {
+            oldActivity.finish();
+        }
+        oldActivity = null;
+    }
+
+    public void setOldActivity(Activity oldActivity) {
+        this.oldActivity = oldActivity;
+    }
+
+    public ArrayList<Integer> getTripsToDelete() {
+        return tripsToDelete;
+    }
+
+    public void setTripsToDelete(ArrayList<Integer> tripsToDelete) {
+        this.tripsToDelete = tripsToDelete;
+    }
+
+    public void addAttractionToDelete(String placeID)
+    {
+        if(!favAttractionsToDelete.contains(placeID))
+        {
+            favAttractionsToDelete.add(placeID);
+            if(favAttractionsToAdd.contains(placeID))
+            {
+                favAttractionsToAdd.remove(placeID);
+            }
+        }
+    }
+
+    public void addAttractionToAdd(String placeID)
+    {
+        if(!favAttractionsToAdd.contains(placeID))
+        {
+            favAttractionsToAdd.add(placeID);
+            if(favAttractionsToDelete.contains(placeID))
+            {
+                favAttractionsToDelete.remove(placeID);
+            }
+        }
+    }
+
     public ArrayList<String> getFavAttractionsToDelete() {
         return favAttractionsToDelete;
     }
 
-    public void setFavAttractionsToDelete(ArrayList<String> favAttractionsToDelete) {
-        this.favAttractionsToDelete = favAttractionsToDelete;
-    }
-
     public ArrayList<String> getFavAttractionsToAdd() {
         return favAttractionsToAdd;
-    }
-
-    public void setFavAttractionsToAdd(ArrayList<String> favAttractionsToAdd) {
-        this.favAttractionsToAdd = favAttractionsToAdd;
     }
 
     public ArrayList<Hotel> getTestHotels(){
@@ -222,14 +262,20 @@ public class Utility {
 
     public boolean addAttractionToFavoriteList(Attraction attraction){
         if(favoriteAttractions.contains(attraction))
+        {
             return false;
+        }
         else
         {
+            if(!favAttractionsToAdd.contains(attraction.getPlaceID()))
+            {
+                favAttractionsToAdd.add(attraction.getPlaceID());
+            }
+            if(favAttractionsToDelete.contains(attraction.getPlaceID()))
+            {
+                favAttractionsToDelete.remove(attraction.getPlaceID());
+            }
             favoriteAttractions.add(attraction);
-            this.favAttractionsToAdd.add(attraction.getPlaceID());
-            this.favAttractionsToDelete.remove(attraction.getPlaceID());
-            Log.e("In Add from Favs==>","Delete Arr" + favAttractionsToDelete.toString());
-            Log.e("In Add from Favs==>","Add Arr" + favAttractionsToAdd.toString());
             return true;
         }
 
@@ -242,14 +288,19 @@ public class Utility {
         {
             if(currAttraction.getPlaceID().equals(attraction.getPlaceID()))
             {
+                if(!favAttractionsToDelete.contains(currAttraction.getPlaceID()))
+                {
+                    favAttractionsToDelete.add(currAttraction.getPlaceID());
+                }
+                if(favAttractionsToAdd.contains(currAttraction.getPlaceID()))
+                {
+                    favAttractionsToAdd.remove(currAttraction.getPlaceID());
+                }
                 favoriteAttractions.remove(currAttraction);
-                this.favAttractionsToAdd.remove(currAttraction.getPlaceID());
-                this.favAttractionsToDelete.add(currAttraction.getPlaceID());
-                Log.e("In Remove From Favs==>","Delete Arr" + favAttractionsToDelete.toString());
-                Log.e("In Remove From Favs==>","Add Arr" + favAttractionsToAdd.toString());
                 return true;
             }
         }
+
         return false;
     }
 
@@ -316,27 +367,13 @@ public class Utility {
 
     public void saveData()
     {
-        ServerConnection.getInstance(context).sendFavAttractions();
+        ServerConnection.getInstance(context).sendFavAttractionsToAdd();
         ServerConnection.getInstance(context).updateUser(instance.getTraveler());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("travelerID", instance.getTravelerID());
         editor.putString("traveler", new Gson().toJson(instance.getTraveler()));
         editor.commit();
     }
-
-    private void initData() {
-        if(sharedPreferences.contains("travelerID"))
-        {
-            instance.setTravelerID(sharedPreferences.getString("travelerID", ""));
-            String travelerJson = sharedPreferences.getString("traveler", "");
-            Traveler traveler = new Gson().fromJson(travelerJson, Traveler.class);
-            Utility.instance.setTraveler(traveler);
-            ServerConnection.getInstance(context).getFavoritesFromServer();
-            //ServerConnection.getInstance(context).getAttractionsFromServer("london");
-            ServerConnection.getInstance(context).getHotelsFromServer("london");
-        }
-    }
-//----------------------------------------------------------------------------------------
 
 
 
