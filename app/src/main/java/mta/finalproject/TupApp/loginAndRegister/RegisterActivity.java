@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import mta.finalproject.TupApp.R;
@@ -37,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private EditText txtFirstName,txtLastName, txtEmail, txtPassword, txtConfirmPassword;
     private Button btnRegister;
+    private TextView txtInvalidInputError;
     private TextInputLayout FirstNameLayout, LastNameLayout, mailLayout, passwordLayout, confirmPasswordLayout;
     private  String firstName, lastName, email, password;
 
@@ -183,6 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
         LastNameLayout = findViewById(R.id.registerLastNameLayout);
         passwordLayout = findViewById(R.id.registerPasswordLayout);
         confirmPasswordLayout = findViewById(R.id.registerConfirmPasswordLayout);
+        txtInvalidInputError = findViewById(R.id.txtInvalidInputError);
     }
 
     private boolean validateData() {
@@ -266,10 +269,12 @@ public class RegisterActivity extends AppCompatActivity {
                     if(exception != null)
                     {
                         //Utility.getInstance(getApplicationContext()).setTraveler(registerTraveler);
-                        Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                        txtInvalidInputError.setVisibility(View.VISIBLE);
                     }
                     else
                     {
+                        txtInvalidInputError.setVisibility(View.GONE);
                         Log.e("HERE==>", "travelerID is--" + Utility.getInstance(getApplicationContext()).getTravelerID());
                         ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
                         Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
