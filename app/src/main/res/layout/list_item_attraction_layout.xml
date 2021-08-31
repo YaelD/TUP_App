@@ -54,6 +54,10 @@
                     android:text="Attraction"
                     android:textAlignment="center"
                     android:textSize="18sp"
+                    android:autoSizeTextType="uniform"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="100sp"
+                    android:autoSizeStepGranularity="2sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/imgSelectedAttraction"
                     app:layout_constraintStart_toStartOf="parent"
@@ -68,8 +72,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/txtNameOfAttr"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/txtNameOfAttr"
-                    app:srcCompat="@drawable/ic_favorite_painted"
-                    app:tint="@color/red"
+                    app:srcCompat="@drawable/ic_star"
+                    app:tint="#FF8C8CFF"
                     tools:ignore="VectorDrawableCompat" />
 
 
