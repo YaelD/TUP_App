@@ -244,6 +244,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     private void initSpinnerDestination(){
         ArrayList<String> destinations = Utility.getInstance(getContext()).getDestinations();
+        destinations.add(0,"Select");
+        Log.e("In Create==>", Utility.getInstance(getContext()).getDestinations().toString());
         ArrayAdapter<String> destinationsAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
@@ -253,10 +255,11 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     }
 
     private void initSpinnerHotels() {
-        ArrayList<Hotel> hotels = Utility.getInstance(getContext()).getTestHotels();
-        hotelsName.add("Select");
-        for(Hotel hotel:hotels){
-            hotelsName.add(hotel.getName());
+        ArrayList<Hotel> hotels = Utility.getInstance(getContext()).getHotels();
+        if(hotelsName.isEmpty()){
+            for(Hotel hotel:hotels){
+                hotelsName.add(hotel.getName());
+            }
         }
         ArrayAdapter<String> hotelsAdapter = new ArrayAdapter<>(
                 getActivity(),

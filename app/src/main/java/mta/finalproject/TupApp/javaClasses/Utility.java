@@ -34,7 +34,6 @@ public class Utility {
     private ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
     private ArrayList<Attraction> attractions = new ArrayList<>();
     private ArrayList<Hotel> hotels = new ArrayList<>();
-    private ArrayList<Hotel> testHotels = new ArrayList<>();
     private TripPlan lastCreatedTrip;
     private ArrayList<TripPlan> allTrips = new ArrayList<>();
 
@@ -45,30 +44,8 @@ public class Utility {
 
     //private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
-    public void initTestHotels(){
-        if( testHotels.isEmpty()) {
-            Hotel hotel1 = new Hotel("Matan", "1");
-            Hotel hotel2 = new Hotel("Yael", "2");
-            Hotel hotel3 = new Hotel("Maya", "3");
-            testHotels.add(hotel1);
-            testHotels.add(hotel2);
-            testHotels.add(hotel3);
-        }
-    }
-
-    public void initDestinations(){
-        if(destinations.isEmpty()){
-            destinations.add("Select");
-            destinations.add("Gal");
-            destinations.add("Maya");
-            destinations.add("Yael");
-            destinations.add("Yoela");
-            destinations.add("Mazal");
-        }
-    }
 
     public ArrayList<String> getDestinations() {
-        //initDestinations();
         return destinations;
     }
 
@@ -128,10 +105,6 @@ public class Utility {
         return favAttractionsToAdd;
     }
 
-    public ArrayList<Hotel> getTestHotels(){
-        //initTestHotels();
-        return testHotels;
-    }
 
     public void writeToSharedPreferences()
     {
