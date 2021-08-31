@@ -244,7 +244,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     private void initSpinnerDestination(){
         ArrayList<String> destinations = Utility.getInstance(getContext()).getDestinations();
-        destinations.add(0,"Select");
+        if(!destinations.get(0).equals("Select")){
+            destinations.add(0,"Select");
+        }
         Log.e("In Create==>", Utility.getInstance(getContext()).getDestinations().toString());
         ArrayAdapter<String> destinationsAdapter = new ArrayAdapter<>(
                 getActivity(),
