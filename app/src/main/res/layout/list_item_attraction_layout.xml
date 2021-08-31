@@ -53,7 +53,6 @@
                     android:gravity="center"
                     android:text="Attraction"
                     android:textAlignment="center"
-                    android:textSize="18sp"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMinTextSize="12sp"
                     android:autoSizeMaxTextSize="100sp"
