@@ -663,9 +663,10 @@ public class ServerConnection {
     }
 
     //----------------------------------------------------------------------------------------
-    public void register(Traveler traveler) {
+    public void register(Traveler traveler, final VolleyCallBack callBack) {
         Log.e("HERE==>", "In Register");
         Gson gson = new Gson();
+
         //make a new request
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + registerURL, new Response.Listener<String>() {
             @Override
@@ -676,8 +677,9 @@ public class ServerConnection {
 
                     JSONObject json = new JSONObject(response);
                     if (json.getString("status").equals("ok")) {
-                        Traveler traveler = new Gson().fromJson(json.getString("message"), Traveler.class);
+                        //Traveler traveler = new Gson().fromJson(json.getString("message"), Traveler.class);
                         Utility.getInstance(context).setTraveler(traveler);
+                        callBack.onSuccessResponse(json.getString("message"));
                         //Utility.getInstance(context).SharedPreferencesWriter();
                         Log.e("HERE==>", "Successfully Registered!");
 
@@ -855,4 +857,6 @@ public class ServerConnection {
 
         }
     }
+
+
 }

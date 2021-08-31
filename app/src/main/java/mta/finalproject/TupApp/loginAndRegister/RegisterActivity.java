@@ -22,13 +22,16 @@ import android.widget.Toast;
 
 import mta.finalproject.TupApp.R;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import mta.finalproject.TupApp.javaClasses.Geometry;
 import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Traveler;
 import mta.finalproject.TupApp.javaClasses.Utility;
+import mta.finalproject.TupApp.javaClasses.VolleyCallBack;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -256,7 +259,20 @@ public class RegisterActivity extends AppCompatActivity {
             email = txtEmail.getText().toString().trim();
             password = txtPassword.getText().toString().trim();
             Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
-            ServerConnection.getInstance(this).register(registerTraveler);
+            ServerConnection.getInstance(this).register(registerTraveler, new VolleyCallBack() {
+                @Override
+                public void onSuccessResponse(String result) {
+                    Traveler traveler = new Gson().fromJson(result, Traveler.class);
+                    Utility.getInstance(getApplicationContext()).setTraveler(traveler);
+                    Log.e("HERE==>", "travelerID is--" +
+                            Utility.getInstance(getApplicationContext()).getTravelerID());
+                }
+
+                @Override
+                public void onErrorResponse(String error) {
+                    txtInvalidInputError.setVisibility(View.VISIBLE);
+                }
+            });
             progressDialog = new ProgressDialog(RegisterActivity.this);
             progressDialog.setMessage("Processing... Please wait ");
             progressDialog.setCancelable(false);
@@ -270,22 +286,23 @@ public class RegisterActivity extends AppCompatActivity {
                     {
                         //Utility.getInstance(getApplicationContext()).setTraveler(registerTraveler);
                         //Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-                        txtInvalidInputError.setVisibility(View.VISIBLE);
                     }
                     else
                     {
-                        txtInvalidInputError.setVisibility(View.GONE);
-                        Log.e("HERE==>", "travelerID is--" + Utility.getInstance(getApplicationContext()).getTravelerID());
-                        ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
-                        Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
-                        Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
+                        /*
+                            txtInvalidInputError.setVisibility(View.GONE);
+                            Log.e("HERE==>", "travelerID is--" + Utility.getInstance(getApplicationContext()).getTravelerID());
+                            ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
+                            Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
+                            Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                         */
                     }
                 }
             };
-            new Handler().postDelayed(runnable, 5000);
+            new Handler().postDelayed(runnable, 0);
 
         }
 }
