@@ -89,4 +89,5 @@ public class MyTripsFragment extends Fragment {
             ServerConnection.getInstance(getContext()).deleteTripFromServer();
         }
     }
+
 }

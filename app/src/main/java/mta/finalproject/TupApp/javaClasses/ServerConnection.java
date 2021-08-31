@@ -87,9 +87,7 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
 
     public serverErrorException getException() {
-        ServerConnection.serverErrorException exceptionSaver = this.exception;
-        this.exception = null;
-        return exceptionSaver;
+        return this.exception;
     }
 
     public void setException(serverErrorException exception) {
@@ -364,6 +362,7 @@ public class ServerConnection {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(String response) {
+                Log.e("DeleteMyTrips==>", "Response=" + response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.getString("status").equals("ok")) {

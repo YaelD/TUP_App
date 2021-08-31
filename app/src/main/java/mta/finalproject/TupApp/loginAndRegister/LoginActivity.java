@@ -177,9 +177,10 @@ public class LoginActivity extends AppCompatActivity {
                 if(ServerConnection.getInstance(getApplicationContext()).getException()== null)
                 {
                     ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
+                    ServerConnection.getInstance(getApplicationContext()).getDestinationsFromServer();
+                    ServerConnection.getInstance(getApplicationContext()).getHotelsFromServer("london");
                     ServerConnection.getInstance(getApplicationContext()).setException(null);
                     Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
-                    //Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
                     Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -187,8 +188,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),
-                            ServerConnection.getInstance(getApplicationContext()).getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    String message = ServerConnection.getInstance(getApplicationContext()).getException().getMessage();
+                    Log.e("LoginActivity==>","Didnt logIn" + message);
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
                 }
             }
         };

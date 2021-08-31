@@ -273,8 +273,10 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initFinButton() {
         TripDetails tripDetails = new TripDetails();
-        tripDetails.setHotelID("ChIJ1TVZs1UFdkgRIeWxo-jEYaE");
-        tripDetails.setDestination("london");
+        Hotel hotel = Utility.getInstance(getContext())
+                .FindHotelByName(spinnerHotels.getSelectedItem().toString());
+        tripDetails.setHotelID(hotel.getPlaceID());
+        tripDetails.setDestination(destinationSpinner.getSelectedItem().toString());
         for (Attraction attraction : Utility.getInstance(getContext()).getTripSelectedAttrations()) {
             tripDetails.getMustSeenAttractionsID().add(attraction.getPlaceID());
         }

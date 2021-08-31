@@ -63,7 +63,17 @@ public class Utility {
     }
 
 
-
+    public Hotel FindHotelByName(String hotelName)
+    {
+        for(Hotel hotel: this.hotels)
+        {
+            if(hotel.getName().equals(hotelName))
+            {
+                return hotel;
+            }
+        }
+        return null;
+    }
 
     public ArrayList<Integer> getTripsToDelete() {
         return tripsToDelete;
