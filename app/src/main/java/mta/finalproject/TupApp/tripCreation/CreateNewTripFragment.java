@@ -89,6 +89,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_new_trip, container, false);
 
+        initSpinnerDestination();
+        initSpinnerHotels();
+
         initView(view);
 
 
@@ -304,9 +307,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
-
-        initSpinnerDestination();
-        initSpinnerHotels();
 
         desiredHours = new ArrayList<>();
         for (LocalDate date : rangeDates) {
