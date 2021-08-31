@@ -88,11 +88,11 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_new_trip, container, false);
+        initView(view);
 
         initSpinnerDestination();
         initSpinnerHotels();
 
-        initView(view);
 
 
         //מניעה מהמשתמש להזין מידע בeditText
@@ -247,7 +247,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         if(!destinations.get(0).equals("Select")){
             destinations.add(0,"Select");
         }
-        Log.e("In Create==>", Utility.getInstance(getContext()).getDestinations().toString());
         ArrayAdapter<String> destinationsAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_spinner_dropdown_item,

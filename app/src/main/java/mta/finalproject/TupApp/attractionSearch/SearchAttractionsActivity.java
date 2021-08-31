@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import mta.finalproject.TupApp.MainActivity;
 import mta.finalproject.TupApp.R;
+import mta.finalproject.TupApp.favoriteAttractions.FavoriteAttractionsActivity;
 import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.loginAndRegister.UserDetailsActivity;
 import mta.finalproject.TupApp.myTrips.MyTripsActivity;
@@ -77,7 +78,7 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
                         break;
                     case R.id.favorites:
                         Utility.getInstance(getApplicationContext()).finishOldActivity();
-                        intent= new Intent(SearchAttractionsActivity.this, SearchAttractionsActivity.class);
+                        intent= new Intent(SearchAttractionsActivity.this, FavoriteAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         finish();

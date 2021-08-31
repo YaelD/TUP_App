@@ -105,18 +105,18 @@ public class ServerConnection {
 //----------------------------------------------------------------------------------------
 
     public void getHotelsFromServer(String destination) {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + hotelsURL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + hotelsURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.e("InGetHotels==>", "Res=" + response);
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString("status").equals("ok")) {
                                 JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
                                 for (int i = 0; i < jsonArray.length(); ++i) {
                                     Utility.getInstance(context).getHotels().add(new Gson().fromJson(jsonArray.get(i).toString(), Hotel.class));
                                 }
-                                Log.e("HERE==>", "Hotels==>" + Utility.getInstance(context).getFavoriteAttractions().toString());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -155,9 +155,8 @@ public class ServerConnection {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString("status").equals("ok")) {
                                 JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
-                                for (int i = 0; i < jsonArray.length(); ++i) {
+                                for (int i = 0; i < jsonArray.length()-1; ++i) {
                                     Log.e("getDestinations==>", jsonArray.getString(i));
-
                                     Utility.getInstance(context).getDestinations().add(jsonArray.getString(i));
                                 }
                                 Log.e("HERE==>", "Destinations==>" + Utility.getInstance(context).getDestinations().toString());
@@ -437,7 +436,7 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("HERE====>", error.toString());
+                Log.e("AttractionsFromSer=>", error.toString());
                 //Toast toast = Toast.makeText(instance.context, error.toString(), Toast.LENGTH_SHORT);
                 //toast.show();
             }
