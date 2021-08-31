@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorRes;
@@ -58,8 +59,11 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
         holder.txtAttractionName.setText(onePlans.get(position).getAttraction().getName());
         if(onePlans.get(position).getFavoriteAttraction())
         {
-            holder.attractionCardView.setCardBackgroundColor(mContext.getColor(R.color.bright_red));
+            //holder.attractionCardView.setCardBackgroundColor(mContext.getColor(R.color.bright_red));
+            holder.imgSelectedAttraction.setVisibility(View.VISIBLE);
         }
+        else
+            holder.imgSelectedAttraction.setVisibility(View.GONE);
 
         holder.attractionCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,12 +86,14 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
         TextView txtHours;
         TextView txtAttractionName;
         CardView attractionCardView;
+        ImageView imgSelectedAttraction;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtHours = itemView.findViewById(R.id.txtHour);
             txtAttractionName = itemView.findViewById(R.id.txtNameOfAttr);
             attractionCardView = itemView.findViewById(R.id.attractionCardView);
+            imgSelectedAttraction = itemView.findViewById(R.id.imgSelectedAttraction);
         }
     }
 }

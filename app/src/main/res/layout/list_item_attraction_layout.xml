@@ -19,7 +19,7 @@
             android:layout_height="60dp"
             android:gravity="center"
             android:text="Hour"
-            android:autoSizeTextType="uniform"
+            android:textSize="20sp"
             android:textStyle="bold|italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/attractionCardView"
@@ -48,14 +48,29 @@
                     android:id="@+id/txtNameOfAttr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/courgette"
+                    android:layout_marginEnd="20dp"
                     android:gravity="center"
                     android:text="Attraction"
+                    android:textAlignment="center"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imgSelectedAttraction"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imgSelectedAttraction"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtNameOfAttr"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtNameOfAttr"
+                    app:srcCompat="@drawable/ic_favorite_painted"
+                    app:tint="@color/red"
+                    tools:ignore="VectorDrawableCompat" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
