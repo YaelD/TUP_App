@@ -293,7 +293,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 }
                 else
                 {
-                    Toast.makeText(getContext(),exception.getMessage(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(),exception.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }, 10000);

@@ -21,25 +21,29 @@
 
     <ImageView
         android:id="@+id/logoImage"
-        android:layout_width="250dp"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="25dp"
+        android:layout_marginEnd="35dp"
+        android:src="@mipmap/logo_transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@mipmap/logo_transparent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnLogin"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="85dp"
         android:fontFamily="@font/lemon"
         android:text="Login"
         android:textAllCaps="false"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:backgroundTint="#2196F3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,13 +51,15 @@
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="85dp"
         android:fontFamily="@font/lemon"
         android:text="Register"
         android:textAllCaps="false"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:backgroundTint="#2196F3"
         app:layout_constraintEnd_toEndOf="@+id/btnLogin"
         app:layout_constraintStart_toStartOf="@+id/btnLogin"
@@ -61,16 +67,21 @@
 
     <Button
         android:id="@+id/btnGuset"
-        android:layout_width="220dp"
-        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="85dp"
         android:fontFamily="@font/lemon"
         android:text="Login as a guest"
         android:textAllCaps="false"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:backgroundTint="#2196F3"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundImage"
         app:layout_constraintEnd_toEndOf="@+id/btnRegister"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btnRegister"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

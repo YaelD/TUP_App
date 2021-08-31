@@ -101,7 +101,12 @@ public class TripViewFragment extends Fragment {
                 alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        tripName = input.getText().toString();
+                        if(input.getText().toString().equals("")){
+                            tripName = input.getHint().toString();
+                        }
+                        else{
+                            tripName = input.getText().toString();
+                        }
                         Utility.getInstance(getContext()).getLastCreatedTrip().setTripName(tripName);
                         Utility.getInstance(getContext()).getLastCreatedTrip().setDestination("london");
                         ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip());

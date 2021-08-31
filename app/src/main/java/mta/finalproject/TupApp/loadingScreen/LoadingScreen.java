@@ -32,7 +32,8 @@ public class LoadingScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
         SharedPreferences sharedPreferences = Utility.getInstance(getApplicationContext()).getSharedPreferences();
-        Utility.getInstance(getApplicationContext()).setTravelerID(sharedPreferences.getString(TRAVELER_ID, "0"));
+        Utility.getInstance(getApplicationContext()).setTravelerID("0");
+        //Utility.getInstance(getApplicationContext()).setTravelerID(sharedPreferences.getString(TRAVELER_ID, "0"));
         ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
         //ServerConnection.getInstance(getApplicationContext()).getHotelsFromServer("london");
         if(sharedPreferences.contains((TRAVELER_ID)))
