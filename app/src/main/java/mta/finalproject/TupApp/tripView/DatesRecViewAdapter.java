@@ -43,6 +43,7 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtDate.setText(plans.get(position).getDate().toString());
         holder.txtHotelName.setText((plans.get(position).getHotel().getName()));
+        holder.txtEndHour.setText(plans.get(position).getFinishTime().toString());
         //holder.txtDate.setText(plans.get(position).getDateStr());
         AttractionsRecViewAdapter adapter = new AttractionsRecViewAdapter(mContext);
         adapter.setOnePlans(plans.get(position).getDaySchedule());
@@ -56,7 +57,7 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView txtDate, txtHotelName;
+        TextView txtDate, txtHotelName, txtEndHour;
         RecyclerView recViewAttractions;
 
         public ViewHolder(@NonNull View itemView) {
@@ -64,6 +65,7 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
             txtDate = itemView.findViewById(R.id.txtDate);
             recViewAttractions = itemView.findViewById(R.id.attractionsRecView);
             txtHotelName = itemView.findViewById(R.id.txtHotelName);
+            txtEndHour = itemView.findViewById(R.id.txtEndHour);
         }
     }
 }
