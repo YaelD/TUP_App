@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import mta.finalproject.TupApp.R;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLoginActivity;
     private String email, password;
     private TextInputLayout passwordLoginLayout, mailLoginLayout;
+    private TextView txtInvalidInputLoginError;
 
 
     @Override
@@ -152,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLoginActivity = findViewById(R.id.btnLoginActivity);
         passwordLoginLayout = findViewById(R.id.passwordLoginLayout);
         mailLoginLayout = findViewById(R.id.mailLoginLayout);
+        txtInvalidInputLoginError = findViewById(R.id.txtInvalidInputLoginError);
     }
 
     public void login(View view) {
@@ -176,6 +179,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if(ServerConnection.getInstance(getApplicationContext()).getException()== null)
                 {
+                    txtInvalidInputLoginError.setVisibility(View.GONE);
                     ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
                     ServerConnection.getInstance(getApplicationContext()).getDestinationsFromServer();
                     ServerConnection.getInstance(getApplicationContext()).getHotelsFromServer("london");
@@ -190,7 +194,8 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     String message = ServerConnection.getInstance(getApplicationContext()).getException().getMessage();
                     Log.e("LoginActivity==>","Didnt logIn" + message);
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    txtInvalidInputLoginError.setVisibility(View.VISIBLE);
 
                 }
             }
