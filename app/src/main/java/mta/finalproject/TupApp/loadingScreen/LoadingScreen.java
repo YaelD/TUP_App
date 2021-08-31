@@ -38,15 +38,10 @@ public class LoadingScreen extends AppCompatActivity {
             String jsonTraveler = sharedPreferences.getString(TRAVELER, "");
             Log.e("LoadingScreen==>", "Traveler in App" + jsonTraveler);
             Log.e("LoadingScreen==>", "TravelerID " + Utility.getInstance(getApplicationContext()).getTravelerID());
-            ServerConnection.getInstance(getApplicationContext()).getDestinationsFromServer();
-            //String defDestination = Utility.getInstance(getApplicationContext()).getDestinations().get(0);
-            ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
-            ServerConnection.getInstance(getApplicationContext()).getHotelsFromServer("london");
             Traveler traveler = new Gson().fromJson(jsonTraveler, Traveler.class);
             Utility.getInstance(getApplicationContext()).setTraveler(traveler);
             Utility.getInstance(getApplicationContext()).saveData();
-            ServerConnection.getInstance(getApplicationContext()).getFavoritesFromServer();
-            ServerConnection.getInstance(getApplicationContext()).getMyTripsFromServer();
+            Utility.getInstance(getApplicationContext()).getDataFromServer();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override

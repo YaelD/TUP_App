@@ -23,7 +23,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Pattern;
 
+import mta.finalproject.TupApp.javaClasses.Traveler;
 import mta.finalproject.TupApp.javaClasses.Utility;
+import mta.finalproject.TupApp.javaClasses.VolleyCallBack;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 import mta.finalproject.TupApp.javaClasses.ServerConnection;
 
@@ -167,40 +169,29 @@ public class LoginActivity extends AppCompatActivity {
     {
         email = txtEmail.getText().toString().trim();
         password = txtPassword.getText().toString().trim();
-        ServerConnection.getInstance(this).logIn(email, password);
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage("Processing... Please wait ");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Runnable r = new Runnable() {
+        ServerConnection.getInstance(getApplicationContext()).logIn(email, password, new VolleyCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void run() {
+            public void onSuccessResponse(Object result) {
                 progressDialog.dismiss();
-                if(ServerConnection.getInstance(getApplicationContext()).getException()== null)
-                {
-                    txtInvalidInputLoginError.setVisibility(View.GONE);
-                    ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
-                    ServerConnection.getInstance(getApplicationContext()).getDestinationsFromServer();
-                    ServerConnection.getInstance(getApplicationContext()).getHotelsFromServer("london");
-                    ServerConnection.getInstance(getApplicationContext()).setException(null);
-                    Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
-                    Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-                else
-                {
-                    String message = ServerConnection.getInstance(getApplicationContext()).getException().getMessage();
-                    Log.e("LoginActivity==>","Didnt logIn" + message);
-                    //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                    txtInvalidInputLoginError.setVisibility(View.VISIBLE);
-
-                }
+                Utility.getInstance(getApplicationContext()).setTraveler((Traveler) result);
+                Utility.getInstance(getApplicationContext()).getDataFromServer();
+                Utility.getInstance(getApplicationContext()).saveData();
+                Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
-        };
-        new Handler().postDelayed(r, 5000);
 
+            @Override
+            public void onErrorResponse(String error) {
+                progressDialog.dismiss();
+
+            }
+        });
     }
 }

@@ -46,8 +46,8 @@ public class ServerConnection {
     private ServerConnection.serverErrorException exception;
 
     //private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
-    //private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
-    private final String baseURL = "http://192.168.141.183:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
+    //private final String baseURL = "http://192.168.141.183:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -191,6 +191,7 @@ public class ServerConnection {
         Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
         TripPlan tripPlan = new TripPlan("", null);
+        tripPlan.setDestination(tripDetails.getDestination());
         ArrayList<DayPlan> arr = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + tripURL + "/create", new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -215,13 +216,12 @@ public class ServerConnection {
                         callBack.onSuccessResponse(tripPlan);
                         //Utility.getInstance(context).setLastCreatedTrip(tripPlan);
                     } else {
-                        ServerConnection.getInstance(context).
-                                setException(new serverErrorException(jsonResponse.getString("message")));
+                        callBack.onErrorResponse("Error Connecting to Server");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    ServerConnection.getInstance(context).
-                            setException(new serverErrorException(e.getMessage()));
+                    callBack.onErrorResponse("Error Connecting to Server");
+
 
                 }
             }
@@ -229,9 +229,7 @@ public class ServerConnection {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("sendTripDetails==>", "Error: " + error.getMessage());
-                ServerConnection.getInstance(context).
-                        setException(new serverErrorException(error.getMessage()));
-
+                callBack.onErrorResponse("Error Connecting to Server");
             }
         }) {
             @Override
@@ -249,13 +247,11 @@ public class ServerConnection {
             }
         };
 
-        //instance.queue.add(stringRequest);
         addToRequestQueue(stringRequest);
-        //return arr;
     }
 
 //----------------------------------------------------------------------------------------
-    public void sendTripPlan(TripPlan tripPlan) {
+    public void sendTripPlan(TripPlan tripPlan, final VolleyCallBack callBack) {
         Log.e("sendTripPlan==>", "Send A trip!!!!");
         ArrayList<DayPlan> arr = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + tripURL, new Response.Listener<String>() {
@@ -267,10 +263,12 @@ public class ServerConnection {
                     if (jsonResponse.getString("status").equals("ok")) {
 
                         int id = jsonResponse.getInt("message");
-                        Utility.getInstance(context).getLastCreatedTrip().setTripID(id);
+                        callBack.onSuccessResponse(id);
+                        //Utility.getInstance(context).getLastCreatedTrip().setTripID(id);
                     } else {
-                        //Log.e("sendTripPlan==>==>", jsonResponse.getString("message"));
-                        ServerConnection.getInstance(context).setException(new serverErrorException(jsonResponse.getString("message")));
+                        Log.e("sendTripPlan==>","Error: " +jsonResponse.getString("message"));
+                        //ServerConnection.getInstance(context).setException(new serverErrorException(jsonResponse.getString("message")));
+                        callBack.onErrorResponse("Error Connecting to Server");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -279,7 +277,9 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ServerConnection.getInstance(context).setException(new serverErrorException("Error Connecting to Server"));
+
+                //ServerConnection.getInstance(context).setException(new serverErrorException("Error Connecting to Server"));
+                callBack.onErrorResponse("Error Connecting to Server");
             }
         }) {
             @Override
@@ -296,7 +296,7 @@ public class ServerConnection {
                 Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
                 String body = gson.toJson(tripPlan);
-                //Log.e("sendTripPlan==>", "TripPlan body" + body);
+                Log.e("sendTripPlan==>", "TripPlan body" + body);
                 return body.getBytes(StandardCharsets.UTF_8);
             }
         };
@@ -599,7 +599,7 @@ public class ServerConnection {
     }
 
 //----------------------------------------------------------------------------------------
-    public void logIn(String email, String password) {
+    public void logIn(String email, String password, final VolleyCallBack callBack) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + loginURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -609,13 +609,14 @@ public class ServerConnection {
                     if (json.getString("status").equals("ok")) {
                         String jsonUserString = json.getString("message");
                         Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
-                        Utility.getInstance(context).setTraveler(traveler);
-                        Utility.getInstance(context).saveData();
-                        ServerConnection.getInstance(context).setException(null);
-                        Log.e("HERE==>", "Successfully LoggedIn");
-                        Log.e("HERE==>", "Traveler ID after log in=" + Utility.getInstance(context).getTravelerID());
+                        //Utility.getInstance(context).setTraveler(traveler);
+                        callBack.onSuccessResponse(traveler);
+                        //Utility.getInstance(context).saveData();
+                        //ServerConnection.getInstance(context).setException(null);
+                        Log.e("LogIn==>", "Successfully LoggedIn");
+                        Log.e("LogIn==>", "Traveler ID after log in=" + Utility.getInstance(context).getTravelerID());
                     } else {
-                        Log.e("HERE==>", "Didn't Login");
+                        Log.e("LogIn==>", "Didn't Login");
                         ServerConnection.getInstance(context).setException
                                 (new serverErrorException("Invalid password or email address. Please try again"));
                     }
@@ -738,21 +739,24 @@ public class ServerConnection {
     }
 
     //----------------------------------------------------------------------------------------
-    public void updateUser(Traveler newTravelerDetails) throws serverErrorException {
+    public void updateUser(Traveler newTravelerDetails, VolleyCallBack callBack) throws serverErrorException {
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, baseURL + updateURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.getString("status").equals("ok")) {
-                        Utility.getInstance(context).setTraveler(newTravelerDetails);
+                        callBack.onSuccessResponse(newTravelerDetails);
+                        //Utility.getInstance(context).setTraveler(newTravelerDetails);
                     } else {
-                        ServerConnection.getInstance(context).setException(new serverErrorException(jsonResponse.getString("message")));
+                        callBack.onErrorResponse("Error Connecting to Server");
+                        //ServerConnection.getInstance(context).setException(new serverErrorException(jsonResponse.getString("message")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("VolleyError==>", e.getMessage());
-                    ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
+                    callBack.onErrorResponse("Error Connecting to Server");
+                    //ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
                 }
             }
         }, new Response.ErrorListener() {
@@ -760,6 +764,8 @@ public class ServerConnection {
             public void onErrorResponse(VolleyError error) {
                 //Log.e("VolleyError==>", error.getMessage());
                 ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
+                callBack.onErrorResponse("Error Connecting to Server");
+
             }
         }) {
             @Override

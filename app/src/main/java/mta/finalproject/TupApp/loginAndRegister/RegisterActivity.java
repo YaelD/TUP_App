@@ -259,19 +259,28 @@ public class RegisterActivity extends AppCompatActivity {
             email = txtEmail.getText().toString().trim();
             password = txtPassword.getText().toString().trim();
             Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
+            progressDialog = new ProgressDialog(RegisterActivity.this);
+            progressDialog.setMessage("Processing... Please wait ");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
             ServerConnection.getInstance(this).register(registerTraveler, new VolleyCallBack() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onSuccessResponse(Object result) {
+                    progressDialog.dismiss();
                     Traveler traveler = new Gson().fromJson((String) result, Traveler.class);
                     Utility.getInstance(getApplicationContext()).setTraveler(traveler);
                     Log.e("HERE==>", "travelerID is--" +
                             Utility.getInstance(getApplicationContext()).getTravelerID());
+                    Utility.getInstance(getApplicationContext()).getDataFromServer();
+                    Utility.getInstance(getApplicationContext()).saveData();
                     Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
                     startActivity(intent);
                     finish();
                 }
                 @Override
                 public void onErrorResponse(String error) {
+                    progressDialog.dismiss();
                     txtInvalidInputError.setVisibility(View.VISIBLE);
                 }
             });

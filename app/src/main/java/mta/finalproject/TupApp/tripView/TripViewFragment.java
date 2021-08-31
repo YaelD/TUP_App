@@ -109,13 +109,32 @@ public class TripViewFragment extends Fragment {
                             tripName = input.getText().toString();
                         }
                         Utility.getInstance(getContext()).getLastCreatedTrip().setTripName(tripName);
-                        Utility.getInstance(getContext()).getLastCreatedTrip().setDestination("london");
-                        ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip());
                         progressDialog = new ProgressDialog(getContext());
                         progressDialog.setMessage("Processing... Please wait ");
                         progressDialog.setCancelable(false);
                         progressDialog.show();
+                        ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip(),
+                                new VolleyCallBack() {
+                                    @Override
+                                    public void onSuccessResponse(Object result) {
+                                        progressDialog.dismiss();
+                                        Utility.getInstance(getContext()).getAllTrips().add
+                                                (Utility.getInstance(getContext()).getLastCreatedTrip());
+                                        Toast.makeText(getContext(), "Trip Saved Successfully", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
+                                        getActivity().startActivity(intent);
+                                        getActivity().finish();
+                                    }
 
+                                    @Override
+                                    public void onErrorResponse(String error) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+                        /*
 
                         Runnable run = new Runnable() {
                             @Override
@@ -139,6 +158,9 @@ public class TripViewFragment extends Fragment {
                             }
                         };
                         new Handler().postDelayed(run, 3000);
+
+                         */
+
 
                     }
                 });

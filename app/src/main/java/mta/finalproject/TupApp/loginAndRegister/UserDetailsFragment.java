@@ -30,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.regex.Pattern;
 
 import mta.finalproject.TupApp.javaClasses.ServerConnection;
+import mta.finalproject.TupApp.javaClasses.VolleyCallBack;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.javaClasses.Traveler;
@@ -222,28 +223,26 @@ public class UserDetailsFragment extends Fragment {
                     progressDialog.setMessage("Processing... Please wait ");
                     progressDialog.setCancelable(false);
                     progressDialog.show();
-                    ServerConnection.getInstance(getContext()).updateUser(newTraveler);
-                    Runnable runnable = new Runnable() {
+                    ServerConnection.getInstance(getContext()).updateUser(newTraveler, new VolleyCallBack() {
                         @Override
-                        public void run() {
+                        public void onSuccessResponse(Object result) {
                             progressDialog.dismiss();
-                            ServerConnection.serverErrorException exception = ServerConnection.getInstance(getContext()).getException();
-                            if(exception!= null)
-                            {
-                                Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Utility.getInstance(getContext()).writeToSharedPreferences();
-                                Toast.makeText(getActivity(), "Changes saved successfully", Toast.LENGTH_LONG).show();
-                                Utility.getInstance(getContext()).setTraveler(newTraveler);
-                                Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
-                                startActivity(intent);
-                                getActivity().finish();
-                            }
+                            Utility.getInstance(getContext()).setTraveler((Traveler) result);
+                            Utility.getInstance(getContext()).writeToSharedPreferences();
+                            Toast.makeText(getActivity(), "Changes saved successfully", Toast.LENGTH_LONG).show();
+                            //Utility.getInstance(getContext()).setTraveler(newTraveler);
+                            //Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
+                            //startActivity(intent);
+                            getActivity().finish();
                         }
-                    };
-                    new Handler().postDelayed(runnable, 3000);
+
+                        @Override
+                        public void onErrorResponse(String error) {
+                            progressDialog.dismiss();
+
+
+                        }
+                    });
                 }
 
             }

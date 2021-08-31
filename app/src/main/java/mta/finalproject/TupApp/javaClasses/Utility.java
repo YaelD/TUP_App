@@ -3,7 +3,10 @@ package mta.finalproject.TupApp.javaClasses;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
 
@@ -44,6 +47,18 @@ public class Utility {
 
     //private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void getDataFromServer()
+    {
+        ServerConnection.getInstance(context).getDestinationsFromServer();
+        ServerConnection.getInstance(context).getAttractionsFromServer("london");
+        ServerConnection.getInstance(context).getHotelsFromServer("london");
+        ServerConnection.getInstance(context).getFavoritesFromServer();
+        ServerConnection.getInstance(context).getMyTripsFromServer();
+
+    }
 
     public ArrayList<String> getDestinations() {
         return destinations;
