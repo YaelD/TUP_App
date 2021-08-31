@@ -32,8 +32,10 @@ import mta.finalproject.TupApp.javaClasses.Attraction;
 import mta.finalproject.TupApp.javaClasses.DesiredHoursInDay;
 import mta.finalproject.TupApp.javaClasses.Hotel;
 import mta.finalproject.TupApp.javaClasses.ServerConnection;
+import mta.finalproject.TupApp.javaClasses.TripPlan;
 import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.javaClasses.TripDetails;
+import mta.finalproject.TupApp.javaClasses.VolleyCallBack;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 import mta.finalproject.TupApp.tripView.TripViewActivity;
 
@@ -284,11 +286,29 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         tripDetails.setHoursEveryDay(desiredHours);
         Log.e("TRIP To send=>", tripDetails.toString());
         //ServerConnection.getInstance(getContext()).sendTripDetailsToServer(TripDetails.getTrip2());
-        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Processing... Please wait");
         progressDialog.setCancelable(false);
         progressDialog.show();
+        ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails, new VolleyCallBack() {
+            @Override
+            public void onSuccessResponse(Object result) {
+                progressDialog.dismiss();
+                Utility.getInstance(getContext()).setLastCreatedTrip((TripPlan)result);
+                Intent intent = new Intent(getActivity(), TripViewActivity.class);
+                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName()); //TODO: this is for test
+                startActivity(intent);
+                getActivity().finish();
+            }
+
+            @Override
+            public void onErrorResponse(String error) {
+
+            }
+        });
+
+        /*
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -307,6 +327,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 }
             }
         }, 10000);
+         */
 
     }
 

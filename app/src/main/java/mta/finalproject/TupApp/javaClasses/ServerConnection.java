@@ -186,7 +186,7 @@ public class ServerConnection {
 
 //----------------------------------------------------------------------------------------
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void sendTripDetailsToServer(TripDetails tripDetails) {
+    public void sendTripDetailsToServer(TripDetails tripDetails, final VolleyCallBack callBack) {
         //Log.e("HERE==>", "Send A trip!!!!");
         Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
@@ -212,7 +212,8 @@ public class ServerConnection {
                             arr.add(dayPlan);
                         }
                         tripPlan.setPlans(arr);
-                        Utility.getInstance(context).setLastCreatedTrip(tripPlan);
+                        callBack.onSuccessResponse(tripPlan);
+                        //Utility.getInstance(context).setLastCreatedTrip(tripPlan);
                     } else {
                         ServerConnection.getInstance(context).
                                 setException(new serverErrorException(jsonResponse.getString("message")));
@@ -672,33 +673,38 @@ public class ServerConnection {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("HERE==>", "In Register- good Response");
                     Log.e("HERE==>", "Response Register==" + response);
-
                     JSONObject json = new JSONObject(response);
                     if (json.getString("status").equals("ok")) {
                         //Traveler traveler = new Gson().fromJson(json.getString("message"), Traveler.class);
-                        Utility.getInstance(context).setTraveler(traveler);
+                        //Utility.getInstance(context).setTraveler(traveler);
                         callBack.onSuccessResponse(json.getString("message"));
                         //Utility.getInstance(context).SharedPreferencesWriter();
-                        Log.e("HERE==>", "Successfully Registered!");
+                        //Log.e("HERE==>", "Successfully Registered!");
 
                     } else {
-                        ServerConnection.getInstance(context).setException(new serverErrorException(json.getString("message")));
-                        Log.e("HERE==>", "Json Bad");
+                        callBack.onErrorResponse("Don't");
+                        //ServerConnection.getInstance(context).setException(new serverErrorException(json.getString("message")));
+                        //Log.e("HERE==>", "Json Bad");
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("HERE==>", e.getMessage());
-                    ServerConnection.getInstance(context).setException(new serverErrorException(e.getMessage()));
+                    callBack.onErrorResponse("Don't");
+                    //ServerConnection.getInstance(context).setException(new serverErrorException(e.getMessage()));
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //Log.e("HERE==>", error.getMessage());
+                /*
                 ServerConnection.getInstance(context).setException
                         (new serverErrorException("Error connecting to server, please try later"));
+
+                 */
+                callBack.onErrorResponse("Don't");
             }
         }) {
             @Override
@@ -857,6 +863,5 @@ public class ServerConnection {
 
         }
     }
-
 
 }

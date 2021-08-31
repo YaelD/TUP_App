@@ -261,48 +261,25 @@ public class RegisterActivity extends AppCompatActivity {
             Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
             ServerConnection.getInstance(this).register(registerTraveler, new VolleyCallBack() {
                 @Override
-                public void onSuccessResponse(String result) {
-                    Traveler traveler = new Gson().fromJson(result, Traveler.class);
+                public void onSuccessResponse(Object result) {
+                    Traveler traveler = new Gson().fromJson((String) result, Traveler.class);
                     Utility.getInstance(getApplicationContext()).setTraveler(traveler);
                     Log.e("HERE==>", "travelerID is--" +
                             Utility.getInstance(getApplicationContext()).getTravelerID());
+                    Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
-
                 @Override
                 public void onErrorResponse(String error) {
                     txtInvalidInputError.setVisibility(View.VISIBLE);
                 }
             });
-            progressDialog = new ProgressDialog(RegisterActivity.this);
-            progressDialog.setMessage("Processing... Please wait ");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-                    ServerConnection.serverErrorException exception = ServerConnection.getInstance(getApplication().getApplicationContext()).getException();
-                    if(exception != null)
-                    {
-                        //Utility.getInstance(getApplicationContext()).setTraveler(registerTraveler);
-                        //Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        /*
-                            txtInvalidInputError.setVisibility(View.GONE);
-                            Log.e("HERE==>", "travelerID is--" + Utility.getInstance(getApplicationContext()).getTravelerID());
-                            ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
-                            Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
-                            Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();
-                         */
-                    }
-                }
-            };
+            /*
+
+
             new Handler().postDelayed(runnable, 0);
+             */
 
         }
 }
