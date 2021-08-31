@@ -235,6 +235,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 }
             });
          */
+
         return view;
     }
 

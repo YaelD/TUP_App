@@ -271,6 +271,7 @@ public class RegisterActivity extends AppCompatActivity {
                     else
                     {
                         Log.e("HERE==>", "travelerID is--" + Utility.getInstance(getApplicationContext()).getTravelerID());
+                        ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
                         Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
                         Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -279,7 +280,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
             };
-            new Handler().postDelayed(runnable, 3000);
+            new Handler().postDelayed(runnable, 5000);
 
         }
 }

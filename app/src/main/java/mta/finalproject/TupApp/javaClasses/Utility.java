@@ -68,7 +68,7 @@ public class Utility {
     }
 
     public ArrayList<String> getDestinations() {
-        initDestinations();
+        //initDestinations();
         return destinations;
     }
 
@@ -129,7 +129,7 @@ public class Utility {
     }
 
     public ArrayList<Hotel> getTestHotels(){
-        initTestHotels();
+        //initTestHotels();
         return testHotels;
     }
 
@@ -388,8 +388,8 @@ public class Utility {
 
     public void saveData()
     {
-        ServerConnection.getInstance(context).sendFavAttractionsToAdd();
-        ServerConnection.getInstance(context).updateUser(instance.getTraveler());
+        //ServerConnection.getInstance(context).sendFavAttractionsToAdd();
+        //ServerConnection.getInstance(context).updateUser(instance.getTraveler());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("travelerID", instance.getTravelerID());
         editor.putString("traveler", new Gson().toJson(instance.getTraveler()));

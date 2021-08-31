@@ -46,7 +46,8 @@ public class ServerConnection {
     private ServerConnection.serverErrorException exception;
 
     //private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
-    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
+    //private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
+    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -145,6 +146,43 @@ public class ServerConnection {
 
     public void getDestinationsFromServer()
     {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, baseURL + destinationsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("getDestinations==>", "Response" + response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.getString("status").equals("ok")) {
+                                JSONArray jsonArray = new JSONArray(jsonObject.getString("message"));
+                                for (int i = 0; i < jsonArray.length(); ++i) {
+                                    Log.e("getDestinations==>", jsonArray.getString(i));
+
+                                    Utility.getInstance(context).getDestinations().add(jsonArray.getString(i));
+                                }
+                                Log.e("HERE==>", "Destinations==>" + Utility.getInstance(context).getDestinations().toString());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> data = new HashMap<>();
+                data.put("travelerID", Utility.getInstance(context).getTravelerID());
+                data.put("Content-Type", "application/json");
+                return data;
+            }
+        };
+        addToRequestQueue(stringRequest);
+
+
 
     }
 
@@ -157,7 +195,7 @@ public class ServerConnection {
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
         TripPlan tripPlan = new TripPlan("", null);
         ArrayList<DayPlan> arr = new ArrayList<>();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + tripURL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + tripURL + "/create", new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(String response) {
@@ -393,13 +431,15 @@ public class ServerConnection {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e("HERE==>", "BadJson");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast toast = Toast.makeText(instance.context, error.toString(), Toast.LENGTH_SHORT);
-                toast.show();
+                Log.e("HERE====>", error.toString());
+                //Toast toast = Toast.makeText(instance.context, error.toString(), Toast.LENGTH_SHORT);
+                //toast.show();
             }
         }) {
             @Override
@@ -571,7 +611,7 @@ public class ServerConnection {
                         String jsonUserString = json.getString("message");
                         Traveler traveler = new Gson().fromJson(jsonUserString, Traveler.class);
                         Utility.getInstance(context).setTraveler(traveler);
-
+                        Utility.getInstance(context).saveData();
                         ServerConnection.getInstance(context).setException(null);
                         Log.e("HERE==>", "Successfully LoggedIn");
                         Log.e("HERE==>", "Traveler ID after log in=" + Utility.getInstance(context).getTravelerID());

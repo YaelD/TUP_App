@@ -176,9 +176,10 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if(ServerConnection.getInstance(getApplicationContext()).getException()== null)
                 {
-
+                    ServerConnection.getInstance(getApplicationContext()).getAttractionsFromServer("london");
                     ServerConnection.getInstance(getApplicationContext()).setException(null);
                     Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
+                    //Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
                     Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -191,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
-        new Handler().postDelayed(r, 2000);
+        new Handler().postDelayed(r, 5000);
 
     }
 }
