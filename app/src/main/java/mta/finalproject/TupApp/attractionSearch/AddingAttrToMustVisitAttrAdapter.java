@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import mta.finalproject.TupApp.javaClasses.Attraction;
+import mta.finalproject.TupApp.javaClasses.Utility;
 
 public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<AddingAttrToMustVisitAttrAdapter.ViewHolder>{
 
@@ -57,7 +58,9 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
 
         holder.checkBox.setOnCheckedChangeListener(null);
 
-        if(selectedAttractions.contains(attractions.get(position)))
+        boolean isInSelected = Utility.isAttractionInArr(selectedAttractions, attractions.get(position));
+
+        if(isInSelected)
         {
             holder.checkBox.setChecked(true);
         }
@@ -66,25 +69,59 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
             holder.checkBox.setChecked(false);
         }
 
+        /*
+        if(selectedAttractions.contains(attractions.get(position)))
+        {
+            Log.e("AddingAttToAdapter==>", "The attraction  " +attractions.get(position).getName() + " is not in the adapter");
+            holder.checkBox.setChecked(true);
+        }
+        else
+        {
+            holder.checkBox.setChecked(false);
+        }
+
+
+         */
+
+
+
+
+
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 if(isChecked)
                 {
-
-                    if(!selectedAttractions.contains(attractions.get(position)))
-                    {
-                        selectedAttractions.add(attractions.get(position));
-                    }
+                    selectedAttractions.add(attractions.get(position));
                 }
-                else // Not Checked
+                else
                 {
-                    if(selectedAttractions.contains(attractions.get(position)))
-                    {
-                        selectedAttractions.remove(attractions.get(position));
-                    }
+                    selectedAttractions.remove(attractions.get(position));
                 }
+                /*
+                    if(isChecked)
+                    {
+                        if(!selectedAttractions.contains(attractions.get(position)))
+                        {
+                            selectedAttractions.add(attractions.get(position));
+                            Log.e("AddToMustVisitAdap==>", "added to selected " + attractions.get(position).getName());
+                            //Log.e("AddToMustVisitAdap==>", "selected Attractions=" +selectedAttractions.toString());
+                        }
+                    }
+                    else
+                    {
+                        if(selectedAttractions.contains(attractions.get(position)))
+                        {
+                            selectedAttractions.remove(attractions.get(position));
+                            Log.e("AddToMustVisitAdap==>", "removed from selected " + attractions.get(position).getName());
+                            //Log.e("AddToMustVisitAdap==>", "selected Attractions=" +selectedAttractions.toString());
+
+                        }
+                    }
+
+                 */
 
             }
         });
@@ -106,6 +143,7 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
 
     public void setSelectedAttractions(ArrayList<Attraction> selectedAttractions) {
         this.selectedAttractions = selectedAttractions;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

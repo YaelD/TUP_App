@@ -157,7 +157,7 @@ public class Utility {
     {
         for(TripPlan trip: allTrips)
         {
-            if(trip.getTripID() == id)
+            if(trip.getTripId() == id)
             {
                 tripsToDelete.add(id);
                 return allTrips.remove(trip);
@@ -343,6 +343,21 @@ public class Utility {
     public ArrayList<Attraction> getTripSelectedAttrations() {
         return tripSelectedAttractions;
     }
+
+
+    static public boolean isAttractionInArr(ArrayList<Attraction> attractionArr, Attraction attraction)
+    {
+        boolean res = false;
+        for(Attraction currentAttraction: attractionArr)
+        {
+            if(currentAttraction.getPlaceID().equals(attraction.getPlaceID()))
+            {
+                res = true;
+            }
+        }
+        return res;
+    }
+
 
      /*
 

@@ -59,13 +59,13 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(Utility.getInstance(mContext).deleteTrip(trips.get(position).getTripID())) {
+                        if(Utility.getInstance(mContext).deleteTrip(trips.get(position).getTripId())) {
                             Toast.makeText(mContext, tripName + " was deleted successfully", Toast.LENGTH_LONG).show();
-                            notifyDataSetChanged();
                             if(getItemCount() == 0)
                             {
                                 emptyListTxt.setVisibility(View.VISIBLE);
                             }
+                            notifyDataSetChanged();
                         }
                     }
                 });

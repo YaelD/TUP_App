@@ -118,18 +118,17 @@ public class SearchAttractionsFragment extends Fragment {
         callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
 
         if(callingActivity.equals(CreateNewTripActivity.class.getName())){
-
+            Log.e("SearchAttractionFrag==>", "Using the good adapter!");
             btnFinish.setVisibility(View.VISIBLE);
 
             adapterToMustVisitAttr = new AddingAttrToMustVisitAttrAdapter(getActivity());
             //adapterToMustVisitAttr.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
 
-            attractionsRecView.setAdapter(adapterToMustVisitAttr);
-            attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             //adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
             adapterToMustVisitAttr.setMustVisitAttractions(Utility.getInstance(getContext()).getAttractions());
-
             adapterToMustVisitAttr.setSelectedAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
+            attractionsRecView.setAdapter(adapterToMustVisitAttr);
+            attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             btnFinish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class TripPlan {
     private String tripName;
     private ArrayList<DayPlan> plans = new ArrayList<>();
-    private int tripID;
+    private int tripId;
     private String destination;
 
 
@@ -38,12 +38,12 @@ public class TripPlan {
         this.plans = plans;
     }
 
-    public int getTripID() {
-        return tripID;
+    public int getTripId() {
+        return tripId;
     }
 
-    public void setTripID(int tripID) {
-        this.tripID = tripID;
+    public void setTripId(int tripId) {
+        this.tripId = tripId;
     }
 
     public static TripPlan getStaticTripPlan()

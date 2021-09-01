@@ -42,7 +42,6 @@ public class MainScreenFragment extends Fragment {
 
         initView(view);
 
-        txtHelloUser.setText("Hello " + Utility.getInstance(getContext()).getTraveler().getFirstName());
         btnCreateTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +79,13 @@ public class MainScreenFragment extends Fragment {
             }
         });
         return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        txtHelloUser.setText("Hello " + Utility.getInstance(getContext()).getTraveler().getFirstName());
     }
 
     private void initView(View view) {

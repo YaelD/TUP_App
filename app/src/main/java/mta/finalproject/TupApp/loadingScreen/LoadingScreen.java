@@ -30,6 +30,7 @@ public class LoadingScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
+        Utility.getInstance(getApplicationContext()).setTravelerID("0");
         SharedPreferences sharedPreferences = Utility.getInstance(getApplicationContext()).getSharedPreferences();
         Utility.getInstance(getApplicationContext()).setTravelerID(sharedPreferences.getString(TRAVELER_ID, "0"));
         if(sharedPreferences.contains((TRAVELER_ID)))
@@ -50,7 +51,7 @@ public class LoadingScreen extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-            }, 4000);
+            }, 3000);
         }
         else
         {

@@ -44,8 +44,8 @@ public class ServerConnection {
     private RequestQueue queue;
     private Context context;
 
-    //private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
-    private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
+    private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
+    //private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
     //private final String baseURL = "http://192.168.141.183:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
@@ -388,7 +388,8 @@ public class ServerConnection {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String body = new Gson().toJson(Utility.getInstance(context).getTripsToDelete());
+                //String body = new Gson().toJson(Utility.getInstance(context).getTripsToDelete());
+                String body = Utility.getInstance(context).getTripsToDelete().toString();
                 body = "{" +
                         "\"tripsIdToDeleteList\":" + body +
                         "}";

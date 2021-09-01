@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        Utility.getInstance(getApplicationContext()).setTravelerID("0");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
