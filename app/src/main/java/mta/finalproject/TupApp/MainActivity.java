@@ -17,7 +17,7 @@ import mta.finalproject.TupApp.loginAndRegister.RegisterActivity;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private Button btnLogin, btnRegister, btnGeust, button1;
+    private Button btnLogin, btnRegister;
     private ImageView backgroundImage, logoImage;
 
     @Override
@@ -41,23 +41,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        btnGeust.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NavigationDrawerActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     private void initViews() {
         Log.d(TAG, "initViews: started");
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
-        btnGeust = findViewById(R.id.btnGuset);
-
         backgroundImage = findViewById(R.id.backgroundImage);
         logoImage = findViewById(R.id.logoImage);
     }

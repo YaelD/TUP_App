@@ -240,8 +240,7 @@ public class UserDetailsFragment extends Fragment {
                         @Override
                         public void onErrorResponse(String error) {
                             progressDialog.dismiss();
-                            newTraveler.setEmailAddress(Utility.getInstance(getContext()).getTraveler().getEmailAddress());
-
+                            email = Utility.getInstance(getContext()).getTraveler().getEmailAddress();
                             txtEmailExistError.setVisibility(View.VISIBLE);
 
                         }
