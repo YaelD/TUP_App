@@ -57,7 +57,7 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
                         finish();
                         break;
                     case R.id.about:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(SearchAttractionsActivity.this);
                         builder.setTitle(getString(R.string.app_name));
                         builder.setMessage("Matan is a genius (AWWWWWW <3)"); //AWWWWWWWW <3
                         builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
@@ -90,7 +90,7 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
                         finish();
                         break;
                     case R.id.logout:
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getApplicationContext());
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(SearchAttractionsActivity.this);
                         alertDialog.setTitle("Logout");
                         alertDialog.setMessage("Are you sure you want to logout the application?");
                         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

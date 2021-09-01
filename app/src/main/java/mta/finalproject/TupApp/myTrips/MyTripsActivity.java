@@ -55,7 +55,7 @@ public class MyTripsActivity extends NavigationDrawerActivity {
                         finish();
                         break;
                     case R.id.about:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MyTripsActivity.this);
                         builder.setTitle(getString(R.string.app_name));
                         builder.setMessage("Matan is a genius (AWWWWWW <3)"); //AWWWWWWWW <3
                         builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
@@ -82,13 +82,14 @@ public class MyTripsActivity extends NavigationDrawerActivity {
                     case R.id.favorites:
                         Utility.getInstance(getApplicationContext()).finishOldActivity();
                         intent = new Intent(MyTripsActivity.this, FavoriteAttractionsActivity.class);
+                        intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.trips:
                         break;
                     case R.id.logout:
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getApplicationContext());
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MyTripsActivity.this);
                         alertDialog.setTitle("Logout");
                         alertDialog.setMessage("Are you sure you want to logout the application?");
                         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

@@ -64,23 +64,25 @@ public class FavoriteAttractionsFragment extends Fragment {
     private void setAdapters()
     {
         String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
-        if(Utility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
-        {
-            txtEmptyFavoriteList.setVisibility(View.GONE);
-        }
-        else
-        {
-            txtEmptyFavoriteList.setVisibility(View.VISIBLE);
-        }
+//        if(Utility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
+//        {
+//            txtEmptyFavoriteList.setVisibility(View.GONE);
+//        }
+//        else
+//        {
+//            txtEmptyFavoriteList.setVisibility(View.VISIBLE);
+//        }
         if(callingActivity.equals(CreateNewTripActivity.class.getName()))
         {
             if(Utility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
             {
                 btnFinishSelectFavAttr.setVisibility(View.VISIBLE);
+                txtEmptyFavoriteList.setVisibility(View.GONE);
             }
             else
             {
                 btnFinishSelectFavAttr.setVisibility(View.GONE);
+                txtEmptyFavoriteList.setVisibility(View.VISIBLE);
             }
             AddingAttrToMustVisitAttrAdapter adapter = new AddingAttrToMustVisitAttrAdapter(getActivity());
             adapter.setMustVisitAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
@@ -92,6 +94,18 @@ public class FavoriteAttractionsFragment extends Fragment {
         {
             btnFinishSelectFavAttr.setVisibility(View.GONE);
 
+            if(Utility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
+            {
+                txtEmptyFavoriteList.setVisibility(View.GONE);
+                AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
+                adapter.setAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
+                recViewFavoriteAttractions.setAdapter(adapter);
+                recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            }
+            else
+            {
+                txtEmptyFavoriteList.setVisibility(View.VISIBLE);
+            }
 
             OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
@@ -103,10 +117,6 @@ public class FavoriteAttractionsFragment extends Fragment {
                 }
             };
             getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-            AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
-            adapter.setAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
-            recViewFavoriteAttractions.setAdapter(adapter);
-            recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
     }
 

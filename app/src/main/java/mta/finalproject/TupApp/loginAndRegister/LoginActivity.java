@@ -187,6 +187,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onErrorResponse(String error) {
+                txtInvalidInputLoginError.setVisibility(View.VISIBLE);
                 progressDialog.dismiss();
                 txtInvalidInputLoginError.setVisibility(View.VISIBLE);
             }
