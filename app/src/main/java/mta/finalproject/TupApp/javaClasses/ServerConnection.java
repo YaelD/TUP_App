@@ -46,8 +46,8 @@ public class ServerConnection {
     private ServerConnection.serverErrorException exception;
 
     //private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
-    private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
-    //private final String baseURL = "http://192.168.141.183:8080/web_war_exploded";
+    //private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
+    private final String baseURL = "http://192.168.141.183:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -616,22 +616,19 @@ public class ServerConnection {
                         Log.e("LogIn==>", "Successfully LoggedIn");
                         Log.e("LogIn==>", "Traveler ID after log in=" + Utility.getInstance(context).getTravelerID());
                     } else {
-                        Log.e("LogIn==>", "Didn't Login");
-                        ServerConnection.getInstance(context).setException
-                                (new serverErrorException("Invalid password or email address. Please try again"));
+                        Log.e("LogIn==>", "Error=" +json.getString("message"));
+                        callBack.onErrorResponse("Error Connecting to Server");
                     }
                 } catch (JSONException e) {
                     Log.e("HERE==>", e.getMessage());
-                    ServerConnection.getInstance(context).setException
-                            (new serverErrorException(e.getMessage()));
+                    callBack.onErrorResponse("Error Connecting to Server");
 
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ServerConnection.getInstance(context).setException
-                        (new serverErrorException("Error connecting to server, please try again"));
+                callBack.onErrorResponse("Error Connecting to Server");
             }
         }) {
 
@@ -762,10 +759,8 @@ public class ServerConnection {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Log.e("VolleyError==>", error.getMessage());
-                ServerConnection.getInstance(context).setException(new serverErrorException("Error connecting to Server"));
+                Log.e("updateUser==>", "Error: " + error.getMessage());
                 callBack.onErrorResponse("Error Connecting to Server");
-
             }
         }) {
             @Override

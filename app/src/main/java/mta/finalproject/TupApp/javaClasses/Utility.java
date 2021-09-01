@@ -133,6 +133,7 @@ public class Utility {
 
     public void writeToSharedPreferences()
     {
+        clearSharedPreferences();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TRAVELER_ID, travelerID);
         String travelerJson = new Gson().toJson(this.getTraveler());

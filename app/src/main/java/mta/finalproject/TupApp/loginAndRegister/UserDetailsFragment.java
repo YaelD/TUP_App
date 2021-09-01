@@ -229,7 +229,8 @@ public class UserDetailsFragment extends Fragment {
                             progressDialog.dismiss();
                             Utility.getInstance(getContext()).setTraveler((Traveler) result);
                             Utility.getInstance(getContext()).writeToSharedPreferences();
-                            Toast.makeText(getActivity(), "Changes saved successfully", Toast.LENGTH_LONG).show();
+
+                            //Toast.makeText(getActivity(), "Changes saved successfully", Toast.LENGTH_LONG).show();
                             //Utility.getInstance(getContext()).setTraveler(newTraveler);
                             //Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
                             //startActivity(intent);
