@@ -262,6 +262,7 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onSuccessResponse(Object result) {
                     progressDialog.dismiss();
+                    txtInvalidInputError.setVisibility(View.GONE);
                     Traveler traveler = new Gson().fromJson((String) result, Traveler.class);
                     Utility.getInstance(getApplicationContext()).setTraveler(traveler);
                     Log.e("HERE==>", "travelerID is--" +
@@ -280,4 +281,6 @@ public class RegisterActivity extends AppCompatActivity {
             });
 
         }
+
+
 }

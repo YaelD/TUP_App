@@ -88,6 +88,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                         holder.btnTimeFrom.setText(holder.startTime.toString());
                         //selectedHours.add(String.format("%02d:%02d", hourOfDay, minute));
                         //desiredHours.get(position).setStartTime(String.format("%02d:%02d", hourOfDay, minute));
+
                         desiredHours.get(position).setStartTime(holder.startTime.toString());
                         Log.e("HERE STARTTIME======>>>", desiredHours.toString());
                         if(holder.startTime.isAfter(holder.endTime))
@@ -100,15 +101,14 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                             {
                                 holder.endTime = LocalTime.of(holder.startTime.getHour()+1, holder.startTime.getMinute());
                             }
-                            //holder.btnTimeTo.setText(String.format("%02d:%02d",holder.endTime.getHour(),holder.endTime.getMinute()));
                             holder.btnTimeTo.setText(holder.endTime.toString());
-                            //selectedHours.add(String.format("%02d:%02d", hourOfDay, minute));
-                            //desiredHours.get(position).setEndTime(String.format("%02d:%02d", holder.endTime.getHour(), holder.endTime.getMinute()));
-                            desiredHours.get(position).setEndTime(holder.endTime.toString());
                         }
                     }
                 //}, 10, 0, true);
                 }, holder.startTime.getHour(), holder.startTime.getMinute(), true);
+
+
+
 
                 timePicker.show();
             }
@@ -130,20 +130,16 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                         {
                             holder.endTime = LocalTime.of(23, 59);
                         }
-                        //holder.btnTimeTo.setText(String.format("%02d:%02d", hourOfDay, minute));
                         holder.btnTimeTo.setText(holder.endTime.toString());
-                        //selectedHours.add(String.format("%02d:%02d", hourOfDay, minute));
-                        //desiredHours.get(position).setEndTime(String.format("%02d:%02d", hourOfDay, minute));
                         desiredHours.get(position).setEndTime(holder.endTime.toString());
-                        //Log.e("HERE END TIME======>>>", desiredHours.toString());
-                        //holder.endTime = LocalTime.of(hourOfDay, minute);
-
                         if(holder.startTime.isAfter(holder.endTime))
                         {
                             holder.startTime = LocalTime.of(holder.endTime.getHour()-1,holder.endTime.getMinute());
                             holder.btnTimeFrom.setText(holder.startTime.toString());
-                            desiredHours.get(position).setStartTime(holder.startTime.toString());
                         }
+                        desiredHours.get(position).setStartTime(holder.startTime.toString());
+                        desiredHours.get(position).setEndTime(holder.endTime.toString());
+
                     }
                 }, holder.endTime.getHour(), holder.endTime.getMinute(), true);
 

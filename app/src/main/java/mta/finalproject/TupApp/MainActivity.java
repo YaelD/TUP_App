@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 import mta.finalproject.TupApp.loginAndRegister.LoginActivity;
 import mta.finalproject.TupApp.loginAndRegister.RegisterActivity;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        Utility.getInstance(getApplicationContext()).setTravelerID("0");
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

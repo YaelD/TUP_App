@@ -176,6 +176,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccessResponse(Object result) {
                 progressDialog.dismiss();
+                txtInvalidInputLoginError.setVisibility(View.GONE);
                 Utility.getInstance(getApplicationContext()).setTraveler((Traveler) result);
                 Utility.getInstance(getApplicationContext()).getDataFromServer();
                 Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
@@ -184,11 +185,10 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-
             @Override
             public void onErrorResponse(String error) {
                 progressDialog.dismiss();
-
+                txtInvalidInputLoginError.setVisibility(View.VISIBLE);
             }
         });
     }
