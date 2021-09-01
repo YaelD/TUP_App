@@ -2,11 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/userDetailsParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible"
-    tools:context=".loginAndRegister.UserDetailsActivity"
-    android:id="@+id/userDetailsParent">
+    tools:context=".loginAndRegister.UserDetailsActivity">
 
     <TextView
         android:id="@+id/txtTitleFirstName"
@@ -21,7 +20,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userDetailsFirstNameLayout"
-        app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,6 +35,7 @@
         app:errorEnabled="true"
         app:helperText="*required"
         app:helperTextTextColor="@color/red"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitleFirstName"
@@ -47,10 +46,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="First Name"
             android:inputType="textCapSentences|textPersonName"
             android:maxLines="1"
-            android:singleLine="true"
-            android:hint="First Name" />
+            android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,7 +111,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userDetailsMailLayout"
-        app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -128,6 +126,7 @@
         app:errorEnabled="true"
         app:helperText="*required"
         app:helperTextTextColor="@color/red"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitleEmail"
@@ -138,10 +137,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
+            android:hint="Email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:singleLine="true"
-            android:hint="Email" />
+            android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,7 +156,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userDetailsPasswordLayout"
-        app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -175,6 +173,7 @@
         app:errorEnabled="true"
         app:helperText="*required"
         app:helperTextTextColor="@color/red"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -186,10 +185,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
+            android:hint="Password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:singleLine="true"
-            android:hint="Password" />
+            android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -206,12 +205,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/userDetailsConfirmPasswordLayout"
-        app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginEnd="35dp"
+        android:visibility="gone"
         app:boxBackgroundColor="#FDF4D2"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="10dp"
@@ -224,21 +223,21 @@
         app:errorEnabled="true"
         app:helperText="*required"
         app:helperTextTextColor="@color/red"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitleConfirmPassword"
-        app:startIconDrawable="@drawable/ic_password"
-        android:visibility="gone">
+        app:startIconDrawable="@drawable/ic_password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtConfirmPasswordUserDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
+            android:hint="Confirm Password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:singleLine="true"
-            android:hint="Confirm Password" />
+            android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -279,6 +278,7 @@
         android:id="@+id/txtEmailExistError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="*Email address is already exist"
         android:textColor="@color/design_default_color_error"
         android:textSize="16sp"
@@ -286,7 +286,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btnSaveChanges"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitleConfirmPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTitleConfirmPassword"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

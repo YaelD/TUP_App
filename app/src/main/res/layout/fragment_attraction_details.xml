@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="312dp" />
+                app:layout_constraintGuide_begin="329dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline9"
@@ -262,7 +262,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="155dp" />
+                app:layout_constraintGuide_begin="172dp" />
 
             <ImageView
                 android:id="@+id/imgRestaurants"
@@ -280,7 +280,7 @@
                 android:id="@+id/txtRestaurants"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Restaurant nearby"
+                android:text="Restaurant \n    nearby"
                 app:layout_constraintEnd_toEndOf="@+id/imgRestaurants"
                 app:layout_constraintStart_toStartOf="@+id/imgRestaurants"
                 app:layout_constraintTop_toBottomOf="@+id/imgRestaurants" />
