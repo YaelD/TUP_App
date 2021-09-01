@@ -246,9 +246,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     private void initSpinnerDestination(){
         ArrayList<String> destinations = Utility.getInstance(getContext()).getDestinations();
-        if(!destinations.get(0).equals("Select")){
-            destinations.add(0,"Select");
-        }
+//        if(!destinations.get(0).equals("Select")){
+//            destinations.add(0,"Select");
+//        }
         ArrayAdapter<String> destinationsAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
