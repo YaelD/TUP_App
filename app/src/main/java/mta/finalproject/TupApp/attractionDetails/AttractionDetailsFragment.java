@@ -31,7 +31,7 @@ public class AttractionDetailsFragment extends Fragment {
 
     private TextView txtAttrName, txtAddress, txtOpeningHours, txtPhone, txtWebsite, txtDescription,txtRestaurants, txtMap;
     private TextView txtAttrAddress, txtAttrOpeningHours, txtAttrPhone, txtAttrWebsite, txtAttrDescription, txtAddToFavorites, txtRemoveFromFavorite;
-    private ImageView imgFavorite, imgMap, imgAttr, imgFavoriteBorder;
+    private ImageView imgFavorite, imgMap, imgAttr, imgFavoriteBorder, imgRestaurants;
     private boolean isImgAddToFavoriteClicked = false, isImgRemoveFromFavoriteClicked = false;
 
     @Nullable
@@ -49,7 +49,7 @@ public class AttractionDetailsFragment extends Fragment {
         txtPhone = view.findViewById(R.id.PhoneText);
         txtWebsite = view.findViewById(R.id.WebsiteText);
         txtDescription = view.findViewById(R.id.DescriptionText);
-        txtRestaurants = view.findViewById(R.id.RestaurantsText);
+        txtRestaurants = view.findViewById(R.id.txtRestaurants);
         txtAttrAddress = view.findViewById(R.id.txtAttrAddress);
         txtAttrOpeningHours = view.findViewById(R.id.txtAttrOpeningHours);
         txtAttrPhone = view.findViewById(R.id.txtAttrPhone);
@@ -63,6 +63,7 @@ public class AttractionDetailsFragment extends Fragment {
         imgAttr = view.findViewById(R.id.imgAttr);
         imgFavoriteBorder = view.findViewById(R.id.imgFavoriteBorder);
         txtRemoveFromFavorite = view.findViewById(R.id.txtRemoveFromFavorite);
+        imgRestaurants = view.findViewById(R.id.imgRestaurants);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -159,7 +160,7 @@ public class AttractionDetailsFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-                    txtRestaurants.setOnClickListener(new View.OnClickListener() {
+                    imgRestaurants.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Uri gmmIntentUri = Uri.parse("geo:"+attraction.getGeometry().toString()+"?q=restaurants");

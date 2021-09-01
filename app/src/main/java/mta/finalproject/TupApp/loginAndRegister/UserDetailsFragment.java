@@ -41,7 +41,7 @@ public class UserDetailsFragment extends Fragment {
     private Button btnSaveChanges, btnCancel;
     private EditText txtFirstName, txtLastName,txtEmail, txtPassword, txtConfirmPassword;
     private TextInputLayout firstNameLayout, lastNameLayout, emailLayout, passwordLayout, confirmPasswordLayout;
-    private TextView txtTitleConfirmPassword;
+    private TextView txtTitleConfirmPassword, txtEmailExistError;
     private Traveler traveler;
     private String firstName, lastName, email, password;
     private ConstraintLayout userDetailsParent;
@@ -202,6 +202,7 @@ public class UserDetailsFragment extends Fragment {
                 emailLayout.setError(null);
                 passwordLayout.setError(null);
                 confirmPasswordLayout.setError(null);
+                txtEmailExistError.setVisibility(View.GONE);
 
                 if(!txtFirstName.getText().toString().isEmpty())
                     firstName = txtFirstName.getText().toString();
@@ -209,7 +210,6 @@ public class UserDetailsFragment extends Fragment {
                     lastName = txtLastName.getText().toString();
                 if(!txtEmail.getText().toString().isEmpty()) {
                     email = txtEmail.getText().toString();
-                    //TODO: check if email exists in DB
                 }
                 boolean isVaild = UserDetailsFragment.this.validateData();
                 if(UserDetailsFragment.this.validateData()) {
@@ -240,7 +240,7 @@ public class UserDetailsFragment extends Fragment {
                         @Override
                         public void onErrorResponse(String error) {
                             progressDialog.dismiss();
-
+                            txtEmailExistError.setVisibility(View.VISIBLE);
 
                         }
                     });
@@ -328,5 +328,6 @@ public class UserDetailsFragment extends Fragment {
         passwordLayout = view.findViewById(R.id.userDetailsPasswordLayout);
         confirmPasswordLayout = view.findViewById(R.id.userDetailsConfirmPasswordLayout);
         userDetailsParent = view.findViewById(R.id.userDetailsParent);
+        txtEmailExistError = view.findViewById(R.id.txtEmailExistError);
     }
 }

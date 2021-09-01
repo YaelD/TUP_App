@@ -72,12 +72,13 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
                 {
+
                     if(!selectedAttractions.contains(attractions.get(position)))
                     {
                         selectedAttractions.add(attractions.get(position));
                     }
                 }
-                else
+                else // Not Checked
                 {
                     if(selectedAttractions.contains(attractions.get(position)))
                     {

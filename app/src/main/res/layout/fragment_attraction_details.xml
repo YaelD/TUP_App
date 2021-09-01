@@ -31,7 +31,7 @@
                 android:id="@+id/imgAttr"
                 android:layout_width="267dp"
                 android:layout_height="178dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="40dp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline8"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="parent"
@@ -155,18 +155,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline9"
-                app:layout_constraintTop_toBottomOf="@+id/DescriptionText" />
-
-            <TextView
-                android:id="@+id/RestaurantsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Restaurants nearby:"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/guideline9"
-                app:layout_constraintTop_toBottomOf="@+id/txtAttrDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/DescriptionText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="10dp"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline4"
@@ -180,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="273dp" />
+                app:layout_constraintGuide_begin="312dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline9"
@@ -208,13 +199,14 @@
                 android:id="@+id/imgFavoriteBorder"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginTop="80dp"
                 android:layout_marginEnd="16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toTopOf="@+id/imgAttr"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_favorite"
                 app:tint="@color/black"
                 tools:ignore="VectorDrawableCompat,SpeakableTextPresentCheck" />
@@ -223,7 +215,6 @@
                 android:id="@+id/imgMap"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -235,12 +226,15 @@
                 android:id="@+id/txtAddToFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:text="Add to favorites"
                 android:textSize="12sp"
                 android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/guideline11"
                 app:layout_constraintEnd_toEndOf="@+id/imgFavoriteBorder"
                 app:layout_constraintStart_toStartOf="@+id/imgFavoriteBorder"
-                app:layout_constraintTop_toBottomOf="@+id/imgFavoriteBorder" />
+                app:layout_constraintTop_toBottomOf="@+id/imgFavoriteBorder"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/txtRemoveFromFavorite"
@@ -268,7 +262,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="170dp" />
+                app:layout_constraintGuide_begin="155dp" />
+
+            <ImageView
+                android:id="@+id/imgRestaurants"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/txtMap"
+                app:srcCompat="@drawable/ic_restaurant"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                android:id="@+id/txtRestaurants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restaurant nearby"
+                app:layout_constraintEnd_toEndOf="@+id/imgRestaurants"
+                app:layout_constraintStart_toStartOf="@+id/imgRestaurants"
+                app:layout_constraintTop_toBottomOf="@+id/imgRestaurants" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

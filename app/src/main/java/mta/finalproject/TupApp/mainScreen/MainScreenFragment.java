@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.myTrips.MyTripsActivity;
 import mta.finalproject.TupApp.R;
 import mta.finalproject.TupApp.attractionSearch.SearchAttractionsActivity;
@@ -41,6 +42,7 @@ public class MainScreenFragment extends Fragment {
 
         initView(view);
 
+        txtHelloUser.setText("Hello " + Utility.getInstance(getContext()).getTraveler().getFirstName());
         btnCreateTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +89,6 @@ public class MainScreenFragment extends Fragment {
         btnSearchAtt = view.findViewById(R.id.btnSearchAtt);
         btnFavoriteAtt = view.findViewById(R.id.btnFavoriteAtt);
         btnMyTrips = view.findViewById(R.id.btnMyTrips);
-       // btnTestAttractionDetails = view.findViewById(R.id.btnTestAttractionDetails);
     }
 
 }
