@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,13 +38,13 @@ public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitA
 
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attractions, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attractions_create_trip, parent, false);
         return new MustVisitAttrRecViewAdapter.ViewHolder(view);
     }
 
     @SuppressLint("LongLogTag")
     @Override
-    public void onBindViewHolder(@NonNull @NotNull MustVisitAttrRecViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull MustVisitAttrRecViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Log.d(TAG, "onBindViewHolder: called");
 
         holder.txtNameAttr.setText(mustVisitAttractions.get(position).getName());
@@ -51,6 +52,14 @@ public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitA
                 .asBitmap()
                 .load(mustVisitAttractions.get(position).getImageUrl())
                 .into(holder.imgAttraction);
+
+        holder.img_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mustVisitAttractions.remove(position);
+                notifyDataSetChanged();
+            }
+        });
 
 
     }
@@ -69,11 +78,13 @@ public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitA
         private CardView parent;
         private ImageView imgAttraction;
         private TextView txtNameAttr;
+        private AppCompatImageView img_cancel;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
             imgAttraction = itemView.findViewById(R.id.imgAttraction);
             txtNameAttr = itemView.findViewById(R.id.txtAttractionName);
+            img_cancel = itemView.findViewById(R.id.img_cancel);
         }
     }
 }
