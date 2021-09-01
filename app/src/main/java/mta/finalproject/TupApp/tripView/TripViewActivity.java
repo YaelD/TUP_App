@@ -56,7 +56,9 @@ public class TripViewActivity extends NavigationDrawerActivity {
                     case R.id.about:
                         AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
                         builder.setTitle(getString(R.string.app_name));
-                        builder.setMessage("Matan is a genius (AWWWWWW <3)"); //AWWWWWWWW <3
+                        builder.setMessage("When it comes to planning and taking a vacation, travelers have to choose destination and traveling times, attractions they want to visit, collect information ,search maps, etc. \n" +
+                                "We are group of Computer Science students that want to help travelers to plan their trips in the best way they can do.This is why we created \"TUP\".\n" +
+                                "\"TUP\" is a Traveling Using Application which helps to travelers plan their trips wisely with an AI algorithem that calculates the optimal route trip by personal preferences.");
                         builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
