@@ -72,13 +72,9 @@ public class NavigationDrawerActivity extends AppCompatActivity{
                     case R.id.userDetails:
                         intent= new Intent(NavigationDrawerActivity.this, UserDetailsActivity.class);
                         startActivity(intent);
-                        finish();
+                        //finish();
                         break;
                     case R.id.home:
-                        intent= new Intent(NavigationDrawerActivity.this, NavigationDrawerActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
                         break;
                     case R.id.about:
                         AlertDialog.Builder builder = new AlertDialog.Builder(NavigationDrawerActivity.this);
@@ -95,24 +91,24 @@ public class NavigationDrawerActivity extends AppCompatActivity{
                     case R.id.createTrip:
                         intent= new Intent(NavigationDrawerActivity.this, CreateNewTripActivity.class);
                         startActivity(intent);
-                        finish();
+                        //finish();
                         break;
                     case R.id.search:
                         intent= new Intent(NavigationDrawerActivity.this, SearchAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
-                        finish();
+                        //finish();
                         break;
                     case R.id.favorites:
                         intent= new Intent(NavigationDrawerActivity.this, FavoriteAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
-                        finish();
+                       // finish();
                         break;
                     case R.id.trips:
                         intent= new Intent(NavigationDrawerActivity.this, MyTripsActivity.class);
                         startActivity(intent);
-                        finish();
+                        //finish();
                         break;
                     case R.id.logout:
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(NavigationDrawerActivity.this);

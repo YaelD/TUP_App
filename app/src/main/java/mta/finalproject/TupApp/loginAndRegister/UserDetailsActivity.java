@@ -1,8 +1,28 @@
 package mta.finalproject.TupApp.loginAndRegister;
 
-import android.os.Bundle;
+import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.navigation.NavigationView;
+
+import org.jetbrains.annotations.NotNull;
+
+import mta.finalproject.TupApp.MainActivity;
+import mta.finalproject.TupApp.R;
+import mta.finalproject.TupApp.attractionSearch.SearchAttractionsActivity;
+import mta.finalproject.TupApp.favoriteAttractions.FavoriteAttractionsActivity;
+import mta.finalproject.TupApp.javaClasses.Utility;
+import mta.finalproject.TupApp.myTrips.MyTripsActivity;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
+import mta.finalproject.TupApp.tripCreation.CreateNewTripActivity;
 
 public class UserDetailsActivity extends NavigationDrawerActivity {
 
@@ -16,42 +36,87 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
         setContainer(new UserDetailsFragment());
     }
 
-//        setContentView(R.layout.activity_user_details);
-//
-//        initUserDetailsViews();
-//
-//        traveler = ServerUtility.getInstance(this).getTraveler();
-//        editTxtFirstName.setHint(traveler.getFirstName());
-//        editTxtLastName.setHint(traveler.getLastName());
-//        editTxtEmail.setHint(traveler.getEmailAddress());
-//        editTxtPassword.setHint(traveler.getPassword());
-//        editTxtConfirmPassword.setHint(traveler.getPassword());
-//
-//        btnCancle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(UserDetailsActivity.this, NavigationDrawerActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        btnSaveChanges.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //show snackBar
-//                Toast.makeText(UserDetailsActivity.this, "Changes saved", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//    }
-//
-//    private void initUserDetailsViews() {
-//        btnSaveChanges = findViewById(R.id.btnSaveChanges);
-//        btnCancle = findViewById(R.id.btnCancle);
-//        editTxtFirstName = findViewById(R.id.editTxtFirstName);
-//        editTxtLastName = findViewById(R.id.editTxtLastName);
-//        editTxtEmail = findViewById(R.id.editTxtEmail);
-//        editTxtPassword = findViewById(R.id.editTxtPassword);
-//        editTxtConfirmPassword = findViewById(R.id.editTxtConfirmPassword);
-//    }
+    @Override
+    public void navBarListeners() {
+        //super.navBarListeners();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                Intent intent;
+                switch (item.getItemId()){
+                    case R.id.userDetails:
+                        break;
+                    case R.id.home:
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        finish();
+                        break;
+                    case R.id.about:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(UserDetailsActivity.this);
+                        builder.setTitle(getString(R.string.app_name));
+                        builder.setMessage("Matan is a genius (AWWWWWW <3)"); //AWWWWWWWW <3
+                        builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        builder.create().show();
+                        break;
+                    case R.id.createTrip:
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        intent= new Intent(UserDetailsActivity.this, CreateNewTripActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.search:
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        intent= new Intent(UserDetailsActivity.this, SearchAttractionsActivity.class);
+                        intent.putExtra(CALLING_ACTIVITY, getClass().getName());
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.favorites:
+                        intent= new Intent(UserDetailsActivity.this, FavoriteAttractionsActivity.class);
+                        intent.putExtra(CALLING_ACTIVITY, getClass().getName());
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.trips:
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        intent= new Intent(UserDetailsActivity.this, MyTripsActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.logout:
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserDetailsActivity.this);
+                        alertDialog.setTitle("Logout");
+                        alertDialog.setMessage("Are you sure you want to logout the application?");
+                        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Utility.getInstance(getApplicationContext()).clearSharedPreferences();
+                                Intent intent= new Intent(UserDetailsActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        alertDialog.show();
+
+                    default:
+                        break;
+                }
+                drawer.closeDrawers();
+                return false;
+            }
+        });
+
+    }
 }

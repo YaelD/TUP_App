@@ -176,6 +176,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccessResponse(Object result) {
                 progressDialog.dismiss();
+                txtInvalidInputLoginError.setVisibility(View.GONE);
                 Utility.getInstance(getApplicationContext()).setTraveler((Traveler) result);
                 Utility.getInstance(getApplicationContext()).getDataFromServer();
                 Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
@@ -187,6 +188,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(String error) {
+                txtInvalidInputLoginError.setVisibility(View.VISIBLE);
                 progressDialog.dismiss();
 
             }
