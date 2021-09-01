@@ -5,7 +5,7 @@ package mta.finalproject.TupApp.javaClasses;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
-public class Traveler implements Serializable {
+public class Traveler {
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -18,7 +18,7 @@ public class Traveler implements Serializable {
         this.password = password;
     }
 
-    public Traveler(Traveler other) throws IllegalValueException {
+    public Traveler(Traveler other)  {
         setFirstName(other.firstName);
         setLastName(other.lastName);
         setEmailAddress(other.emailAddress);
@@ -37,42 +37,22 @@ public class Traveler implements Serializable {
     public String getPassword() {
         return password;
     }
-    //public RouteTrip getRouteTrip() { return routeTrip; }
 
-    public void setFirstName(String firstName) throws IllegalValueException {
-        if (firstName.trim().isEmpty())
-            throw new IllegalValueException("Name cannot be empty");
+    public void setFirstName(String firstName)  {
         this.firstName = firstName.trim();
     }
 
-    public void setLastName(String lastName) throws IllegalValueException {
-        if (lastName.trim().isEmpty())
-            throw new IllegalValueException("Name cannot be empty");
+    public void setLastName(String lastName) {
         this.lastName = lastName.trim();
     }
 
-    public void setEmailAddress(String emailAddress) throws IllegalValueException {
-        String regex = "^(.+)@(.+)$";
-        Pattern pattern = Pattern.compile(regex);
-
-        if (!pattern.matcher(emailAddress).matches())
-            throw new IllegalValueException("Email address is not valid");
+    public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
-    public void setPassword(String password) throws IllegalValueException {
-        if (password == null || password.trim().isEmpty())
-            throw new IllegalValueException("Password cannot be empty");
+    public void setPassword(String password)  {
         this.password = password;
     }
-
-    /*
-
-    public void setRouteTrip(RouteTrip routeTrip){
-        this.routeTrip = routeTrip;
-    }
-     */
-
 
 
     @Override
@@ -86,23 +66,4 @@ public class Traveler implements Serializable {
                 '}';
     }
 
-    public static class InvalidUsernameOrPasswordException extends Exception {
-        public InvalidUsernameOrPasswordException(String message) {super(message);}
-    }
-
-    public static class IllegalValueException extends Exception{
-        public IllegalValueException(String message) {
-            super(message);
-        }
-    }
-
-    public static class AlreadyExistsException extends Exception {
-        public AlreadyExistsException(String message) {
-            super(message);
-        }
-    }
-
-    public static class NotFoundException extends Exception {
-        public NotFoundException(String message) {super(message);}
-    }
 }
