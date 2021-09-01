@@ -8,26 +8,20 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.view.inputmethod.InputMethodSubtype;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import mta.finalproject.TupApp.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
-import java.util.Locale;
 import java.util.regex.Pattern;
 
-import mta.finalproject.TupApp.javaClasses.Geometry;
 import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Traveler;
 import mta.finalproject.TupApp.javaClasses.Utility;
@@ -273,7 +267,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Log.e("HERE==>", "travelerID is--" +
                             Utility.getInstance(getApplicationContext()).getTravelerID());
                     Utility.getInstance(getApplicationContext()).getDataFromServer();
-                    Utility.getInstance(getApplicationContext()).saveData();
+                    Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
                     Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
                     startActivity(intent);
                     finish();
@@ -284,11 +278,6 @@ public class RegisterActivity extends AppCompatActivity {
                     txtInvalidInputError.setVisibility(View.VISIBLE);
                 }
             });
-            /*
-
-
-            new Handler().postDelayed(runnable, 0);
-             */
 
         }
 }

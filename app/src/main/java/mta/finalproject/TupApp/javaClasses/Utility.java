@@ -141,23 +141,13 @@ public class Utility {
         editor.commit();
     }
 
+
     public void clearSharedPreferences()
     {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.commit();
     }
-
-
-    public void testAttractions()
-    {
-        String att1 = "{\"name\":\"The Mall\",\"address\":\"The Mall, London, UK\",\"phoneNumber\":\"N\\\\A\",\"website\":\"N\\\\A\",\"geometry\":{\"lat\":\"51.5045039\",\"lng\":\"-0.1342032\"},\"placeID\":\"ChIJ1SnFptAEdkgRCQABqtg50Cw\",\"types\":[\"route\"],\"OpeningHoursArr\":[{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"SUNDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"MONDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"TUESDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"WEDNESDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"THURSDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"FRIDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]},{\"isAllDayLongOpened\":true,\"isOpen\":true,\"day\":\"SATURDAY\",\"openingHours\":[\"01:00\"],\"closingHours\":[\"23:59\"]}],\"imageUrl\":\"https:\\/\\/upload.wikimedia.org\\/wikipedia\\/commons\\/thumb\\/0\\/07\\/The_Coldstream_Guards_Troop_Their_Colour_MOD_45165212.jpg\\/300px-The_Coldstream_Guards_Troop_Their_Colour_MOD_45165212.jpg\",\"description\":\"The Mall () is a road in the City of Westminster, central London, between Buckingham Palace at its western end and Trafalgar Square via Admiralty Arch to the east.\\nNear the east end at Trafalgar Square and Whitehall it is met by Horse Guards Road and Spring Gardens where the Metropolitan Board of Works and London County Council were once based.\\nIt is closed to traffic on Saturdays, Sundays, public holidays and on ceremonial occasions.\\nHistory\\n\\nThe Mall began as a field for playing pall-mall.\\n\",\"duration\":3}";
-        String att2 = "{\"name\":\"London Transport Museum\",\"address\":\"Covent Garden, London WC2E 7BB, UK\",\"phoneNumber\":\"N\\\\A\",\"website\":\"https:\\/\\/ltmuseum.co.uk\\/\",\"geometry\":{\"lat\":\"51.5119054\",\"lng\":\"-0.1215648\"},\"placeID\":\"ChIJ4bF21K8FdkgRDXc6FiSVAzE\",\"types\":[\"museum\",\"tourist_attraction\",\"cafe\",\"point_of_interest\",\"establishment\"],\"OpeningHoursArr\":[{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"SUNDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"MONDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"TUESDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"WEDNESDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"THURSDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"FRIDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]},{\"isAllDayLongOpened\":false,\"isOpen\":true,\"day\":\"SATURDAY\",\"openingHours\":[\"10:00\"],\"closingHours\":[\"18:00\"]}],\"imageUrl\":\"https:\\/\\/upload.wikimedia.org\\/wikipedia\\/commons\\/thumb\\/d\\/d1\\/London_Transport_Museum_%2842206944281%29.jpg\\/300px-London_Transport_Museum_%2842206944281%29.jpg\",\"description\":\"The London Transport Museum (often abbreviated as the LTM) is a transport museum based in Covent Garden, London.\\nThe museum mainly hosts exhibits related to the heritage of London's transport, as well as  conserving and explaining the history of it.\\nThe majority of the museum's exhibits originated in the collections of London Transport, but, since the creation of Transport for London (TfL) in 2000, the remit of the museum has expanded to cover all aspects of transportation in the city.\\nThe museum operates from two sites within London.\\n\",\"duration\":3}";
-        attractions.add(new Gson().fromJson(att1, Attraction.class));
-        attractions.add(new Gson().fromJson(att2, Attraction.class));
-
-    }
-
 
 
 //----------------------------------------------------------------------------------------
@@ -384,15 +374,6 @@ public class Utility {
         //testAttractions();
     }
 
-    public void saveData()
-    {
-        //ServerConnection.getInstance(context).sendFavAttractionsToAdd();
-        //ServerConnection.getInstance(context).updateUser(instance.getTraveler());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("travelerID", instance.getTravelerID());
-        editor.putString("traveler", new Gson().toJson(instance.getTraveler()));
-        editor.commit();
-    }
 
 
 

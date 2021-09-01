@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import mta.finalproject.TupApp.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -180,7 +178,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 Utility.getInstance(getApplicationContext()).setTraveler((Traveler) result);
                 Utility.getInstance(getApplicationContext()).getDataFromServer();
-                Utility.getInstance(getApplicationContext()).saveData();
+                Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
                 Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

@@ -17,7 +17,6 @@ import mta.finalproject.TupApp.MainActivity;
 import mta.finalproject.TupApp.R;
 import com.google.gson.Gson;
 
-import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Traveler;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 import mta.finalproject.TupApp.javaClasses.Utility;
@@ -40,7 +39,7 @@ public class LoadingScreen extends AppCompatActivity {
             Log.e("LoadingScreen==>", "TravelerID " + Utility.getInstance(getApplicationContext()).getTravelerID());
             Traveler traveler = new Gson().fromJson(jsonTraveler, Traveler.class);
             Utility.getInstance(getApplicationContext()).setTraveler(traveler);
-            Utility.getInstance(getApplicationContext()).saveData();
+            Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
             Utility.getInstance(getApplicationContext()).getDataFromServer();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
