@@ -150,6 +150,13 @@ public class Utility {
         editor.commit();
     }
 
+    public static void logOut()
+    {
+        instance.clearSharedPreferences();
+        instance = null;
+    }
+
+
 
 //----------------------------------------------------------------------------------------
 

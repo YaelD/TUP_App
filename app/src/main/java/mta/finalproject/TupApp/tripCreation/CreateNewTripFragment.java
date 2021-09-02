@@ -2,6 +2,7 @@ package mta.finalproject.TupApp.tripCreation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,6 +58,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -77,7 +79,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private EditText txtSelectDateFrom, txtSelectDateTo;
     private RecyclerView recViewDesiredHours, recViewMustVisitAttr;
     private List<LocalDate> rangeDates = new ArrayList<>();
-    private ArrayList<DesiredHoursInDay> desiredHours;
+    private ArrayList<DesiredHoursInDay> desiredHours = new ArrayList<>();
     private LocalDate startDate, endDate;
     private MaterialDatePicker<Long> materialDatePicker2;
     private ProgressDialog progressDialog;
@@ -260,6 +262,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     private void initSpinnerHotels() {
         ArrayList<Hotel> hotels = Utility.getInstance(getContext()).getHotels();
         if(hotelsName.isEmpty()){
+            hotelsName.add("Select");
             for(Hotel hotel:hotels){
                 hotelsName.add(hotel.getName());
             }
@@ -334,19 +337,30 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
+        if(desiredHours.size() > 0)
+        {
+            Log.e("CreateTripHours==>", "Date:" + desiredHours.get(0).getDate() +
+                    " Start=" + desiredHours.get(0).getStartTime() + " End=" +
+                    desiredHours.get(0).getEndTime());
+        }
 
+        /*
         desiredHours = new ArrayList<>();
         for (LocalDate date : rangeDates) {
             desiredHours.add(new DesiredHoursInDay(date.toString()));
         }
+         */
 
         callAdapter(desiredHours);
 
+        /*
         MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
         adapter.setMustVisitAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
 
         recViewMustVisitAttr.setAdapter(adapter);
         recViewMustVisitAttr.setLayoutManager(new GridLayoutManager(getActivity(),2));
+
+         */
     }
 
 
@@ -373,7 +387,11 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 .mapToObj(i -> CreateNewTripFragment.this.startDate.plusDays(i))
                 .collect(Collectors.toList());
 
+
+
         //TODO: remove it to another function, and before that check if all the dates are correct
+        //TODO: keep it here for future adapters
+
         desiredHours = new ArrayList<>();
         for (LocalDate date : rangeDates) {
             desiredHours.add(new DesiredHoursInDay(date.toString()));
@@ -383,12 +401,16 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
     }
 
     private void callAdapter(ArrayList<DesiredHoursInDay> desiredHours) {
-
         DesiredHoursRecViewAdapter adapter = new DesiredHoursRecViewAdapter(getActivity());
         adapter.setDesiredHours(desiredHours);
-
         recViewDesiredHours.setAdapter(adapter);
         recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        MustVisitAttrRecViewAdapter adapter2 = new MustVisitAttrRecViewAdapter(getActivity());
+        adapter2.setMustVisitAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
+        recViewMustVisitAttr.setAdapter(adapter2);
+        recViewMustVisitAttr.setLayoutManager(new GridLayoutManager(getActivity(),2));
+
 
     }
 
