@@ -103,6 +103,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         txtSelectDateFrom.setInputType(InputType.TYPE_NULL);
         txtSelectDateTo.setInputType(InputType.TYPE_NULL);
 
+
+
         //הגדרת לוח השנה
         //TODO: CHANGE THE RANGE OF YEARS
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
@@ -113,7 +115,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         calendar.set(Calendar.MONTH, Calendar.DECEMBER);
         Long december = calendar.getTimeInMillis();
 
-
         //בניה של לוח השנה
         CalendarConstraints.Builder constraintBuilder1 = new CalendarConstraints.Builder();
         constraintBuilder1.setStart(january);
@@ -123,12 +124,14 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         constraintBuilder2.setStart(january);
         constraintBuilder2.setEnd(december);
 
+
         //בניה של הטיים פיקרים
         MaterialDatePicker.Builder<Long> builder1 = MaterialDatePicker.Builder.datePicker();
         builder1.setTitleText("Select start date");
         builder1.setCalendarConstraints(constraintBuilder1.build());
         MaterialDatePicker<Long> materialDatePicker1 = builder1.build();
         MaterialDatePicker.Builder<Long> builder2 = MaterialDatePicker.Builder.datePicker();
+
 
 
         txtSelectDateFrom.setOnClickListener(new View.OnClickListener() {

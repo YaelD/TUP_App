@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.slidingpanelayout.widget.SlidingPaneLayout;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class TripViewFragment extends Fragment {
     private RecyclerView dateRecView;
     private Button btnSaveTrip, btnCancelTripView;
     private String callingActivity, tripName;
-    private RelativeLayout relativeLayoutTripView;
+    private SlidingPaneLayout slidingPaneLayoutTripView;
     private ProgressDialog progressDialog;
 
 
@@ -180,7 +181,7 @@ public class TripViewFragment extends Fragment {
     private void initViews(View view) {
         dateRecView = view.findViewById(R.id.dateRecView);
         btnSaveTrip = view.findViewById(R.id.btnSaveTrip);
-        relativeLayoutTripView = view.findViewById(R.id.relativeLayoutTripView);
+        slidingPaneLayoutTripView = view.findViewById(R.id.slidingPaneLayoutTripView);
         btnCancelTripView = view.findViewById(R.id.btnCancelTripView);
     }
 
