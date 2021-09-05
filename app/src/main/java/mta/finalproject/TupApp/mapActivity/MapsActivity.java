@@ -1,24 +1,37 @@
 package mta.finalproject.TupApp.mapActivity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.telephony.gsm.GsmCellLocation;
+import android.util.Log;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mta.finalproject.TupApp.R;
 import mta.finalproject.TupApp.databinding.ActivityMapsBinding;
+import mta.finalproject.TupApp.javaClasses.Attraction;
 import mta.finalproject.TupApp.javaClasses.DayPlan;
 import mta.finalproject.TupApp.javaClasses.Hotel;
 import mta.finalproject.TupApp.javaClasses.OnePlan;
@@ -27,30 +40,23 @@ import mta.finalproject.TupApp.javaClasses.Utility;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    public static String TRIP_INDEX = "TRIPID";
-    public static String DAY_INDEX = "DAY";
+    public static String DAY_PLAN_JSON = "DAYPLANJSON";
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
-    private ArrayList<OnePlan> allDayAttractions = new ArrayList<>();
-    private Hotel hotel;
+    private DayPlan dayPlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.e("MapActivity==>", "Got To MapS");
+
 
         Intent intent = getIntent();
-        int tripIndex = intent.getIntExtra(TRIP_INDEX, 0);
-        int day = intent.getIntExtra(DAY_INDEX, 0);
-
-
-        TripPlan tripPlan = Utility.getInstance(getApplicationContext()).getAllTrips().get(tripIndex);
-        DayPlan dayPlans = tripPlan.getPlans().get(day);
-        hotel = dayPlans.getHotel();
-        allDayAttractions = dayPlans.getDaySchedule();
-
+        String dayPlanJson = intent.getStringExtra(DAY_PLAN_JSON);
+        this.dayPlan = new Gson().fromJson(dayPlanJson, DayPlan.class);
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -61,45 +67,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.addMarker(new MarkerOptions().position(hotel.getGeometry().geometryToLatLng()));
 
-
-
+        mMap.addMarker(new MarkerOptions().position(dayPlan.getHotel().getGeometry().geometryToLatLng()).title(dayPlan.getHotel().getName())
+        .icon(BitmapDescriptorFactory
+                .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         ArrayList<LatLng> attractionsLatLng = new ArrayList<>();
-        for(OnePlan onePlan: allDayAttractions)
+        attractionsLatLng.add(dayPlan.getHotel().getGeometry().geometryToLatLng());
+        for(OnePlan onePlan: dayPlan.getDaySchedule())
         {
-            mMap.addMarker(new MarkerOptions().position(onePlan.getAttraction().getGeometry().geometryToLatLng())
+
+            Marker currMarger = mMap.addMarker(new MarkerOptions().position(onePlan.getAttraction().getGeometry().geometryToLatLng())
             .title(onePlan.getAttraction().getName()).snippet(onePlan.getAttraction().getAddress()));
+            currMarger.setTag(onePlan.getAttraction());
             attractionsLatLng.add(onePlan.getAttraction().getGeometry().geometryToLatLng());
         }
+        attractionsLatLng.add(dayPlan.getHotel().getGeometry().geometryToLatLng());
 
-
-
-        for(LatLng latLng: attractionsLatLng)
+        int arrLen = attractionsLatLng.size();
+        for(int i =0; i < arrLen-1;++i)
         {
-            mMap.addPolyline(new PolylineOptions().add(latLng).color(Color.BLUE));
+            mMap.addPolyline(new PolylineOptions().add(attractionsLatLng.get(i), attractionsLatLng.get(i+1)).color(Color.RED).width(3));
         }
 
-
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 
 
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hotel.getGeometry().geometryToLatLng(), 13));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(dayPlan.getHotel().getGeometry().geometryToLatLng(), 13));
     }
+
+
+
+
 }

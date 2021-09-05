@@ -35,6 +35,7 @@ public class Geometry {
     public LatLng geometryToLatLng() {
         Double Lat = Double.valueOf(this.lat);
         Double Lng = Double.valueOf(this.lng);
+
         return new LatLng(Lat, Lng);
     }
 }

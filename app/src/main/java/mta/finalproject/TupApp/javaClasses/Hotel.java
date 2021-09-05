@@ -11,9 +11,10 @@ public class Hotel {
     private Geometry geometry;
 
 
-    public Hotel(String name, String placeID) {
+    public Hotel(String name, String placeID, Geometry geometry) {
         this.name = name;
         this.placeID = placeID;
+        this.geometry = geometry;
     }
 
 

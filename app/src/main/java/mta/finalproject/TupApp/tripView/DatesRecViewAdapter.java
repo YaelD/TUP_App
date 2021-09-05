@@ -1,10 +1,11 @@
 package mta.finalproject.TupApp.tripView;
 
-import static mta.finalproject.TupApp.mapActivity.MapsActivity.TRIP_INDEX;
+import static mta.finalproject.TupApp.mapActivity.MapsActivity.DAY_PLAN_JSON;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
 
 import mta.finalproject.TupApp.R;
 
@@ -58,8 +61,10 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
         holder.imgRouteMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("DatesAdapter==>", "In On Click Listener");
                 Intent intent = new Intent(mContext, MapsActivity.class);
-                //intent.putExtra(TRIP_INDEX, plans.get(position));
+                String dayPlanJson = new Gson().toJson(plans.get(position));
+                intent.putExtra(DAY_PLAN_JSON, dayPlanJson);
                 mContext.startActivity(intent);
             }
         });

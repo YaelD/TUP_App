@@ -205,7 +205,7 @@ public class ServerConnection {
                             DayPlan dayPlan = gson.fromJson(dayPlanjson, DayPlan.class);
 
                             OnePlan currentPlan = dayPlan.getDaySchedule().get(0);
-                            dayPlan.setHotel(new Hotel(currentPlan.getAttraction().getName(), currentPlan.getAttraction().getPlaceID()));
+                            dayPlan.setHotel(new Hotel(currentPlan.getAttraction().getName(), currentPlan.getAttraction().getPlaceID(), currentPlan.getAttraction().getGeometry()));
                             dayPlan.getDaySchedule().remove(0);
                             arr.add(dayPlan);
                         }
