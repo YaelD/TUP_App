@@ -7,6 +7,8 @@ import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.time.DayOfWeek;
 
 import java.util.ArrayList;
@@ -127,4 +129,5 @@ public class Attraction {
         }
         return stringBuilder.toString();
     }
+
 }

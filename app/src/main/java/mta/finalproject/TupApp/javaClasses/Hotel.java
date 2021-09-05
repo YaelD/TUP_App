@@ -4,15 +4,25 @@ package mta.finalproject.TupApp.javaClasses;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Hotel implements Parcelable {
+public class Hotel {
 
     private String name;
     private String placeID;
+    private Geometry geometry;
 
 
     public Hotel(String name, String placeID) {
         this.name = name;
         this.placeID = placeID;
+    }
+
+
+    public Geometry getGeometry() {
+        return geometry;
+    }
+
+    public void setGeometry(Geometry geometry) {
+        this.geometry = geometry;
     }
 
     public String getName() {
@@ -36,26 +46,4 @@ public class Hotel implements Parcelable {
         placeID = in.readString();
     }
 
-    public static final Creator<Hotel> CREATOR = new Creator<Hotel>() {
-        @Override
-        public Hotel createFromParcel(Parcel in) {
-            return new Hotel(in);
-        }
-
-        @Override
-        public Hotel[] newArray(int size) {
-            return new Hotel[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(placeID);
-    }
 }
