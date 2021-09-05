@@ -34,6 +34,7 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
 
         initViews();
         setContainer(new UserDetailsFragment());
+        Utility.setLocale(this, "en");
     }
 
     @Override

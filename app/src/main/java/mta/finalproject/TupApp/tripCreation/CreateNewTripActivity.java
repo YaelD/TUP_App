@@ -3,8 +3,11 @@ package mta.finalproject.TupApp.tripCreation;
 import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -14,6 +17,8 @@ import androidx.appcompat.app.AlertDialog;
 import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
 
 import mta.finalproject.TupApp.MainActivity;
 import mta.finalproject.TupApp.R;
@@ -32,6 +37,7 @@ public class CreateNewTripActivity extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContainer(new CreateNewTripFragment());
+        Utility.setLocale(this, "en");
     }
 
     @Override
@@ -115,5 +121,14 @@ public class CreateNewTripActivity extends NavigationDrawerActivity {
             }
         });
 
+    }
+
+    public static void setLocale(Activity activity, String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = activity.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

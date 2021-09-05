@@ -32,7 +32,7 @@ public class FavoriteAttractionsActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main_screen);
         setContainer(new FavoriteAttractionsFragment());
-
+        Utility.setLocale(this, "en");
     }
 
     @Override

@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        Utility.setLocale(this, "en");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

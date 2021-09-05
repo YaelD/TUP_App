@@ -36,6 +36,7 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
 
         setContainer(new SearchAttractionsFragment());
+        Utility.setLocale(this, "en");
     }
 
     @Override

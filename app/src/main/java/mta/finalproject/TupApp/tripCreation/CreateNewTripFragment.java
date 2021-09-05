@@ -1,8 +1,10 @@
 package mta.finalproject.TupApp.tripCreation;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -94,8 +96,11 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_create_new_trip, container, false);
         initView(view);
 
+
         initSpinnerDestination();
         initSpinnerHotels();
+
+
 
 
 

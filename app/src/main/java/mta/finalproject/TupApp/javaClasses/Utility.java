@@ -3,6 +3,8 @@ package mta.finalproject.TupApp.javaClasses;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.util.Log;
 
@@ -11,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Utility {
 
@@ -436,10 +439,13 @@ public class Utility {
      */
 
 
-
-
-
-
-
+    public static void setLocale(Activity activity, String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = activity.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
 
 }

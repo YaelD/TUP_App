@@ -33,6 +33,7 @@ public class MyTripsActivity extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContainer(new MyTripsFragment());
+        Utility.setLocale(this, "en");
     }
 
 

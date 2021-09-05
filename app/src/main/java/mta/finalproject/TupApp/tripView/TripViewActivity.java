@@ -33,6 +33,7 @@ public class TripViewActivity extends NavigationDrawerActivity {
         //setContentView(R.layout.activity_main_screen);
 
         setContainer(new TripViewFragment());
+        Utility.setLocale(this, "en");
     }
 
     @Override

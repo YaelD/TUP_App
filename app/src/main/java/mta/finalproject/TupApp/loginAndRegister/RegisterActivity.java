@@ -44,9 +44,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        initViews();
+        Utility.setLocale(this, "en");
 
         firstName = lastName = email = password = "";
-        initViews();
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override

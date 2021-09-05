@@ -9,8 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -31,6 +34,8 @@ import mta.finalproject.TupApp.myTrips.MyTripsActivity;
 import mta.finalproject.TupApp.tripCreation.CreateNewTripActivity;
 
 import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTIVITY;
+
+import java.util.Locale;
 
 public class NavigationDrawerActivity extends AppCompatActivity{
 
@@ -159,15 +164,16 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         toolbar = findViewById(R.id.toolbar);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//
+//        if(Utility.getInstance(getApplicationContext()).getTripsToDelete().size() != 0)
+//        {
+//            ServerConnection.getInstance(getApplicationContext()).deleteTripFromServer();
+//        }
+//
+//
+//    }
 
-        if(Utility.getInstance(getApplicationContext()).getTripsToDelete().size() != 0)
-        {
-            ServerConnection.getInstance(getApplicationContext()).deleteTripFromServer();
-        }
-
-
-    }
 }

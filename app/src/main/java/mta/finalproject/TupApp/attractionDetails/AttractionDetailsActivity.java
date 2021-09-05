@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -17,6 +19,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
 
 import mta.finalproject.TupApp.MainActivity;
 import mta.finalproject.TupApp.attractionSearch.SearchAttractionsActivity;
@@ -45,6 +49,7 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
 //        transaction.replace(R.id.container, new AttractionDetailsFragment());
 //        transaction.commit();
         setContainer(new AttractionDetailsFragment());
+        Utility.setLocale(this, "en");
 //        initViews();
     }
 

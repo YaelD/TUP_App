@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
+        Utility.setLocale(this, "en");
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
