@@ -1,9 +1,14 @@
 package mta.finalproject.TupApp.tripView;
 
+import static mta.finalproject.TupApp.mapActivity.MapsActivity.TRIP_INDEX;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +20,7 @@ import mta.finalproject.TupApp.R;
 import java.util.ArrayList;
 
 import mta.finalproject.TupApp.javaClasses.DayPlan;
+import mta.finalproject.TupApp.mapActivity.MapsActivity;
 
 public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapter.ViewHolder>{
 
@@ -40,7 +46,7 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.txtDate.setText(plans.get(position).getDate().toString());
         holder.txtHotelName.setText((plans.get(position).getHotel().getName()));
         holder.txtEndHour.setText(plans.get(position).getFinishTime().toString());
@@ -49,6 +55,14 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
         adapter.setOnePlans(plans.get(position).getDaySchedule());
         holder.recViewAttractions.setAdapter(adapter);
         holder.recViewAttractions.setLayoutManager(new LinearLayoutManager(mContext));
+        holder.imgRouteMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MapsActivity.class);
+                //intent.putExtra(TRIP_INDEX, plans.get(position));
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -59,6 +73,7 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView txtDate, txtHotelName, txtEndHour;
         RecyclerView recViewAttractions;
+        ImageView imgRouteMap;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +81,7 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
             recViewAttractions = itemView.findViewById(R.id.attractionsRecView);
             txtHotelName = itemView.findViewById(R.id.txtHotelName);
             txtEndHour = itemView.findViewById(R.id.txtEndHour);
+            imgRouteMap = itemView.findViewById(R.id.imgRouteMap);
         }
     }
 }

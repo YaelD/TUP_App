@@ -27,8 +27,8 @@ import mta.finalproject.TupApp.javaClasses.Utility;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    final static String TRIP_INDEX = "TRIPID";
-    final static String DAY_INDEX = "DAY";
+    public static String TRIP_INDEX = "TRIPID";
+    public static String DAY_INDEX = "DAY";
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
