@@ -138,10 +138,21 @@ public class AttractionDetailsFragment extends Fragment {
                     imgMap.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Uri gmmIntentUri = Uri.parse("geo:"+ attraction.getGeometry().toString() + "?q=" +attraction.getGeometry().toString()+"(" + attraction.getName() + ")");
+                            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + attraction.getGeometry().getLat()+","+attraction.getGeometry().getLng()+"&mode=w");
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                             mapIntent.setPackage("com.google.android.apps.maps");
                             startActivity(mapIntent);
+
+
+                            /*
+                            //TODO: add a pin in map
+
+                                Uri gmmIntentUri = Uri.parse("geo:"+ attraction.getGeometry().toString() + "?q=" +attraction.getGeometry().toString()+"(" + attraction.getName() + ")");
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                startActivity(mapIntent);
+
+                             */
 
                         }
                     });

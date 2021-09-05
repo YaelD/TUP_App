@@ -107,7 +107,10 @@ public class SearchAttractionsFragment extends Fragment {
         else
         {
             //Log.e("HERE==>", "In adapterDoDetails");
-            adapterToDetailsAttr.setAttractions(filteredList);
+            if(!filteredList.isEmpty())
+            {
+                adapterToDetailsAttr.setAttractions(filteredList);
+            }
         }
     }
 

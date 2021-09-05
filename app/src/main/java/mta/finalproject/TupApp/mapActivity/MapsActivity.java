@@ -79,7 +79,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         attractionsLatLng.add(dayPlan.getHotel().getGeometry().geometryToLatLng());
         for(OnePlan onePlan: dayPlan.getDaySchedule())
         {
-
             Marker currMarger = mMap.addMarker(new MarkerOptions().position(onePlan.getAttraction().getGeometry().geometryToLatLng())
             .title(onePlan.getAttraction().getName()).snippet(onePlan.getAttraction().getAddress()));
             currMarger.setTag(onePlan.getAttraction());
