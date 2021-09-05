@@ -5,7 +5,7 @@
     android:layout_height="176dp"
     android:gravity="bottom"
     android:paddingStart="15dp"
-    android:background="#ABF5FF">
+    android:background="@drawable/nav_background3">
 
     <ImageView
         android:layout_width="250dp"

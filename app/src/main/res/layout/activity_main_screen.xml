@@ -18,8 +18,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/design_default_color_primary"
-            android:elevation="4dp" />
+            android:background="#0028B6"
+            android:elevation="4dp"/>
+
 
         <FrameLayout
             android:id="@+id/container"
