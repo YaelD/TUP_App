@@ -41,19 +41,17 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.container, new AttractionDetailsFragment());
-//        transaction.commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, new AttractionDetailsFragment());
+        transaction.commit();
         setContainer(new AttractionDetailsFragment());
         initViews();
     }
 
 
-    /*
-    //TODO: please dont :\
+
     @Override
     public void navBarListeners() {
-        //super.navBarListeners();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -61,18 +59,21 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
                 Intent intent;
                 switch (item.getItemId()){
                     case R.id.userDetails:
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
                         intent= new Intent(AttractionDetailsActivity.this, UserDetailsActivity.class);
-                        oldActivity.finish();
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.home:
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
                         finish();
                         break;
                     case R.id.about:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AttractionDetailsActivity.this);
                         builder.setTitle(getString(R.string.app_name));
-                        builder.setMessage("Matan is a genius (AWWWWWW <3)"); //AWWWWWWWW <3
+                        builder.setMessage("When it comes to planning and taking a vacation, travelers have to choose destination and traveling times, attractions they want to visit, collect information ,search maps, etc. \n" +
+                                "We are group of Computer Science students that want to help travelers to plan their trips in the best way they can do.This is why we created \"TUP\".\n" +
+                                "\"TUP\" is a Traveling Using Application which helps to travelers plan their trips wisely with an AI algorithem that calculates the optimal route trip by personal preferences.");
                         builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -82,28 +83,33 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
                         builder.create().show();
                         break;
                     case R.id.createTrip:
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
                         intent= new Intent(AttractionDetailsActivity.this, CreateNewTripActivity.class);
-                        oldActivity.finish();
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.search:
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
                         intent= new Intent(AttractionDetailsActivity.this, SearchAttractionsActivity.class);
-                        oldActivity.finish();
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.favorites:
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        intent= new Intent(AttractionDetailsActivity.this, FavoriteAttractionsActivity.class);
+                        intent.putExtra(CALLING_ACTIVITY, getClass().getName());
+                        startActivity(intent);
+                        finish();
                         break;
                     case R.id.trips:
-                        oldActivity.finish();
+                        Utility.getInstance(getApplicationContext()).finishOldActivity();
                         intent= new Intent(AttractionDetailsActivity.this, MyTripsActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.logout:
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getApplicationContext());
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AttractionDetailsActivity.this);
                         alertDialog.setTitle("Logout");
                         alertDialog.setMessage("Are you sure you want to logout the application?");
                         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -131,8 +137,5 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
                 return false;
             }
         });
-
     }
-
-     */
 }
