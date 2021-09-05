@@ -39,13 +39,13 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
+       // setContentView(R.layout.activity_main_screen);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, new AttractionDetailsFragment());
-        transaction.commit();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.container, new AttractionDetailsFragment());
+//        transaction.commit();
         setContainer(new AttractionDetailsFragment());
-        initViews();
+//        initViews();
     }
 
 
