@@ -124,11 +124,7 @@ public class NavigationDrawerActivity extends AppCompatActivity{
                         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Utility.getInstance(getApplicationContext()).clearSharedPreferences();
-                                Intent intent= new Intent(NavigationDrawerActivity.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                                finish();
+                                logout();
                             }
                         });
                         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -162,6 +158,15 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         drawer = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
+    }
+
+    protected void logout()
+    {
+        Intent intent= new Intent(NavigationDrawerActivity.this, MainActivity.class);
+        Utility.logOut();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
 //    @Override

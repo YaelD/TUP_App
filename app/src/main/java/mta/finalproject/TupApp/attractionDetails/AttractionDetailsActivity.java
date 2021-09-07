@@ -120,11 +120,16 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
                         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Utility.getInstance(getApplicationContext()).clearSharedPreferences();
-                                Intent intent= new Intent(AttractionDetailsActivity.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                                finish();
+                                logout();
+                                /*
+
+                                    Utility.getInstance(getApplicationContext()).clearSharedPreferences();
+                                    Intent intent= new Intent(AttractionDetailsActivity.this, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    finish();
+
+                                 */
                             }
                         });
                         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

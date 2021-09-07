@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import mta.finalproject.TupApp.javaClasses.Attraction;
+import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 import mta.finalproject.TupApp.tripCreation.CreateNewTripActivity;
@@ -75,17 +76,25 @@ public class SearchAttractionsFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         setRecView();
     }
 
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e("SearchAttrFrag==>", "SAVING and Deleting Favs Attractions");
+        if(Utility.getInstance(getContext()).getFavAttractionsToAdd().size() > 0)
+        {
+            ServerConnection.getInstance(getContext()).sendFavAttractionsToAdd();
+        }
+        if(Utility.getInstance(getContext()).getFavAttractionsToDelete().size() > 0)
+        {
+            ServerConnection.getInstance(getContext()).sendFavAttractionsToDelete();
+        }
+    }
 
 
 

@@ -155,6 +155,19 @@ public class Utility {
 
     public static void logOut()
     {
+        if(!instance.getTripsToDelete().isEmpty())
+        {
+            ServerConnection.getInstance(instance.context).deleteTripFromServer();
+        }
+        if(!instance.getFavAttractionsToDelete().isEmpty())
+        {
+            ServerConnection.getInstance(instance.context).sendFavAttractionsToDelete();
+
+        }
+        if(!instance.getFavAttractionsToAdd().isEmpty())
+        {
+            ServerConnection.getInstance(instance.context).sendFavAttractionsToAdd();
+        }
         instance.clearSharedPreferences();
         instance = null;
     }

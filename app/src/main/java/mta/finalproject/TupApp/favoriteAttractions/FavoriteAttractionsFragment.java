@@ -61,6 +61,13 @@ public class FavoriteAttractionsFragment extends Fragment {
         setAdapters();
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+
     private void setAdapters()
     {
         String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
@@ -94,8 +101,11 @@ public class FavoriteAttractionsFragment extends Fragment {
         {
             btnFinishSelectFavAttr.setVisibility(View.GONE);
 
+            Log.e("FavAttFrag==>", "The size of fav attractions is" +
+                    Utility.getInstance(getContext()).getFavoriteAttractions().size());
             if(Utility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
             {
+                Log.e("FavAttFrag==>","Setting Adapter!!");
                 txtEmptyFavoriteList.setVisibility(View.GONE);
                 AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
                 adapter.setAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
@@ -110,9 +120,9 @@ public class FavoriteAttractionsFragment extends Fragment {
             OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
                 public void handleOnBackPressed() {
-                    Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getActivity().startActivity(intent);
+                    //Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //getActivity().startActivity(intent);
                     getActivity().finish();
                 }
             };
@@ -123,18 +133,21 @@ public class FavoriteAttractionsFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Log.e("FavAttractionsFrag==>", "SAVING and Deleting Attractions");
+        //TODO: Matan added this
+        recViewFavoriteAttractions.setAdapter(null);
+        Log.e("FavAttractionsFrag==>", "SAVING and Deleting Favs Attractions");
         if(Utility.getInstance(getContext()).getFavAttractionsToAdd().size() > 0)
         {
             ServerConnection.getInstance(getContext()).sendFavAttractionsToAdd();
-            //Utility.getInstance(getContext()).getFavAttractionsToAdd().clear();
         }
         if(Utility.getInstance(getContext()).getFavAttractionsToDelete().size() > 0)
         {
             ServerConnection.getInstance(getContext()).sendFavAttractionsToDelete();
-            //Utility.getInstance(getContext()).getFavAttractionsToDelete().clear();
         }
     }
+
+
+
 
     private void initViews(View view) {
         recViewFavoriteAttractions = view.findViewById(R.id.recViewFavoriteAttractions);
