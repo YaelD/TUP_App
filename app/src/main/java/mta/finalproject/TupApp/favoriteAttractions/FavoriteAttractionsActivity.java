@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import mta.finalproject.TupApp.MainActivity;
 import mta.finalproject.TupApp.R;
 import mta.finalproject.TupApp.attractionSearch.SearchAttractionsActivity;
+import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.loginAndRegister.UserDetailsActivity;
 import mta.finalproject.TupApp.myTrips.MyTripsActivity;
@@ -30,14 +32,12 @@ public class FavoriteAttractionsActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main_screen);
         setContainer(new FavoriteAttractionsFragment());
         Utility.setLocale(this, "en");
     }
 
     @Override
     public void navBarListeners() {
-        //super.navBarListeners();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -114,6 +114,21 @@ public class FavoriteAttractionsActivity extends NavigationDrawerActivity {
                 return false;
             }
         });
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("FavAttractionsAct==>", "SAVING and Deleting Favs Attractions");
+        if(Utility.getInstance(getApplicationContext()).getFavAttractionsToAdd().size() > 0)
+        {
+            ServerConnection.getInstance(getApplicationContext()).sendFavAttractionsToAdd();
+        }
+        if(Utility.getInstance(getApplicationContext()).getFavAttractionsToDelete().size() > 0)
+        {
+            ServerConnection.getInstance(getApplicationContext()).sendFavAttractionsToDelete();
+        }
 
     }
 }

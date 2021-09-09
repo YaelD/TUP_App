@@ -77,7 +77,6 @@ public class NavigationDrawerActivity extends AppCompatActivity{
                     case R.id.userDetails:
                         intent= new Intent(NavigationDrawerActivity.this, UserDetailsActivity.class);
                         startActivity(intent);
-                        //finish();
                         break;
                     case R.id.home:
                         break;
@@ -98,24 +97,20 @@ public class NavigationDrawerActivity extends AppCompatActivity{
                     case R.id.createTrip:
                         intent= new Intent(NavigationDrawerActivity.this, CreateNewTripActivity.class);
                         startActivity(intent);
-                        //finish();
                         break;
                     case R.id.search:
                         intent= new Intent(NavigationDrawerActivity.this, SearchAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
-                        //finish();
                         break;
                     case R.id.favorites:
                         intent= new Intent(NavigationDrawerActivity.this, FavoriteAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
-                       // finish();
                         break;
                     case R.id.trips:
                         intent= new Intent(NavigationDrawerActivity.this, MyTripsActivity.class);
                         startActivity(intent);
-                        //finish();
                         break;
                     case R.id.logout:
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(NavigationDrawerActivity.this);
@@ -154,7 +149,6 @@ public class NavigationDrawerActivity extends AppCompatActivity{
     }
 
     public void initViews() {
-        //Log.d(TAG, "initViews: started");
         drawer = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
@@ -168,17 +162,4 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         startActivity(intent);
         finish();
     }
-
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//
-//        if(Utility.getInstance(getApplicationContext()).getTripsToDelete().size() != 0)
-//        {
-//            ServerConnection.getInstance(getApplicationContext()).deleteTripFromServer();
-//        }
-//
-//
-//    }
-
 }

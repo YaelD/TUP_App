@@ -59,7 +59,6 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
         holder.txtAttractionName.setText(onePlans.get(position).getAttraction().getName());
         if(onePlans.get(position).getFavoriteAttraction())
         {
-            //holder.attractionCardView.setCardBackgroundColor(mContext.getColor(R.color.bright_red));
             holder.imgSelectedAttraction.setVisibility(View.VISIBLE);
         }
         else

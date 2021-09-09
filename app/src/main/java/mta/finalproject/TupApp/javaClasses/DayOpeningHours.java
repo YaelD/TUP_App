@@ -7,9 +7,6 @@ import androidx.annotation.RequiresApi;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 
-// DayOfWeek is enum that contains all days
-// DayOfWeek is an enum representing the 7 days of the week - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday.
-// change ti it because it's easier to convert from localDate
 public class DayOpeningHours {
 
     private boolean isOpen;
@@ -39,22 +36,8 @@ public class DayOpeningHours {
     }
     public ArrayList<String> getOpeningHours() {return openingHours;}
 
-/*    public ArrayList<LocalTime> getOpeningHoursLocalTime() {
-        ArrayList<LocalTime> res = new ArrayList<>();
-        for(String time : openingHours)
-            res.add(common.converter.convertStringToLocalTime(time));
-        return res;
-    }*/
 
     public ArrayList<String> getClosingHours() {return closingHours;}
-
-  /*  public ArrayList<LocalTime> getClosingHoursLocalTime() {
-        ArrayList<LocalTime> res = new ArrayList<>();
-        for(String time : closingHours)
-            res.add(common.converter.convertStringToLocalTime(time));
-        return res;
-    }*/
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public DayOpeningHours(int day) {

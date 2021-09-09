@@ -15,9 +15,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import mta.finalproject.TupApp.R;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import java.util.regex.Pattern;
 
@@ -32,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private ProgressDialog progressDialog;
     private EditText txtEmail, txtPassword;
-    private Button btnLoginActivity;
     private String email, password;
     private TextInputLayout passwordLoginLayout, mailLoginLayout;
     private TextView txtInvalidInputLoginError;
@@ -151,7 +152,6 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "initViews: started");
         txtEmail= findViewById(R.id.txtLoginEmail);
         txtPassword= findViewById(R.id.txtLoginPassword);
-        btnLoginActivity = findViewById(R.id.btnLoginActivity);
         passwordLoginLayout = findViewById(R.id.passwordLoginLayout);
         mailLoginLayout = findViewById(R.id.mailLoginLayout);
         txtInvalidInputLoginError = findViewById(R.id.txtInvalidInputLoginError);
@@ -174,22 +174,22 @@ public class LoginActivity extends AppCompatActivity {
         ServerConnection.getInstance(getApplicationContext()).logIn(email, password, new VolleyCallBack() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onSuccessResponse(Object result) {
+            public void onSuccessResponse(String result) {
                 progressDialog.dismiss();
-                txtInvalidInputLoginError.setVisibility(View.GONE);
-                Utility.getInstance(getApplicationContext()).setTraveler((Traveler) result);
+                Traveler traveler = new Gson().fromJson(result, Traveler.class);
+                Utility.getInstance(getApplicationContext()).setTraveler(traveler);
                 Utility.getInstance(getApplicationContext()).getDataFromServer();
                 Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
                 Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
+
             }
             @Override
             public void onErrorResponse(String error) {
-                txtInvalidInputLoginError.setVisibility(View.VISIBLE);
                 progressDialog.dismiss();
-                txtInvalidInputLoginError.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), "Error Connecting to Server", Toast.LENGTH_SHORT);
             }
         });
     }

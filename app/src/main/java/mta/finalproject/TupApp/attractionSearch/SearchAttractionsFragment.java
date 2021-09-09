@@ -32,7 +32,6 @@ import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTI
 
 public class SearchAttractionsFragment extends Fragment {
 
-    public static final String SELECTED_ATTRACTIONS = "selected attractions";
 
 
     private SearchView searchViewAttr;
@@ -48,7 +47,6 @@ public class SearchAttractionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_attractions, container, false);
-
         initView(view);
         callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
 
@@ -82,6 +80,7 @@ public class SearchAttractionsFragment extends Fragment {
     }
 
 
+    /*
     @Override
     public void onStop() {
         super.onStop();
@@ -95,6 +94,7 @@ public class SearchAttractionsFragment extends Fragment {
             ServerConnection.getInstance(getContext()).sendFavAttractionsToDelete();
         }
     }
+     */
 
 
 
@@ -110,12 +110,10 @@ public class SearchAttractionsFragment extends Fragment {
         }
         if(callingActivity.equals(CreateNewTripActivity.class.getName()))
         {
-            //Log.e("HERE==>", "In adapterMustVisit");
             adapterToMustVisitAttr.setMustVisitAttractions(filteredList);
         }
         else
         {
-            //Log.e("HERE==>", "In adapterDoDetails");
             if(!filteredList.isEmpty())
             {
                 adapterToDetailsAttr.setAttractions(filteredList);
@@ -124,7 +122,6 @@ public class SearchAttractionsFragment extends Fragment {
     }
 
 
-    //WE are in the Search attractions!!
     private void setRecView()
     {
         callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
@@ -134,9 +131,6 @@ public class SearchAttractionsFragment extends Fragment {
             btnFinish.setVisibility(View.VISIBLE);
 
             adapterToMustVisitAttr = new AddingAttrToMustVisitAttrAdapter(getActivity());
-            //adapterToMustVisitAttr.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
-
-            //adapterToMustVisitAttr.setMustVisitAttractions(ServerUtility.getInstance(getContext()).getAttractionsTest());
             adapterToMustVisitAttr.setMustVisitAttractions(Utility.getInstance(getContext()).getAttractions());
             adapterToMustVisitAttr.setSelectedAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
             attractionsRecView.setAdapter(adapterToMustVisitAttr);

@@ -23,7 +23,7 @@ public class Attraction {
     private String placeID;
     private String imageUrl;
     private String description;
-    private ArrayList<DayOpeningHours> OpeningHoursArr = new ArrayList<>();//
+    private ArrayList<DayOpeningHours> OpeningHoursArr = new ArrayList<>();
 
     public Attraction(String name) {
         this.name = name;

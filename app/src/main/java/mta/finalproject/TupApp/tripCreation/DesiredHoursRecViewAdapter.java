@@ -51,7 +51,6 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull @NotNull DesiredHoursRecViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        //holder.startTime = desiredHours.get(position)
         holder.startTime = LocalTime.parse(desiredHours.get(position).getStartTime());
         holder.endTime = LocalTime.parse(desiredHours.get(position).getEndTime());
         holder.txtDate.setText(desiredHours.get(position).getDate() + ":");
@@ -85,10 +84,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                                 holder.startTime = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute()+1);
                             }
                         }
-                        //holder.btnTimeFrom.setText(String.format("%02d:%02d", hourOfDay, minute));
                         holder.btnTimeFrom.setText(holder.startTime.toString());
-                        //selectedHours.add(String.format("%02d:%02d", hourOfDay, minute));
-                        //desiredHours.get(position).setStartTime(String.format("%02d:%02d", hourOfDay, minute));
 
                         desiredHours.get(position).setStartTime(holder.startTime.toString());
                         if(holder.startTime.isAfter(holder.endTime))

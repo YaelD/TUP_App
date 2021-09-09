@@ -69,24 +69,6 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
             holder.checkBox.setChecked(false);
         }
 
-        /*
-        if(selectedAttractions.contains(attractions.get(position)))
-        {
-            Log.e("AddingAttToAdapter==>", "The attraction  " +attractions.get(position).getName() + " is not in the adapter");
-            holder.checkBox.setChecked(true);
-        }
-        else
-        {
-            holder.checkBox.setChecked(false);
-        }
-
-
-         */
-
-
-
-
-
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -100,29 +82,6 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
                 {
                     selectedAttractions.remove(attractions.get(position));
                 }
-                /*
-                    if(isChecked)
-                    {
-                        if(!selectedAttractions.contains(attractions.get(position)))
-                        {
-                            selectedAttractions.add(attractions.get(position));
-                            Log.e("AddToMustVisitAdap==>", "added to selected " + attractions.get(position).getName());
-                            //Log.e("AddToMustVisitAdap==>", "selected Attractions=" +selectedAttractions.toString());
-                        }
-                    }
-                    else
-                    {
-                        if(selectedAttractions.contains(attractions.get(position)))
-                        {
-                            selectedAttractions.remove(attractions.get(position));
-                            Log.e("AddToMustVisitAdap==>", "removed from selected " + attractions.get(position).getName());
-                            //Log.e("AddToMustVisitAdap==>", "selected Attractions=" +selectedAttractions.toString());
-
-                        }
-                    }
-
-                 */
-
             }
         });
 

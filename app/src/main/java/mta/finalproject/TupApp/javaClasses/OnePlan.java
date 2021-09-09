@@ -2,9 +2,6 @@ package mta.finalproject.TupApp.javaClasses;
 
 
 import java.time.LocalTime;
-
-//change the class name
-
 public class OnePlan {
     private Attraction attraction;
     private LocalTime startTime;

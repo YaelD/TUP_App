@@ -51,9 +51,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.e("MapActivity==>", "Got To MapS");
-
-
         Intent intent = getIntent();
         String dayPlanJson = intent.getStringExtra(DAY_PLAN_JSON);
         this.dayPlan = new Gson().fromJson(dayPlanJson, DayPlan.class);
@@ -89,12 +86,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int arrLen = attractionsLatLng.size();
         for(int i =0; i < arrLen-1;++i)
         {
-            mMap.addPolyline(new PolylineOptions().add(attractionsLatLng.get(i), attractionsLatLng.get(i+1)).color(Color.RED).width(3));
+            mMap.addPolyline(new PolylineOptions().add(attractionsLatLng.get(i), attractionsLatLng.get(i+1)).color(Color.BLUE).width(5));
         }
-
-
-
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(dayPlan.getHotel().getGeometry().geometryToLatLng(), 13));
     }
 

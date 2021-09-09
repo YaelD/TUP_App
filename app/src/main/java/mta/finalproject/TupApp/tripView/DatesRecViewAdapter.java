@@ -53,7 +53,6 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
         holder.txtDate.setText(plans.get(position).getDate().toString());
         holder.txtHotelName.setText((plans.get(position).getHotel().getName()));
         holder.txtEndHour.setText(plans.get(position).getFinishTime().toString());
-        //holder.txtDate.setText(plans.get(position).getDateStr());
         AttractionsRecViewAdapter adapter = new AttractionsRecViewAdapter(mContext);
         adapter.setOnePlans(plans.get(position).getDaySchedule());
         holder.recViewAttractions.setAdapter(adapter);

@@ -20,7 +20,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-import mta.finalproject.TupApp.MainActivity;
 import mta.finalproject.TupApp.R;
 import mta.finalproject.TupApp.attractionSearch.SearchAttractionsActivity;
 import mta.finalproject.TupApp.favoriteAttractions.FavoriteAttractionsActivity;
@@ -126,5 +125,10 @@ public class CreateNewTripActivity extends NavigationDrawerActivity {
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

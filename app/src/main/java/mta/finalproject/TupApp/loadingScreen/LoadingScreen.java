@@ -46,7 +46,6 @@ public class LoadingScreen extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    //TODO: CHECK FOR COOKIE TO NAVIGATE THE USER TO RELEVANT INTENT
                     Intent intent = new Intent(LoadingScreen.this, NavigationDrawerActivity.class);
                     startActivity(intent);
                     finish();

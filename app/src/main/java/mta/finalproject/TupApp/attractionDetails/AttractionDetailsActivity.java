@@ -43,14 +43,8 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_main_screen);
-
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.container, new AttractionDetailsFragment());
-//        transaction.commit();
         setContainer(new AttractionDetailsFragment());
         Utility.setLocale(this, "en");
-//        initViews();
     }
 
 
@@ -121,15 +115,6 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 logout();
-                                /*
-
-                                    Utility.getInstance(getApplicationContext()).clearSharedPreferences();
-                                    Intent intent= new Intent(AttractionDetailsActivity.this, MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    finish();
-
-                                 */
                             }
                         });
                         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

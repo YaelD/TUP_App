@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import mta.finalproject.TupApp.R;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,7 +45,7 @@ public class UserDetailsFragment extends Fragment {
     private TextView txtTitleConfirmPassword, txtEmailExistError;
     private Traveler traveler;
     private String firstName, lastName, email, password;
-    private ConstraintLayout userDetailsParent;
+    //private ConstraintLayout userDetailsParent;
     private ProgressDialog progressDialog;
 
 
@@ -225,16 +226,12 @@ public class UserDetailsFragment extends Fragment {
                     progressDialog.show();
                     ServerConnection.getInstance(getContext()).updateUser(newTraveler, new VolleyCallBack() {
                         @Override
-                        public void onSuccessResponse(Object result) {
+                        public void onSuccessResponse(String result) {
                             progressDialog.dismiss();
-                            Utility.getInstance(getContext()).setTraveler((Traveler) result);
+                            Utility.getInstance(getContext()).setTraveler(new Gson().fromJson(result, Traveler.class));
                             Utility.getInstance(getContext()).writeToSharedPreferences();
-
-                            //Toast.makeText(getActivity(), "Changes saved successfully", Toast.LENGTH_LONG).show();
-                            //Utility.getInstance(getContext()).setTraveler(newTraveler);
-                            //Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
-                            //startActivity(intent);
                             getActivity().finish();
+
                         }
 
                         @Override
@@ -242,7 +239,6 @@ public class UserDetailsFragment extends Fragment {
                             progressDialog.dismiss();
                             email = Utility.getInstance(getContext()).getTraveler().getEmailAddress();
                             txtEmailExistError.setVisibility(View.VISIBLE);
-
                         }
                     });
                 }
@@ -328,7 +324,7 @@ public class UserDetailsFragment extends Fragment {
         emailLayout = view.findViewById(R.id.userDetailsMailLayout);
         passwordLayout = view.findViewById(R.id.userDetailsPasswordLayout);
         confirmPasswordLayout = view.findViewById(R.id.userDetailsConfirmPasswordLayout);
-        userDetailsParent = view.findViewById(R.id.userDetailsParent);
+        //userDetailsParent = view.findViewById(R.id.userDetailsParent);
         txtEmailExistError = view.findViewById(R.id.txtEmailExistError);
     }
 }

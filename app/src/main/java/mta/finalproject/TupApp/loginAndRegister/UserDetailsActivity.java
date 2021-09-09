@@ -30,8 +30,6 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main_screen);
-
         initViews();
         setContainer(new UserDetailsFragment());
         Utility.setLocale(this, "en");
@@ -39,7 +37,6 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
 
     @Override
     public void navBarListeners() {
-        //super.navBarListeners();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override

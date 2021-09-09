@@ -5,9 +5,12 @@ import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTI
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -101,6 +104,7 @@ public class TripViewFragment extends Fragment {
                 alertDialog.setView(input);
 
                 alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(input.getText().toString().equals("")){
@@ -117,52 +121,20 @@ public class TripViewFragment extends Fragment {
                         ServerConnection.getInstance(getContext()).sendTripPlan(Utility.getInstance(getContext()).getLastCreatedTrip(),
                                 new VolleyCallBack() {
                                     @Override
-                                    public void onSuccessResponse(Object result) {
+                                    public void onSuccessResponse(String result) {
                                         progressDialog.dismiss();
+                                        Utility.getInstance(getContext()).getLastCreatedTrip().setTripId(Integer.parseInt(result.toString()));
                                         Utility.getInstance(getContext()).getAllTrips().add
                                                 (Utility.getInstance(getContext()).getLastCreatedTrip());
                                         Toast.makeText(getContext(), "Trip Saved Successfully", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
-                                        getActivity().startActivity(intent);
                                         getActivity().finish();
                                     }
 
                                     @Override
                                     public void onErrorResponse(String error) {
-                                        progressDialog.dismiss();
-                                        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Error Connecting to Server", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
-
-                        /*
-
-                        Runnable run = new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                                ServerConnection.serverErrorException exception =
-                                        ServerConnection.getInstance(getContext()).getException();
-                                if(exception == null)
-                                {
-                                    Utility.getInstance(getContext()).getAllTrips().add
-                                            (Utility.getInstance(getContext()).getLastCreatedTrip());
-                                    Toast.makeText(getContext(), "Trip Saved Successfully", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
-                                    getActivity().startActivity(intent);
-                                    getActivity().finish();
-                                }
-                                else
-                                {
-                                    Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        };
-                        new Handler().postDelayed(run, 3000);
-
-                         */
-
-
                     }
                 });
                 alertDialog.create().show();
@@ -190,8 +162,6 @@ public class TripViewFragment extends Fragment {
     {
         DatesRecViewAdapter adapter = new DatesRecViewAdapter(getContext());
         adapter.setPlans(Utility.getInstance(getContext()).getLastCreatedTrip().getPlans());
-        //TODO: setLastCreatedTrip in Utility class
-
         dateRecView.setAdapter(adapter);
         dateRecView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 

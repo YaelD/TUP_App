@@ -46,26 +46,4 @@ public class TripPlan {
         this.tripId = tripId;
     }
 
-    public static TripPlan getStaticTripPlan()
-    {
-        ArrayList<DayPlan> plans = new ArrayList<>();
-
-        ArrayList<OnePlan> onePlans = new ArrayList<>();
-        Attraction att = new Attraction("London Eye");
-        att.setPlaceID("1");
-        //onePlans.add(new OnePlan(new Attraction("London Eye"), "09:00", "11:00"));
-        //onePlans.add(new OnePlan(att, "09:00", "11:00"));
-        //onePlans.add(new OnePlan(new Attraction("Big Ben"), "12:00", "14:00"));
-        //plans.add(new DayPlan(onePlans, "10.10.21"));
-        ArrayList<OnePlan> twoPlans = new ArrayList<>();
-        //twoPlans.add(new OnePlan(new Attraction("Buckingham Palace"), "10:00", "13:00"));
-        //twoPlans.add(new OnePlan(new Attraction("Piccadilly Street"), "14:00", "16:00"));
-        //plans.add(new DayPlan(twoPlans, "11.10.21"));
-        TripPlan trip = new TripPlan( "London Trip", plans);
-        return trip;
-    }
-
-
-
-
 }

@@ -1,13 +1,9 @@
 package mta.finalproject.TupApp.tripCreation;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,8 +28,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import mta.finalproject.TupApp.attractionSearch.SearchAttractionsActivity;
 import mta.finalproject.TupApp.favoriteAttractions.FavoriteAttractionsActivity;
 import mta.finalproject.TupApp.javaClasses.Attraction;
+import mta.finalproject.TupApp.javaClasses.DayPlan;
 import mta.finalproject.TupApp.javaClasses.DesiredHoursInDay;
 import mta.finalproject.TupApp.javaClasses.Hotel;
+import mta.finalproject.TupApp.javaClasses.OnePlan;
 import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.TripPlan;
 import mta.finalproject.TupApp.javaClasses.Utility;
@@ -50,17 +48,21 @@ import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -100,17 +102,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         initSpinnerDestination();
         initSpinnerHotels();
 
-
-
-
-
-        //מניעה מהמשתמש להזין מידע בeditText
         txtSelectDateFrom.setInputType(InputType.TYPE_NULL);
         txtSelectDateTo.setInputType(InputType.TYPE_NULL);
 
-
-
-        //הגדרת לוח השנה
         //TODO: CHANGE THE RANGE OF YEARS
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.clear();
@@ -147,9 +141,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         });
 
 
-        //TODO: Here we have a material Date Picker!!!!
-
-
 
         materialDatePicker1.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -159,23 +150,16 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 startDate = Instant.ofEpochMilli(selection).atZone(ZoneId.systemDefault()).toLocalDate();
                 endDate = startDate;
                 isSelectedStartDate = true;
-
-                //Calendar Constraints
-                //CalendarConstraints.Builder constraintBuilder2 = new CalendarConstraints.Builder();
-                //TODO: show in 2nd datepicker from the startdate
                 ArrayList<CalendarConstraints.DateValidator> validators = new ArrayList<CalendarConstraints.DateValidator>();
                 validators.add(DateValidatorPointBackward.before(selection + TimeUnit.DAYS.toMillis(6)));
                 validators.add(DateValidatorPointForward.from(selection));
 
-                //Material datePicker
-                //MaterialDatePicker.Builder<Long> builder2 = MaterialDatePicker.Builder.datePicker();
                 builder2.setTitleText("Select end date");
                 builder2.setSelection(selection);
                 builder2.setCalendarConstraints(constraintBuilder2.setValidator(CompositeDateValidator.allOf(validators)).build());
                 materialDatePicker2 = builder2.build();
                 txtSelectDateTo.setText(materialDatePicker1.getHeaderText());
                 if (isSelectedEndDate && (endDate.isBefore(startDate) || ((startDate.plusDays(6)).isBefore(endDate)))) {
-                    //materialDatePicker2 = builder2.build();
                     materialDatePicker2.show(getActivity().getSupportFragmentManager(), "DATE_PICKER2");
                     isSelectedEndDate = false;
                     endDate = positiveButtonClick(materialDatePicker2, startDate);
@@ -185,7 +169,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                     txtSelectDateTo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //materialDatePicker2 = builder2.build();
                             materialDatePicker2.show(getActivity().getSupportFragmentManager(), "DATE_PICKER2");
                             endDate = positiveButtonClick(materialDatePicker2, startDate);
                         }
@@ -193,12 +176,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 }
                 saveRangeOfDates(startDate, endDate);
 
-
-                //materialDatePicker2.setCancelable(false);
-                //dismissButtonclick(materialDatePicker2, startDate, endDate);
-                //cancelButtonClick(materialDatePicker2, startDate, endDate);
-//                if (isDateToSelected)
-//                    saveRangeOfDates(startDate, endDate);
             }
         });
 
@@ -241,24 +218,11 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         };
 
         getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-        /*
-            btnFinishCreation.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onClick(View view) {
-                    initFinButton();
-                }
-            });
-         */
-
         return view;
     }
 
     private void initSpinnerDestination(){
         ArrayList<String> destinations = Utility.getInstance(getContext()).getDestinations();
-//        if(!destinations.get(0).equals("Select")){
-//            destinations.add(0,"Select");
-//        }
         ArrayAdapter<String> destinationsAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_spinner_dropdown_item,
@@ -302,45 +266,42 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         progressDialog.show();
         ServerConnection.getInstance(getContext()).sendTripDetailsToServer(tripDetails, new VolleyCallBack() {
             @Override
-            public void onSuccessResponse(Object result) {
+            public void onSuccessResponse(String result) {
                 progressDialog.dismiss();
-                Utility.getInstance(getContext()).setLastCreatedTrip((TripPlan)result);
+                Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new ServerConnection.LocalTimeAdapter())
+                        .registerTypeAdapter(LocalDate.class, new ServerConnection.LocalDateAdapter()).create();
+                TripPlan tripPlan = new TripPlan("", null);
+                tripPlan.setDestination(tripDetails.getDestination());
+                ArrayList<DayPlan> arr = new ArrayList<>();
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        String dayPlanjson = jsonArray.getString(i);
+                        DayPlan dayPlan = gson.fromJson(dayPlanjson, DayPlan.class);
+                        OnePlan currentPlan = dayPlan.getDaySchedule().get(0);
+                        dayPlan.setHotel(new Hotel(currentPlan.getAttraction().getName(), currentPlan.getAttraction().getPlaceID(), currentPlan.getAttraction().getGeometry()));
+                        dayPlan.getDaySchedule().remove(0);
+                        arr.add(dayPlan);
+                    }
+                    tripPlan.setPlans(arr);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Utility.getInstance(getContext()).setLastCreatedTrip(tripPlan);
                 Intent intent = new Intent(getActivity(), TripViewActivity.class);
-                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName()); //TODO: this is for test
+                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
                 startActivity(intent);
                 getActivity().finish();
             }
 
             @Override
             public void onErrorResponse(String error) {
-                progressDialog.dismiss();
-                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                Log.e("createTrip==>", "JSON error");
+                Toast.makeText(getContext(), "Error Connecting to server", Toast.LENGTH_SHORT);
             }
         });
-
-        /*
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ServerConnection.serverErrorException exception = ServerConnection.getInstance(getContext()).getException();
-                progressDialog.dismiss();
-                if(exception == null)
-                {
-                    Intent intent = new Intent(getActivity(), TripViewActivity.class);
-                    intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName()); //TODO: this is for test
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-                else
-                {
-                    //Toast.makeText(getContext(),exception.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        }, 10000);
-         */
-
     }
+
 
     @Override
     public void onResume() {
@@ -352,23 +313,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                     desiredHours.get(0).getEndTime());
         }
 
-        /*
-        desiredHours = new ArrayList<>();
-        for (LocalDate date : rangeDates) {
-            desiredHours.add(new DesiredHoursInDay(date.toString()));
-        }
-         */
-
         callAdapter(desiredHours);
-
-        /*
-        MustVisitAttrRecViewAdapter adapter = new MustVisitAttrRecViewAdapter(getActivity());
-        adapter.setMustVisitAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
-
-        recViewMustVisitAttr.setAdapter(adapter);
-        recViewMustVisitAttr.setLayoutManager(new GridLayoutManager(getActivity(),2));
-
-         */
     }
 
 
@@ -394,12 +339,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                 .limit(numOfDays)
                 .mapToObj(i -> CreateNewTripFragment.this.startDate.plusDays(i))
                 .collect(Collectors.toList());
-
-
-
-        //TODO: remove it to another function, and before that check if all the dates are correct
-        //TODO: keep it here for future adapters
-
         desiredHours = new ArrayList<>();
         for (LocalDate date : rangeDates) {
             desiredHours.add(new DesiredHoursInDay(date.toString()));

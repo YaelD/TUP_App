@@ -71,14 +71,6 @@ public class FavoriteAttractionsFragment extends Fragment {
     private void setAdapters()
     {
         String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
-//        if(Utility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
-//        {
-//            txtEmptyFavoriteList.setVisibility(View.GONE);
-//        }
-//        else
-//        {
-//            txtEmptyFavoriteList.setVisibility(View.VISIBLE);
-//        }
         if(callingActivity != null  && callingActivity.equals(CreateNewTripActivity.class.getName()))
         {
             if(Utility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
@@ -120,9 +112,6 @@ public class FavoriteAttractionsFragment extends Fragment {
             OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
                 public void handleOnBackPressed() {
-                    //Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                    //getActivity().startActivity(intent);
                     getActivity().finish();
                 }
             };
@@ -135,6 +124,8 @@ public class FavoriteAttractionsFragment extends Fragment {
         super.onStop();
         //TODO: Matan added this
         recViewFavoriteAttractions.setAdapter(null);
+        /*
+
         Log.e("FavAttractionsFrag==>", "SAVING and Deleting Favs Attractions");
         if(Utility.getInstance(getContext()).getFavAttractionsToAdd().size() > 0)
         {
@@ -144,6 +135,8 @@ public class FavoriteAttractionsFragment extends Fragment {
         {
             ServerConnection.getInstance(getContext()).sendFavAttractionsToDelete();
         }
+
+         */
     }
 
 

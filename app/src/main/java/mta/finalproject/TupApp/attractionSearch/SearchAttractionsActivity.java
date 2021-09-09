@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import mta.finalproject.TupApp.MainActivity;
 import mta.finalproject.TupApp.R;
 import mta.finalproject.TupApp.favoriteAttractions.FavoriteAttractionsActivity;
+import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Utility;
 import mta.finalproject.TupApp.loginAndRegister.UserDetailsActivity;
 import mta.finalproject.TupApp.myTrips.MyTripsActivity;
@@ -121,5 +123,20 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("SearchAttActivity==>", "SAVING and Deleting Favs Attractions");
+        if(Utility.getInstance(getApplicationContext()).getFavAttractionsToAdd().size() > 0)
+        {
+            ServerConnection.getInstance(getApplicationContext()).sendFavAttractionsToAdd();
+        }
+        if(Utility.getInstance(getApplicationContext()).getFavAttractionsToDelete().size() > 0)
+        {
+            ServerConnection.getInstance(getApplicationContext()).sendFavAttractionsToDelete();
+        }
+
     }
 }

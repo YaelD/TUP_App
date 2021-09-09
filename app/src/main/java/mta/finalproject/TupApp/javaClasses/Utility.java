@@ -34,7 +34,6 @@ public class Utility {
     private Activity oldActivity = null;
 
     private ArrayList<String> destinations = new ArrayList<>();
-
     private ArrayList<Integer> tripsToDelete = new ArrayList<>();
     private ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
     private ArrayList<Attraction> favoriteAttractions = new ArrayList<>();
@@ -43,12 +42,8 @@ public class Utility {
     private TripPlan lastCreatedTrip;
     private ArrayList<TripPlan> allTrips = new ArrayList<>();
 
-
     private ArrayList<String> favAttractionsToDelete = new ArrayList<>();
     private ArrayList<String> favAttractionsToAdd = new ArrayList<>();
-
-
-    //private Traveler TestTraveler = new Traveler("Yael","Davidov","yaeldv@gmail.com", "1234");
 
 
 
@@ -99,30 +94,6 @@ public class Utility {
 
     public void setTripsToDelete(ArrayList<Integer> tripsToDelete) {
         this.tripsToDelete = tripsToDelete;
-    }
-
-    public void addAttractionToDelete(String placeID)
-    {
-        if(!favAttractionsToDelete.contains(placeID))
-        {
-            favAttractionsToDelete.add(placeID);
-            if(favAttractionsToAdd.contains(placeID))
-            {
-                favAttractionsToAdd.remove(placeID);
-            }
-        }
-    }
-
-    public void addAttractionToAdd(String placeID)
-    {
-        if(!favAttractionsToAdd.contains(placeID))
-        {
-            favAttractionsToAdd.add(placeID);
-            if(favAttractionsToDelete.contains(placeID))
-            {
-                favAttractionsToDelete.remove(placeID);
-            }
-        }
     }
 
     public ArrayList<String> getFavAttractionsToDelete() {
@@ -195,12 +166,6 @@ public class Utility {
         return sharedPreferences;
     }
 
-
-    public void addTrip(TripPlan trip)
-    {
-        allTrips.add(trip);
-    }
-
 //----------------------------------------------------------------------------------------
 
     public String getTravelerID() {
@@ -240,18 +205,18 @@ public class Utility {
 //----------------------------------------------------------------------------------------
 
     public void setAttractions(ArrayList<Attraction> attractions) {
-        instance.attractions = attractions;
+        this.attractions = attractions;
     }
 
 
-    //----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
     public TripPlan getLastCreatedTrip() {
         return lastCreatedTrip;
     }
 
     public void setLastCreatedTrip(TripPlan lastCreatedTrip) {
-        instance.lastCreatedTrip = lastCreatedTrip;
+        this.lastCreatedTrip = lastCreatedTrip;
     }
 
 //----------------------------------------------------------------------------------------
@@ -316,7 +281,6 @@ public class Utility {
 //----------------------------------------------------------------------------------------
 
     public boolean removeAttractionFromFavoriteList(Attraction attraction){
-        Log.e("HERE==>", "Check on Attraction " + attraction.getPlaceID());
         for(Attraction currAttraction: favoriteAttractions)
         {
             if(currAttraction.getPlaceID().equals(attraction.getPlaceID()))
@@ -339,26 +303,12 @@ public class Utility {
 
 //----------------------------------------------------------------------------------------
 
-    public ArrayList<Hotel> getHotelsByDestination(String destination) {
-        ServerConnection.getInstance(context).getHotelsFromServer(destination.toLowerCase().trim()+"_hotels");
-        return hotels;
-    }
-//----------------------------------------------------------------------------------------
-
     public ArrayList<Attraction> getAttractions() {
-        if(instance.attractions.size() == 0)
-        {
-            //ServerConnection.getInstance(context).getAttractionsFromServer("london");
-        }
-        return instance.attractions;
+        return attractions;
     }
 //----------------------------------------------------------------------------------------
 
     public ArrayList<Hotel> getHotels() {
-        if(hotels == null)
-        {
-            ServerConnection.getInstance(context).getHotelsFromServer("london_hotels");
-        }
         return hotels;
     }
 //----------------------------------------------------------------------------------------
@@ -380,17 +330,6 @@ public class Utility {
         }
         return res;
     }
-
-
-     /*
-
-        public void setTripSelectedAttrations(ArrayList<Attraction> tripSelectedAttrations) {
-            this.tripSelectedAttractions = tripSelectedAttrations;
-        }
-      */
-
-
-
 //----------------------------------------------------------------------------------------
 
     public static synchronized Utility getInstance(Context context)
@@ -399,7 +338,6 @@ public class Utility {
         {
             instance = new Utility(context);
         }
-        //instance.setTraveler(instance.TestTraveler);
         return instance;
     }
 
@@ -408,50 +346,12 @@ public class Utility {
     private Utility(Context context) {
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences(SHARED_PREF_FILE_NAME, Context.MODE_PRIVATE);
-        //initData();
-        //TODO: This is a test, delete it!
-        //testAttractions();
     }
 
 
 
 
     //----------------------------------------------------------------------------------------
-
-    /*
-
-
-    public ArrayList<Attraction> searchAttractions (String text){
-        if (null != attractions) {
-            ArrayList<Attraction> searchedAttractions = new ArrayList<>();
-            for (Attraction attraction: attractions) {
-                if (attraction.getName().equalsIgnoreCase(text)) {
-                    searchedAttractions.add(attraction);
-                }
-
-                String[] names = attraction.getName().split(" ");
-                for (int i=0; i< names.length; i++) {
-                    if(text.equalsIgnoreCase(names [i])){
-                        boolean doesExist = false;
-
-                        for (Attraction attr: searchedAttractions) {
-                            if(attr.getPlaceID() == attraction.getPlaceID()) {
-                                doesExist = true;
-                            }
-                        }
-                        if(!doesExist) {
-                            searchedAttractions.add(attraction);
-                        }
-                    }
-                }
-            }
-            return searchedAttractions;
-        }
-        return null;
-    }
-     */
-
-
     public static void setLocale(Activity activity, String languageCode) {
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);

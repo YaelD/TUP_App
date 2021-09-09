@@ -33,7 +33,7 @@ public class AttractionDetailsFragment extends Fragment {
 
     public static final String ATTRACTION_KEY = "attraction";
 
-    private TextView txtAttrName, txtAddress, txtOpeningHours, txtPhone, txtWebsite, txtDescription,txtRestaurants, txtMap;
+    private TextView txtAttrName; //,txtAddress, txtOpeningHours, txtPhone, txtWebsite, txtDescription,txtRestaurants, txtMap;
     private TextView txtAttrAddress, txtAttrOpeningHours, txtAttrPhone, txtAttrWebsite, txtAttrDescription, txtAddToFavorites, txtRemoveFromFavorite;
     private ImageView imgFavorite, imgLocation, imgAttr, imgFavoriteBorder, imgRestaurants, imgNavigate;
     private boolean isImgAddToFavoriteClicked = false, isImgRemoveFromFavoriteClicked = false;
@@ -58,12 +58,16 @@ public class AttractionDetailsFragment extends Fragment {
     }
 
     private void initViews(View view) {
+        /*
         txtAddress = view.findViewById(R.id.AddressText);
         txtOpeningHours = view.findViewById(R.id.OpeningHoursText);
         txtPhone = view.findViewById(R.id.PhoneText);
         txtWebsite = view.findViewById(R.id.WebsiteText);
         txtDescription = view.findViewById(R.id.DescriptionText);
         txtRestaurants = view.findViewById(R.id.txtRestaurants);
+        txtMap = view.findViewById(R.id.txtMap);
+
+         */
         txtAttrAddress = view.findViewById(R.id.txtAttrAddress);
         txtAttrOpeningHours = view.findViewById(R.id.txtAttrOpeningHours);
         txtAttrPhone = view.findViewById(R.id.txtAttrPhone);
@@ -73,7 +77,6 @@ public class AttractionDetailsFragment extends Fragment {
         imgFavorite = view.findViewById(R.id.imgFavorite);
         imgLocation = view.findViewById(R.id.imgLocation);
         txtAddToFavorites = view.findViewById(R.id.txtAddToFavorite);
-        txtMap = view.findViewById(R.id.txtMap);
         imgAttr = view.findViewById(R.id.imgAttr);
         imgFavoriteBorder = view.findViewById(R.id.imgFavoriteBorder);
         txtRemoveFromFavorite = view.findViewById(R.id.txtRemoveFromFavorite);
@@ -91,7 +94,6 @@ public class AttractionDetailsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         if(null != intent){
             String attractionID = getActivity().getIntent().getStringExtra(ATTRACTION_KEY);
-            //Attraction attraction = intent.getParcelableExtra(ATTRACTION_KEY);
             Attraction attraction = Utility.getInstance(getContext()).getAttractionByID(attractionID);
             if(attraction != null){
                 txtAttrName.setText(attraction.getName());
@@ -131,7 +133,6 @@ public class AttractionDetailsFragment extends Fragment {
                             {
                                 Toast.makeText(getActivity(), attraction.getName()+" removed from favorites successfully" ,
                                         Toast.LENGTH_SHORT).show();
-                                //Utility.getInstance(getContext()).addAttractionToDelete(attraction.getPlaceID());
                             }
                         }
                     });

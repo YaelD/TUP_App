@@ -31,7 +31,6 @@ import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterActivity";
-    public final static String LATIN_STRING = "a b c d e f g h i j k l m n o p q r s t u v w x y z";
     private ProgressDialog progressDialog;
     private EditText txtFirstName,txtLastName, txtEmail, txtPassword, txtConfirmPassword;
     private Button btnRegister;
@@ -261,10 +260,10 @@ public class RegisterActivity extends AppCompatActivity {
             ServerConnection.getInstance(this).register(registerTraveler, new VolleyCallBack() {
                 @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
-                public void onSuccessResponse(Object result) {
+                public void onSuccessResponse(String result) {
                     progressDialog.dismiss();
-                    txtInvalidInputError.setVisibility(View.VISIBLE);
-                    Traveler traveler = new Gson().fromJson((String) result, Traveler.class);
+                    txtInvalidInputError.setVisibility(View.GONE);
+                    Traveler traveler = new Gson().fromJson( result, Traveler.class);
                     Utility.getInstance(getApplicationContext()).setTraveler(traveler);
                     Log.e("HERE==>", "travelerID is--" +
                             Utility.getInstance(getApplicationContext()).getTravelerID());
@@ -280,6 +279,7 @@ public class RegisterActivity extends AppCompatActivity {
                     txtInvalidInputError.setVisibility(View.VISIBLE);
                 }
             });
+
 
         }
 }

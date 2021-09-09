@@ -82,22 +82,4 @@ public class DayPlan {
         ArrayList<DayPlan> dayPlans = new ArrayList<>();
         return dayPlans;
     }
-
-    //---------------------------------------------------------------------
-   /*
-
-    public DayPlan(ArrayList<OnePlan> daySchedule, String dateStr) {
-        this.daySchedule = daySchedule;
-        this.dateStr = dateStr;
-    }
-
-    public String getDateStr() {
-        return dateStr;
-    }
-
-    public void setDateStr(String dateStr) {
-        this.dateStr = dateStr;
-    }
-
-    */
 }

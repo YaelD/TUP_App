@@ -1,10 +1,5 @@
 package mta.finalproject.TupApp.javaClasses;
 
-//import engine.planTrip.RouteTrip;
-
-import java.io.Serializable;
-import java.util.regex.Pattern;
-
 public class Traveler {
     private String firstName;
     private String lastName;
