@@ -246,6 +246,33 @@ public class Utility {
         return false;
     }
 
+    void addToDeleteFavs(String placeID)
+    {
+        if(!this.favAttractionsToDelete.contains(placeID))
+        {
+            this.favAttractionsToDelete.add(placeID);
+        }
+    }
+
+    void removeFromDeleteFavs(String placeID)
+    {
+        this.favAttractionsToDelete.remove(placeID);
+    }
+
+    void addToAddFavs(String placeID)
+    {
+        if(!this.favAttractionsToAdd.contains(placeID))
+        {
+            this.favAttractionsToAdd.add(placeID);
+        }
+    }
+
+    void removeFromAddFavs(String placeID)
+    {
+        this.favAttractionsToAdd. remove(placeID);
+    }
+
+
 //----------------------------------------------------------------------------------------
 
     public ArrayList<Attraction> getFavoriteAttractions() {
@@ -265,13 +292,14 @@ public class Utility {
         }
         else
         {
-            if(!favAttractionsToAdd.contains(attraction.getPlaceID()))
-            {
-                favAttractionsToAdd.add(attraction.getPlaceID());
-            }
-            if(favAttractionsToDelete.contains(attraction.getPlaceID()))
+            if(!favAttractionsToAdd.contains(attraction.getPlaceID()) &&
+                    favAttractionsToDelete.contains(attraction.getPlaceID()))
             {
                 favAttractionsToDelete.remove(attraction.getPlaceID());
+            }
+            else if(!favAttractionsToAdd.contains(attraction.getPlaceID()))
+            {
+                favAttractionsToAdd.add(attraction.getPlaceID());
             }
             favoriteAttractions.add(attraction);
             return true;
@@ -285,13 +313,15 @@ public class Utility {
         {
             if(currAttraction.getPlaceID().equals(attraction.getPlaceID()))
             {
-                if(!favAttractionsToDelete.contains(currAttraction.getPlaceID()))
-                {
-                    favAttractionsToDelete.add(currAttraction.getPlaceID());
-                }
-                if(favAttractionsToAdd.contains(currAttraction.getPlaceID()))
+                //the attraction is from the server
+                if(!favAttractionsToDelete.contains(currAttraction.getPlaceID()) &&
+                    favAttractionsToAdd.contains(currAttraction.getPlaceID()))
                 {
                     favAttractionsToAdd.remove(currAttraction.getPlaceID());
+                }
+                else if(!favAttractionsToDelete.contains(currAttraction.getPlaceID()))
+                {
+                    favAttractionsToDelete.add(currAttraction.getPlaceID());
                 }
                 favoriteAttractions.remove(currAttraction);
                 return true;

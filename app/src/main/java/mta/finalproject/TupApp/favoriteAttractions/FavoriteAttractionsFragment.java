@@ -92,12 +92,8 @@ public class FavoriteAttractionsFragment extends Fragment {
         else
         {
             btnFinishSelectFavAttr.setVisibility(View.GONE);
-
-            Log.e("FavAttFrag==>", "The size of fav attractions is" +
-                    Utility.getInstance(getContext()).getFavoriteAttractions().size());
             if(Utility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
             {
-                Log.e("FavAttFrag==>","Setting Adapter!!");
                 txtEmptyFavoriteList.setVisibility(View.GONE);
                 AttractionsSearchRecAdapter adapter = new AttractionsSearchRecAdapter(getActivity());
                 adapter.setAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
