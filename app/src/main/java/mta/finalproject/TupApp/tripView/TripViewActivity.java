@@ -84,6 +84,7 @@ public class TripViewActivity extends NavigationDrawerActivity {
                     case R.id.favorites:
                         Utility.getInstance(getApplicationContext()).finishOldActivity();
                         intent = new Intent(TripViewActivity.this, FavoriteAttractionsActivity.class);
+                        intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         finish();
                         break;

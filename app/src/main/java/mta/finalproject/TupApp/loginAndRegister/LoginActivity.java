@@ -29,7 +29,6 @@ import mta.finalproject.TupApp.javaClasses.ServerConnection;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final String URL = "http://10.0.0.5/login.php";
     private static final String TAG = "LoginActivity";
     private ProgressDialog progressDialog;
     private EditText txtEmail, txtPassword;

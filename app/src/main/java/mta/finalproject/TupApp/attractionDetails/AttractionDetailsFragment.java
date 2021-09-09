@@ -1,5 +1,6 @@
 package mta.finalproject.TupApp.attractionDetails;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -15,12 +16,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import mta.finalproject.TupApp.R;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 import mta.finalproject.TupApp.javaClasses.Attraction;
 import mta.finalproject.TupApp.javaClasses.Utility;
@@ -31,8 +35,18 @@ public class AttractionDetailsFragment extends Fragment {
 
     private TextView txtAttrName, txtAddress, txtOpeningHours, txtPhone, txtWebsite, txtDescription,txtRestaurants, txtMap;
     private TextView txtAttrAddress, txtAttrOpeningHours, txtAttrPhone, txtAttrWebsite, txtAttrDescription, txtAddToFavorites, txtRemoveFromFavorite;
-    private ImageView imgFavorite, imgMap, imgAttr, imgFavoriteBorder, imgRestaurants;
+    private ImageView imgFavorite, imgLocation, imgAttr, imgFavoriteBorder, imgRestaurants, imgNavigate;
     private boolean isImgAddToFavoriteClicked = false, isImgRemoveFromFavoriteClicked = false;
+    private AlertDialog dialog1, dialog2;
+    private AlertDialog.Builder builder1, builder2;
+    private String[] navigationMode = {"Driving", "Bicycling", "Two-wheeler", "Walking"};
+    private String[] navigationAvoid = {"Tolls", "Highways", "Ferries"};
+    private String selection = "Driving";
+    private String uriStr = "";
+    private ArrayList<String> arrChecked = new ArrayList<>();
+    Uri gmmIntentUri;
+    Intent mapIntent;
+
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -57,13 +71,14 @@ public class AttractionDetailsFragment extends Fragment {
         txtAttrDescription = view.findViewById(R.id.txtAttrDescription);
         txtAttrName = view.findViewById(R.id.txtAttrName);
         imgFavorite = view.findViewById(R.id.imgFavorite);
-        imgMap = view.findViewById(R.id.imgMap);
+        imgLocation = view.findViewById(R.id.imgLocation);
         txtAddToFavorites = view.findViewById(R.id.txtAddToFavorite);
         txtMap = view.findViewById(R.id.txtMap);
         imgAttr = view.findViewById(R.id.imgAttr);
         imgFavoriteBorder = view.findViewById(R.id.imgFavoriteBorder);
         txtRemoveFromFavorite = view.findViewById(R.id.txtRemoveFromFavorite);
         imgRestaurants = view.findViewById(R.id.imgRestaurants);
+        imgNavigate = view.findViewById(R.id.imgNavigate);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -135,26 +150,99 @@ public class AttractionDetailsFragment extends Fragment {
                             }
                         }
                     });
-                    imgMap.setOnClickListener(new View.OnClickListener() {
+                    imgNavigate.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //TODO: add a dialoc th user can choose how to navigate to the attraction
-                            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + attraction.getGeometry().getLat()+","+attraction.getGeometry().getLng()+"&mode=w");
+                            builder1 = new AlertDialog.Builder(getActivity());
+                            builder1.setTitle("Choose navigation mode:");
+                            builder1.setSingleChoiceItems(navigationMode, 0, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    selection = navigationMode[which];
+                                }
+                            });
+                            builder1.setPositiveButton("continue", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    uriStr = "google.navigation:q=" + attraction.getGeometry().getLat()+","+attraction.getGeometry().getLng();
+                                    switch (selection){
+                                        case "Driving":
+                                            uriStr = uriStr+"&mode=d";
+                                            break;
+                                        case "Bicycling":
+                                            uriStr = uriStr+"&mode=b";
+                                            break;
+                                        case "Two-wheeler":
+                                            uriStr = uriStr+"&mode=l";
+                                            break;
+                                        case "Walking":
+                                            uriStr = uriStr+"&mode=w";
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    builder2 = new AlertDialog.Builder(getActivity());
+                                    builder2.setTitle("Avoid from:");
+                                    builder2.setMultiChoiceItems(navigationAvoid, null, new DialogInterface.OnMultiChoiceClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                            if(isChecked) {
+                                                if(!arrChecked.contains(navigationAvoid[which]))
+                                                    arrChecked.add(navigationAvoid[which]);
+                                            }else {
+                                                if(arrChecked.contains(navigationAvoid[which]))
+                                                    arrChecked.remove(navigationAvoid[which]);
+                                            }
+                                        }
+                                    });
+                                    builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            if(!arrChecked.isEmpty()) {
+                                                uriStr = uriStr + "&avoid=";
+                                                for (String selectedAvoid : arrChecked) {
+                                                    if (selectedAvoid.equals("Tolls"))
+                                                        uriStr += "t";
+                                                    if (selectedAvoid.equals("Highways"))
+                                                        uriStr += "h";
+                                                    if (selectedAvoid.equals("Ferries"))
+                                                        uriStr += "f";
+                                                }
+                                            }
+                                            gmmIntentUri = Uri.parse(uriStr);
+                                            mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                            mapIntent.setPackage("com.google.android.apps.maps");
+                                            startActivity(mapIntent);
+                                        }
+                                    });
+                                    builder2.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+                                    dialog2 = builder2.create();
+                                    dialog2.show();
+                                }
+                            });
+                            builder1.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                            dialog1 = builder1.create();
+                            dialog1.show();
+                        }
+                    });
+
+                    imgLocation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Uri gmmIntentUri = Uri.parse("geo:"+ attraction.getGeometry().toString() + "?q=" +attraction.getGeometry().toString()+"(" + attraction.getName() + ")");
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                             mapIntent.setPackage("com.google.android.apps.maps");
                             startActivity(mapIntent);
-
-
-                            /*
-                            //TODO: add a pin in map
-
-                                Uri gmmIntentUri = Uri.parse("geo:"+ attraction.getGeometry().toString() + "?q=" +attraction.getGeometry().toString()+"(" + attraction.getName() + ")");
-                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                                mapIntent.setPackage("com.google.android.apps.maps");
-                                startActivity(mapIntent);
-
-                             */
-
                         }
                     });
                     txtAttrWebsite.setOnClickListener(new View.OnClickListener() {
@@ -181,7 +269,6 @@ public class AttractionDetailsFragment extends Fragment {
                             startActivity(mapIntent);
                         }
                     });
-
             }
         }
     }

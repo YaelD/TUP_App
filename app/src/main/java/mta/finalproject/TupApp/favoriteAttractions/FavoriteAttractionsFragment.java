@@ -79,7 +79,7 @@ public class FavoriteAttractionsFragment extends Fragment {
 //        {
 //            txtEmptyFavoriteList.setVisibility(View.VISIBLE);
 //        }
-        if(callingActivity.equals(CreateNewTripActivity.class.getName()))
+        if(callingActivity != null  && callingActivity.equals(CreateNewTripActivity.class.getName()))
         {
             if(Utility.getInstance(getContext()).getFavoriteAttractions().size() != 0)
             {
