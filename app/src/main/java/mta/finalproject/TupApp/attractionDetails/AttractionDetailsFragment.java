@@ -138,6 +138,7 @@ public class AttractionDetailsFragment extends Fragment {
                     imgMap.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            //TODO: add a dialoc th user can choose how to navigate to the attraction
                             Uri gmmIntentUri = Uri.parse("google.navigation:q=" + attraction.getGeometry().getLat()+","+attraction.getGeometry().getLng()+"&mode=w");
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                             mapIntent.setPackage("com.google.android.apps.maps");

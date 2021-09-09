@@ -62,7 +62,6 @@ public class Traveler {
                 ", lastName='" + lastName + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
                 ", password='" + password + '\'' +
-                //", routeTrip=" + routeTrip +
                 '}';
     }
 
