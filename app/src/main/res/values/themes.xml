@@ -14,6 +14,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="TimePickerDialogStyle" parent="@style/ThemeOverlay.AppCompat.Dialog">
+        <item name="showTitle">false</item>
+        <item name="colorControlActivated">#BABABA</item>
+        <item name="colorAccent">@color/purple_500</item>
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorSecondary">#000000</item>
+    </style>
+
     <style name="Theme.TUPApp.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar" />
 
     <style name="Theme.TUPApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

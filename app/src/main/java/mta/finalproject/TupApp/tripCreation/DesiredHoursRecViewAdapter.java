@@ -74,9 +74,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
 
                 final Calendar calendar = Calendar.getInstance();
 
-                TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @SuppressLint("DefaultLocale")
+                TimePickerDialog timePicker = new TimePickerDialog(context, R.style.TimePickerDialogStyle, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         holder.startTime = LocalTime.of(hourOfDay, minute);
@@ -112,13 +110,51 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                                 desiredHours.get(position).getEndTime());
 
                     }
-                //}, 10, 0, true);
                 }, holder.startTime.getHour(), holder.startTime.getMinute(), true);
-
-
-
-
                 timePicker.show();
+
+//                TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+//                    @RequiresApi(api = Build.VERSION_CODES.O)
+//                    @SuppressLint("DefaultLocale")
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                        holder.startTime = LocalTime.of(hourOfDay, minute);
+//                        if(LocalDate.now().toString().equals(desiredHours.get(position).getDate().toString()))
+//                        {
+//                            if(holder.startTime.isBefore(LocalTime.now().plusMinutes(3)))
+//                            {
+//                                holder.startTime = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute()+1);
+//                            }
+//                        }
+//                        //holder.btnTimeFrom.setText(String.format("%02d:%02d", hourOfDay, minute));
+//                        holder.btnTimeFrom.setText(holder.startTime.toString());
+//                        //selectedHours.add(String.format("%02d:%02d", hourOfDay, minute));
+//                        //desiredHours.get(position).setStartTime(String.format("%02d:%02d", hourOfDay, minute));
+//
+//                        desiredHours.get(position).setStartTime(holder.startTime.toString());
+//                        if(holder.startTime.isAfter(holder.endTime))
+//                        {
+//                            if(holder.startTime.getHour() == 23)
+//                            {
+//                                holder.endTime = LocalTime.of(23,59);
+//                            }
+//                            else
+//                            {
+//                                holder.endTime = LocalTime.of(holder.startTime.getHour()+1, holder.startTime.getMinute());
+//                            }
+//                            holder.btnTimeTo.setText(holder.endTime.toString());
+//                        }
+//                        desiredHours.get(position).setStartTime(holder.startTime.toString());
+//                        desiredHours.get(position).setEndTime(holder.endTime.toString());
+//                        Log.e("CreateTripHours==>", "Date:" + desiredHours.get(position).getDate() +
+//                                " Start=" + desiredHours.get(position).getStartTime() + " End=" +
+//                                desiredHours.get(position).getEndTime());
+//
+//                    }
+//                //}, 10, 0, true);
+//                }, holder.startTime.getHour(), holder.startTime.getMinute(), true);
+//
+//                timePicker.show();
             }
         });
 
@@ -128,7 +164,7 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
 
-                TimePickerDialog timePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePicker = new TimePickerDialog(context, R.style.TimePickerDialogStyle, new TimePickerDialog.OnTimeSetListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @SuppressLint("DefaultLocale")
                     @Override
@@ -155,7 +191,6 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                 }, holder.endTime.getHour(), holder.endTime.getMinute(), true);
 
                 //}, 20, 0, true);
-
                 timePicker.show();
             }
         });

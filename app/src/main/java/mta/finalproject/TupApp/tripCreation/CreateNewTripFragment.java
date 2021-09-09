@@ -233,9 +233,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
+//                Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+//                getActivity().startActivity(intent);
                 getActivity().finish();
             }
         };

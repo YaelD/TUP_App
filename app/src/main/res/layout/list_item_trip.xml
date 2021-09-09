@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:fontFamily="@font/lobster_two_bold_italic"
+                android:fontFamily="@font/carter_one"
                 android:text="Trip"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"

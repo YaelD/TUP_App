@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/lobster_two_bold_italic"
+                android:fontFamily="@font/carter_one"
                 android:text="Attraction's Name"
                 android:textColor="@color/black"
                 android:textSize="24sp"

@@ -9,6 +9,7 @@
         <entry key="..\:/AndroidStudioProjects/TUP_App/app/src/main/res/layout/fragment_search_attractions.xml" value="0.5464285714285714" />
         <entry key="..\:/AndroidStudioProjects/TUP_App/app/src/main/res/layout/fragment_trip_view.xml" value="0.20520833333333333" />
         <entry key="..\:/AndroidStudioProjects/TUP_App/app/src/main/res/layout/list_item_attractions.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/matanpe/AndroidStudioProjects/TUP_App/app/src/main/res/drawable-anydpi/ic_favorite.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/matanpe/AndroidStudioProjects/TUP_App/app/src/main/res/drawable-anydpi/ic_location.xml" value="0.2703125" />
         <entry key="..\:/Users/matanpe/AndroidStudioProjects/TUP_App/app/src/main/res/drawable-anydpi/ic_navigation.xml" value="0.2703125" />
         <entry key="..\:/Users/matanpe/AndroidStudioProjects/TUP_App/app/src/main/res/drawable/show_password_selector.xml" value="0.26615384615384613" />
@@ -40,6 +41,7 @@
         <entry key="..\:/Users/matanpe/AndroidStudioProjects/TUP_App/app/src/main/res/layout/navigation_drawer_header.xml" value="0.21574074074074073" />
         <entry key="..\:/Users/matanpe/AndroidStudioProjects/TUP_App/app/src/main/res/layout/spinner_hotels.xml" value="0.176" />
         <entry key="..\:/Users/matanpe/AndroidStudioProjects/TUP_App/app/src/main/res/menu/navigation_drawer_menu.xml" value="0.23425925925925925" />
+        <entry key="..\:/Users/matanpe/AndroidStudioProjects/TUP_App/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/drawable-anydpi/ic_add.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/drawable-anydpi/ic_search.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/activity_login.xml" value="0.13489583333333333" />
