@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.slidingpanelayout.widget.SlidingPaneLayout;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +40,13 @@ import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 public class TripViewFragment extends Fragment {
 
 
+    private int scrollPosition = 0;
     private RecyclerView dateRecView;
     private Button btnSaveTrip, btnCancelTripView;
     private String callingActivity, tripName;
     private SlidingPaneLayout slidingPaneLayoutTripView;
     private ProgressDialog progressDialog;
+    private LinearLayoutManager layoutManager;
 
 
 
@@ -50,6 +54,7 @@ public class TripViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
     }
 
@@ -93,7 +98,7 @@ public class TripViewFragment extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                 alertDialog.setTitle("Trip name");
-                alertDialog.setMessage("Enter trip's name:"); //AWWWWWWWW <3
+                alertDialog.setMessage("Enter trip's name:");
 
                 final EditText input = new EditText(getActivity());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -132,7 +137,8 @@ public class TripViewFragment extends Fragment {
 
                                     @Override
                                     public void onErrorResponse(String error) {
-                                        Toast.makeText(getContext(), "Error Connecting to Server", Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getContext(), "This Trip is already exist", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }
@@ -144,6 +150,7 @@ public class TripViewFragment extends Fragment {
 
         return view;
     }
+
 
     @Override
     public void onResume() {
@@ -162,9 +169,17 @@ public class TripViewFragment extends Fragment {
     {
         DatesRecViewAdapter adapter = new DatesRecViewAdapter(getContext());
         adapter.setPlans(Utility.getInstance(getContext()).getLastCreatedTrip().getPlans());
+        //dateRecView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         dateRecView.setAdapter(adapter);
-        dateRecView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
+        dateRecView.setLayoutManager(layoutManager);
+        dateRecView.scrollToPosition(scrollPosition);
+        dateRecView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                scrollPosition = layoutManager.findLastVisibleItemPosition();
+            }
+        });
     }
 
 

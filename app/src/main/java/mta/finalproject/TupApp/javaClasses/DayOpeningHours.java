@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class DayOpeningHours {
 
+    private boolean isAllDayLongOpened;
     private boolean isOpen;
     private DayOfWeek day;
     private ArrayList<String> openingHours = new ArrayList<>();
@@ -67,16 +68,21 @@ public class DayOpeningHours {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(this.day +": ");
-        if(this.isOpen)
-        {
-            for (int i = 0; i < this.openingHours.size(); ++i)
-            {
-                stringBuilder.append(openingHours.get(i) + "-" + closingHours.get(i) + "\n");
-            }
+        if(isAllDayLongOpened) {
+            stringBuilder.append("Open all day\n");
         }
-        else
-        {
-            stringBuilder.append("Closed\n");
+        else {
+            if(this.isOpen)
+            {
+                for (int i = 0; i < this.openingHours.size(); ++i)
+                {
+                    stringBuilder.append(openingHours.get(i) + "-" + closingHours.get(i) + "\n");
+                }
+            }
+            else
+            {
+                stringBuilder.append("Closed\n");
+            }
         }
         return stringBuilder.toString();
     }

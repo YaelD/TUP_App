@@ -1,6 +1,5 @@
 package mta.finalproject.TupApp.attractionSearch;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import mta.finalproject.TupApp.javaClasses.Attraction;
-import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Utility;
-import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 import mta.finalproject.TupApp.tripCreation.CreateNewTripActivity;
 
 import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTIVITY;
@@ -41,6 +38,8 @@ public class SearchAttractionsFragment extends Fragment {
     private AddingAttrToMustVisitAttrAdapter adapterToMustVisitAttr;
     private String callingActivity;
     private ArrayList<Attraction> attractions = new ArrayList<>();
+    private GridLayoutManager layoutManager;
+    private int scrollPosition;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -48,8 +47,9 @@ public class SearchAttractionsFragment extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_attractions, container, false);
         initView(view);
-        callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
-
+        //callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
+        layoutManager = new GridLayoutManager(getContext(), 2);
+        scrollPosition = 0;
         attractions = Utility.getInstance(getContext()).getAttractions();
 
         searchViewAttr.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -124,17 +124,27 @@ public class SearchAttractionsFragment extends Fragment {
 
     private void setRecView()
     {
+
         callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
 
         if(callingActivity.equals(CreateNewTripActivity.class.getName())){
-            Log.e("SearchAttractionFrag==>", "Using the good adapter!");
             btnFinish.setVisibility(View.VISIBLE);
-
             adapterToMustVisitAttr = new AddingAttrToMustVisitAttrAdapter(getActivity());
             adapterToMustVisitAttr.setMustVisitAttractions(Utility.getInstance(getContext()).getAttractions());
             adapterToMustVisitAttr.setSelectedAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
             attractionsRecView.setAdapter(adapterToMustVisitAttr);
-            attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            attractionsRecView.scrollToPosition(scrollPosition);
+            //attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            attractionsRecView.setLayoutManager(layoutManager);
+            attractionsRecView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    scrollPosition = layoutManager.findFirstVisibleItemPosition();
+                }
+            });
+
+
             btnFinish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -155,15 +165,22 @@ public class SearchAttractionsFragment extends Fragment {
                 }
             };
             getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-
-
             adapterToDetailsAttr = new AttractionsSearchRecAdapter(getActivity());
-            adapterToDetailsAttr.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
-            attractionsRecView.setAdapter(adapterToDetailsAttr);
-
-            attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             ArrayList<Attraction> array = Utility.getInstance(getContext()).getAttractions();
             adapterToDetailsAttr.setAttractions(array);
+            //adapterToDetailsAttr.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
+            attractionsRecView.setAdapter(adapterToDetailsAttr);
+            attractionsRecView.scrollToPosition(scrollPosition);
+            attractionsRecView.setLayoutManager(layoutManager);
+            attractionsRecView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    scrollPosition = layoutManager.findFirstVisibleItemPosition();
+                }
+            });
+
+            //.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
      }
 
