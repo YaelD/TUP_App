@@ -7,6 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".loginAndRegister.UserDetailsActivity">
 
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:alpha="0.6"
+        android:scaleType="centerCrop"
+        android:src="@drawable/nav_background3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:id="@+id/txtTitleFirstName"
         android:layout_width="wrap_content"
@@ -265,7 +280,8 @@
         android:text="cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline10"
-        app:layout_constraintTop_toTopOf="@+id/btnSaveChanges" />
+        app:layout_constraintTop_toTopOf="@+id/btnSaveChanges"
+        app:strokeColor="#000000" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline10"
