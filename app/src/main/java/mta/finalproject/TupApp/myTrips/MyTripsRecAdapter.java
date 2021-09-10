@@ -60,7 +60,7 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(Utility.getInstance(mContext).deleteTrip(trips.get(position).getTripId())) {
-                            Toast.makeText(mContext, tripName + " was deleted successfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext, tripName + " was deleted successfully", Toast.LENGTH_SHORT).show();
                             if(getItemCount() == 0)
                             {
                                 emptyListTxt.setVisibility(View.VISIBLE);

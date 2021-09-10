@@ -165,6 +165,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void getLogInInfoFromDB()
     {
+        txtInvalidInputLoginError.setVisibility(View.GONE);
         email = txtEmail.getText().toString().trim();
         password = txtPassword.getText().toString().trim();
         progressDialog = new ProgressDialog(LoginActivity.this);
@@ -188,8 +189,9 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onErrorResponse(String error) {
+                txtInvalidInputLoginError.setVisibility(View.VISIBLE);
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Error Connecting to Server", Toast.LENGTH_SHORT);
+                //Toast.makeText(getApplicationContext(), "Error Connecting to Server", Toast.LENGTH_SHORT);
             }
         });
     }

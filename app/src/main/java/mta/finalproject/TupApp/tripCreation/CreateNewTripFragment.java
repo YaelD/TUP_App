@@ -297,7 +297,8 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
             @Override
             public void onErrorResponse(String error) {
                 Log.e("createTrip==>", "JSON error");
-                Toast.makeText(getContext(), "Error Connecting to server", Toast.LENGTH_SHORT);
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), "Error Connecting to server", Toast.LENGTH_SHORT).show();
             }
         });
     }
