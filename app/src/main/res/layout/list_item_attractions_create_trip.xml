@@ -2,43 +2,63 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_180sdp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/parent"
-        android:layout_width="160dp"
-        android:layout_height="190dp"
-        android:layout_margin="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
         app:cardCornerRadius="7dp"
         app:cardElevation="7dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parentTest1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.77" />
+
             <ImageView
                 android:id="@+id/imgAttraction"
-                android:layout_width="160dp"
-                android:layout_height="150dp"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constrainedHeight="true"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="@id/guideline13"
+                app:layout_constraintEnd_toEndOf="@+id/parentTest1"
+                app:layout_constraintStart_toStartOf="@+id/parentTest1"
+                app:layout_constraintTop_toTopOf="@+id/parentTest1"/>
 
             <TextView
                 android:id="@+id/txtAttractionName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgAttraction"
                 android:gravity="center"
                 android:text="Attraction Name"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/parentTest1"
+                app:layout_constraintEnd_toEndOf="@+id/parentTest1"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/parentTest1"
+                app:layout_constraintTop_toTopOf="@id/guideline13"
+                app:layout_constraintVertical_bias="0.1" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_cancel"

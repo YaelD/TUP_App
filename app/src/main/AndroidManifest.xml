@@ -41,7 +41,8 @@
             android:name=".loginAndRegister.UserDetailsActivity"
             android:label="@string/activity_user_details"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.TUPApp.NoActionBar" />
+            android:theme="@style/Theme.TUPApp.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".tripView.TripViewActivity"
             android:exported="true"

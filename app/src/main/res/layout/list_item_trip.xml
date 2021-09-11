@@ -12,7 +12,7 @@
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
         android:layout_height="60dp"
-        android:layout_marginHorizontal="45dp"
+        android:layout_marginHorizontal="@dimen/_35sdp"
         app:cardBackgroundColor="#C4FFF1"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
@@ -33,7 +33,7 @@
                 android:layout_marginStart="30dp"
                 android:fontFamily="@font/carter_one"
                 android:text="Trip"
-                android:textSize="24sp"
+                android:textSize="@dimen/_20ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

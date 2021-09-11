@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="176dp"
+    android:layout_height="@dimen/_143sdp"
     android:gravity="bottom"
-    android:paddingStart="10dp"
+    android:paddingStart="@dimen/_5sdp"
     android:background="@drawable/nav_background3">
 
     <ImageView
-        android:layout_width="250dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_130sdp"
         android:src="@mipmap/tup_logo2"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="@dimen/_5sdp"/>
 
 </LinearLayout>

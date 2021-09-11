@@ -30,6 +30,8 @@
         android:background="#FFF2C1"
         android:iconifiedByDefault="false"
         android:queryHint="Search Attractions"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-!@#$%^*?0123456789"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

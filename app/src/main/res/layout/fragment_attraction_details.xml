@@ -24,7 +24,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-52dp"
+        tools:layout_editor_absoluteY="307dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -39,15 +41,19 @@
                 android:fontFamily="@font/carter_one"
                 android:text="Attraction's Name"
                 android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textSize="@dimen/_20ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imgAttr"
-                android:layout_width="267dp"
-                android:layout_height="178dp"
-                android:layout_marginTop="80dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_195sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_27sdp"
+
+                app:layout_constrainedHeight="true"
+                app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toTopOf="@+id/guideline8"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,13 +65,13 @@
                 android:id="@+id/AddressText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
                 android:text="Address:"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline9"
-                app:layout_constraintTop_toTopOf="@+id/guideline8" />
+                app:layout_constraintTop_toBottomOf="@+id/txtNavigate" />
 
             <TextView
                 android:id="@+id/OpeningHoursText"
@@ -74,7 +80,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Opening Hours:"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline9"
                 app:layout_constraintTop_toBottomOf="@+id/txtAttrAddress" />
@@ -86,7 +92,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Phone:"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline9"
                 app:layout_constraintTop_toBottomOf="@+id/txtAttrOpeningHours" />
@@ -98,7 +104,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Website:"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline9"
                 app:layout_constraintTop_toBottomOf="@+id/PhoneText" />
@@ -110,7 +116,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Description:"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/guideline9"
                 app:layout_constraintTop_toBottomOf="@+id/txtAttrWebsite" />
@@ -123,7 +129,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -138,7 +144,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -155,7 +161,7 @@
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:textColorLink="#0024FF"
-                android:textSize="16sp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toBottomOf="@+id/PhoneText"
@@ -175,7 +181,7 @@
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:textColorLink="#0024FF"
-                android:textSize="16sp"
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="bold"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toBottomOf="@+id/WebsiteText"
@@ -194,7 +200,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -207,33 +213,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="290dp" />
+                app:layout_constraintGuide_percent="0.7" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="374dp" />
+                app:layout_constraintGuide_begin="350dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="26dp" />
+                app:layout_constraintGuide_percent="0.05" />
 
             <ImageView
                 android:id="@+id/imgFavorite"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="80dp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginTop="@dimen/_68sdp"
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_favorite_painted"
@@ -242,15 +247,14 @@
 
             <ImageView
                 android:id="@+id/imgFavoriteBorder"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="80dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginTop="@dimen/_68sdp"
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_favorite"
@@ -259,13 +263,13 @@
 
             <ImageView
                 android:id="@+id/imgLocation"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/_135sdp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
-                app:layout_constraintTop_toTopOf="@+id/guideline11"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_location"
                 tools:ignore="VectorDrawableCompat" />
 
@@ -277,10 +281,10 @@
                 android:text="Add to favorites"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="@dimen/_10ssp"
                 android:visibility="visible"
                 app:layout_constrainedWidth="true"
-                app:layout_constraintEnd_toEndOf="@+id/imgFavorite"
+                app:layout_constraintEnd_toEndOf="@+id/imgFavoriteBorder"
                 app:layout_constraintStart_toStartOf="@+id/imgFavoriteBorder"
                 app:layout_constraintTop_toBottomOf="@+id/imgFavoriteBorder" />
 
@@ -290,9 +294,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Remove from favorites"
-                android:textSize="12sp"
-                android:visibility="gone"
                 android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp"
+                android:visibility="gone"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="@+id/imgFavorite"
                 app:layout_constraintStart_toStartOf="@+id/imgFavorite"
@@ -305,7 +309,7 @@
                 android:gravity="center"
                 android:text="Location"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="@+id/imgLocation"
                 app:layout_constraintStart_toStartOf="@+id/imgLocation"
@@ -313,12 +317,11 @@
 
             <ImageView
                 android:id="@+id/imgNavigate"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/txtRestaurants"
                 app:srcCompat="@drawable/ic_navigation"
@@ -332,7 +335,7 @@
                 android:gravity="center"
                 android:text="Navigate"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="@+id/imgNavigate"
                 app:layout_constraintStart_toStartOf="@+id/imgNavigate"
@@ -343,16 +346,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="163dp" />
+                app:layout_constraintGuide_begin="168dp" />
 
             <ImageView
                 android:id="@+id/imgRestaurants"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/txtMap"
                 app:srcCompat="@drawable/ic_restaurant"
@@ -365,10 +367,17 @@
                 android:gravity="center"
                 android:text="Restaurant nearby"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="@dimen/_10ssp"
                 app:layout_constraintEnd_toEndOf="@+id/imgRestaurants"
                 app:layout_constraintStart_toStartOf="@+id/imgRestaurants"
                 app:layout_constraintTop_toBottomOf="@+id/imgRestaurants" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
