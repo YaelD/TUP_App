@@ -89,10 +89,6 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
             parent = itemView.findViewById(R.id.parent);
             imgAttraction = itemView.findViewById(R.id.imgAttraction);
             txtNameAttr = itemView.findViewById(R.id.txtAttractionName);
-
-//            parent = itemView.findViewById(R.id.parentTest);
-//            imgAttraction = itemView.findViewById(R.id.imgAttractiontest);
-//            txtNameAttr = itemView.findViewById(R.id.txtAttractionNametest);
         }
     }
 }

@@ -134,7 +134,6 @@ public class SearchAttractionsFragment extends Fragment {
             adapterToMustVisitAttr.setSelectedAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
             attractionsRecView.setAdapter(adapterToMustVisitAttr);
             attractionsRecView.scrollToPosition(scrollPosition);
-            //attractionsRecView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             attractionsRecView.setLayoutManager(layoutManager);
             attractionsRecView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override

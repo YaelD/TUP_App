@@ -89,7 +89,6 @@ public class AttractionDetailsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        //String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
 
         Intent intent = getActivity().getIntent();
         if(null != intent){
