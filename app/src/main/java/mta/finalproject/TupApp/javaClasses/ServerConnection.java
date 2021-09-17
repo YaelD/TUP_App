@@ -18,8 +18,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpStack;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -47,6 +45,7 @@ public class ServerConnection {
     private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
     //private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
     //private final String baseURL = "http://192.168.46.183:8080/web_war_exploded";
+    //private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -401,15 +400,12 @@ public class ServerConnection {
                     return super.parseNetworkResponse(response);
                 }
             };
-
-            //queue.add(stringRequest);
             addToRequestQueue(stringRequest);
         }
 
 
-    //----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
     public void register(Traveler traveler, final VolleyCallBack callBack) {
-
         Gson gson = new Gson();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + registerURL, new Response.Listener<String>() {
             @Override

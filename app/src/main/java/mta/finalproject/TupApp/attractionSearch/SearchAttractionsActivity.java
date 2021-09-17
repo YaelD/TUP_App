@@ -36,11 +36,13 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //TODO: Matan Added this
+        Utility.getInstance(getApplicationContext()).addActivity(this);
         setContainer(new SearchAttractionsFragment());
         Utility.setLocale(this, "en");
     }
 
+    /*
     @Override
     public void navBarListeners() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -50,13 +52,13 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
                 Intent intent;
                 switch (item.getItemId()){
                     case R.id.userDetails:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(SearchAttractionsActivity.this, UserDetailsActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.home:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         finish();
                         break;
                     case R.id.about:
@@ -74,7 +76,7 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
                         builder.create().show();
                         break;
                     case R.id.createTrip:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(SearchAttractionsActivity.this, CreateNewTripActivity.class);
                         startActivity(intent);
                         finish();
@@ -82,14 +84,14 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
                     case R.id.search:
                         break;
                     case R.id.favorites:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(SearchAttractionsActivity.this, FavoriteAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.trips:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(SearchAttractionsActivity.this, MyTripsActivity.class);
                         startActivity(intent);
                         finish();
@@ -123,6 +125,14 @@ public class SearchAttractionsActivity extends NavigationDrawerActivity {
                 return false;
             }
         });
+    }
+
+     */
+
+
+    @Override
+    protected void moveToSearchAttractions() {
+
     }
 
     @Override

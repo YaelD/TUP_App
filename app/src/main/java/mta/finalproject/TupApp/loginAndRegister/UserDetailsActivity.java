@@ -30,11 +30,14 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO: Matan Added this
+        Utility.getInstance(getApplicationContext()).addActivity(this);
         initViews();
         setContainer(new UserDetailsFragment());
         Utility.setLocale(this, "en");
     }
 
+    /*
     @Override
     public void navBarListeners() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -46,7 +49,7 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
                     case R.id.userDetails:
                         break;
                     case R.id.home:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         finish();
                         break;
                     case R.id.about:
@@ -62,13 +65,13 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
                         builder.create().show();
                         break;
                     case R.id.createTrip:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(UserDetailsActivity.this, CreateNewTripActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.search:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(UserDetailsActivity.this, SearchAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
@@ -81,7 +84,7 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
                         finish();
                         break;
                     case R.id.trips:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(UserDetailsActivity.this, MyTripsActivity.class);
                         startActivity(intent);
                         finish();
@@ -112,5 +115,11 @@ public class UserDetailsActivity extends NavigationDrawerActivity {
             }
         });
 
+    }
+
+     */
+
+    @Override
+    protected void moveToUserDetails() {
     }
 }

@@ -32,10 +32,13 @@ public class FavoriteAttractionsActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utility.getInstance(getApplicationContext()).addActivity(this);
         setContainer(new FavoriteAttractionsFragment());
         Utility.setLocale(this, "en");
+        setCallBack();
     }
 
+    /*
     @Override
     public void navBarListeners() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -45,13 +48,13 @@ public class FavoriteAttractionsActivity extends NavigationDrawerActivity {
                 Intent intent;
                 switch (item.getItemId()){
                     case R.id.userDetails:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(FavoriteAttractionsActivity.this, UserDetailsActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.home:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         finish();
                         break;
                     case R.id.about:
@@ -69,13 +72,13 @@ public class FavoriteAttractionsActivity extends NavigationDrawerActivity {
                         builder.create().show();
                         break;
                     case R.id.createTrip:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(FavoriteAttractionsActivity.this, CreateNewTripActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.search:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(FavoriteAttractionsActivity.this, SearchAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
@@ -84,7 +87,7 @@ public class FavoriteAttractionsActivity extends NavigationDrawerActivity {
                     case R.id.favorites:
                         break;
                     case R.id.trips:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(FavoriteAttractionsActivity.this, MyTripsActivity.class);
                         startActivity(intent);
                         finish();
@@ -114,6 +117,13 @@ public class FavoriteAttractionsActivity extends NavigationDrawerActivity {
                 return false;
             }
         });
+
+    }
+
+     */
+
+    @Override
+    protected void moveToFavoriteAttractions() {
 
     }
 

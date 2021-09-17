@@ -2,53 +2,51 @@ package mta.finalproject.TupApp.attractionDetails;
 
 import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTIVITY;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.activity.OnBackPressedCallback;
 
-import com.google.android.material.navigation.NavigationView;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
-
-import mta.finalproject.TupApp.MainActivity;
 import mta.finalproject.TupApp.attractionSearch.SearchAttractionsActivity;
 import mta.finalproject.TupApp.favoriteAttractions.FavoriteAttractionsActivity;
 import mta.finalproject.TupApp.javaClasses.Utility;
-import mta.finalproject.TupApp.loginAndRegister.UserDetailsActivity;
-import mta.finalproject.TupApp.myTrips.MyTripsActivity;
 import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
-
-import mta.finalproject.TupApp.R;
-import mta.finalproject.TupApp.tripCreation.CreateNewTripActivity;
-
-
 
 
 public class AttractionDetailsActivity extends NavigationDrawerActivity {
 
     private static final String TAG = "AttractionDetailsActivity";
+    private String callingActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO: Matan Added this
+        Utility.getInstance(getApplicationContext()).addActivity(this);
+        callingActivity =  getIntent().getStringExtra(CALLING_ACTIVITY);
         setContainer(new AttractionDetailsFragment());
         Utility.setLocale(this, "en");
+        //setCallBack();
     }
 
+    @Override
+    protected void setCallBack() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Utility.sendDataToServer();
+    }
 
+    /*
     @Override
     public void navBarListeners() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -58,13 +56,13 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
                 Intent intent;
                 switch (item.getItemId()){
                     case R.id.userDetails:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(AttractionDetailsActivity.this, UserDetailsActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.home:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         finish();
                         break;
                     case R.id.about:
@@ -82,27 +80,27 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
                         builder.create().show();
                         break;
                     case R.id.createTrip:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(AttractionDetailsActivity.this, CreateNewTripActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.search:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(AttractionDetailsActivity.this, SearchAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.favorites:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(AttractionDetailsActivity.this, FavoriteAttractionsActivity.class);
                         intent.putExtra(CALLING_ACTIVITY, getClass().getName());
                         startActivity(intent);
                         finish();
                         break;
                     case R.id.trips:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         intent= new Intent(AttractionDetailsActivity.this, MyTripsActivity.class);
                         startActivity(intent);
                         finish();
@@ -132,5 +130,31 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
                 return false;
             }
         });
+    }
+
+     */
+
+    @Override
+    protected void moveToSearchAttractions() {
+        if(!callingActivity.equals(SearchAttractionsActivity.class.getName()))
+        {
+            Utility.getInstance(getApplicationContext()).finishAllActivities();
+            Intent intent= new Intent(AttractionDetailsActivity.this, SearchAttractionsActivity.class);
+            intent.putExtra(CALLING_ACTIVITY, getClass().getName());
+            startActivity(intent);
+        }
+        finish();
+    }
+
+    @Override
+    protected void moveToFavoriteAttractions() {
+        if(!callingActivity.equals(FavoriteAttractionsActivity.class.getName()))
+        {
+            Utility.getInstance(getApplicationContext()).finishAllActivities();
+            Intent intent= new Intent(AttractionDetailsActivity.this, FavoriteAttractionsActivity.class);
+            intent.putExtra(CALLING_ACTIVITY, getClass().getName());
+            startActivity(intent);
+        }
+        finish();
     }
 }

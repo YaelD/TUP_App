@@ -171,6 +171,7 @@ public class UserDetailsFragment extends Fragment {
         txtPassword.addTextChangedListener(watcher);
 
 
+        /*
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -181,6 +182,8 @@ public class UserDetailsFragment extends Fragment {
             }
         };
         getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+
+         */
 
 
 

@@ -93,4 +93,9 @@ public class MainScreenFragment extends Fragment {
         btnMyTrips = view.findViewById(R.id.btnMyTrips);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        Utility.sendDataToServer();
+    }
 }

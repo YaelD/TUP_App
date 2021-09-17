@@ -105,13 +105,14 @@ public class FavoriteAttractionsFragment extends Fragment {
                 txtEmptyFavoriteList.setVisibility(View.VISIBLE);
             }
 
-            OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-                @Override
-                public void handleOnBackPressed() {
-                    getActivity().finish();
-                }
-            };
-            getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+//            OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//                @Override
+//                public void handleOnBackPressed() {
+//                    Utility.getInstance(getContext()).finishAllActivities();
+//                    //getActivity().finish();
+//                }
+//            };
+//            getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         }
     }
 
@@ -120,19 +121,6 @@ public class FavoriteAttractionsFragment extends Fragment {
         super.onStop();
         //TODO: Matan added this
         recViewFavoriteAttractions.setAdapter(null);
-        /*
-
-        Log.e("FavAttractionsFrag==>", "SAVING and Deleting Favs Attractions");
-        if(Utility.getInstance(getContext()).getFavAttractionsToAdd().size() > 0)
-        {
-            ServerConnection.getInstance(getContext()).sendFavAttractionsToAdd();
-        }
-        if(Utility.getInstance(getContext()).getFavAttractionsToDelete().size() > 0)
-        {
-            ServerConnection.getInstance(getContext()).sendFavAttractionsToDelete();
-        }
-
-         */
     }
 
 

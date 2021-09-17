@@ -34,11 +34,14 @@ public class CreateNewTripActivity extends NavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Utility.getInstance(getApplicationContext()).addActivity(this);
         super.onCreate(savedInstanceState);
         setContainer(new CreateNewTripFragment());
         Utility.setLocale(this, "en");
     }
 
+
+    /*
     @Override
     public void navBarListeners()
     {
@@ -54,7 +57,7 @@ public class CreateNewTripActivity extends NavigationDrawerActivity {
                         finish();
                         break;
                     case R.id.home:
-                        Utility.getInstance(getApplicationContext()).finishOldActivity();
+                        Utility.getInstance(getApplicationContext()).finishAllActivities();
                         finish();
                         break;
                     case R.id.about:
@@ -116,6 +119,21 @@ public class CreateNewTripActivity extends NavigationDrawerActivity {
             }
         });
 
+    }
+
+     */
+
+
+    @Override
+    protected void moveToCreateTrip() {
+    }
+
+    @Override
+    protected void moveToFavoriteAttractions() {
+        Utility.getInstance(getApplicationContext()).finishAllActivities();
+        Intent intent= new Intent(CreateNewTripActivity.this, FavoriteAttractionsActivity.class);
+        intent.putExtra(CALLING_ACTIVITY, NavigationDrawerActivity.class.getName());
+        startActivity(intent);
     }
 
     public static void setLocale(Activity activity, String languageCode) {

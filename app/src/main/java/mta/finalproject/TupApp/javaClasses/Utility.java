@@ -31,7 +31,7 @@ public class Utility {
     private String travelerID;
     private SharedPreferences sharedPreferences;
 
-    private Activity oldActivity = null;
+    private ArrayList<Activity> oldActivities = new ArrayList<>();
 
     private ArrayList<String> destinations = new ArrayList<>();
     private ArrayList<Integer> tripsToDelete = new ArrayList<>();
@@ -58,23 +58,26 @@ public class Utility {
 
     }
 
+
+    public void addActivity(Activity activity)
+    {
+        this.oldActivities.add(activity);
+    }
+
+    public void finishAllActivities()
+    {
+        for(Activity activity: oldActivities)
+        {
+            activity.finish();
+        }
+        oldActivities.clear();
+    }
+
+
+
     public ArrayList<String> getDestinations() {
         return destinations;
     }
-
-    public void finishOldActivity() {
-        if(oldActivity != null)
-        {
-            oldActivity.finish();
-        }
-        oldActivity = null;
-    }
-
-
-    public void setOldActivity(Activity oldActivity) {
-        this.oldActivity = oldActivity;
-    }
-
 
     public Hotel FindHotelByName(String hotelName)
     {
@@ -124,7 +127,7 @@ public class Utility {
         editor.commit();
     }
 
-    public static void logOut()
+    public static void sendDataToServer()
     {
         if(!instance.getTripsToDelete().isEmpty())
         {
@@ -139,6 +142,13 @@ public class Utility {
         {
             ServerConnection.getInstance(instance.context).sendFavAttractionsToAdd();
         }
+
+    }
+
+
+    public static void logOut()
+    {
+        sendDataToServer();
         instance.clearSharedPreferences();
         instance = null;
     }

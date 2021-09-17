@@ -41,16 +41,25 @@ public class LoadingScreen extends AppCompatActivity {
             Traveler traveler = new Gson().fromJson(jsonTraveler, Traveler.class);
             Utility.getInstance(getApplicationContext()).setTraveler(traveler);
             Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
-            Utility.getInstance(getApplicationContext()).getDataFromServer();
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(LoadingScreen.this, NavigationDrawerActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }, 3000);
+            if(Utility.getInstance(getApplicationContext()).getAttractions().isEmpty())
+            {
+                Utility.getInstance(getApplicationContext()).getDataFromServer();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(LoadingScreen.this, NavigationDrawerActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, 3000);
+            }
+            else
+            {
+                Intent intent = new Intent(LoadingScreen.this, NavigationDrawerActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
         else
         {
