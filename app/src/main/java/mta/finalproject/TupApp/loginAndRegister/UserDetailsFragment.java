@@ -45,7 +45,6 @@ public class UserDetailsFragment extends Fragment {
     private TextView txtTitleConfirmPassword, txtEmailExistError;
     private Traveler traveler;
     private String firstName, lastName, email, password;
-    //private ConstraintLayout userDetailsParent;
     private ProgressDialog progressDialog;
 
 
@@ -134,12 +133,25 @@ public class UserDetailsFragment extends Fragment {
                 else
                     passwordLayout.setError(null);
 
-                if(txtEmail.getText().toString().length() > 0)
+                if(txtEmail.getText().toString().length() == 0) {
+                    emailLayout.setError(null);
+                    txtEmailExistError.setVisibility(View.GONE);
+                }
+                else if(txtEmail.getText().toString().length() > 0)
                     if (!UserDetailsFragment.this.isEmailValid(txtEmail.getText().toString())) {
                         emailLayout.setError("Invalid email address");
+                        txtEmailExistError.setVisibility(View.GONE);
                 }
                 else if (txtEmail.getText().toString().isEmpty() || isEmailValid(txtEmail.getText().toString())){
                     emailLayout.setError(null);
+                    txtEmailExistError.setVisibility(View.GONE);
+                }
+
+                if(txtFirstName.getText().toString().length() > 0){
+                    firstNameLayout.setError(null);
+                }
+                if(txtLastName.getText().toString().length() > 0){
+                    lastNameLayout.setError(null);
                 }
 
                 if (!txtPassword.getText().toString().isEmpty()){
@@ -169,22 +181,6 @@ public class UserDetailsFragment extends Fragment {
         txtLastName.addTextChangedListener(watcher);
         txtEmail.addTextChangedListener(watcher);
         txtPassword.addTextChangedListener(watcher);
-
-
-        /*
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Intent intent = new Intent(getActivity(), NavigationDrawerActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
-            }
-        };
-        getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-
-         */
-
 
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -327,7 +323,6 @@ public class UserDetailsFragment extends Fragment {
         emailLayout = view.findViewById(R.id.userDetailsMailLayout);
         passwordLayout = view.findViewById(R.id.userDetailsPasswordLayout);
         confirmPasswordLayout = view.findViewById(R.id.userDetailsConfirmPasswordLayout);
-        //userDetailsParent = view.findViewById(R.id.userDetailsParent);
         txtEmailExistError = view.findViewById(R.id.txtEmailExistError);
     }
 }

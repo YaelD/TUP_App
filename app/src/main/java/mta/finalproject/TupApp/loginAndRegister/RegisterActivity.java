@@ -119,10 +119,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(txtEmail.getText().toString().length() > 0 && (!RegisterActivity.this.isEmailValid(txtEmail.getText().toString()))) {
                     mailLayout.setError("Invalid email address");
+                    txtInvalidInputError.setVisibility(View.GONE);
                 }
                 else if (isEmailValid(txtEmail.getText().toString())){
                     mailLayout.setError(null);
-
+                    txtInvalidInputError.setVisibility(View.GONE);
                 }
 
                 if(txtFirstName.getText().toString().length() > 0){
