@@ -36,14 +36,15 @@ public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitA
         this.mContext = mContext;
     }
 
-
-
+    //====================================================================================//
 
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attractions_create_trip, parent, false);
         return new MustVisitAttrRecViewAdapter.ViewHolder(view);
     }
+
+    //====================================================================================//
 
     @SuppressLint("LongLogTag")
     @Override
@@ -81,16 +82,24 @@ public class MustVisitAttrRecViewAdapter extends RecyclerView.Adapter<MustVisitA
 
     }
 
+    //====================================================================================//
+
     @Override
     public int getItemCount() {
         return mustVisitAttractions.size();
     }
 
+    //====================================================================================//
+
+    @SuppressLint("NotifyDataSetChanged")
     public void setMustVisitAttractions(ArrayList<Attraction> attractions) {
         this.mustVisitAttractions = attractions;
         notifyDataSetChanged();
     }
 
+    //====================================================================================//
+
+    //connect between the items in the layout to the class
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CardView parent;
         private ImageView imgAttraction;

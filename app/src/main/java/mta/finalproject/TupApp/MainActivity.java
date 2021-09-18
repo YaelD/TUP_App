@@ -16,9 +16,7 @@ import mta.finalproject.TupApp.loginAndRegister.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     private Button btnLogin, btnRegister;
-    private ImageView backgroundImage, logoImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +42,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //====================================================================================//
+
     private void initViews() {
-        Log.d(TAG, "initViews: started");
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
-        backgroundImage = findViewById(R.id.backgroundImage);
-        logoImage = findViewById(R.id.logoImage);
     }
-
 }

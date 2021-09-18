@@ -28,18 +28,22 @@ import mta.finalproject.TupApp.javaClasses.OnePlan;
 public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsRecViewAdapter.ViewHolder> {
 
     public static final String ATTRACTION_KEY = "attraction";
-
     private Context mContext;
     private ArrayList<OnePlan> onePlans = new ArrayList<>();
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setOnePlans(ArrayList<OnePlan> onePlans) {
         this.onePlans = onePlans;
         notifyDataSetChanged();
     }
 
+    //====================================================================================//
+
     public AttractionsRecViewAdapter(Context mContext) {
         this.mContext = mContext;
     }
+
+    //====================================================================================//
 
     @NonNull
     @Override
@@ -49,6 +53,8 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
         return holder;
 
     }
+
+    //====================================================================================//
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("ResourceAsColor")
@@ -74,13 +80,16 @@ public class AttractionsRecViewAdapter extends RecyclerView.Adapter<AttractionsR
         });
     }
 
+    //====================================================================================//
+
     @Override
     public int getItemCount() {
         return onePlans.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    //====================================================================================//
 
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtHours;
         TextView txtAttractionName;

@@ -28,15 +28,15 @@ import mta.finalproject.TupApp.tripView.TripViewActivity;
 
 public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.ViewHolder>{
 
-    private static final String TAG = "MyTripsRecAdapter";
     private ArrayList<TripPlan> trips = new ArrayList<>();
     private Context mContext;
-
     private TextView emptyListTxt;
 
     public MyTripsRecAdapter(Context mContext) {
         this.mContext = mContext;
     }
+
+    //====================================================================================//
 
     @NonNull
     @Override
@@ -44,6 +44,8 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_trip, parent, false);
         return new MyTripsRecAdapter.ViewHolder(view);
     }
+
+    //====================================================================================//
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -91,10 +93,14 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
         });
     }
 
+    //====================================================================================//
+
     @Override
     public int getItemCount() {
         return trips.size();
     }
+
+    //====================================================================================//
 
     @SuppressLint("NotifyDataSetChanged")
     public void setTrips(ArrayList<TripPlan> trips) {
@@ -102,9 +108,13 @@ public class MyTripsRecAdapter extends RecyclerView.Adapter<MyTripsRecAdapter.Vi
         notifyDataSetChanged();
     }
 
+    //====================================================================================//
+
     public void setEmptyListTxt(TextView emptyListTxt) {
         this.emptyListTxt = emptyListTxt;
     }
+
+    //====================================================================================//
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 

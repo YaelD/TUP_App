@@ -36,35 +36,34 @@ public class MyTripsFragment extends Fragment {
 
         initViews(view);
 
-
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-//                Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-//                getActivity().startActivity(intent);
                 getActivity().finish();
             }
         };
 
         getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
-
-
-
         return view;
     }
+
+    //====================================================================================//
 
     private void initViews(View view) {
         recViewMyTrips = view.findViewById(R.id.recViewMyTrips);
         txtEmptyTripList = view.findViewById(R.id.txtEmptyTripList);
     }
 
+    //====================================================================================//
+
     @Override
     public void onResume() {
         super.onResume();
         setAdapter();
     }
+
+    //====================================================================================//
 
     private void setAdapter()
     {
@@ -81,6 +80,7 @@ public class MyTripsFragment extends Fragment {
         }
     }
 
+    //====================================================================================//
 
     @Override
     public void onStop() {
@@ -91,5 +91,4 @@ public class MyTripsFragment extends Fragment {
             ServerConnection.getInstance(getContext()).deleteTripFromServer();
         }
     }
-
 }

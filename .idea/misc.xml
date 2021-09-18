@@ -46,7 +46,7 @@
         <entry key="..\:/Users/matanpe/AndroidStudioProjects/TUP_App/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/drawable-anydpi/ic_add.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/drawable-anydpi/ic_search.xml" value="0.19583333333333333" />
-        <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/activity_login.xml" value="0.13489583333333333" />
+        <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/activity_main_screen.xml" value="0.13802083333333334" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/activity_maps.xml" value="0.1796875" />
@@ -54,7 +54,7 @@
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/activity_register.xml" value="0.1546875" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/content_matan_test.xml" value="0.1796875" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/favorite_attractions_list.xml" value="0.1" />
-        <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/fragment_attraction_details.xml" value="0.22" />
+        <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/fragment_attraction_details.xml" value="0.1" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/fragment_create_new_trip.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/fragment_favorite_attractions.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/yael davidov/StudioProjects/TUP_App/app/src/main/res/layout/fragment_first.xml" value="0.1796875" />

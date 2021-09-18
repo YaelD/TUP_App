@@ -31,14 +31,19 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
     Context mContext;
 
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setPlans(ArrayList<DayPlan> plans) {
         this.plans = plans;
         notifyDataSetChanged();
     }
 
+    //====================================================================================//
+
     public DatesRecViewAdapter(Context mContext) {
         this.mContext = mContext;
     }
+
+    //====================================================================================//
 
     @NonNull
     @Override
@@ -47,6 +52,8 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
+
+    //====================================================================================//
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -60,6 +67,7 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
         holder.imgRouteMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO: delete this log
                 Log.e("DatesAdapter==>", "In On Click Listener");
                 Intent intent = new Intent(mContext, MapsActivity.class);
                 String dayPlanJson = new Gson().toJson(plans.get(position));
@@ -69,10 +77,14 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
         });
     }
 
+    //====================================================================================//
+
     @Override
     public int getItemCount() {
         return plans.size();
     }
+
+    //====================================================================================//
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView txtDate, txtHotelName, txtEndHour;

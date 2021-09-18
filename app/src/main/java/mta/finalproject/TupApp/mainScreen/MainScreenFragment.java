@@ -1,5 +1,6 @@
 package mta.finalproject.TupApp.mainScreen;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,10 +28,8 @@ import mta.finalproject.TupApp.tripCreation.CreateNewTripActivity;
 public class MainScreenFragment extends Fragment {
 
     public static final String CALLING_ACTIVITY = "calling activity";
-
-    private ImageView btnLogoImage;
     private TextView txtHelloUser;
-    private Button btnCreateTrip, btnSearchAtt, btnFavoriteAtt, btnMyTrips, btnTestAttractionDetails;
+    private Button btnCreateTrip, btnSearchAtt, btnFavoriteAtt, btnMyTrips;
 
 
 
@@ -55,7 +54,6 @@ public class MainScreenFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), SearchAttractionsActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
                 startActivity(intent);
-
             }
         });
         btnFavoriteAtt.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +62,6 @@ public class MainScreenFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), FavoriteAttractionsActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
                 startActivity(intent);
-
             }
         });
         btnMyTrips.setOnClickListener(new View.OnClickListener() {
@@ -77,21 +74,26 @@ public class MainScreenFragment extends Fragment {
         return view;
     }
 
+    //====================================================================================//
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResume() {
         super.onResume();
         txtHelloUser.setText("Hello " + Utility.getInstance(getContext()).getTraveler().getFirstName());
     }
 
+    //====================================================================================//
+
     private void initView(View view) {
-        btnLogoImage = view.findViewById(R.id.btnLogoImage);
         txtHelloUser = view.findViewById(R.id.txtHelloUser);
         btnCreateTrip = view.findViewById(R.id.btnCreateTrip);
         btnSearchAtt = view.findViewById(R.id.btnSearchAtt);
         btnFavoriteAtt = view.findViewById(R.id.btnFavoriteAtt);
         btnMyTrips = view.findViewById(R.id.btnMyTrips);
     }
+
+    //====================================================================================//
 
     @Override
     public void onStop() {

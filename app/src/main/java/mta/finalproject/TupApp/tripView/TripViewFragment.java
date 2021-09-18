@@ -39,7 +39,6 @@ import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 
 public class TripViewFragment extends Fragment {
 
-
     private int scrollPosition = 0;
     private RecyclerView dateRecView;
     private Button btnSaveTrip, btnCancelTripView;
@@ -49,14 +48,14 @@ public class TripViewFragment extends Fragment {
     private LinearLayoutManager layoutManager;
 
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
     }
+
+    //====================================================================================//
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -151,12 +150,16 @@ public class TripViewFragment extends Fragment {
         return view;
     }
 
+    //====================================================================================//
 
     @Override
     public void onResume() {
         super.onResume();
         setAdapter();
     }
+
+    //====================================================================================//
+
     private void initViews(View view) {
         dateRecView = view.findViewById(R.id.dateRecView);
         btnSaveTrip = view.findViewById(R.id.btnSaveTrip);
@@ -164,6 +167,7 @@ public class TripViewFragment extends Fragment {
         btnCancelTripView = view.findViewById(R.id.btnCancelTripView);
     }
 
+    //====================================================================================//
 
     private void setAdapter()
     {
@@ -181,6 +185,5 @@ public class TripViewFragment extends Fragment {
             }
         });
     }
-
 
 }

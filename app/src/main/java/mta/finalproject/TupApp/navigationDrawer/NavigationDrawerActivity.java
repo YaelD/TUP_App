@@ -34,7 +34,6 @@ import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTI
 
 public class NavigationDrawerActivity extends AppCompatActivity{
 
-    private static final String TAG = "mta/finalproject/TupApp/navigationDrawer";
     protected DrawerLayout drawer;
     protected NavigationView navigationView;
     private MaterialToolbar toolbar;
@@ -54,12 +53,16 @@ public class NavigationDrawerActivity extends AppCompatActivity{
 
     }
 
+    //====================================================================================//
+
     public void setContainer(Fragment fragment)
     {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
+
+    //====================================================================================//
 
     public void navBarListeners()
     {
@@ -71,68 +74,27 @@ public class NavigationDrawerActivity extends AppCompatActivity{
                 switch (item.getItemId()){
                     case R.id.userDetails:
                         moveToUserDetails();
-//                        intent= new Intent(NavigationDrawerActivity.this, UserDetailsActivity.class);
-//                        startActivity(intent);
                         break;
                     case R.id.home:
                         moveToMainScreen();
                         break;
                     case R.id.about:
                         buildAbout();
-                        /*
-                        AlertDialog.Builder builder = new AlertDialog.Builder(NavigationDrawerActivity.this);
-                        builder.setTitle(getString(R.string.app_name));
-                        builder.setMessage("When it comes to planning and taking a vacation, travelers have to choose destination and traveling times, attractions they want to visit, collect information ,search maps, etc. \n" +
-                                "We are group of Computer Science students that want to help travelers to plan their trips in the best way they can do.This is why we created \"TUP\".\n" +
-                                "\"TUP\" is a Traveling Using Application which helps to travelers plan their trips wisely with an AI algorithem that calculates the optimal route trip by personal preferences.");
-                        builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                        builder.create().show();
-                         */
                         break;
                     case R.id.createTrip:
                         moveToCreateTrip();
-//                        intent= new Intent(NavigationDrawerActivity.this, CreateNewTripActivity.class);
-//                        startActivity(intent);
                         break;
                     case R.id.search:
                         moveToSearchAttractions();
-//                        intent= new Intent(NavigationDrawerActivity.this, SearchAttractionsActivity.class);
-//                        intent.putExtra(CALLING_ACTIVITY, getClass().getName());
-//                        startActivity(intent);
                         break;
                     case R.id.favorites:
                         moveToFavoriteAttractions();
-//                        intent= new Intent(NavigationDrawerActivity.this, FavoriteAttractionsActivity.class);
-//                        intent.putExtra(CALLING_ACTIVITY, getClass().getName());
-//                        startActivity(intent);
                         break;
                     case R.id.trips:
                         moveToMTrips();
-//                        intent= new Intent(NavigationDrawerActivity.this, MyTripsActivity.class);
-//                        startActivity(intent);
                         break;
                     case R.id.logout:
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(NavigationDrawerActivity.this);
-                        alertDialog.setTitle("Logout");
-                        alertDialog.setMessage("Are you sure you want to logout the application?");
-                        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                logout();
-                            }
-                        });
-                        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                        alertDialog.show();
+                        buildLogoutDialog();
                     default:
                         break;
                 }
@@ -143,6 +105,8 @@ public class NavigationDrawerActivity extends AppCompatActivity{
 
     }
 
+    //====================================================================================//
+
     public void setToolBarAndDrawer(){
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -151,11 +115,36 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         toggle.syncState();
     }
 
+    //====================================================================================//
+
     public void initViews() {
         drawer = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
     }
+
+    //====================================================================================//
+
+    protected void buildLogoutDialog(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(NavigationDrawerActivity.this);
+        alertDialog.setTitle("Logout");
+        alertDialog.setMessage("Are you sure you want to logout the application?");
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+            }
+        });
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alertDialog.show();
+    }
+
+    //====================================================================================//
 
     protected void logout()
     {
@@ -166,10 +155,14 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         finish();
     }
 
+    //====================================================================================//
+
     protected void moveToMainScreen()
     {
         Utility.getInstance(getApplicationContext()).finishAllActivities();
     }
+
+    //====================================================================================//
 
     protected void moveToUserDetails()
     {
@@ -178,6 +171,8 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         startActivity(intent);
 
     }
+
+    //====================================================================================//
 
     protected void buildAbout()
     {
@@ -195,6 +190,8 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         builder.create().show();
     }
 
+    //====================================================================================//
+
     protected void moveToCreateTrip()
     {
         Utility.getInstance(getApplicationContext()).finishAllActivities();
@@ -202,6 +199,7 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
+    //====================================================================================//
 
     protected void moveToSearchAttractions()
     {
@@ -212,6 +210,8 @@ public class NavigationDrawerActivity extends AppCompatActivity{
 
     }
 
+    //====================================================================================//
+
     protected void moveToFavoriteAttractions()
     {
         Utility.getInstance(getApplicationContext()).finishAllActivities();
@@ -221,6 +221,8 @@ public class NavigationDrawerActivity extends AppCompatActivity{
 
     }
 
+    //====================================================================================//
+
     protected void moveToMTrips()
     {
         Utility.getInstance(getApplicationContext()).finishAllActivities();
@@ -228,7 +230,7 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
-
+    //====================================================================================//
 
     protected void setCallBack()
     {
@@ -241,7 +243,5 @@ public class NavigationDrawerActivity extends AppCompatActivity{
         getOnBackPressedDispatcher().addCallback(this, callback);
 
     }
-
-
 
 }
