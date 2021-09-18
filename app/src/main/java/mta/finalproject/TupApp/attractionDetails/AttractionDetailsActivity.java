@@ -1,12 +1,9 @@
 package mta.finalproject.TupApp.attractionDetails;
 
 import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTIVITY;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.activity.OnBackPressedCallback;
-
 import mta.finalproject.TupApp.attractionSearch.SearchAttractionsActivity;
 import mta.finalproject.TupApp.favoriteAttractions.FavoriteAttractionsActivity;
 import mta.finalproject.TupApp.javaClasses.Utility;
@@ -17,17 +14,17 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
 
     private static final String TAG = "AttractionDetailsActivity";
     private String callingActivity;
+    //====================================================================================//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO: Matan Added this
         Utility.getInstance(getApplicationContext()).addActivity(this);
         callingActivity =  getIntent().getStringExtra(CALLING_ACTIVITY);
         setContainer(new AttractionDetailsFragment());
         Utility.setLocale(this, "en");
-        //setCallBack();
     }
+    //====================================================================================//
 
     @Override
     protected void setCallBack() {
@@ -39,12 +36,17 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
     }
+    //====================================================================================//
 
     @Override
     protected void onStop() {
         super.onStop();
-        Utility.sendDataToServer();
+        if(Utility.getInstance(getApplicationContext()) != null)
+        {
+            Utility.sendDataToServer();
+        }
     }
+    //====================================================================================//
 
     @Override
     protected void moveToSearchAttractions() {
@@ -57,6 +59,7 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
         }
         finish();
     }
+    //====================================================================================//
 
     @Override
     protected void moveToFavoriteAttractions() {
@@ -69,4 +72,6 @@ public class AttractionDetailsActivity extends NavigationDrawerActivity {
         }
         finish();
     }
+    //====================================================================================//
+
 }

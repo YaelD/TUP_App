@@ -12,10 +12,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import mta.finalproject.TupApp.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -38,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout passwordLoginLayout, mailLoginLayout;
     private TextView txtInvalidInputLoginError;
 
+    //====================================================================================//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,16 +97,16 @@ public class LoginActivity extends AppCompatActivity {
         txtEmail.addTextChangedListener(textWatcher);
         txtPassword.addTextChangedListener(textWatcher);
     }
+    //====================================================================================//
 
     private void initLogin(){
         Log.d(TAG, "initLogin: started");
 
         if(validateData()){
             getLogInInfoFromDB();
-            //Intent intent= new Intent(LoginActivity.this, MainScreenActivity.class);
-            //startActivity(intent);
         }
     }
+    //====================================================================================//
 
     private boolean validateData() {
         Log.d(TAG, "validateData: started");
@@ -134,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         return validData;
     }
+    //====================================================================================//
 
     public static boolean isEmailValid(String email)
     {
@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         return pat.matcher(email).matches();
     }
+    //====================================================================================//
 
     private void initViews(){
         Log.d(TAG, "initViews: started");
@@ -156,15 +157,16 @@ public class LoginActivity extends AppCompatActivity {
         mailLoginLayout = findViewById(R.id.mailLoginLayout);
         txtInvalidInputLoginError = findViewById(R.id.txtInvalidInputLoginError);
     }
+    //====================================================================================//
 
     public void login(View view) {
         mailLoginLayout.setError(null);
         passwordLoginLayout.setError(null);
         initLogin();
     }
+    //====================================================================================//
 
-    public void getLogInInfoFromDB()
-    {
+    public void getLogInInfoFromDB() {
         txtInvalidInputLoginError.setVisibility(View.GONE);
         email = txtEmail.getText().toString().trim();
         password = txtPassword.getText().toString().trim();
@@ -195,4 +197,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    //====================================================================================//
+
 }

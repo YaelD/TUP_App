@@ -5,6 +5,7 @@ public class Traveler {
     private String lastName;
     private String emailAddress;
     private String password;
+    //====================================================================================//
 
     public Traveler(String firstName, String lastName, String emailAddress, String password) {
         this.firstName = firstName;
@@ -12,6 +13,7 @@ public class Traveler {
         this.emailAddress = emailAddress;
         this.password = password;
     }
+    //====================================================================================//
 
     public Traveler(Traveler other)  {
         setFirstName(other.firstName);
@@ -19,6 +21,7 @@ public class Traveler {
         setEmailAddress(other.emailAddress);
         setPassword(other.password);
     }
+    //====================================================================================//
 
     public String getFirstName() {
         return firstName;
@@ -32,23 +35,27 @@ public class Traveler {
     public String getPassword() {
         return password;
     }
+    //====================================================================================//
 
     public void setFirstName(String firstName)  {
         this.firstName = firstName.trim();
     }
+    //====================================================================================//
 
     public void setLastName(String lastName) {
         this.lastName = lastName.trim();
     }
+    //====================================================================================//
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
+    //====================================================================================//
 
     public void setPassword(String password)  {
         this.password = password;
     }
-
+    //====================================================================================//
 
     @Override
     public String toString() {
@@ -59,5 +66,6 @@ public class Traveler {
                 ", password='" + password + '\'' +
                 '}';
     }
+    //====================================================================================//
 
 }

@@ -38,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout FirstNameLayout, LastNameLayout, mailLayout, passwordLayout, confirmPasswordLayout;
     private  String firstName, lastName, email, password;
 
+    //====================================================================================//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    //====================================================================================//
 
     private void initViews() {
         txtFirstName = findViewById(R.id.txtFirstNameRegister);
@@ -185,6 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPasswordLayout = findViewById(R.id.registerConfirmPasswordLayout);
         txtInvalidInputError = findViewById(R.id.txtInvalidInputError);
     }
+    //====================================================================================//
 
     private boolean validateData() {
         boolean isValid = true;
@@ -233,9 +236,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         return isValid;
     }
+    //====================================================================================//
 
-    public static boolean isEmailValid(String email)
-    {
+    public static boolean isEmailValid(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -246,41 +249,43 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         return pat.matcher(email).matches();
     }
+    //====================================================================================//
 
-        private void sendRegisterInfoToServer()
-        {
-            firstName = txtFirstName.getText().toString().trim();
-            lastName = txtLastName.getText().toString().trim();
-            email = txtEmail.getText().toString().trim();
-            password = txtPassword.getText().toString().trim();
-            Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
-            progressDialog = new ProgressDialog(RegisterActivity.this);
-            progressDialog.setMessage("Processing... Please wait ");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-            ServerConnection.getInstance(this).register(registerTraveler, new VolleyCallBack() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onSuccessResponse(String result) {
-                    progressDialog.dismiss();
-                    txtInvalidInputError.setVisibility(View.GONE);
-                    Traveler traveler = new Gson().fromJson( result, Traveler.class);
-                    Utility.getInstance(getApplicationContext()).setTraveler(traveler);
-                    Log.e("HERE==>", "travelerID is--" +
-                            Utility.getInstance(getApplicationContext()).getTravelerID());
-                    Utility.getInstance(getApplicationContext()).getDataFromServer();
-                    Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
-                    Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                @Override
-                public void onErrorResponse(String error) {
-                    progressDialog.dismiss();
-                    txtInvalidInputError.setVisibility(View.VISIBLE);
-                }
-            });
+    private void sendRegisterInfoToServer() {
+        firstName = txtFirstName.getText().toString().trim();
+        lastName = txtLastName.getText().toString().trim();
+        email = txtEmail.getText().toString().trim();
+        password = txtPassword.getText().toString().trim();
+        Traveler registerTraveler = new Traveler(firstName, lastName, email, password);
+        progressDialog = new ProgressDialog(RegisterActivity.this);
+        progressDialog.setMessage("Processing... Please wait ");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        ServerConnection.getInstance(this).register(registerTraveler, new VolleyCallBack() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onSuccessResponse(String result) {
+                progressDialog.dismiss();
+                txtInvalidInputError.setVisibility(View.GONE);
+                Traveler traveler = new Gson().fromJson( result, Traveler.class);
+                Utility.getInstance(getApplicationContext()).setTraveler(traveler);
+                Log.e("HERE==>", "travelerID is--" +
+                        Utility.getInstance(getApplicationContext()).getTravelerID());
+                Utility.getInstance(getApplicationContext()).getDataFromServer();
+                Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
+                Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            @Override
+            public void onErrorResponse(String error) {
+                progressDialog.dismiss();
+                txtInvalidInputError.setVisibility(View.VISIBLE);
+            }
+        });
 
 
-        }
+    }
+    //====================================================================================//
+
 }

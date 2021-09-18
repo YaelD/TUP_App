@@ -23,7 +23,7 @@ import mta.finalproject.TupApp.javaClasses.Utility;
 
 public class LoadingScreen extends AppCompatActivity {
 
-
+    //====================================================================================//
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -70,6 +70,7 @@ public class LoadingScreen extends AppCompatActivity {
 
 
     }
+    //====================================================================================//
 
 
 

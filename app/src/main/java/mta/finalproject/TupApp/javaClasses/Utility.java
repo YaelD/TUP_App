@@ -19,20 +19,15 @@ public class Utility {
 
 
     private final static String SHARED_PREF_FILE_NAME = "TupPref";
-
     public final static String TRAVELER = "traveler";
     public final static String TRAVELER_ID = "travelerID";
-
-
 
     private static Utility instance;
     private Context context;
     private Traveler traveler;
     private String travelerID;
     private SharedPreferences sharedPreferences;
-
     private ArrayList<Activity> oldActivities = new ArrayList<>();
-
     private ArrayList<String> destinations = new ArrayList<>();
     private ArrayList<Integer> tripsToDelete = new ArrayList<>();
     private ArrayList<Attraction> tripSelectedAttractions = new ArrayList<>();
@@ -41,15 +36,17 @@ public class Utility {
     private ArrayList<Hotel> hotels = new ArrayList<>();
     private TripPlan lastCreatedTrip;
     private ArrayList<TripPlan> allTrips = new ArrayList<>();
-
     private ArrayList<String> favAttractionsToDelete = new ArrayList<>();
     private ArrayList<String> favAttractionsToAdd = new ArrayList<>();
 
 
 
+
+
+    //====================================================================================//
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void getDataFromServer()
-    {
+    public void getDataFromServer() {
         ServerConnection.getInstance(context).getDestinationsFromServer();
         ServerConnection.getInstance(context).getAttractionsFromServer("london");
         ServerConnection.getInstance(context).getHotelsFromServer("london");
@@ -57,30 +54,29 @@ public class Utility {
         ServerConnection.getInstance(context).getMyTripsFromServer();
 
     }
-
+    //====================================================================================//
 
     public void addActivity(Activity activity)
     {
         this.oldActivities.add(activity);
     }
+    //====================================================================================//
 
-    public void finishAllActivities()
-    {
+    public void finishAllActivities() {
         for(Activity activity: oldActivities)
         {
             activity.finish();
         }
         oldActivities.clear();
     }
-
-
+    //====================================================================================//
 
     public ArrayList<String> getDestinations() {
         return destinations;
     }
+    //====================================================================================//
 
-    public Hotel FindHotelByName(String hotelName)
-    {
+    public Hotel FindHotelByName(String hotelName) {
         for(Hotel hotel: this.hotels)
         {
             if(hotel.getName().equals(hotelName))
@@ -90,26 +86,29 @@ public class Utility {
         }
         return null;
     }
+    //====================================================================================//
 
     public ArrayList<Integer> getTripsToDelete() {
         return tripsToDelete;
     }
+    //====================================================================================//
 
     public void setTripsToDelete(ArrayList<Integer> tripsToDelete) {
         this.tripsToDelete = tripsToDelete;
     }
+    //====================================================================================//
 
     public ArrayList<String> getFavAttractionsToDelete() {
         return favAttractionsToDelete;
     }
+    //====================================================================================//
 
     public ArrayList<String> getFavAttractionsToAdd() {
         return favAttractionsToAdd;
     }
+    //====================================================================================//
 
-
-    public void writeToSharedPreferences()
-    {
+    public void writeToSharedPreferences() {
         clearSharedPreferences();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TRAVELER_ID, travelerID);
@@ -118,47 +117,40 @@ public class Utility {
         editor.putString(TRAVELER, travelerJson);
         editor.commit();
     }
+    //====================================================================================//
 
-
-    public void clearSharedPreferences()
-    {
+    public void clearSharedPreferences() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.commit();
     }
+    //====================================================================================//
 
-    public static void sendDataToServer()
-    {
-        if(!instance.getTripsToDelete().isEmpty())
+    public static void sendDataToServer() {
+        if(instance.getTripsToDelete() != null && !instance.getTripsToDelete().isEmpty())
         {
             ServerConnection.getInstance(instance.context).deleteTripFromServer();
         }
-        if(!instance.getFavAttractionsToDelete().isEmpty())
+        if(instance.getFavAttractionsToDelete() != null && !instance.getFavAttractionsToDelete().isEmpty())
         {
             ServerConnection.getInstance(instance.context).sendFavAttractionsToDelete();
-
         }
-        if(!instance.getFavAttractionsToAdd().isEmpty())
+        if(instance.getFavAttractionsToAdd() != null &&!instance.getFavAttractionsToAdd().isEmpty())
         {
             ServerConnection.getInstance(instance.context).sendFavAttractionsToAdd();
         }
 
     }
+    //====================================================================================//
 
-
-    public static void logOut()
-    {
+    public static void logOut() {
         sendDataToServer();
         instance.clearSharedPreferences();
         instance = null;
     }
+    //====================================================================================//
 
-
-
-//----------------------------------------------------------------------------------------
-
-    public boolean deleteTrip(int id)
-    {
+    public boolean deleteTrip(int id) {
         for(TripPlan trip: allTrips)
         {
             if(trip.getTripId() == id)
@@ -169,70 +161,59 @@ public class Utility {
         }
         return false;
     }
-//----------------------------------------------------------------------------------------
-
+    //====================================================================================//
 
     public SharedPreferences getSharedPreferences() {
         return sharedPreferences;
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public String getTravelerID() {
         return travelerID;
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public void setTravelerID(String travelerID) {
         this.travelerID = travelerID;
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public ArrayList<TripPlan> getAllTrips() {
         return allTrips;
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public void setAllTrips(ArrayList<TripPlan> allTrips) {
         instance.allTrips = allTrips;
     }
-
-//----------------------------------------------------------------------------------------
-
+    //====================================================================================//
 
     public Traveler getTraveler() {
         return traveler;
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public void setTraveler(Traveler traveler) {
         this.traveler = traveler;
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public void setAttractions(ArrayList<Attraction> attractions) {
         this.attractions = attractions;
     }
-
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public TripPlan getLastCreatedTrip() {
         return lastCreatedTrip;
     }
+    //====================================================================================//
 
     public void setLastCreatedTrip(TripPlan lastCreatedTrip) {
         this.lastCreatedTrip = lastCreatedTrip;
     }
+    //====================================================================================//
 
-//----------------------------------------------------------------------------------------
-
-    public Attraction getAttractionByID(String id)
-    {
+    public Attraction getAttractionByID(String id) {
         Attraction selectedAttraction = null;
         for(Attraction currentAttraction: attractions)
         {
@@ -243,9 +224,9 @@ public class Utility {
         }
         return selectedAttraction;
     }
+    //====================================================================================//
 
-    public boolean isAttractionIsInFavorites(String id)
-    {
+    public boolean isAttractionIsInFavorites(String id){
         for(Attraction attraction: favoriteAttractions)
         {
             if(attraction.getPlaceID().equals(id))
@@ -255,45 +236,17 @@ public class Utility {
         }
         return false;
     }
-
-    void addToDeleteFavs(String placeID)
-    {
-        if(!this.favAttractionsToDelete.contains(placeID))
-        {
-            this.favAttractionsToDelete.add(placeID);
-        }
-    }
-
-    void removeFromDeleteFavs(String placeID)
-    {
-        this.favAttractionsToDelete.remove(placeID);
-    }
-
-    void addToAddFavs(String placeID)
-    {
-        if(!this.favAttractionsToAdd.contains(placeID))
-        {
-            this.favAttractionsToAdd.add(placeID);
-        }
-    }
-
-    void removeFromAddFavs(String placeID)
-    {
-        this.favAttractionsToAdd. remove(placeID);
-    }
-
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public ArrayList<Attraction> getFavoriteAttractions() {
         return favoriteAttractions;
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public void setFavoriteAttractions(ArrayList<Attraction> favoriteAttractions) {
         this.favoriteAttractions = favoriteAttractions;
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public boolean addAttractionToFavoriteList(Attraction attraction){
         if(favoriteAttractions.contains(attraction))
@@ -316,7 +269,7 @@ public class Utility {
         }
 
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public boolean removeAttractionFromFavoriteList(Attraction attraction){
         for(Attraction currAttraction: favoriteAttractions)
@@ -340,26 +293,24 @@ public class Utility {
 
         return false;
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public ArrayList<Attraction> getAttractions() {
         return attractions;
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public ArrayList<Hotel> getHotels() {
         return hotels;
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
-    public ArrayList<Attraction> getTripSelectedAttrations() {
+    public ArrayList<Attraction> getTripSelectedAttractions() {
         return tripSelectedAttractions;
     }
+    //====================================================================================//
 
-
-    static public boolean isAttractionInArr(ArrayList<Attraction> attractionArr, Attraction attraction)
-    {
+    static public boolean isAttractionInArr(ArrayList<Attraction> attractionArr, Attraction attraction) {
         boolean res = false;
         for(Attraction currentAttraction: attractionArr)
         {
@@ -370,28 +321,23 @@ public class Utility {
         }
         return res;
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
-    public static synchronized Utility getInstance(Context context)
-    {
+    public static synchronized Utility getInstance(Context context) {
         if(null == instance)
         {
             instance = new Utility(context);
         }
         return instance;
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     private Utility(Context context) {
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences(SHARED_PREF_FILE_NAME, Context.MODE_PRIVATE);
     }
+    //====================================================================================//
 
-
-
-
-    //----------------------------------------------------------------------------------------
     public static void setLocale(Activity activity, String languageCode) {
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);
@@ -400,5 +346,6 @@ public class Utility {
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
+    //====================================================================================//
 
 }

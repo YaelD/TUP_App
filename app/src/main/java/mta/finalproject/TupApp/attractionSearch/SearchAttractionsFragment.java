@@ -40,14 +40,13 @@ public class SearchAttractionsFragment extends Fragment {
     private ArrayList<Attraction> attractions = new ArrayList<>();
     private GridLayoutManager layoutManager;
     private int scrollPosition;
+    //====================================================================================//
 
     @Nullable
-    @org.jetbrains.annotations.Nullable
     @Override
-    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_attractions, container, false);
         initView(view);
-        //callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
         layoutManager = new GridLayoutManager(getContext(), 2);
         scrollPosition = 0;
         attractions = Utility.getInstance(getContext()).getAttractions();
@@ -66,37 +65,16 @@ public class SearchAttractionsFragment extends Fragment {
                 return false;
             }
         });
-
-
-
-
         return view;
     }
+    //====================================================================================//
 
     @Override
     public void onResume() {
         super.onResume();
         setRecView();
     }
-
-
-    /*
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.e("SearchAttrFrag==>", "SAVING and Deleting Favs Attractions");
-        if(Utility.getInstance(getContext()).getFavAttractionsToAdd().size() > 0)
-        {
-            ServerConnection.getInstance(getContext()).sendFavAttractionsToAdd();
-        }
-        if(Utility.getInstance(getContext()).getFavAttractionsToDelete().size() > 0)
-        {
-            ServerConnection.getInstance(getContext()).sendFavAttractionsToDelete();
-        }
-    }
-     */
-
-
+    //====================================================================================//
 
     private void filter(String text)
     {
@@ -120,18 +98,17 @@ public class SearchAttractionsFragment extends Fragment {
             }
         }
     }
-
+    //====================================================================================//
 
     private void setRecView()
     {
 
         callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
-
         if(callingActivity.equals(CreateNewTripActivity.class.getName())){
             btnFinish.setVisibility(View.VISIBLE);
             adapterToMustVisitAttr = new AddingAttrToMustVisitAttrAdapter(getActivity());
             adapterToMustVisitAttr.setMustVisitAttractions(Utility.getInstance(getContext()).getAttractions());
-            adapterToMustVisitAttr.setSelectedAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
+            adapterToMustVisitAttr.setSelectedAttractions(Utility.getInstance(getContext()).getTripSelectedAttractions());
             attractionsRecView.setAdapter(adapterToMustVisitAttr);
             attractionsRecView.scrollToPosition(scrollPosition);
             attractionsRecView.setLayoutManager(layoutManager);
@@ -157,9 +134,6 @@ public class SearchAttractionsFragment extends Fragment {
             OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
                 public void handleOnBackPressed() {
-//                    Intent intent = new Intent(getContext(), NavigationDrawerActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    getActivity().startActivity(intent);
                     getActivity().finish();
                 }
             };
@@ -167,7 +141,6 @@ public class SearchAttractionsFragment extends Fragment {
             adapterToDetailsAttr = new AttractionsSearchRecAdapter(getActivity());
             ArrayList<Attraction> array = Utility.getInstance(getContext()).getAttractions();
             adapterToDetailsAttr.setAttractions(array);
-            //adapterToDetailsAttr.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT);
             attractionsRecView.setAdapter(adapterToDetailsAttr);
             attractionsRecView.scrollToPosition(scrollPosition);
             attractionsRecView.setLayoutManager(layoutManager);
@@ -178,16 +151,16 @@ public class SearchAttractionsFragment extends Fragment {
                     scrollPosition = layoutManager.findFirstVisibleItemPosition();
                 }
             });
-
-            //.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
      }
-
+    //====================================================================================//
 
     private void initView(View view) {
         attractionsRecView = view.findViewById(R.id.searchAttrRecView);
         btnFinish = view.findViewById(R.id.btnFinish);
         searchViewAttr = view.findViewById(R.id.attSearchView);
     }
+    //====================================================================================//
+
 }
 

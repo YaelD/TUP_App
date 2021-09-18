@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -30,16 +29,14 @@ import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTI
 
 public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<AttractionsSearchRecAdapter.ViewHolder> {
     private static final String TAG = "AttrSearchRecAdapter";
-
     private ArrayList<Attraction> attractions = new ArrayList<>();
-
-
     private Context mContext;
-
+    //====================================================================================//
 
     public AttractionsSearchRecAdapter(Context mContext) {
         this.mContext = mContext;
     }
+    //====================================================================================//
 
     @NotNull
     @Override
@@ -47,6 +44,7 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_attractions, parent, false);
         return new ViewHolder(view);
     }
+    //====================================================================================//
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull AttractionsSearchRecAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -67,22 +65,25 @@ public class AttractionsSearchRecAdapter extends RecyclerView.Adapter<Attraction
             }
         });
     }
+    //====================================================================================//
 
     @Override
     public int getItemCount() {
         return attractions.size();
     }
+    //====================================================================================//
 
     public void setAttractions(ArrayList<Attraction> attractions) {
         this.attractions = attractions;
         notifyDataSetChanged();
     }
-
+    //====================================================================================//
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CardView parent;
         private ImageView imgAttraction;
         private TextView txtNameAttr;
+        //====================================================================================//
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

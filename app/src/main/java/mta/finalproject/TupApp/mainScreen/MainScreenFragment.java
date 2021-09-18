@@ -95,9 +95,14 @@ public class MainScreenFragment extends Fragment {
 
     //====================================================================================//
 
+
     @Override
     public void onStop() {
         super.onStop();
-        Utility.sendDataToServer();
+        if(Utility.getInstance(getContext()) != null)
+        {
+            Utility.sendDataToServer();
+        }
     }
+
 }

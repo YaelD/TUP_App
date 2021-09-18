@@ -67,8 +67,6 @@ public class DatesRecViewAdapter extends RecyclerView.Adapter<DatesRecViewAdapte
         holder.imgRouteMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: delete this log
-                Log.e("DatesAdapter==>", "In On Click Listener");
                 Intent intent = new Intent(mContext, MapsActivity.class);
                 String dayPlanJson = new Gson().toJson(plans.get(position));
                 intent.putExtra(DAY_PLAN_JSON, dayPlanJson);

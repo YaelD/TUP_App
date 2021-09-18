@@ -285,21 +285,9 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     //====================================================================================//
 
-    //TODO: ask from Matan
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initFinButton() {
-        TripDetails tripDetails = new TripDetails();
-        Hotel hotel = Utility.getInstance(getContext())
-                .FindHotelByName(spinnerHotels.getSelectedItem().toString());
-        tripDetails.setHotelID(hotel.getPlaceID());
-        tripDetails.setDestination(destinationSpinner.getSelectedItem().toString());
-        for (Attraction attraction : Utility.getInstance(getContext()).getTripSelectedAttrations()) {
-            tripDetails.getMustSeenAttractionsID().add(attraction.getPlaceID());
-        }
-        Utility.getInstance(getContext()).getTripSelectedAttrations().clear();
-        tripDetails.setHoursEveryDay(desiredHours);
-        //TODO: delete this log
-        Log.e("TRIP To send=>", tripDetails.toString());
+        TripDetails tripDetails = makeTripDetails();
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Processing... Please wait");
         progressDialog.setCancelable(false);
@@ -324,20 +312,14 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
                         arr.add(dayPlan);
                     }
                     tripPlan.setPlans(arr);
+                    Utility.getInstance(getContext()).setLastCreatedTrip(tripPlan);
+                    moveToNextActivity();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Utility.getInstance(getContext()).setLastCreatedTrip(tripPlan);
-                Intent intent = new Intent(getActivity(), TripViewActivity.class);
-                intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
-                startActivity(intent);
-                getActivity().finish();
             }
-
             @Override
             public void onErrorResponse(String error) {
-                //TODO: delete this log
-                Log.e("createTrip==>", "JSON error");
                 progressDialog.dismiss();
                 Toast.makeText(getContext(), "Error Connecting to server", Toast.LENGTH_SHORT).show();
             }
@@ -346,17 +328,39 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     //====================================================================================//
 
+    private void moveToNextActivity()
+    {
+        Intent intent = new Intent(getActivity(), TripViewActivity.class);
+        intent.putExtra(CALLING_ACTIVITY, getActivity().getClass().getName());
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    //====================================================================================//
+
+    private TripDetails makeTripDetails()
+    {
+        TripDetails tripDetails = new TripDetails();
+        Hotel hotel = Utility.getInstance(getContext())
+                .FindHotelByName(spinnerHotels.getSelectedItem().toString());
+        tripDetails.setHotelID(hotel.getPlaceID());
+        tripDetails.setDestination(destinationSpinner.getSelectedItem().toString());
+        for (Attraction attraction : Utility.getInstance(getContext()).getTripSelectedAttractions()) {
+            tripDetails.getMustSeenAttractionsID().add(attraction.getPlaceID());
+        }
+        Utility.getInstance(getContext()).getTripSelectedAttractions().clear();
+        tripDetails.setHoursEveryDay(desiredHours);
+        return tripDetails;
+    }
+
+    //====================================================================================//
+
+
+    //====================================================================================//
+
     @Override
     public void onResume() {
         super.onResume();
-        if(desiredHours.size() > 0)
-        {
-            //TODO: delete this log
-            Log.e("CreateTripHours==>", "Date:" + desiredHours.get(0).getDate() +
-                    " Start=" + desiredHours.get(0).getStartTime() + " End=" +
-                    desiredHours.get(0).getEndTime());
-        }
-
         callAdapter(desiredHours);
     }
 
@@ -405,7 +409,7 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
         recViewDesiredHours.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         MustVisitAttrRecViewAdapter mustVisitAttrAdapter = new MustVisitAttrRecViewAdapter(getActivity());
-        mustVisitAttrAdapter.setMustVisitAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
+        mustVisitAttrAdapter.setMustVisitAttractions(Utility.getInstance(getContext()).getTripSelectedAttractions());
         recViewMustVisitAttr.setAdapter(mustVisitAttrAdapter);
         recViewMustVisitAttr.setLayoutManager(new GridLayoutManager(getActivity(),2));
     }

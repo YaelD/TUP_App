@@ -43,9 +43,6 @@ public class ServerConnection {
     private Context context;
 
     private final String baseURL = "http://tup1-env.eba-qvijjvbu.us-west-2.elasticbeanstalk.com";
-    //private final String baseURL = "http://10.0.2.2:8080/web_war_exploded";
-    //private final String baseURL = "http://192.168.46.183:8080/web_war_exploded";
-    //private final String baseURL = "http://10.0.0.5:8080/web_war_exploded";
     private final String allAttractionsURL = "/attractions/all";
     private final String tripURL = "/trip";
     private final String loginURL = "/login";
@@ -57,8 +54,7 @@ public class ServerConnection {
     private final String deleteURL = "/delete";
     private final String createURL = "/create";
 
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public static synchronized ServerConnection getInstance(Context context) {
         if (null == instance) {
@@ -66,13 +62,13 @@ public class ServerConnection {
         }
         return instance;
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     private ServerConnection(Context context) {
         queue = Volley.newRequestQueue(context);
         this.context = context;
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public RequestQueue getQueue() {
         if (queue == null) {
@@ -80,9 +76,9 @@ public class ServerConnection {
         }
         return queue;
     }
-//----------------------------------------------------------------------------------------
-    private void makeStrRequest(String functionName,int method, String url, String body, final VolleyCallBack callBack)
-    {
+    //====================================================================================//
+
+    private void makeStrRequest(String functionName,int method, String url, String body, final VolleyCallBack callBack) {
         StringRequest stringRequest = new StringRequest(method, url,
                 new Response.Listener<String>() {
                     @Override
@@ -127,11 +123,13 @@ public class ServerConnection {
         };
         addToRequestQueue(stringRequest);
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
+
     private  <T> void addToRequestQueue(Request<T> req) {
         getQueue().add(req);
     }
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
+
     public void getHotelsFromServer(String destination) {
         makeStrRequest("getHotels", Request.Method.POST, baseURL + hotelsURL, destination,
                 new VolleyCallBack() {
@@ -153,16 +151,14 @@ public class ServerConnection {
                     }
                 });
     }
-
+    //====================================================================================//
 
     public void getDestinationsFromServer(){
         makeStrRequest("getDestinations", Request.Method.GET, baseURL + destinationsURL, "",
                 new VolleyCallBack() {
                     @Override
                     public void onSuccessResponse(String result) {
-
                         try {
-
                             JSONArray jsonArray = new JSONArray(result);
                             Utility.getInstance(context).getDestinations().add("Select");
                             for (int i = 0; i < jsonArray.length(); ++i) {
@@ -181,9 +177,7 @@ public class ServerConnection {
                     }
                 });
     }
-
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendTripDetailsToServer(TripDetails tripDetails, final VolleyCallBack callBack) {
@@ -192,18 +186,15 @@ public class ServerConnection {
         makeStrRequest("sendTripDetails", Request.Method.POST,
                 baseURL+tripURL+createURL, gson.toJson(tripDetails), callBack);
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void sendTripPlan(TripPlan tripPlan, final VolleyCallBack callBack)
-    {
+    public void sendTripPlan(TripPlan tripPlan, final VolleyCallBack callBack) {
         Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
             .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
         makeStrRequest("sendTripPlan",Request.Method.PUT,baseURL+tripURL, gson.toJson(tripPlan), callBack);
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void getMyTripsFromServer(){
@@ -232,8 +223,8 @@ public class ServerConnection {
             }
         });
     }
+    //====================================================================================//
 
-//----------------------------------------------------------------------------------------
     public void deleteTripFromServer() {
         String body = Utility.getInstance(context).getTripsToDelete().toString();
         body = "{" +
@@ -250,11 +241,9 @@ public class ServerConnection {
             }
         });
     }
+    //====================================================================================//
 
-    //----------------------------------------------------------------------------------------
-
-    public void getAttractionsFromServer(String destination)
-    {
+    public void getAttractionsFromServer(String destination) {
         makeStrRequest("getAllAttractions", Request.Method.POST, baseURL + allAttractionsURL, destination, new VolleyCallBack() {
             @Override
             public void onSuccessResponse(String result) {
@@ -271,19 +260,16 @@ public class ServerConnection {
                     e.printStackTrace();
                     Log.e("getAllAttractions=>", "Error=JSON");
                 }
-
             }
-
             @Override
             public void onErrorResponse(String error) {
 
             }
         });
     }
+    //====================================================================================//
 
-    //----------------------------------------------------------------------------------------
-    public void getFavoritesFromServer()
-    {
+    public void getFavoritesFromServer() {
         makeStrRequest("getFavorites", Request.Method.GET, baseURL + favAttractionsURL, "", new VolleyCallBack() {
             @Override
             public void onSuccessResponse(String result) {
@@ -304,9 +290,9 @@ public class ServerConnection {
             }
         });
     }
-    //----------------------------------------------------------------------------------------
-    public void sendFavAttractionsToAdd()
-    {
+    //====================================================================================//
+
+    public void sendFavAttractionsToAdd() {
         String body = new Gson().toJson(Utility.getInstance(context).getFavAttractionsToAdd());
         body = "{" +
                 "\"favoriteAttractionsList\":" + body +
@@ -322,9 +308,9 @@ public class ServerConnection {
                     }
                 });
     }
+    //====================================================================================//
 
-    public void sendFavAttractionsToDelete()
-    {
+    public void sendFavAttractionsToDelete() {
         String body = new Gson().toJson(Utility.getInstance(context).getFavAttractionsToDelete());
         body = "{" +
                 "\"favoriteAttractionsList\":" + body +
@@ -343,8 +329,8 @@ public class ServerConnection {
                     }
                 });
     }
+    //====================================================================================//
 
-//----------------------------------------------------------------------------------------
     public void logIn(String email, String password, final VolleyCallBack callBack) {
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + loginURL, new Response.Listener<String>() {
@@ -402,9 +388,8 @@ public class ServerConnection {
             };
             addToRequestQueue(stringRequest);
         }
+    //====================================================================================//
 
-
-//----------------------------------------------------------------------------------------
     public void register(Traveler traveler, final VolleyCallBack callBack) {
         Gson gson = new Gson();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseURL + registerURL, new Response.Listener<String>() {
@@ -459,16 +444,13 @@ public class ServerConnection {
         addToRequestQueue(stringRequest);
 
     }
+    //====================================================================================//
 
-    //----------------------------------------------------------------------------------------
-
-    public void updateUser(Traveler newTravelerDetails, VolleyCallBack callBack)
-    {
+    public void updateUser(Traveler newTravelerDetails, VolleyCallBack callBack) {
         String body = new Gson().toJson(newTravelerDetails);
         makeStrRequest("updateUser", Request.Method.PUT, baseURL+updateURL, body, callBack);
     }
-
-//----------------------------------------------------------------------------------------
+    //====================================================================================//
 
     public static class LocalTimeAdapter extends TypeAdapter<LocalTime> {
 
@@ -508,9 +490,9 @@ public class ServerConnection {
             return LocalTime.parse(time.substring(1, 6));
         }
     }
+    //====================================================================================//
 
     public static class LocalDateAdapter extends TypeAdapter<LocalDate> {
-
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void write(JsonWriter out, LocalDate value) throws IOException {
@@ -546,5 +528,6 @@ public class ServerConnection {
 
         }
     }
+    //====================================================================================//
 
 }

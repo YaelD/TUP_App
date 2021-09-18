@@ -1,15 +1,12 @@
 package mta.finalproject.TupApp.favoriteAttractions;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,14 +19,9 @@ import org.jetbrains.annotations.NotNull;
 
 import mta.finalproject.TupApp.attractionSearch.AddingAttrToMustVisitAttrAdapter;
 import mta.finalproject.TupApp.attractionSearch.AttractionsSearchRecAdapter;
-import mta.finalproject.TupApp.javaClasses.ServerConnection;
 import mta.finalproject.TupApp.javaClasses.Utility;
-import mta.finalproject.TupApp.navigationDrawer.NavigationDrawerActivity;
 import mta.finalproject.TupApp.tripCreation.CreateNewTripActivity;
-
 import static mta.finalproject.TupApp.mainScreen.MainScreenFragment.CALLING_ACTIVITY;
-
-import java.util.ArrayList;
 
 public class FavoriteAttractionsFragment extends Fragment {
     private static final String TAG = "FavoriteAttractionsFrag";
@@ -38,8 +30,7 @@ public class FavoriteAttractionsFragment extends Fragment {
     private Button btnFinishSelectFavAttr;
     private TextView txtEmptyFavoriteList;
 
-
-
+    //====================================================================================//
 
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -54,22 +45,22 @@ public class FavoriteAttractionsFragment extends Fragment {
 
         return view;
     }
+    //====================================================================================//
 
     @Override
     public void onResume() {
         super.onResume();
         setAdapters();
     }
-
+    //====================================================================================//
 
     @Override
     public void onPause() {
         super.onPause();
     }
+    //====================================================================================//
 
-
-    private void setAdapters()
-    {
+    private void setAdapters() {
         String callingActivity = getActivity().getIntent().getStringExtra(CALLING_ACTIVITY);
         if(callingActivity != null  && callingActivity.equals(CreateNewTripActivity.class.getName()))
         {
@@ -85,7 +76,7 @@ public class FavoriteAttractionsFragment extends Fragment {
             }
             AddingAttrToMustVisitAttrAdapter adapter = new AddingAttrToMustVisitAttrAdapter(getActivity());
             adapter.setMustVisitAttractions(Utility.getInstance(getContext()).getFavoriteAttractions());
-            adapter.setSelectedAttractions(Utility.getInstance(getContext()).getTripSelectedAttrations());
+            adapter.setSelectedAttractions(Utility.getInstance(getContext()).getTripSelectedAttractions());
             recViewFavoriteAttractions.setAdapter(adapter);
             recViewFavoriteAttractions.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
@@ -105,30 +96,22 @@ public class FavoriteAttractionsFragment extends Fragment {
                 txtEmptyFavoriteList.setVisibility(View.VISIBLE);
             }
 
-//            OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-//                @Override
-//                public void handleOnBackPressed() {
-//                    Utility.getInstance(getContext()).finishAllActivities();
-//                    //getActivity().finish();
-//                }
-//            };
-//            getActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         }
     }
+    //====================================================================================//
 
     @Override
     public void onStop() {
         super.onStop();
-        //TODO: Matan added this
         recViewFavoriteAttractions.setAdapter(null);
     }
-
-
-
+    //====================================================================================//
 
     private void initViews(View view) {
         recViewFavoriteAttractions = view.findViewById(R.id.recViewFavoriteAttractions);
         btnFinishSelectFavAttr = view.findViewById(R.id.btnFinishSelectFavAttr);
         txtEmptyFavoriteList = view.findViewById(R.id.txtEmptyFavoriteList);
     }
+    //====================================================================================//
+
 }

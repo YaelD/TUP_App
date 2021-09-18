@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
@@ -36,11 +37,28 @@ public class CreateNewTripActivity extends NavigationDrawerActivity {
         super.onCreate(savedInstanceState);
         setContainer(new CreateNewTripFragment());
         Utility.setLocale(this, "en");
+        setCallBack();
     }
     //====================================================================================//
+
     @Override
     protected void moveToCreateTrip() {
     }
+    //====================================================================================//
+
+    @Override
+    protected void setCallBack() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Utility.getInstance(getApplicationContext()).getTripSelectedAttractions().clear();
+                Utility.getInstance(getApplicationContext()).finishAllActivities();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
+    }
+
 
     //====================================================================================//
 
@@ -61,18 +79,6 @@ public class CreateNewTripActivity extends NavigationDrawerActivity {
         intent.putExtra(CALLING_ACTIVITY, NavigationDrawerActivity.class.getName());
         startActivity(intent);
     }
-
-    //====================================================================================//
-
-    //TODO: check why this code is here
-//    public static void setLocale(Activity activity, String languageCode) {
-//        Locale locale = new Locale(languageCode);
-//        Locale.setDefault(locale);
-//        Resources resources = activity.getResources();
-//        Configuration config = resources.getConfiguration();
-//        config.setLocale(locale);
-//        resources.updateConfiguration(config, resources.getDisplayMetrics());
-//    }
 
     //====================================================================================//
 

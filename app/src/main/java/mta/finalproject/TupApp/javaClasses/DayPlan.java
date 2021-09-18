@@ -18,6 +18,7 @@ public class DayPlan {
     private LocalTime startTime;
     private LocalTime finishTime;
 
+    //====================================================================================//
 
     public DayPlan(double durationDesireByUser, ArrayList<OnePlan> daySchedule, LocalDate date,
                    Hotel hotel, LocalTime startTime, LocalTime finishTime, int durationDay) {
@@ -28,58 +29,73 @@ public class DayPlan {
         this.startTime = startTime;
         this.finishTime = finishTime;
     }
+    //====================================================================================//
 
     public double getDurationDesireByUser() {
         return durationDesireByUser;
     }
+    //====================================================================================//
 
     public void setDurationDesireByUser(double durationDesireByUser) {
         this.durationDesireByUser = durationDesireByUser;
     }
+    //====================================================================================//
 
     public ArrayList<OnePlan> getDaySchedule() {
         return daySchedule;
     }
+    //====================================================================================//
 
     public void setDaySchedule(ArrayList<OnePlan> daySchedule) {
         this.daySchedule = daySchedule;
     }
+    //====================================================================================//
 
     public LocalDate getDate() {
         return date;
     }
+    //====================================================================================//
 
     public void setDate(LocalDate date) {
         this.date = date;
     }
+    //====================================================================================//
 
     public Hotel getHotel() {
         return hotel;
     }
+    //====================================================================================//
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
+    //====================================================================================//
 
     public LocalTime getStartTime() {
         return startTime;
     }
+    //====================================================================================//
 
     public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
+    //====================================================================================//
 
     public LocalTime getFinishTime() {
         return finishTime;
     }
+    //====================================================================================//
 
     public void setFinishTime(LocalTime finishTime) {
         this.finishTime = finishTime;
     }
+    //====================================================================================//
 
     public static ArrayList<DayPlan> getStaticDayPlan()
     {
         ArrayList<DayPlan> dayPlans = new ArrayList<>();
         return dayPlans;
     }
+    //====================================================================================//
+
 }

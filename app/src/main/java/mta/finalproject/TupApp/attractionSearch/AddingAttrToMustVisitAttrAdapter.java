@@ -37,29 +37,27 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
     public AddingAttrToMustVisitAttrAdapter(Context mContext) {
         this.mContext = mContext;
     }
+    //====================================================================================//
 
-    @NonNull
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_pick_must_visit_attraction, parent, false);
         return new AddingAttrToMustVisitAttrAdapter.ViewHolder(view);
     }
+    //====================================================================================//
 
     @SuppressLint("LongLogTag")
     @Override
-    public void onBindViewHolder(@NonNull @NotNull AddingAttrToMustVisitAttrAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull AddingAttrToMustVisitAttrAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Log.d(TAG, "onBindViewHolder: called");
         holder.txtNameAttr.setText(attractions.get(position).getName());
         Glide.with(mContext)
                 .asBitmap()
                 .load(attractions.get(position).getImageUrl())
                 .into(holder.imgAttraction);
-
         holder.checkBox.setOnCheckedChangeListener(null);
-
         boolean isInSelected = Utility.isAttractionInArr(selectedAttractions, attractions.get(position));
-
         if(isInSelected)
         {
             holder.checkBox.setChecked(true);
@@ -68,8 +66,6 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
         {
             holder.checkBox.setChecked(false);
         }
-
-
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -86,30 +82,33 @@ public class AddingAttrToMustVisitAttrAdapter extends RecyclerView.Adapter<Addin
         });
 
     }
-
-
-
+    //====================================================================================//
 
     @Override
     public int getItemCount() {
         return attractions.size();
     }
+    //====================================================================================//
 
     public void setMustVisitAttractions(ArrayList<Attraction> attractions) {
         this.attractions = attractions;
         notifyDataSetChanged();
     }
+    //====================================================================================//
 
     public void setSelectedAttractions(ArrayList<Attraction> selectedAttractions) {
         this.selectedAttractions = selectedAttractions;
         notifyDataSetChanged();
     }
+    //====================================================================================//
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private CardView parent;
         private ImageView imgAttraction;
         private TextView txtNameAttr;
         private CheckBox checkBox;
+
+        //====================================================================================//
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

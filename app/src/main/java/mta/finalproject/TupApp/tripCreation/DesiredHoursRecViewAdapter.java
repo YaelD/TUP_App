@@ -109,11 +109,6 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                                 desiredHours.get(position).setEndTime(holder.endTime.toString());
                                 holder.btnEndTime.setText(holder.startTime.toString());
                                 holder.btnStartTime.setText(holder.endTime.toString());
-                                //TODO: delete this log
-                                Log.e("CreateTripHours==>", "Date:" + desiredHours.get(position).getDate() +
-                                        " Start=" + desiredHours.get(position).getStartTime() + " End=" +
-                                        desiredHours.get(position).getEndTime());
-
                             }
                         },
                         holder.endTime.getHour(), holder.endTime.getMinute(), true);
@@ -171,10 +166,6 @@ public class DesiredHoursRecViewAdapter extends RecyclerView.Adapter<DesiredHour
                                 desiredHours.get(position).setEndTime(holder.endTime.toString());
                                 holder.btnEndTime.setText(holder.startTime.toString());
                                 holder.btnStartTime.setText(holder.endTime.toString());
-                                //TODO: delete this log
-                                Log.e("CreateTripHours==>", "Date:" + desiredHours.get(position).getDate() +
-                                        " Start=" + desiredHours.get(position).getStartTime() + " End=" +
-                                        desiredHours.get(position).getEndTime());
                             }
                         }, holder.startTime.getHour(), holder.startTime.getMinute(), true);
                 timePicker.show();
