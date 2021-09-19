@@ -355,9 +355,6 @@ public class CreateNewTripFragment extends Fragment implements View.OnClickListe
 
     //====================================================================================//
 
-
-    //====================================================================================//
-
     @Override
     public void onResume() {
         super.onResume();
