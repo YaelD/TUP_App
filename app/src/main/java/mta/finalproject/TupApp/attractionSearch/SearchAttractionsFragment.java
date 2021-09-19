@@ -59,8 +59,6 @@ public class SearchAttractionsFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
-                Log.e("HERE==>", "In Query Text change");
                 filter(newText);
                 return false;
             }

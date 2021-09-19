@@ -87,7 +87,6 @@ public class MyTripsFragment extends Fragment {
         super.onStop();
         if(Utility.getInstance(getContext()).getTripsToDelete().size() > 0)
         {
-            Log.e("MyTripsFrag=>", "Deleting==" + Utility.getInstance(getContext()).getTripsToDelete().toString());
             ServerConnection.getInstance(getContext()).deleteTripFromServer();
         }
     }

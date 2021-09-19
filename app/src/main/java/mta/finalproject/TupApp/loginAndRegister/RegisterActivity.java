@@ -269,8 +269,6 @@ public class RegisterActivity extends AppCompatActivity {
                 txtInvalidInputError.setVisibility(View.GONE);
                 Traveler traveler = new Gson().fromJson( result, Traveler.class);
                 Utility.getInstance(getApplicationContext()).setTraveler(traveler);
-                Log.e("HERE==>", "travelerID is--" +
-                        Utility.getInstance(getApplicationContext()).getTravelerID());
                 Utility.getInstance(getApplicationContext()).getDataFromServer();
                 Utility.getInstance(getApplicationContext()).writeToSharedPreferences();
                 Intent intent = new Intent(RegisterActivity.this, NavigationDrawerActivity.class);

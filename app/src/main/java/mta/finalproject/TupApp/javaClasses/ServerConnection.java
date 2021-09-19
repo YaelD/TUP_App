@@ -86,17 +86,14 @@ public class ServerConnection {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString("status").equals("ok")) {
-                                Log.e(functionName+"==>","Ok Response=" + response);
                                 callBack.onSuccessResponse(jsonObject.getString("message"));
                             }
                             else
                             {
-                                Log.e(functionName+ "==>", "Error Response=" + jsonObject.getString("message"));
                                 callBack.onErrorResponse("Error Connecting to Server");
                             }
                             } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e(functionName +"==>", "error=JSON");
                             callBack.onErrorResponse("Error Connecting to Server");
                         }
                     }
@@ -105,7 +102,6 @@ public class ServerConnection {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         callBack.onErrorResponse("Error Connecting to Server");
-                        Log.e(functionName+ "==>", "Error: " + error);
                     }
                 })
         {
@@ -142,7 +138,6 @@ public class ServerConnection {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("getHotels=>", "Error JSON");
                         }
                     }
                     @Override
@@ -166,7 +161,6 @@ public class ServerConnection {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("getDestinations=>", "Error JSON");
                         }
 
                     }
@@ -212,7 +206,6 @@ public class ServerConnection {
                     }
                     Utility.getInstance(context).setAllTrips(trips);
                 } catch (JSONException e) {
-                    Log.e("getMyTrips=>", "Error JSON");
                     e.printStackTrace();
                 }
             }
@@ -258,7 +251,6 @@ public class ServerConnection {
                     Utility.getInstance(context).setAttractions(attractions);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("getAllAttractions=>", "Error=JSON");
                 }
             }
             @Override
@@ -280,7 +272,6 @@ public class ServerConnection {
                         }
                 }
                 catch (JSONException e) {
-                    Log.e("getFavorites=>", "Error=JSON");
                     e.printStackTrace();
                 }
             }
@@ -338,18 +329,14 @@ public class ServerConnection {
                 public void onResponse(String response) {
                     try {
                         JSONObject jsonResponse = new JSONObject(response);
-                        Log.e("HERE==>", "log in response=" + response);
                         if (jsonResponse.getString("status").equals("ok")) {
-                            Log.e("logIn==>", "Ok Response=" + jsonResponse.getString("message"));
                             String jsonUserString = jsonResponse.getString("message");
                             callBack.onSuccessResponse(jsonUserString);
                         } else {
-                            Log.e("logIn=>", "Error Response=" + jsonResponse.getString("message"));
                             callBack.onErrorResponse("Error Connecting to Server");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Log.e("logIn=>", "Error=JSON");
                         callBack.onErrorResponse("Error Connecting to Server");
 
                     }
@@ -357,7 +344,6 @@ public class ServerConnection {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("logIn=>", "Error: " + error);
                     callBack.onErrorResponse("Error Connecting to Server");
                 }
             }) {
@@ -398,23 +384,19 @@ public class ServerConnection {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     if (jsonResponse.getString("status").equals("ok")) {
-                        Log.e("register==>", "Ok Response=" + jsonResponse.getString("message"));
                         callBack.onSuccessResponse(jsonResponse.getString("message"));
 
                     } else {
                         callBack.onErrorResponse("Don't");
-                        Log.e("register=>", "Error Response=" + jsonResponse.getString("message"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.e("register=>", "Error=JSON");
                     callBack.onErrorResponse("Don't");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("register=>", "Error: " + error);
                 callBack.onErrorResponse("Don't");
             }
         }) {
@@ -430,7 +412,6 @@ public class ServerConnection {
             @Override
             public byte[] getBody() throws AuthFailureError {
                 String json = gson.toJson(traveler);
-                Log.e("HERE==>", json);
                 return json.getBytes(StandardCharsets.UTF_8);
             }
 

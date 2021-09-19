@@ -36,8 +36,8 @@ public class LoadingScreen extends AppCompatActivity {
         if(sharedPreferences.contains((TRAVELER_ID)))
         {
             String jsonTraveler = sharedPreferences.getString(TRAVELER, "");
-            Log.e("LoadingScreen==>", "Traveler in App" + jsonTraveler);
-            Log.e("LoadingScreen==>", "TravelerID " + Utility.getInstance(getApplicationContext()).getTravelerID());
+
+
             Traveler traveler = new Gson().fromJson(jsonTraveler, Traveler.class);
             Utility.getInstance(getApplicationContext()).setTraveler(traveler);
             Utility.getInstance(getApplicationContext()).writeToSharedPreferences();

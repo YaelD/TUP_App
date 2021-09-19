@@ -113,7 +113,6 @@ public class Utility {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TRAVELER_ID, travelerID);
         String travelerJson = new Gson().toJson(this.getTraveler());
-        Log.e("HERE==>", "Traveler is about to write:" + travelerJson);
         editor.putString(TRAVELER, travelerJson);
         editor.commit();
     }
